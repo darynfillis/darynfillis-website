@@ -1,0 +1,31 @@
+# robots.txt for darynfillis.com
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://darynfillis.com/sitemap.xml
+
+# AI/LLM crawlers explicitly permitted
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /

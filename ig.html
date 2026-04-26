@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="shortcut icon" href="/favicon.png">
+
+<title>Daryn Fillis | Links | Certified Mortgage Advisor Los Angeles</title>
+<meta name="description" content="Daryn Fillis, Certified Mortgage Advisor at NEO Home Loans in Los Angeles. Book a call, get pre-qualified, join the refi watchlist, or see resources for real estate agents.">
+<link rel="canonical" href="https://darynfillis.com/ig">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Daryn Fillis | Links | Los Angeles Mortgage Advisor">
+<meta property="og:description" content="Book a call, get pre-qualified, or explore mortgage strategy resources.">
+<meta property="og:url" content="https://darynfillis.com/ig">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://darynfillis.com/og-home.jpg">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;800&display=swap" rel="stylesheet">
+
+<!-- Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Daryn Fillis Links",
+  "url": "https://darynfillis.com/ig",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "Daryn Fillis",
+    "jobTitle": "Certified Mortgage Advisor",
+    "worksFor": {"@type": "Organization", "name": "NEO Home Loans"},
+    "telephone": "+1-424-396-6967",
+    "email": "myadvisors@neohomeloans.com",
+    "url": "https://darynfillis.com/about",
+    "identifier": {
+      "@type": "PropertyValue",
+      "propertyID": "NMLS",
+      "value": "1988371"
+    }
+  }
+}
+</script>
+
+<style>
+  :root {
+    --font: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --navy: #0A2540;
+    --navy-deep: #061a2e;
+    --blue: #5bcbf5;
+    --blue-dark: #2ba8d9;
+    --white: #ffffff;
+    --muted: rgba(255,255,255,0.55);
+    --faint: rgba(255,255,255,0.35);
+    --card-bg: rgba(255,255,255,0.04);
+    --card-border: rgba(255,255,255,0.1);
+    --card-hover: rgba(91,203,245,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--navy-deep);
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+    color: var(--white);
+    min-height: 100vh;
+  }
+
+  body {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(91,203,245,0.1) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 50% 100%, rgba(91,203,245,0.05) 0%, transparent 60%),
+      var(--navy-deep);
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: clamp(40px, 8vw, 64px) clamp(20px, 5vw, 32px);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .name {
+    font-weight: 800;
+    font-size: clamp(2rem, 7vw, 2.75rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 14px;
+  }
+
+  .name .first { color: var(--white); }
+  .name .last  { color: var(--blue); }
+
+  .bio {
+    font-weight: 200;
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .bio strong {
+    font-weight: 600;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .city-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 14px;
+    padding: 4px 12px;
+    background: rgba(91,203,245,0.12);
+    border: 1px solid rgba(91,203,245,0.25);
+    border-radius: 20px;
+    font-size: 0.64rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+
+  .city-badge-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--blue);
+    box-shadow: 0 0 8px var(--blue);
+  }
+
+  /* ─── LINK CARDS ─── */
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+
+  .link-card {
+    display: block;
+    padding: 18px 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--white);
+    transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .link-card:hover, .link-card:active {
+    background: var(--card-hover);
+    border-color: rgba(91,203,245,0.3);
+    transform: translateY(-1px);
+  }
+
+  .link-card.primary {
+    background: linear-gradient(135deg, rgba(91,203,245,0.15) 0%, rgba(91,203,245,0.05) 100%);
+    border: 1.5px solid var(--blue);
+    box-shadow: 0 0 20px rgba(91,203,245,0.15);
+  }
+
+  .link-card.primary:hover, .link-card.primary:active {
+    background: linear-gradient(135deg, rgba(91,203,245,0.25) 0%, rgba(91,203,245,0.1) 100%);
+    box-shadow: 0 0 32px rgba(91,203,245,0.25);
+  }
+
+  .link-title {
+    font-weight: 800;
+    font-size: 0.96rem;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    margin-bottom: 3px;
+    text-align: center;
+  }
+
+  .link-sub {
+    font-weight: 200;
+    font-size: 0.76rem;
+    color: var(--faint);
+    letter-spacing: 0.02em;
+    text-align: center;
+  }
+
+  .link-card.primary .link-sub {
+    color: rgba(91,203,245,0.75);
+  }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    text-align: center;
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    margin: 20px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+  }
+
+  /* ─── DIRECT CONTACT ─── */
+  .contact-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+
+  .contact-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--white);
+    font-weight: 800;
+    font-size: 0.8rem;
+    transition: all 0.22s;
+  }
+
+  .contact-btn:hover, .contact-btn:active {
+    background: rgba(91,203,245,0.08);
+    border-color: rgba(91,203,245,0.3);
+  }
+
+  .contact-btn svg {
+    width: 16px;
+    height: 16px;
+    color: var(--blue);
+  }
+
+  /* ─── SOCIAL ROW ─── */
+  .social-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin: 32px 0 24px;
+  }
+
+  .social-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.22s;
+  }
+
+  .social-icon:hover, .social-icon:active {
+    background: rgba(91,203,245,0.1);
+    border-color: rgba(91,203,245,0.3);
+    transform: translateY(-2px);
+  }
+
+  .social-icon svg {
+    width: 18px;
+    height: 18px;
+    color: rgba(255,255,255,0.6);
+    transition: color 0.22s;
+  }
+
+  .social-icon:hover svg {
+    color: var(--blue);
+  }
+
+  /* ─── FOOTER ─── */
+  .site-footer {
+    margin-top: auto;
+    text-align: center;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .footer-name {
+    font-weight: 800;
+    font-size: 0.74rem;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 8px;
+    letter-spacing: 0.04em;
+  }
+
+  .footer-disclaimer {
+    font-weight: 200;
+    font-size: 0.64rem;
+    color: rgba(255,255,255,0.3);
+    line-height: 1.65;
+    max-width: 380px;
+    margin: 0 auto 12px;
+  }
+
+  .footer-site-link {
+    display: inline-block;
+    margin-top: 8px;
+    font-weight: 800;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue);
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid rgba(91,203,245,0.3);
+    border-radius: 16px;
+    transition: all 0.22s;
+  }
+
+  .footer-site-link:hover {
+    background: rgba(91,203,245,0.1);
+  }
+
+  /* Tap feedback on mobile */
+  @media (hover: none) {
+    .link-card:active {
+      transform: scale(0.98);
+    }
+    .contact-btn:active, .social-icon:active {
+      transform: scale(0.95);
+    }
+  }
+
+  /* Desktop refinement */
+  @media (min-width: 640px) {
+    .container {
+      padding: 72px 40px;
+    }
+    .name {
+      font-size: 3rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="header">
+    <h1 class="name"><span class="first">DARYN</span> <span class="last">FILLIS</span></h1>
+    <p class="bio"><strong>Certified Mortgage Advisor</strong><br>NEO Home Loans · NMLS #1988371</p>
+    <div class="city-badge">
+      <span class="city-badge-dot"></span>
+      <span>Los Angeles · LA Mortgage Advisor</span>
+    </div>
+  </header>
+
+  <!-- PRIMARY LINKS -->
+  <div class="links">
+
+    <!-- 1. Primary: Book a Call -->
+    <a href="https://darynfillis.com/schedule" class="link-card primary">
+      <div class="link-title">Know your number in 15 minutes</div>
+      <div class="link-sub">Free call. Just a straight answer.</div>
+    </a>
+
+    <!-- 2. Get Pre-Qualified -->
+    <a href="https://neohomeloans.com/start/r/130676" class="link-card">
+      <div class="link-title">See what you qualify for</div>
+      <div class="link-sub">3 minutes online. No credit hit.</div>
+    </a>
+
+    <!-- 3. Field Notes -->
+    <a href="https://darynfillis.com/field-notes" class="link-card">
+      <div class="link-title">What most buyers wish they knew sooner</div>
+      <div class="link-sub">Mortgage strategy, written for LA.</div>
+    </a>
+
+    <!-- 4. Refi Rate Watch -->
+    <a href="https://darynfillis.com/refi-rate-watch" class="link-card">
+      <div class="link-title">Don't miss the next rate drop</div>
+      <div class="link-sub">I'll watch the rates. You'll get the call.</div>
+    </a>
+
+    <!-- DIVIDER: Agent resources -->
+    <div class="divider">For Real Estate Agents</div>
+
+    <!-- 5. For Agents -->
+    <a href="https://darynfillis.com/for-agents" class="link-card">
+      <div class="link-title">Your clients deserve financing that wins</div>
+      <div class="link-sub">Close in 15 days. Waive contingencies. Zero surprises.</div>
+    </a>
+
+    <!-- 6. Partnership Plus -->
+    <a href="https://darynfillis.com/partnership-plus" class="link-card">
+      <div class="link-title">Turn one listing into six deals</div>
+      <div class="link-sub">Free playbook. Payment-first marketing system.</div>
+    </a>
+
+  </div>
+
+  <!-- DIRECT CONTACT -->
+  <div class="contact-row">
+    <a href="sms:+14243966967" class="contact-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span>Text Me</span>
+    </a>
+    <a href="tel:4243966967" class="contact-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span>Call Me</span>
+    </a>
+  </div>
+
+  <!-- SOCIAL ICONS -->
+  <div class="social-row">
+    <a href="https://instagram.com/mymortgageadvisor" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+    </a>
+    <a href="https://facebook.com/darynfillis" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+    <a href="https://linkedin.com/in/darynfillis" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+    <a href="https://youtube.com/@darynfillis" target="_blank" rel="noopener" class="social-icon" aria-label="YouTube">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-name">Daryn Fillis · Certified Mortgage Advisor</div>
+    <p class="footer-disclaimer">
+      NEO Home Loans · NMLS #1988371<br>
+      Powered by Better Mortgage Corporation · NMLS #330511<br>
+      Equal Housing Lender · Equal Housing Opportunity
+    </p>
+    <a href="https://darynfillis.com/" class="footer-site-link">darynfillis.com →</a>
+  </footer>
+
+</div>
+
+</body>
+</html>
