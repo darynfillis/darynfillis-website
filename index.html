@@ -1122,10 +1122,10 @@ footer { background: var(--ink); padding: 56px 48px 36px; }
 .prequal-legal { font-size: 0.68rem; font-weight: 200; color: rgba(255,255,255,0.28); line-height: 1.6; margin-top: 16px; position: relative; z-index: 1; }
 
 
-/* ══ MOBILE VIDEO SUPPRESSION ══ */
+/* ══ MOBILE: video plays on all devices ══ */
 @media(max-width:768px){
-  .hero-bg-video { display: none !important; }
-  .hero-bg-fallback { display: block !important; }
+  /* Video plays on mobile. Fallback shows underneath until video loads. */
+  .hero-bg-fallback { display: block; }
 }
 
 /* ══ TRUST BAR — slim strip ══ */
