@@ -1405,6 +1405,40 @@ html{-webkit-text-size-adjust:100%;}
   .refi-rate-opts{grid-template-columns:1fr 1fr !important}
 }
 
+
+/* ── STRATEGIES GRID ── */
+.strategies-section { background: var(--navy); padding: clamp(72px, 9vw, 112px) clamp(20px, 4vw, 48px); position: relative; overflow: hidden; }
+.strategies-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 100% 50%, rgba(91,203,245,0.05) 0%, transparent 60%); pointer-events: none; }
+.strategies-header { text-align: center; margin-bottom: 48px; position: relative; z-index: 1; }
+.strategies-header .eyebrow { color: var(--blue); }
+.strategies-h2 { font-weight: 800; font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--white); letter-spacing: -0.025em; line-height: 1.1; margin: 8px 0 14px; }
+.strategies-sub { font-weight: 200; font-size: 1rem; color: rgba(255,255,255,0.55); line-height: 1.85; max-width: 560px; margin: 0 auto; }
+.strategies-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; position: relative; z-index: 1; }
+@media (max-width: 980px) { .strategies-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .strategies-grid { grid-template-columns: 1fr; } }
+.strategy-card { display: flex; flex-direction: column; padding: 28px 26px; background: rgba(255,255,255,0.03); border: 1px solid rgba(91,203,245,0.15); border-radius: 12px; text-decoration: none; transition: all 0.22s; }
+.strategy-card:hover { background: rgba(91,203,245,0.06); border-color: rgba(91,203,245,0.3); transform: translateY(-2px); }
+.sc-eyebrow { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
+.sc-title { font-weight: 800; font-size: 1.05rem; color: var(--white); letter-spacing: -0.015em; margin-bottom: 10px; }
+.sc-desc { font-weight: 200; font-size: 0.86rem; color: rgba(255,255,255,0.55); line-height: 1.7; margin-bottom: 18px; flex: 1; }
+.sc-link { font-weight: 800; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-top: auto; }
+
+/* ── REFI WATCH CTA ── */
+.refi-watch-section { background: var(--white); padding: clamp(48px, 7vw, 80px) clamp(20px, 4vw, 48px); }
+.refi-watch-card { max-width: 1080px; margin: 0 auto; background: linear-gradient(135deg, rgba(91,203,245,0.06) 0%, rgba(91,203,245,0.02) 100%); border: 1.5px solid rgba(91,203,245,0.3); border-radius: 16px; padding: clamp(36px, 5vw, 56px) clamp(28px, 4vw, 56px); display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(28px, 4vw, 56px); align-items: center; }
+@media (max-width: 760px) { .refi-watch-card { grid-template-columns: 1fr; } }
+.rwc-eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 5px 14px; background: rgba(91,203,245,0.12); border: 1px solid rgba(91,203,245,0.3); border-radius: 20px; margin-bottom: 18px; }
+.rwc-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 8px var(--blue); }
+.rwc-eyebrow span:not(.rwc-dot) { font-size: 0.66rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue-dark); }
+.rwc-h2 { font-weight: 800; font-size: clamp(1.6rem, 2.8vw, 2.2rem); color: var(--navy); letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 14px; }
+.rwc-h2 em { font-style: normal; color: var(--blue-dark); }
+.rwc-body { font-weight: 200; font-size: 0.95rem; color: var(--body); line-height: 1.85; margin-bottom: 24px; max-width: 520px; }
+.rwc-visual { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media (max-width: 760px) { .rwc-visual { grid-template-columns: repeat(3, 1fr); } }
+.rwc-chip { background: var(--white); border: 1px solid var(--rule); border-radius: 10px; padding: 18px 16px; text-align: center; }
+.rwc-chip-num { font-weight: 800; font-size: clamp(1.6rem, 2.6vw, 2.2rem); color: var(--navy); letter-spacing: -0.04em; line-height: 1; }
+.rwc-chip-lbl { font-weight: 200; font-size: 0.74rem; color: var(--muted); margin-top: 6px; letter-spacing: 0.04em; }
+
 </style>
 </head>
 <script type="application/ld+json">
@@ -1688,6 +1722,92 @@ html{-webkit-text-size-adjust:100%;}
     <h2 class="hook-headline">Of young homeowners have at least one regret about their mortgage. Here's what they all have in common.</h2>
     <p class="hook-body">It wasn't the house. It was the financing — wrong structure, wrong advice, an advisor who disappeared the day after closing. There are five things I cover with every client that most advisors never bring up. They're the difference between a mortgage that builds your wealth and one that just gets you to closing.</p>
     <a href="/interest-rate-vs-cost" class="hook-link">See what most advisors won't tell you →</a>
+  </div>
+</section>
+
+<!-- ══ STRATEGIES GRID ══ -->
+<section class="strategies-section" id="strategies">
+  <div class="max-w">
+    <div class="strategies-header reveal">
+      <span class="eyebrow">Where I focus</span>
+      <h2 class="strategies-h2">The work most advisors won't do.</h2>
+      <p class="strategies-sub">Six places where the right strategy turns a good mortgage into the one that builds your wealth, not just gets you to closing.</p>
+    </div>
+
+    <div class="strategies-grid">
+      <a href="/competitive-offer-strategy" class="strategy-card reveal">
+        <div class="sc-eyebrow">For buyers</div>
+        <div class="sc-title">Competitive Offer Strategy</div>
+        <div class="sc-desc">Win the home with a stronger offer, not a higher price. Fully underwritten pre-approvals close in 15 days.</div>
+        <div class="sc-link">See how →</div>
+      </a>
+
+      <a href="/no-cost-refinance" class="strategy-card reveal d1">
+        <div class="sc-eyebrow">For homeowners</div>
+        <div class="sc-title">No-Cost Refinance</div>
+        <div class="sc-desc">Refinance without closing costs. The bank covers them. You keep the savings.</div>
+        <div class="sc-link">See how →</div>
+      </a>
+
+      <a href="/mortgage-under-management" class="strategy-card reveal d2">
+        <div class="sc-eyebrow">After closing</div>
+        <div class="sc-title">Mortgage Under Management</div>
+        <div class="sc-desc">I watch your file for life. PMI removal, refi windows, equity strategy. Most advisors disappear after closing. I don't.</div>
+        <div class="sc-link">See how →</div>
+      </a>
+
+      <a href="/pmi-strategy" class="strategy-card reveal d3">
+        <div class="sc-eyebrow">For first-time buyers</div>
+        <div class="sc-title">PMI Strategy</div>
+        <div class="sc-desc">PMI isn't permanent. The trick is knowing when you can remove it. I'll tell you the day, not the year.</div>
+        <div class="sc-link">See how →</div>
+      </a>
+
+      <a href="/interest-rate-vs-cost" class="strategy-card reveal d4">
+        <div class="sc-eyebrow">For everyone</div>
+        <div class="sc-title">Rate vs. Cost</div>
+        <div class="sc-desc">The lowest rate isn't always the lowest cost. Knowing the difference is the difference.</div>
+        <div class="sc-link">See how →</div>
+      </a>
+
+      <a href="/self-employed" class="strategy-card reveal d5">
+        <div class="sc-eyebrow">Self-employed buyers</div>
+        <div class="sc-title">Self-Employed Mortgages</div>
+        <div class="sc-desc">Bank statement, P&amp;L, DSCR, asset depletion, NINE loans. Built for buyers whose tax returns don't tell the whole story.</div>
+        <div class="sc-link">See how →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ REFI RATE WATCH LEAD MAGNET ══ -->
+<section class="refi-watch-section">
+  <div class="max-w">
+    <div class="refi-watch-card reveal">
+      <div class="rwc-content">
+        <div class="rwc-eyebrow">
+          <span class="rwc-dot"></span>
+          <span>Free service · For homeowners</span>
+        </div>
+        <h2 class="rwc-h2">Don't watch rates. <em>I'll watch them for you.</em></h2>
+        <p class="rwc-body">Tell me your current rate. When the market moves enough to matter for your situation, I'll text you with the exact math. No newsletter. No spam. Just a call when it's worth your time.</p>
+        <a href="/refi-rate-watch" class="btn btn-blue">Sign me up, free →</a>
+      </div>
+      <div class="rwc-visual">
+        <div class="rwc-chip">
+          <div class="rwc-chip-num">Free</div>
+          <div class="rwc-chip-lbl">No commitment</div>
+        </div>
+        <div class="rwc-chip">
+          <div class="rwc-chip-num">30s</div>
+          <div class="rwc-chip-lbl">To sign up</div>
+        </div>
+        <div class="rwc-chip">
+          <div class="rwc-chip-num">3</div>
+          <div class="rwc-chip-lbl">Fields only</div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
