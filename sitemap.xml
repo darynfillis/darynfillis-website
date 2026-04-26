@@ -99,6 +99,14 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- First-Time Homebuyers -->
+  <url>
+    <loc>https://darynfillis.com/first-time-buyers</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Tools -->
   <url>
     <loc>https://darynfillis.com/refi-rate-watch</loc>
