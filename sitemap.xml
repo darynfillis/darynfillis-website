@@ -107,6 +107,14 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Military & Veterans / VA Loans -->
+  <url>
+    <loc>https://darynfillis.com/military-veterans</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Tools -->
   <url>
     <loc>https://darynfillis.com/refi-rate-watch</loc>
