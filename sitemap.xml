@@ -155,4 +155,12 @@
     <priority>0.6</priority>
   </url>
 
+  <!-- Accessibility -->
+  <url>
+    <loc>https://darynfillis.com/accessibility</loc>
+    <lastmod>2026-04-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
 </urlset>
