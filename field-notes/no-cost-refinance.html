@@ -9,11 +9,11 @@
 <link rel="apple-touch-icon" href="/favicon.png">
 <link rel="shortcut icon" href="/favicon.png">
 
-<title>The No-Cost Refinance: What It Actually Means | Daryn Fillis · NEO Home Loans LA</title>
-<meta name="description" content="A no-cost refinance rolls closing costs into the rate so you pay nothing upfront and save from day one. Here is how the math works and when it beats a traditional refinance.">
+<title>What Is a No-Cost Refinance? | Daryn Fillis | LA Mortgage Advisor</title>
+<meta name="description" content="A no-cost refinance rolls closing costs into the rate so you pay nothing upfront. Learn when it makes sense, when it doesn't, and how the break-even math actually works.">
 
 <!-- Canonical -->
-<link rel="canonical" href="https://darynfillis.com/field-notes/no-cost-refinance">
+<link rel="canonical" href="https://darynfillis.com/no-cost-refinance">
 
 <!-- Open Graph — controls every social share preview -->
 <meta property="og:type"        content="website">
@@ -521,8 +521,8 @@ footer { background: var(--ink); padding: 56px 48px 36px; }
 .footer-col h4 { font-weight: 800; font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 16px; }
 .footer-col a { display: block; font-weight: 200; font-size: 0.79rem; color: rgba(255,255,255,0.4); text-decoration: none; margin-bottom: 9px; transition: color 0.2s; }
 .footer-col a:hover { color: var(--white); }
-.footer-bottom { max-width: 1120px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 22px; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
-.footer-legal { font-size: 0.64rem; color: rgba(255,255,255,0.18); line-height: 1.75; max-width: 680px; font-weight: 200; }
+.footer-bottom { max-width: 1120px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 22px; display: flex; flex-direction: column; align-items: stretch; gap: 18px; }
+.footer-legal { font-size: 0.72rem; color: rgba(255,255,255,0.7); line-height: 1.75; width: 100%; font-weight: 200; }
 .footer-copy { font-size: 0.66rem; color: rgba(255,255,255,0.16); white-space: nowrap; }
 
 /* ══════════════════════════
@@ -1196,16 +1196,13 @@ footer { background: var(--ink); padding: 56px 48px 36px; }
 }
 
 @keyframes wobble {
-  0%,100% { transform: rotate(0deg); }
-  15%      { transform: rotate(-2deg) scale(1.03); }
-  30%      { transform: rotate(2deg)  scale(1.04); }
-  45%      { transform: rotate(-1.5deg); }
-  60%      { transform: rotate(1.5deg); }
-  75%      { transform: rotate(-1deg); }
+  0%,100%  { transform: translateY(0); }
+  25%      { transform: translateY(-2px); }
+  75%      { transform: translateY(2px); }
 }
 .btn-wobble {
-  animation: wobble 2s ease-in-out infinite;
-  animation-delay: 1s;
+  animation: wobble 3s ease-in-out infinite;
+  animation-delay: 2s;
 }
 .btn-wobble:hover { animation: none; }
 
@@ -1307,26 +1304,72 @@ html{-webkit-text-size-adjust:100%;}
   75%{transform:rotate(-0.5deg);}
 }
 
+
+.skip-to-main{position:absolute;left:-9999px;top:0;z-index:9999;background:var(--blue);color:var(--navy);padding:14px 20px;font-weight:800;font-size:0.92rem;text-decoration:none;border-radius:0 0 8px 0}
+.skip-to-main:focus{left:0;outline:3px solid var(--blue);outline-offset:2px}
+
+/* Social icons row in footer */
+.footer-socials { max-width: 1120px; margin: 0 auto 28px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.footer-socials-label { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.95); margin-right: 4px; }
+.footer-socials-icons { display: flex; gap: 8px; flex-wrap: wrap; }
+.footer-social-link { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.95); transition: all 0.2s; text-decoration: none; }
+.footer-social-link:hover { background: rgba(91,203,245,0.12); border-color: var(--blue); color: var(--blue); transform: translateY(-1px); }
+.footer-social-link:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.footer-social-link svg { width: 14px; height: 14px; fill: currentColor; }
+@media (max-width: 600px) {
+  .footer-socials { justify-content: center; gap: 10px; }
+  .footer-socials-label { margin-right: 0; }
+}
 </style>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Article",
- "headline":"The no-cost refinance: what it actually means and when it makes sense.",
- "description":"A no-cost refinance rolls closing costs into the rate so you pay nothing upfront and save from day one. Here is how the math works and when it beats a traditional refinance.",
- "author":{"@type":"Person","name":"Daryn Fillis","url":"https://darynfillis.com/about"},
- "publisher":{"@type":"Organization","name":"NEO Home Loans","url":"https://neohomeloans.com"},
- "datePublished":"2026-02-01",
- "mainEntityOfPage":{"@type":"WebPage","@id":"https://darynfillis.com/field-notes/no-cost-refinance"},
- "keywords":"no-cost refinance, refinance closing costs, break-even refinance, no cost refi Los Angeles, when to refinance"}
-</script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
   {"@type":"ListItem","position":1,"name":"Home","item":"https://darynfillis.com/"},
-  {"@type":"ListItem","position":2,"name":"Field Notes","item":"https://darynfillis.com/field-notes"},
-  {"@type":"ListItem","position":3,"name":"No-Cost Refinance","item":"https://darynfillis.com/field-notes/no-cost-refinance"}
+  {"@type":"ListItem","position":2,"name":"No-Cost Refinance","item":"https://darynfillis.com/no-cost-refinance"}
 ]}
 </script>
-
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a no-cost refinance?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A no-cost refinance is a mortgage refinance where closing costs are rolled into the interest rate instead of being paid upfront at closing. You pay nothing out of pocket, your savings begin from day one, and there is no break-even period to wait through."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When does a no-cost refinance make more sense than a traditional refinance?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A no-cost refinance makes more sense when your timeline in the home or loan is uncertain, when rates may drop further, when the rate improvement is meaningful but not dramatic, or when you want to preserve cash rather than paying $8,000 to $12,000 in closing costs upfront. If you plan to stay in the loan more than 31 months, a traditional refinance typically wins on total savings."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does a traditional refinance cost versus a no-cost refinance?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A traditional refinance in Los Angeles typically costs $8,000 to $12,000 in closing costs paid upfront, with a break-even point of 24 to 36 months. A no-cost refinance costs $0 at closing because those costs are built into a slightly higher interest rate, which means savings start immediately."
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DefinedTerm",
+  "name": "No-Cost Refinance",
+  "description": "A no-cost refinance is a mortgage refinance where all closing costs are rolled into a slightly higher interest rate rather than paid upfront. You pay nothing at closing. Savings begin on day one. There is no break-even period to wait through.",
+  "inDefinedTermSet": "https://darynfillis.com/"
+}
+</script>
 <body>
+<a href="#main-content" class="skip-to-main">Skip to main content</a>
 <!-- ══ NAV ══ -->
 <nav id="nav">
   <!-- Full NEO color logo — all tiers: N-icon + NEO + Home Loans + powered by better -->
@@ -1389,116 +1432,113 @@ html{-webkit-text-size-adjust:100%;}
     <a href="/" class="breadcrumb-item">Home</a><span class="breadcrumb-sep">›</span><a href="/#strategies" class="breadcrumb-item">Strategies</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-item current" aria-current="page">No-Cost Refinance</span>
   </div>
 </nav>
-<nav class="breadcrumb-bar" aria-label="Breadcrumb">
-  <div class="breadcrumb-inner">
-    <a href="/" class="breadcrumb-item">Home</a>
-    <span class="breadcrumb-sep">›</span>
-    <a href="/field-notes" class="breadcrumb-item">Field Notes</a>
-    <span class="breadcrumb-sep">›</span>
-    <span class="breadcrumb-item current">No-Cost Refinance</span>
-  </div>
-</nav>
-<div style="background:var(--navy);padding:clamp(100px,14vw,140px) clamp(20px,4vw,48px) clamp(48px,6vw,72px);position:relative;overflow:hidden">
-  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 100% 40%,rgba(91,203,245,0.07) 0%,transparent 60%);pointer-events:none"></div>
-  <div class="max-w" style="max-width:760px;position:relative;z-index:1">
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap">
-      <span style="font-size:0.62rem;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue);background:rgba(91,203,245,0.12);border:1px solid rgba(91,203,245,0.25);padding:4px 12px;border-radius:20px">Refinancing</span>
-      <span style="font-size:0.7rem;font-weight:200;color:rgba(255,255,255,0.4)">2026 · 4 min read</span>
-    </div>
-    <h1 style="font-weight:800;font-size:clamp(2rem,4.5vw,3.2rem);color:var(--white);letter-spacing:-0.03em;line-height:1.06;margin-bottom:20px">The no-cost refinance: what it actually means and when it makes sense.</h1>
-    <p style="font-weight:200;font-size:1.05rem;color:rgba(255,255,255,0.55);line-height:1.85;max-width:600px">Not every refinance is a good refinance. And not every refinance needs to cost $10,000 upfront. Here is the math behind the no-cost structure and how to know when it is the right call.</p>
+
+<main id="main-content">
+
+<div style="background:var(--navy);padding:clamp(90px,14vw,140px) clamp(20px,4vw,48px) clamp(48px,6vw,72px);position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 100% 50%,rgba(91,203,245,0.05) 0%,transparent 60%)"></div>
+  <div class="max-w" style="position:relative;z-index:1">
+    <span class="eyebrow" style="color:var(--blue)">Strategy Guide</span>
+    <h1 style="font-weight:800;font-size:clamp(1.7rem,5vw,3.2rem);color:var(--white);letter-spacing:-0.03em;line-height:1.06;margin-bottom:20px;max-width:760px">Your last refinance probably cost you $8,000–$12,000 upfront.<br>Your next one doesn't have to cost a dollar.</h1>
+    <p style="font-weight:200;font-size:1.05rem;color:rgba(255,255,255,0.55);line-height:1.85;max-width:560px;margin-bottom:32px">There's a structure that rolls all closing costs into the rate. You pay nothing to close. You save from day one. Here's exactly how it works.</p>
+    <a href="/schedule" class="btn btn-blue btn-wobble">Find out if a no-cost refi saves you money — free</a>
   </div>
 </div>
 
-<!-- Hero image -->
-<div style="background:var(--white);padding:clamp(20px,3vw,32px) clamp(20px,4vw,48px) 0">
-  <div class="max-w" style="max-width:880px">
-    <img src="/field-notes/images/no-cost-refinance.png" alt="Home mortgage refinance documents on a desk" style="width:100%;height:auto;border-radius:12px;display:block;box-shadow:0 4px 24px rgba(10,37,64,0.08)" loading="eager">
-  </div>
-</div>
-
-<div style="background:var(--white);padding:clamp(48px,8vw,80px) clamp(20px,4vw,48px)">
+<!-- ═══ DEFINITION BLOCK (GEO/AEO optimized) ═══ -->
+<div style="background:var(--surface);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:28px clamp(20px,4vw,48px)">
   <div class="max-w" style="max-width:760px">
-
-    <p style="font-weight:400;font-size:1.02rem;color:var(--body);line-height:1.9;margin-bottom:24px">Most people who refinance pay between $8,000 and $12,000 in closing costs. Loan origination fees, title insurance, escrow, appraisal, prepaid interest. The costs add up quickly, and then the clock starts. You need to stay in the loan long enough for the monthly savings to exceed what you paid to get in. That break-even point is typically two to three years out.</p>
-
-    <p style="font-weight:400;font-size:1.02rem;color:var(--body);line-height:1.9;margin-bottom:24px">A no-cost refinance works differently. Instead of paying closing costs upfront, you take a slightly higher interest rate and the lender uses the premium to cover those costs. You pay nothing at closing. Your savings start on day one. There is no break-even period to wait through.</p>
-
-    <h2 style="font-weight:800;font-size:clamp(1.4rem,2.5vw,1.9rem);color:var(--navy);letter-spacing:-0.025em;line-height:1.15;margin:40px 0 16px">How the math actually works.</h2>
-
-    <p style="font-weight:400;font-size:1.02rem;color:var(--body);line-height:1.9;margin-bottom:20px">Here is a simplified comparison. Say you are currently at 7.5% on a $600,000 balance and market rates have moved to 6.5%.</p>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px">
-      <div style="background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:22px 20px">
-        <div style="font-weight:800;font-size:0.82rem;color:var(--navy);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--rule)">Traditional refinance</div>
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <div><div style="font-weight:200;font-size:0.72rem;color:var(--muted)">New rate</div><div style="font-weight:800;font-size:1rem;color:var(--navy)">6.50%</div></div>
-          <div><div style="font-weight:200;font-size:0.72rem;color:var(--muted)">Closing costs</div><div style="font-weight:800;font-size:1rem;color:var(--navy)">~$9,000</div></div>
-          <div><div style="font-weight:200;font-size:0.72rem;color:var(--muted)">Monthly savings</div><div style="font-weight:800;font-size:1rem;color:var(--navy)">~$290/mo</div></div>
-          <div><div style="font-weight:200;font-size:0.72rem;color:var(--muted)">Break-even</div><div style="font-weight:800;font-size:1rem;color:#c0392b">31 months</div></div>
-        </div>
-      </div>
-      <div style="background:rgba(91,203,245,0.06);border:1.5px solid rgba(91,203,245,0.3);border-radius:10px;padding:22px 20px">
-        <div style="font-weight:800;font-size:0.82rem;color:var(--navy);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid rgba(91,203,245,0.2)">No-cost refinance</div>
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <div><div style="font-weight:200;font-size:0.72rem;color:var(--muted)">New rate</div><div style="font-weight:800;font-size:1rem;color:var(--navy)">6.75%</div></div>
-          <div><div style="font-weight:200;font-size:0.72rem;color:var(--muted)">Closing costs</div><div style="font-weight:800;font-size:1rem;color:var(--navy)">$0</div></div>
-          <div><div style="font-weight:200;font-size:0.72rem;color:var(--muted)">Monthly savings</div><div style="font-weight:800;font-size:1rem;color:var(--navy)">~$195/mo</div></div>
-          <div><div style="font-weight:200;font-size:0.72rem;color:var(--muted)">Break-even</div><div style="font-weight:800;font-size:1rem;color:var(--blue-dark)">Day one</div></div>
-        </div>
-      </div>
-    </div>
-
-    <p style="font-weight:400;font-size:1.02rem;color:var(--body);line-height:1.9;margin-bottom:24px">The no-cost option saves less per month but starts immediately and costs nothing. If you stay in the loan more than 31 months, the traditional refinance eventually wins on total savings. If you move, sell, or refinance again before month 31, the no-cost structure comes out ahead every time.</p>
-
-    <h2 style="font-weight:800;font-size:clamp(1.4rem,2.5vw,1.9rem);color:var(--navy);letter-spacing:-0.025em;line-height:1.15;margin:40px 0 16px">When the no-cost structure makes the most sense.</h2>
-
-    <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:32px">
-      <div style="display:flex;gap:14px;align-items:flex-start">
-        <span style="width:7px;height:7px;border-radius:50%;background:var(--blue-dark);flex-shrink:0;margin-top:9px"></span>
-        <p style="font-weight:400;font-size:0.97rem;color:var(--body);line-height:1.8;margin:0"><strong style="color:var(--navy)">You are not sure how long you will stay.</strong> If your timeline is uncertain, paying closing costs is a gamble. The no-cost structure removes that risk entirely.</p>
-      </div>
-      <div style="display:flex;gap:14px;align-items:flex-start">
-        <span style="width:7px;height:7px;border-radius:50%;background:var(--blue-dark);flex-shrink:0;margin-top:9px"></span>
-        <p style="font-weight:400;font-size:0.97rem;color:var(--body);line-height:1.8;margin:0"><strong style="color:var(--navy)">Rates may drop further.</strong> If you think this isn't the bottom of the rate cycle, a no-cost refinance lets you capture today's improvement without paying closing costs you may pay again on the next one.</p>
-      </div>
-      <div style="display:flex;gap:14px;align-items:flex-start">
-        <span style="width:7px;height:7px;border-radius:50%;background:var(--blue-dark);flex-shrink:0;margin-top:9px"></span>
-        <p style="font-weight:400;font-size:0.97rem;color:var(--body);line-height:1.8;margin:0"><strong style="color:var(--navy)">The rate drop is meaningful but not enormous.</strong> When the improvement is significant but not dramatic, a no-cost structure lets you capture the savings without needing a long break-even runway to justify it.</p>
-      </div>
-      <div style="display:flex;gap:14px;align-items:flex-start">
-        <span style="width:7px;height:7px;border-radius:50%;background:var(--blue-dark);flex-shrink:0;margin-top:9px"></span>
-        <p style="font-weight:400;font-size:0.97rem;color:var(--body);line-height:1.8;margin:0"><strong style="color:var(--navy)">You want to preserve cash.</strong> Closing costs paid upfront are capital you are no longer deploying elsewhere. A no-cost refinance keeps that capital in your hands.</p>
-      </div>
-    </div>
-
-    <h2 style="font-weight:800;font-size:clamp(1.4rem,2.5vw,1.9rem);color:var(--navy);letter-spacing:-0.025em;line-height:1.15;margin:40px 0 16px">What most lenders won't tell you.</h2>
-
-    <p style="font-weight:400;font-size:1.02rem;color:var(--body);line-height:1.9;margin-bottom:24px">Most lenders don't proactively offer a no-cost structure. The commission on a traditional refinance is higher because the fees are higher. The no-cost option requires the advisor to explain a more complex trade-off and often results in a smaller upfront payday. The incentive structure points toward paying costs.</p>
-
-    <p style="font-weight:400;font-size:1.02rem;color:var(--body);line-height:1.9;margin-bottom:36px">I run the break-even analysis on every refinance I recommend before I recommend it. If the traditional structure makes more sense for your timeline, I will tell you that. If no-cost wins, I will tell you that too. The math is the answer, not the fee structure.</p>
-
-    <div style="background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:28px 32px;margin-bottom:8px">
-      <div style="font-size:0.67rem;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:10px">Thinking about refinancing?</div>
-      <p style="font-weight:400;font-size:0.92rem;color:var(--body);line-height:1.8;margin-bottom:18px">Tell me your current rate and balance and I will run the break-even analysis for both structures. Free, 15 minutes. You will know whether it makes sense before we hang up.</p>
-      <a href="/schedule" class="btn btn-blue btn-wobble">Get my free refi analysis</a>
-    </div>
-<div style="padding-top:32px;border-top:1px solid var(--rule);display:flex;align-items:center;gap:16px;margin-top:40px">
-  <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#0A2540,#1a3d60);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.78rem;color:white;flex-shrink:0">DF</div>
-  <div>
-    <div style="font-weight:800;font-size:0.82rem;color:var(--navy)">Daryn Fillis</div>
-    <div style="font-weight:200;font-size:0.72rem;color:var(--muted)">Certified Mortgage Advisor · NEO Home Loans · NMLS #1988371</div>
+    <div style="font-size:0.65rem;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:10px">Definition</div>
+    <p style="font-weight:600;font-size:0.98rem;color:var(--navy);line-height:1.75;margin:0"><strong>No-Cost Refinance:</strong> A no-cost refinance is a mortgage refinance where all closing costs are rolled into a slightly higher interest rate rather than paid upfront. You pay nothing at closing. Savings begin on day one. There is no break-even period to wait through.</p>
   </div>
 </div>
+
+<section style="background:var(--white);padding:clamp(56px,8vw,96px) clamp(20px,4vw,48px)">
+  <div class="max-w">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(28px,6vw,80px);align-items:start">
+      <div class="reveal">
+        <h2 style="font-weight:800;font-size:clamp(1.8rem,3vw,2.4rem);color:var(--navy);letter-spacing:-0.025em;line-height:1.1;margin-bottom:20px">What a no-cost refinance actually is.</h2>
+        <p style="font-weight:400;font-size:0.97rem;color:var(--body);line-height:1.85;margin-bottom:18px">When you refinance, there are two ways to handle closing costs: pay them out of pocket, or roll them into the loan. A no-cost refinance uses the second approach: the lender increases your interest rate slightly in exchange for covering the costs. You pay nothing at closing.</p>
+        <p style="font-weight:400;font-size:0.97rem;color:var(--body);line-height:1.85;margin-bottom:18px">Done correctly, this means you start saving immediately. There's no break-even period to wait through, no 30-month countdown before the refinance "pays for itself." Every month from day one, your payment is lower than it was.</p>
+        <p style="font-weight:400;font-size:0.97rem;color:var(--body);line-height:1.85">The key phrase is "done correctly." A no-cost refinance at the wrong rate spread doesn't save you anything — it just shifts costs around. The math has to actually work.</p>
+      </div>
+      <div class="reveal d1">
+        <div style="background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:32px">
+          <div style="font-size:0.67rem;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:20px">The break-even math</div>
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="padding:16px;background:var(--white);border:1px solid var(--rule);border-radius:8px">
+              <div style="font-weight:800;font-size:0.88rem;color:var(--navy);margin-bottom:6px">Traditional refinance</div>
+              <div style="font-weight:200;font-size:0.82rem;color:var(--body);line-height:1.65">$8,000 closing costs ÷ $250/month savings = 32 months to break even. If you move or refi again before month 32, you lost money.</div>
+            </div>
+            <div style="padding:16px;background:#e8f8fe;border:1px solid rgba(56,184,232,0.25);border-radius:8px">
+              <div style="font-weight:800;font-size:0.88rem;color:var(--navy);margin-bottom:6px">No-cost refinance</div>
+              <div style="font-weight:200;font-size:0.82rem;color:var(--body);line-height:1.65">$0 closing costs. Slightly higher rate, but still lower than your current rate. You save from month one. Break-even: immediate.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--surface);padding:clamp(40px,6vw,72px) clamp(20px,4vw,48px)">
+  <div class="max-w">
+    <h2 style="font-weight:800;font-size:clamp(1.8rem,3vw,2.4rem);color:var(--navy);letter-spacing:-0.025em;line-height:1.1;margin-bottom:48px;text-align:center">When a no-cost refinance is the right move.</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
+      <div class="reveal d1" style="background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:28px">
+        <div style="font-weight:800;font-size:0.88rem;color:var(--navy);margin-bottom:10px">You're not staying forever</div>
+        <p style="font-weight:200;font-size:0.85rem;color:var(--body);line-height:1.75">If you plan to move, sell, or refinance again within 5–7 years, a no-cost structure almost always beats paying points. The break-even math rarely works in your favor with a short horizon.</p>
+      </div>
+      <div class="reveal d2" style="background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:28px">
+        <div style="font-weight:800;font-size:0.88rem;color:var(--navy);margin-bottom:10px">Rates are likely to drop again</div>
+        <p style="font-weight:200;font-size:0.85rem;color:var(--body);line-height:1.75">If you expect another rate cycle where you'll want to refi again, paying closing costs now means paying them twice. A no-cost structure preserves your flexibility.</p>
+      </div>
+      <div class="reveal d3" style="background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:28px">
+        <div style="font-weight:800;font-size:0.88rem;color:var(--navy);margin-bottom:10px">You want to protect cash</div>
+        <p style="font-weight:200;font-size:0.85rem;color:var(--body);line-height:1.75">$8,000 at closing is $8,000 that isn't in your emergency fund, investment account, or next down payment. No-cost keeps your liquidity intact while still lowering your payment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--white);padding:clamp(40px,6vw,72px) clamp(20px,4vw,48px)">
+  <div class="max-w" style="max-width:760px">
+    <h2 style="font-weight:800;font-size:clamp(1.8rem,3vw,2.4rem);color:var(--navy);letter-spacing:-0.025em;line-height:1.1;margin-bottom:20px">What I check before recommending any refinance.</h2>
+    <p style="font-weight:400;font-size:0.97rem;color:var(--body);line-height:1.85;margin-bottom:18px">Most advisors don't lead with the no-cost structure because it produces a slightly smaller loan — and a slightly smaller commission. That's the real reason it's underused.</p>
+    <p style="font-weight:400;font-size:0.97rem;color:var(--body);line-height:1.85;margin-bottom:18px">Before I recommend any refinance, I run a full break-even analysis comparing: your current rate and remaining term, the no-cost rate you'd qualify for, the traditional rate with closing costs, how long you plan to stay in the home, and what you'd do with the cash you'd spend on closing costs if you kept it.</p>
+    <p style="font-weight:400;font-size:0.97rem;color:var(--body);line-height:1.85;margin-bottom:32px">If someone recommends a refinance without walking you through that math, get a second opinion. The right answer depends on your specific situation — not a generic rule of thumb about rate drops.</p>
+    <div style="background:var(--surface);border-left:3px solid var(--blue);padding:20px 24px;border-radius:0 8px 8px 0">
+      <p style="font-weight:600;font-size:0.9rem;color:var(--navy);margin:0">This analysis is free. It takes 15 minutes or less. And it tells you exactly whether a refinance makes sense for you — not in theory, but in your actual situation with your actual numbers.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MID-PAGE PRE-QUAL CTA ══ -->
+<div style="background:var(--navy);padding:48px;margin:0;position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 100% 50%,rgba(91,203,245,0.06) 0%,transparent 60%);pointer-events:none"></div>
+  <div class="max-w" style="display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;position:relative;z-index:1">
+    <div>
+      <div style="font-weight:800;font-size:1.05rem;color:var(--white);margin-bottom:6px">Find out what you qualify for in 3 minutes.</div>
+      <div style="font-weight:200;font-size:0.88rem;color:rgba(255,255,255,0.5)">Soft credit check. A real number, not an estimate.</div>
+    </div>
+    <a href="https://neohomeloans.com/start/r/130676" target="_blank" rel="noopener" class="btn btn-blue" style="white-space:nowrap;flex-shrink:0">Start Pre-Qualification →</a>
   </div>
 </div>
+
 <div style="background:var(--navy);padding:clamp(40px,6vw,72px) clamp(20px,4vw,48px);text-align:center">
   <div class="max-w reveal">
-    <h2 style="font-weight:800;font-size:clamp(1.8rem,3vw,2.4rem);color:var(--white);letter-spacing:-0.025em;margin-bottom:16px">Thinking about refinancing?</h2>
+    <h2 style="font-weight:800;font-size:clamp(1.8rem,3vw,2.4rem);color:var(--white);letter-spacing:-0.025em;margin-bottom:16px">Ready to put this strategy to work?</h2>
     <p style="font-weight:200;font-size:1rem;color:rgba(255,255,255,0.5);margin-bottom:28px">If we're a good fit, you'll know in 15 minutes. If we're not, I'll tell you that too.</p>
-    <a href="/schedule" class="btn btn-blue btn-wobble">Get my free refi analysis</a>
+    <a href="/schedule" class="btn btn-blue btn-wobble">I've seen enough — let's talk</a>
   </div>
 </div>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","datePublished":"2026-01-15","dateModified":"2026-04-23","headline":"What Is a No-Cost Refinance and How Does It Work?","description":"A no-cost refinance rolls closing costs into the loan rate so you pay nothing upfront. Done correctly, you start saving immediately with no break-even period.","author":{"@type":"Person","name":"Daryn Fillis","url":"https://darynfillis.com/about"},"publisher":{"@type":"Organization","name":"NEO Home Loans","url":"https://neohomeloans.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://darynfillis.com/no-cost-refinance"}}
+</script>
+
+<!-- ═══ AUTHOR BIO — E-E-A-T signal ═══ -->
+</main>
+
 <!-- ══ FOOTER ══ -->
 <footer>
   <div class="footer-grid">
@@ -1570,23 +1610,43 @@ html{-webkit-text-size-adjust:100%;}
     <div class="footer-col">
       <h4>Legal</h4>
       <a href="https://better.com/about-us/privacy-policy" target="_blank">Privacy policy</a>
+      <a href="/accessibility">Accessibility</a>
       <a href="https://www.nmlsconsumeraccess.org/TuringTestPage.aspx?ReturnUrl=/EntityDetails.aspx/COMPANY/330511" target="_blank">NMLS consumer access</a>
     </div>
   </div>
+
+  <div class="footer-socials">
+    <span class="footer-socials-label">Find me on</span>
+    <div class="footer-socials-icons">
+      <a href="https://www.instagram.com/mymortgageadvisor" target="_blank" rel="noopener" class="footer-social-link" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </a>
+      <a href="https://www.facebook.com/darynfillis" target="_blank" rel="noopener" class="footer-social-link" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/darynfillis" target="_blank" rel="noopener" class="footer-social-link" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+      <a href="https://www.youtube.com/@mymortgageadvisors" target="_blank" rel="noopener" class="footer-social-link" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      </a>
+    </div>
+  </div>
+
   <div class="footer-bottom">
     <div class="footer-legal">
-      <strong style="color:rgba(255,255,255,0.28)">Daryn Fillis | NMLS# 1988371 | NEO Home Loans | Powered by Better Mortgage Corporation</strong><br><br>
+      <strong style="color:rgba(255,255,255,0.95)">Daryn Fillis | NMLS# 1988371 | NEO Home Loans | Powered by Better Mortgage Corporation</strong><br><br>
       &copy; 2026 Better Home &amp; Finance Holding Company and/or its affiliates. Better is a family of companies. Better Mortgage Corporation provides home loans; Better Real Estate, LLC and Better Real Estate California Inc License # 02164055 provides real estate services; Better Cover, LLC sells insurance products; and Better Settlement Services provides title insurance services; and Better Inspect, LLC provides home inspection services. All rights reserved.<br><br>
       Better BMC operates under the name Better Mortgage Corporation in New York.<br><br>
-      Home lending products offered by Better Mortgage Corporation. Better Mortgage Corporation is a direct lender. NMLS #330511. 1 World Trade Center, 80th Floor, New York, NY 10007. Loans made or arranged pursuant to a California Finance Lenders Law License. Not available in all states. Equal Housing Lender. <a href="https://www.nmlsconsumeraccess.org/TuringTestPage.aspx?ReturnUrl=/EntityDetails.aspx/COMPANY/330511" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);text-decoration:underline">NMLS Consumer Access</a><br><br>
-      Better Real Estate, LLC dba BRE, Better Home Services, BRE Services, LLC and Better Real Estate, and operating in the State of California through its wholly owned subsidiary Better Real Estate California Inc., is a licensed real estate brokerage and maintains its corporate headquarters at 325-41 Chestnut Street, Suite 826, Philadelphia, PA 19106. <a href="https://better.com/about-us/licenses" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);text-decoration:underline">Here is a full listing of Better Real Estate, LLC's license numbers.</a> Better Real Estate, LLC provides access to real estate brokerage services via its nationwide network of partner brokerages and real estate agents (&ldquo;Better Real Estate Partner Agents&rdquo;). Equal Housing Opportunity. All rights reserved.<br><br>
-      <a href="https://better.com/content/pdfs/NY-StandardOperatingProcedures.pdf" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);text-decoration:underline">New York State Housing and Anti-Discrimination Notice</a> &nbsp;|&nbsp;
-      <a href="https://better.com/content/pdfs/NY-StandardOperatingProcedures.pdf" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);text-decoration:underline">New York Standard Operating Procedures</a> &nbsp;|&nbsp;
-      <a href="https://www.trec.texas.gov/forms/information-about-brokerage-services" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);text-decoration:underline">Texas Real Estate Commission: Information About Brokerage Services</a> &nbsp;|&nbsp;
-      <a href="https://www.trec.texas.gov/forms/consumer-protection-notice" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);text-decoration:underline">Consumer Protection Notice</a><br><br>
+      Home lending products offered by Better Mortgage Corporation. Better Mortgage Corporation is a direct lender. NMLS #330511. 1 World Trade Center, 80th Floor, New York, NY 10007. Loans made or arranged pursuant to a California Finance Lenders Law License. Not available in all states. Equal Housing Lender. <a href="https://www.nmlsconsumeraccess.org/TuringTestPage.aspx?ReturnUrl=/EntityDetails.aspx/COMPANY/330511" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.95);text-decoration:underline">NMLS Consumer Access</a><br><br>
+      Better Real Estate, LLC dba BRE, Better Home Services, BRE Services, LLC and Better Real Estate, and operating in the State of California through its wholly owned subsidiary Better Real Estate California Inc., is a licensed real estate brokerage and maintains its corporate headquarters at 325-41 Chestnut Street, Suite 826, Philadelphia, PA 19106. <a href="https://better.com/about-us/licenses" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.95);text-decoration:underline">Here is a full listing of Better Real Estate, LLC's license numbers.</a> Better Real Estate, LLC provides access to real estate brokerage services via its nationwide network of partner brokerages and real estate agents (&ldquo;Better Real Estate Partner Agents&rdquo;). Equal Housing Opportunity. All rights reserved.<br><br>
+      <a href="https://better.com/content/pdfs/NY-StandardOperatingProcedures.pdf" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.95);text-decoration:underline">New York State Housing and Anti-Discrimination Notice</a> &nbsp;|&nbsp;
+      <a href="https://better.com/content/pdfs/NY-StandardOperatingProcedures.pdf" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.95);text-decoration:underline">New York Standard Operating Procedures</a> &nbsp;|&nbsp;
+      <a href="https://www.trec.texas.gov/forms/information-about-brokerage-services" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.95);text-decoration:underline">Texas Real Estate Commission: Information About Brokerage Services</a> &nbsp;|&nbsp;
+      <a href="https://www.trec.texas.gov/forms/consumer-protection-notice" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.95);text-decoration:underline">Consumer Protection Notice</a><br><br>
       Better Settlement Services, LLC. 325-41 Chestnut Street, Suite 803, Philadelphia, PA 19106.<br><br>
       Homeowners insurance policies are offered through Better Cover, LLC, a Pennsylvania Resident Producer Agency. License #881593. 325-41 Chestnut Street, Suite 807, Philadelphia, PA 19106.<br><br>
-      Insurance quotes and policies are offered through Better Cover, LLC. A Pennsylvania Resident Producer Agency. License #881593. <a href="https://better.com/about-us/licenses" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);text-decoration:underline">Here is a full listing of Better Cover, LLC's license numbers.</a><br><br>
+      Insurance quotes and policies are offered through Better Cover, LLC. A Pennsylvania Resident Producer Agency. License #881593. <a href="https://better.com/about-us/licenses" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.95);text-decoration:underline">Here is a full listing of Better Cover, LLC's license numbers.</a><br><br>
       Better Inspect, LLC maintains its corporate headquarters at 325-41 Chestnut Street, Suite 846, Philadelphia, PA 19106.<br><br>
       Better Mortgage Corporation, Better Real Estate, LLC, Better Settlement Services, LLC, Better Cover, LLC, Better Connect, and Better Inspect, LLC are separate operating subsidiaries of Better Home &amp; Finance Holding Company. Each company is a separate legal entity operated and managed through its own management and governance structure as required by its state of incorporation, and applicable and legal and regulatory requirements. Products not available in all states.<br><br>
       Any unauthorized use of any proprietary or intellectual property is strictly prohibited. All trademarks, service marks, trade names, logos, icons, and domain names are proprietary to Better Home &amp; Finance Holding Company. Better Home &amp; Finance Holding Company trademarks are federally registered with the U.S. Patent and Trademark Office. Better Cover is a registered trademark with the U.S. Patent and Trademark Office and is owned by Better Cover, LLC.<br><br>
@@ -1595,7 +1655,6 @@ html{-webkit-text-size-adjust:100%;}
     <div class="footer-copy">&copy; 2026 Daryn Fillis</div>
   </div>
 </footer>
-
 <script>
 /* ── NAV ── */
 const nav = document.getElementById('nav');
@@ -1838,6 +1897,5 @@ function submitFN() {
   document.getElementById('fnSubConfirm').style.display = 'block';
 }
 </script>
-
 </body>
 </html>

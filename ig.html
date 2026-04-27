@@ -366,11 +366,28 @@
       font-size: 3rem;
     }
   }
+
+.skip-to-main{position:absolute;left:-9999px;top:0;z-index:9999;background:var(--blue);color:var(--navy);padding:14px 20px;font-weight:800;font-size:0.92rem;text-decoration:none;border-radius:0 0 8px 0}
+.skip-to-main:focus{left:0;outline:3px solid var(--blue);outline-offset:2px}
+
+/* Social icons row in footer */
+.footer-socials { max-width: 1120px; margin: 0 auto 28px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.footer-socials-label { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.95); margin-right: 4px; }
+.footer-socials-icons { display: flex; gap: 8px; flex-wrap: wrap; }
+.footer-social-link { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.95); transition: all 0.2s; text-decoration: none; }
+.footer-social-link:hover { background: rgba(91,203,245,0.12); border-color: var(--blue); color: var(--blue); transform: translateY(-1px); }
+.footer-social-link:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.footer-social-link svg { width: 14px; height: 14px; fill: currentColor; }
+@media (max-width: 600px) {
+  .footer-socials { justify-content: center; gap: 10px; }
+  .footer-socials-label { margin-right: 0; }
+}
 </style>
 </head>
 <body>
 
-<div class="container">
+<a href="#main-content" class="skip-to-main">Skip to main content</a>
+<main id="main-content"><div class="container">
 
   <!-- HEADER -->
   <header class="header">
@@ -465,7 +482,7 @@
     <a href="https://darynfillis.com/" class="footer-site-link">darynfillis.com →</a>
   </footer>
 
-</div>
+</div></main>
 
 </body>
 </html>

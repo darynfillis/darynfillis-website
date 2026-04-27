@@ -521,8 +521,8 @@ footer { background: var(--ink); padding: 56px 48px 36px; }
 .footer-col h4 { font-weight: 800; font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 16px; }
 .footer-col a { display: block; font-weight: 200; font-size: 0.79rem; color: rgba(255,255,255,0.4); text-decoration: none; margin-bottom: 9px; transition: color 0.2s; }
 .footer-col a:hover { color: var(--white); }
-.footer-bottom { max-width: 1120px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 22px; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
-.footer-legal { font-size: 0.64rem; color: rgba(255,255,255,0.18); line-height: 1.75; max-width: 680px; font-weight: 200; }
+.footer-bottom { max-width: 1120px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 22px; display: flex; flex-direction: column; align-items: stretch; gap: 18px; }
+.footer-legal { font-size: 0.72rem; color: rgba(255,255,255,0.7); line-height: 1.75; width: 100%; font-weight: 200; }
 .footer-copy { font-size: 0.66rem; color: rgba(255,255,255,0.16); white-space: nowrap; }
 
 /* ══════════════════════════
@@ -1299,6 +1299,22 @@ html{-webkit-text-size-adjust:100%;}
   75%{transform:rotate(-0.5deg);}
 }
 
+
+.skip-to-main{position:absolute;left:-9999px;top:0;z-index:9999;background:var(--blue);color:var(--navy);padding:14px 20px;font-weight:800;font-size:0.92rem;text-decoration:none;border-radius:0 0 8px 0}
+.skip-to-main:focus{left:0;outline:3px solid var(--blue);outline-offset:2px}
+
+/* Social icons row in footer */
+.footer-socials { max-width: 1120px; margin: 0 auto 28px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.footer-socials-label { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.95); margin-right: 4px; }
+.footer-socials-icons { display: flex; gap: 8px; flex-wrap: wrap; }
+.footer-social-link { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.95); transition: all 0.2s; text-decoration: none; }
+.footer-social-link:hover { background: rgba(91,203,245,0.12); border-color: var(--blue); color: var(--blue); transform: translateY(-1px); }
+.footer-social-link:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.footer-social-link svg { width: 14px; height: 14px; fill: currentColor; }
+@media (max-width: 600px) {
+  .footer-socials { justify-content: center; gap: 10px; }
+  .footer-socials-label { margin-right: 0; }
+}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
@@ -1388,6 +1404,7 @@ html{-webkit-text-size-adjust:100%;}
 </script>
 
 <body>
+<a href="#main-content" class="skip-to-main">Skip to main content</a>
 <!-- ══ NAV ══ -->
 <nav id="nav">
   <!-- Full NEO color logo — all tiers: N-icon + NEO + Home Loans + powered by better -->
@@ -1450,6 +1467,8 @@ html{-webkit-text-size-adjust:100%;}
     <a href="/" class="breadcrumb-item">Home</a><span class="breadcrumb-sep">›</span><a href="/#strategies" class="breadcrumb-item">Strategies</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-item current" aria-current="page">No-Cost Refinance</span>
   </div>
 </nav>
+
+<main id="main-content">
 <nav class="breadcrumb-bar" aria-label="Breadcrumb">
   <div class="breadcrumb-inner">
     <a href="/" class="breadcrumb-item">Home</a>
@@ -1628,6 +1647,8 @@ html{-webkit-text-size-adjust:100%;}
   </div>
 </section>
 
+</main>
+
 <!-- ══ FOOTER ══ -->
 <footer>
   <div class="footer-grid">
@@ -1699,23 +1720,43 @@ html{-webkit-text-size-adjust:100%;}
     <div class="footer-col">
       <h4>Legal</h4>
       <a href="https://better.com/about-us/privacy-policy" target="_blank">Privacy policy</a>
+      <a href="/accessibility">Accessibility</a>
       <a href="https://www.nmlsconsumeraccess.org/TuringTestPage.aspx?ReturnUrl=/EntityDetails.aspx/COMPANY/330511" target="_blank">NMLS consumer access</a>
     </div>
   </div>
+
+  <div class="footer-socials">
+    <span class="footer-socials-label">Find me on</span>
+    <div class="footer-socials-icons">
+      <a href="https://www.instagram.com/mymortgageadvisor" target="_blank" rel="noopener" class="footer-social-link" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </a>
+      <a href="https://www.facebook.com/darynfillis" target="_blank" rel="noopener" class="footer-social-link" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/darynfillis" target="_blank" rel="noopener" class="footer-social-link" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+      <a href="https://www.youtube.com/@mymortgageadvisors" target="_blank" rel="noopener" class="footer-social-link" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      </a>
+    </div>
+  </div>
+
   <div class="footer-bottom">
     <div class="footer-legal">
-      <strong style="color:rgba(255,255,255,0.28)">Daryn Fillis | NMLS# 1988371 | NEO Home Loans | Powered by Better Mortgage Corporation</strong><br><br>
+      <strong style="color:rgba(255,255,255,0.95)">Daryn Fillis | NMLS# 1988371 | NEO Home Loans | Powered by Better Mortgage Corporation</strong><br><br>
       &copy; 2026 Better Home &amp; Finance Holding Company and/or its affiliates. Better is a family of companies. Better Mortgage Corporation provides home loans; Better Real Estate, LLC and Better Real Estate California Inc License # 02164055 provides real estate services; Better Cover, LLC sells insurance products; and Better Settlement Services provides title insurance services; and Better Inspect, LLC provides home inspection services. All rights reserved.<br><br>
       Better BMC operates under the name Better Mortgage Corporation in New York.<br><br>
-      Home lending products offered by Better Mortgage Corporation. Better Mortgage Corporation is a direct lender. NMLS #330511. 1 World Trade Center, 80th Floor, New York, NY 10007. Loans made or arranged pursuant to a California Finance Lenders Law License. Not available in all states. Equal Housing Lender. <a href="https://www.nmlsconsumeraccess.org/TuringTestPage.aspx?ReturnUrl=/EntityDetails.aspx/COMPANY/330511" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);text-decoration:underline">NMLS Consumer Access</a><br><br>
-      Better Real Estate, LLC dba BRE, Better Home Services, BRE Services, LLC and Better Real Estate, and operating in the State of California through its wholly owned subsidiary Better Real Estate California Inc., is a licensed real estate brokerage and maintains its corporate headquarters at 325-41 Chestnut Street, Suite 826, Philadelphia, PA 19106. <a href="https://better.com/about-us/licenses" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);text-decoration:underline">Here is a full listing of Better Real Estate, LLC's license numbers.</a> Better Real Estate, LLC provides access to real estate brokerage services via its nationwide network of partner brokerages and real estate agents (&ldquo;Better Real Estate Partner Agents&rdquo;). Equal Housing Opportunity. All rights reserved.<br><br>
-      <a href="https://better.com/content/pdfs/NY-StandardOperatingProcedures.pdf" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);text-decoration:underline">New York State Housing and Anti-Discrimination Notice</a> &nbsp;|&nbsp;
-      <a href="https://better.com/content/pdfs/NY-StandardOperatingProcedures.pdf" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);text-decoration:underline">New York Standard Operating Procedures</a> &nbsp;|&nbsp;
-      <a href="https://www.trec.texas.gov/forms/information-about-brokerage-services" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);text-decoration:underline">Texas Real Estate Commission: Information About Brokerage Services</a> &nbsp;|&nbsp;
-      <a href="https://www.trec.texas.gov/forms/consumer-protection-notice" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);text-decoration:underline">Consumer Protection Notice</a><br><br>
+      Home lending products offered by Better Mortgage Corporation. Better Mortgage Corporation is a direct lender. NMLS #330511. 1 World Trade Center, 80th Floor, New York, NY 10007. Loans made or arranged pursuant to a California Finance Lenders Law License. Not available in all states. Equal Housing Lender. <a href="https://www.nmlsconsumeraccess.org/TuringTestPage.aspx?ReturnUrl=/EntityDetails.aspx/COMPANY/330511" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.95);text-decoration:underline">NMLS Consumer Access</a><br><br>
+      Better Real Estate, LLC dba BRE, Better Home Services, BRE Services, LLC and Better Real Estate, and operating in the State of California through its wholly owned subsidiary Better Real Estate California Inc., is a licensed real estate brokerage and maintains its corporate headquarters at 325-41 Chestnut Street, Suite 826, Philadelphia, PA 19106. <a href="https://better.com/about-us/licenses" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.95);text-decoration:underline">Here is a full listing of Better Real Estate, LLC's license numbers.</a> Better Real Estate, LLC provides access to real estate brokerage services via its nationwide network of partner brokerages and real estate agents (&ldquo;Better Real Estate Partner Agents&rdquo;). Equal Housing Opportunity. All rights reserved.<br><br>
+      <a href="https://better.com/content/pdfs/NY-StandardOperatingProcedures.pdf" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.95);text-decoration:underline">New York State Housing and Anti-Discrimination Notice</a> &nbsp;|&nbsp;
+      <a href="https://better.com/content/pdfs/NY-StandardOperatingProcedures.pdf" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.95);text-decoration:underline">New York Standard Operating Procedures</a> &nbsp;|&nbsp;
+      <a href="https://www.trec.texas.gov/forms/information-about-brokerage-services" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.95);text-decoration:underline">Texas Real Estate Commission: Information About Brokerage Services</a> &nbsp;|&nbsp;
+      <a href="https://www.trec.texas.gov/forms/consumer-protection-notice" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.95);text-decoration:underline">Consumer Protection Notice</a><br><br>
       Better Settlement Services, LLC. 325-41 Chestnut Street, Suite 803, Philadelphia, PA 19106.<br><br>
       Homeowners insurance policies are offered through Better Cover, LLC, a Pennsylvania Resident Producer Agency. License #881593. 325-41 Chestnut Street, Suite 807, Philadelphia, PA 19106.<br><br>
-      Insurance quotes and policies are offered through Better Cover, LLC. A Pennsylvania Resident Producer Agency. License #881593. <a href="https://better.com/about-us/licenses" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);text-decoration:underline">Here is a full listing of Better Cover, LLC's license numbers.</a><br><br>
+      Insurance quotes and policies are offered through Better Cover, LLC. A Pennsylvania Resident Producer Agency. License #881593. <a href="https://better.com/about-us/licenses" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.95);text-decoration:underline">Here is a full listing of Better Cover, LLC's license numbers.</a><br><br>
       Better Inspect, LLC maintains its corporate headquarters at 325-41 Chestnut Street, Suite 846, Philadelphia, PA 19106.<br><br>
       Better Mortgage Corporation, Better Real Estate, LLC, Better Settlement Services, LLC, Better Cover, LLC, Better Connect, and Better Inspect, LLC are separate operating subsidiaries of Better Home &amp; Finance Holding Company. Each company is a separate legal entity operated and managed through its own management and governance structure as required by its state of incorporation, and applicable and legal and regulatory requirements. Products not available in all states.<br><br>
       Any unauthorized use of any proprietary or intellectual property is strictly prohibited. All trademarks, service marks, trade names, logos, icons, and domain names are proprietary to Better Home &amp; Finance Holding Company. Better Home &amp; Finance Holding Company trademarks are federally registered with the U.S. Patent and Trademark Office. Better Cover is a registered trademark with the U.S. Patent and Trademark Office and is owned by Better Cover, LLC.<br><br>
