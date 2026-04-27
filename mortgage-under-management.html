@@ -1563,6 +1563,95 @@ html{-webkit-text-size-adjust:100%;}
   </div>
 </section>
 
+
+<!-- ══ MONTHLY WEALTH DIGEST SIGNUP (NEPQ-framed) ══ -->
+<section style="background:var(--navy);padding:clamp(72px,10vw,120px) clamp(20px,4vw,48px);position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 30% 30%,rgba(91,203,245,0.07) 0%,transparent 60%);pointer-events:none"></div>
+
+  <div class="max-w" style="max-width:1080px;position:relative;z-index:1">
+    <div style="display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(36px,5vw,72px);align-items:start" class="wd-grid">
+
+      <!-- Left: NEPQ pitch -->
+      <div class="reveal">
+        <div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:24px;padding:6px 14px;border-radius:20px;background:rgba(91,203,245,0.12);border:1px solid rgba(91,203,245,0.3)">
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px var(--blue)"></span>
+          <span style="font-size:0.66rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue)">Monthly Wealth Digest · Free for clients</span>
+        </div>
+
+        <h2 style="font-weight:800;font-size:clamp(1.9rem,3.4vw,2.8rem);color:var(--white);letter-spacing:-0.025em;line-height:1.08;margin-bottom:18px;font-style:italic">Do you actually know what your home is worth right now?</h2>
+
+        <p style="font-weight:200;font-size:1rem;color:rgba(255,255,255,0.7);line-height:1.85;margin-bottom:18px">Most homeowners don't. They check Zillow once a year and forget. But your home is your largest asset, and it's changing in value every month. Equity changes. Refi opportunities open and close. Local markets shift. Most lenders never tell you any of this.</p>
+
+        <p style="font-weight:400;font-size:1.02rem;color:rgba(255,255,255,0.85);line-height:1.7;margin-bottom:24px">I send a monthly digest to clients that tells them what's actually happening with their home, value, equity, refi math, and the local market. Sent the second Tuesday of every month.</p>
+
+        <!-- What's in it -->
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(91,203,245,0.18);border-radius:10px;padding:20px 24px;margin-bottom:18px">
+          <div style="font-size:0.66rem;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue);margin-bottom:14px">What's in your monthly digest</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:var(--blue);font-weight:800;flex-shrink:0">→</span><span style="font-size:0.92rem;color:rgba(255,255,255,0.8);line-height:1.6"><strong style="color:var(--white);font-weight:800">Your home's estimated market value</strong> — refreshed against current data</span></div>
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:var(--blue);font-weight:800;flex-shrink:0">→</span><span style="font-size:0.92rem;color:rgba(255,255,255,0.8);line-height:1.6"><strong style="color:var(--white);font-weight:800">Your equity position</strong> — and how it's grown since last month</span></div>
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:var(--blue);font-weight:800;flex-shrink:0">→</span><span style="font-size:0.92rem;color:rgba(255,255,255,0.8);line-height:1.6"><strong style="color:var(--white);font-weight:800">Local market insights</strong> — what comparable homes near you are doing</span></div>
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:var(--blue);font-weight:800;flex-shrink:0">→</span><span style="font-size:0.92rem;color:rgba(255,255,255,0.8);line-height:1.6"><strong style="color:var(--white);font-weight:800">Refinance signal</strong> — when the math shifts in your favor</span></div>
+          </div>
+        </div>
+
+        <p style="font-weight:200;font-size:0.86rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0">Want yours? Tell me where to send it.</p>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="reveal d1" style="background:rgba(255,255,255,0.05);border:1px solid rgba(91,203,245,0.3);border-radius:14px;padding:clamp(28px,3.5vw,40px);box-shadow:0 8px 40px rgba(0,0,0,0.25)">
+        <div style="text-align:center;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,0.08)">
+          <div style="font-weight:800;font-size:0.66rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue);margin-bottom:8px">Get your wealth digest</div>
+          <div style="font-weight:800;font-size:1.15rem;color:var(--white);letter-spacing:-0.015em">Free monthly, sent the second Tuesday</div>
+        </div>
+
+        <form name="wealth-digest" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks-wealth-digest">
+          <input type="hidden" name="form-name" value="wealth-digest">
+          <p style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
+
+          <div style="margin-bottom:14px">
+            <label for="wd-firstname" style="display:block;font-size:0.7rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px">First name</label>
+            <input type="text" id="wd-firstname" name="firstname" required placeholder="Your first name" style="width:100%;padding:13px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(91,203,245,0.2);border-radius:8px;color:var(--white);font-family:var(--font);font-size:0.95rem;outline:none;transition:border 0.2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(91,203,245,0.2)'">
+          </div>
+
+          <div style="margin-bottom:14px">
+            <label for="wd-lastname" style="display:block;font-size:0.7rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px">Last name</label>
+            <input type="text" id="wd-lastname" name="lastname" required placeholder="Your last name" style="width:100%;padding:13px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(91,203,245,0.2);border-radius:8px;color:var(--white);font-family:var(--font);font-size:0.95rem;outline:none;transition:border 0.2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(91,203,245,0.2)'">
+          </div>
+
+          <div style="margin-bottom:14px">
+            <label for="wd-email" style="display:block;font-size:0.7rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px">Email</label>
+            <input type="email" id="wd-email" name="email" required placeholder="you@email.com" style="width:100%;padding:13px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(91,203,245,0.2);border-radius:8px;color:var(--white);font-family:var(--font);font-size:0.95rem;outline:none;transition:border 0.2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(91,203,245,0.2)'">
+          </div>
+
+          <div style="margin-bottom:14px">
+            <label for="wd-phone" style="display:block;font-size:0.7rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px">Phone</label>
+            <input type="tel" id="wd-phone" name="phone" required placeholder="(424) 555-0123" style="width:100%;padding:13px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(91,203,245,0.2);border-radius:8px;color:var(--white);font-family:var(--font);font-size:0.95rem;outline:none;transition:border 0.2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(91,203,245,0.2)'">
+          </div>
+
+          <div style="margin-bottom:18px">
+            <label for="wd-address" style="display:block;font-size:0.7rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px">Property address</label>
+            <input type="text" id="wd-address" name="address" required placeholder="Street, City, State, ZIP" style="width:100%;padding:13px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(91,203,245,0.2);border-radius:8px;color:var(--white);font-family:var(--font);font-size:0.95rem;outline:none;transition:border 0.2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(91,203,245,0.2)'">
+            <p style="font-size:0.72rem;font-weight:200;color:rgba(255,255,255,0.4);margin:6px 0 0;line-height:1.5">I use this to track your home's market data. Your address stays private and is only used to generate your digest.</p>
+          </div>
+
+          <button type="submit" style="width:100%;padding:15px 24px;background:var(--blue);color:var(--navy);border:none;border-radius:8px;font-family:var(--font);font-weight:800;font-size:0.95rem;cursor:pointer;transition:all 0.18s;letter-spacing:-0.01em" onmouseover="this.style.background='#7dd6f7';this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 20px rgba(91,203,245,0.3)'" onmouseout="this.style.background='var(--blue)';this.style.transform='translateY(0)';this.style.boxShadow='none'">Send me my Wealth Digest →</button>
+
+          <p style="font-weight:200;font-size:0.7rem;color:rgba(255,255,255,0.4);text-align:center;margin:14px 0 0;line-height:1.55">Free monthly. Unsubscribe anytime.<br>Your information stays with me.</p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (max-width: 760px) {
+    .wd-grid { grid-template-columns: 1fr !important; }
+  }
+</style>
+
+
 <!-- ══ FOOTER ══ -->
 <footer>
   <div class="footer-grid">
@@ -1618,7 +1707,9 @@ html{-webkit-text-size-adjust:100%;}
       <h4>Work with me</h4>
       <a href="/schedule">Book a call</a>
       <a href="https://neohomeloans.com/start/r/130676">Apply now</a>
+      <a href="/first-time-buyers">First-Time Homebuyers</a>
       <a href="/self-employed">Self-Employed Mortgage</a>
+      <a href="/military-veterans">Military &amp; Veterans</a>
       <a href="/refi-rate-watch">Refi Rate Watch</a>
       <a href="/partnership-plus">Partnership Plus</a>
       <a href="/warm-handoff">Warm Handoff (for agents)</a>
