@@ -1515,147 +1515,345 @@ html{-webkit-text-size-adjust:100%;}
   padding: 8px 16px; border-radius: 24px; background: rgba(91,203,245,0.05);
 }
 
-/* DESKTOP MAP */
-.map-desktop { position: relative; width: 100%; line-height: 0; background: var(--navy); }
-.map-desktop img { width: 100%; height: auto; display: block; }
-.map-desktop .overlay { position: absolute; inset: 0; pointer-events: none; }
-.stage-btn {
-  position: absolute; transform: translate(-50%, -50%);
-  width: 56px; height: 56px; background: transparent; border: none;
-  cursor: pointer; pointer-events: all; border-radius: 50%; padding: 0; z-index: 10;
-  -webkit-tap-highlight-color: transparent; outline: none;
-  transition: transform 0.18s;
+/* ── DESKTOP MAP — invisible hit zones ── */
+.map-desktop {
+  position: relative;
+  width: 100%;
+  line-height: 0;
+  background: var(--navy);
 }
-.stage-btn:hover { transform: translate(-50%, -50%) scale(1.15); }
-.stage-btn:focus-visible { box-shadow: 0 0 0 3px rgba(91,203,245,0.55); }
-.stage-btn-num {
-  display: flex; align-items: center; justify-content: center;
-  width: 32px; height: 32px; margin: 12px auto;
-  background: var(--blue); color: var(--navy);
-  font-weight: 800; font-size: 0.85rem;
-  border-radius: 50%; box-shadow: 0 0 0 4px rgba(10,37,64,0.85), 0 4px 12px rgba(0,0,0,0.4);
-  transition: all 0.18s;
+.map-desktop img {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
 }
-.stage-btn:hover .stage-btn-num { background: var(--white); }
-
-/* MOBILE MAP — pan/zoom */
-.map-mobile {
-  display: none; position: relative; width: 100%; height: 70vh;
-  min-height: 380px; overflow: hidden; touch-action: none; background: var(--navy); cursor: grab;
+.map-desktop .overlay {
+  position: absolute; inset: 0;
+  pointer-events: none;
 }
-.map-mobile.grabbing { cursor: grabbing; }
-.map-mobile-inner { position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform; }
-.map-mobile-inner img { display: block; width: 1440px; pointer-events: none; user-select: none; -webkit-user-select: none; }
-.mobile-btn {
-  position: absolute; transform: translate(-50%, -50%);
-  width: 56px; height: 56px; background: transparent; border: none;
-  border-radius: 50%; cursor: pointer; pointer-events: all; z-index: 10;
+.stage-hit {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 90px; height: 90px;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  pointer-events: all;
+  padding: 0;
+  z-index: 10;
   -webkit-tap-highlight-color: transparent;
+  outline: none;
+  transition: background 0.18s, box-shadow 0.18s;
 }
-.mobile-btn-num {
-  display: flex; align-items: center; justify-content: center;
-  width: 36px; height: 36px; margin: 10px auto;
-  background: var(--blue); color: var(--navy);
-  font-weight: 800; font-size: 0.95rem;
-  border-radius: 50%; box-shadow: 0 0 0 5px rgba(10,37,64,0.9), 0 4px 12px rgba(0,0,0,0.5);
+.stage-hit:hover {
+  background: rgba(91,203,245,0.12);
+  box-shadow: 0 0 0 2px rgba(91,203,245,0.4), 0 0 30px rgba(91,203,245,0.25);
 }
-.map-hint-pill {
-  position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
-  background: rgba(10,37,64,0.92); border: 1px solid rgba(91,203,245,0.32);
-  color: rgba(255,255,255,0.85); font-size: 0.66rem; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 8px 16px; border-radius: 20px; white-space: nowrap;
-  pointer-events: none; z-index: 20; transition: opacity 0.7s ease;
+.stage-hit:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+  background: rgba(91,203,245,0.1);
 }
 
-/* MODAL */
+/* Tooltip on hover (desktop) */
+.stage-hit::after {
+  content: attr(data-name);
+  position: absolute;
+  top: -42px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10,37,64,0.95);
+  color: var(--white);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  border: 1px solid rgba(91,203,245,0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s;
+}
+.stage-hit:hover::after { opacity: 1; }
+
+/* ── MOBILE LAYOUT — small map + cards ── */
+.map-mobile-static {
+  display: none;
+  width: 100%;
+  background: var(--navy);
+  padding: 0;
+  position: relative;
+}
+.map-mobile-static img {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.map-mobile-static-caption {
+  text-align: center;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(91,203,245,0.7);
+  padding: 14px 20px 4px;
+}
+.map-mobile-static-caption-sub {
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 200;
+  color: rgba(255,255,255,0.55);
+  padding: 0 24px 18px;
+  line-height: 1.55;
+}
+
+/* Mobile cards */
+.stages-cards {
+  display: none;
+  background: var(--navy);
+  padding: 12px 20px 60px;
+}
+.stage-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(91,203,245,0.15);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  overflow: hidden;
+}
+.stage-card:hover, .stage-card:active {
+  background: rgba(91,203,245,0.08);
+  border-color: rgba(91,203,245,0.35);
+}
+.stage-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.stage-card-num {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: var(--navy);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+.stage-card-info { flex: 1; min-width: 0; }
+.stage-card-name {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--white);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin-bottom: 4px;
+}
+.stage-card-summary {
+  font-weight: 200;
+  font-size: 0.86rem;
+  color: rgba(255,255,255,0.62);
+  line-height: 1.55;
+}
+.stage-card-chevron {
+  width: 20px; height: 20px;
+  flex-shrink: 0;
+  transition: transform 0.25s;
+  margin-top: 6px;
+  color: rgba(91,203,245,0.6);
+}
+.stage-card.open .stage-card-chevron { transform: rotate(180deg); }
+
+/* Expanded section inside card */
+.stage-card-expanded {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, margin-top 0.25s ease, opacity 0.25s ease;
+  opacity: 0;
+  margin-top: 0;
+}
+.stage-card.open .stage-card-expanded {
+  max-height: 800px;
+  margin-top: 16px;
+  opacity: 1;
+}
+.expanded-section {
+  padding-top: 16px;
+  border-top: 1px solid rgba(91,203,245,0.12);
+  margin-top: 4px;
+}
+.expanded-section h4 {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 8px;
+}
+.expanded-section:not(:first-child) {
+  margin-top: 16px;
+}
+.expanded-section p {
+  font-size: 0.88rem;
+  font-weight: 200;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.7;
+}
+.expanded-time-badge {
+  display: inline-block;
+  background: rgba(91,203,245,0.1);
+  border: 1px solid rgba(91,203,245,0.32);
+  color: var(--blue);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 6px;
+  line-height: 1.4;
+}
+.expanded-cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  color: var(--blue);
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(91,203,245,0.35);
+  padding-bottom: 2px;
+}
+
+/* ── DESKTOP MODAL ── */
 .j-modal-overlay {
-  position: fixed; inset: 0; background: rgba(6,22,40,0.85);
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  z-index: 500; display: flex; align-items: center; justify-content: center;
-  padding: 24px; opacity: 0; pointer-events: none; transition: opacity 0.22s ease;
+  position: fixed; inset: 0;
+  background: rgba(6,22,40,0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 500;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
 }
 .j-modal-overlay.open { opacity: 1; pointer-events: all; }
 .j-modal-card {
-  background: var(--navy); border: 1px solid rgba(91,203,245,0.22);
-  border-radius: 14px; width: 100%; max-width: 660px; max-height: 88vh;
-  overflow-y: auto; padding: 36px; position: relative;
-  transform: translateY(16px) scale(0.975); transition: transform 0.22s ease;
+  background: var(--navy);
+  border: 1px solid rgba(91,203,245,0.22);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 660px;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 36px;
+  position: relative;
+  transform: translateY(16px) scale(0.975);
+  transition: transform 0.22s ease;
 }
 .j-modal-overlay.open .j-modal-card { transform: translateY(0) scale(1); }
 .j-modal-close {
-  position: absolute; top: 18px; right: 18px;
-  background: rgba(255,255,255,0.07); border: none; color: rgba(255,255,255,0.6);
-  width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
-  font-size: 0.85rem; display: flex; align-items: center; justify-content: center;
-  font-family: inherit; transition: all 0.15s;
+  position: absolute;
+  top: 18px; right: 18px;
+  background: rgba(255,255,255,0.07);
+  border: none;
+  color: rgba(255,255,255,0.6);
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex; align-items: center; justify-content: center;
+  font-family: inherit;
+  transition: all 0.15s;
 }
 .j-modal-close:hover { background: rgba(91,203,245,0.18); color: var(--white); }
 .j-modal-nav-row {
-  display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24px;
 }
 .j-modal-nav-btn {
-  background: rgba(91,203,245,0.09); border: 1px solid rgba(91,203,245,0.22);
-  color: var(--blue); font-size: 0.66rem; font-weight: 800;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  padding: 6px 14px; border-radius: 6px; cursor: pointer;
-  font-family: inherit; transition: background 0.15s;
+  background: rgba(91,203,245,0.09);
+  border: 1px solid rgba(91,203,245,0.22);
+  color: var(--blue);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
 }
 .j-modal-nav-btn:hover:not(:disabled) { background: rgba(91,203,245,0.18); }
 .j-modal-nav-btn:disabled { opacity: 0.22; cursor: default; }
-.j-modal-tag { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(91,203,245,0.7); }
-.j-modal-icon { font-size: 2rem; margin-bottom: 8px; line-height: 1; }
+.j-modal-tag {
+  font-size: 0.65rem; font-weight: 800;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(91,203,245,0.7);
+}
 .j-modal-name {
-  font-size: 1.7rem; font-weight: 800; color: var(--white);
-  line-height: 1.1; margin-bottom: 24px; padding-bottom: 20px;
+  font-size: 1.7rem; font-weight: 800;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 24px; padding-bottom: 20px;
   border-bottom: 1px solid rgba(91,203,245,0.16);
 }
-.j-modal-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 26px; }
+.j-modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 26px;
+}
 .j-modal-section h3 {
-  font-size: 0.62rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase;
+  font-size: 0.62rem; font-weight: 800;
+  letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--blue); margin-bottom: 8px;
 }
 .j-modal-section p {
-  font-size: 0.9rem; font-weight: 200; line-height: 1.65;
+  font-size: 0.9rem; font-weight: 200;
+  line-height: 1.65;
   color: rgba(255,255,255,0.85);
 }
 .j-time-badge {
-  display: inline-block; background: rgba(91,203,245,0.1); border: 1px solid rgba(91,203,245,0.32);
-  color: var(--blue); font-size: 0.78rem; font-weight: 700;
-  padding: 6px 12px; border-radius: 6px; line-height: 1.4;
+  display: inline-block;
+  background: rgba(91,203,245,0.1);
+  border: 1px solid rgba(91,203,245,0.32);
+  color: var(--blue);
+  font-size: 0.78rem; font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 6px;
 }
 .j-modal-cta {
-  display: inline-flex; align-items: center; gap: 6px; margin-top: 24px;
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 24px;
   color: var(--blue); font-size: 0.82rem; font-weight: 700;
-  text-decoration: none; border-bottom: 1px solid rgba(91,203,245,0.35);
-  padding-bottom: 2px; transition: opacity 0.15s;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(91,203,245,0.35);
+  padding-bottom: 2px;
 }
-.j-modal-cta:hover { opacity: 0.7; }
 
-/* RESPONSIVE */
+/* RESPONSIVE: switch to mobile layout at <=768 */
 @media (max-width: 768px) {
-  .map-desktop { display: none; }
-  .map-mobile  { display: block; }
-  .j-modal-overlay { align-items: flex-end; padding: 0; }
-  .j-modal-card {
-    max-width: 100%; max-height: 80vh; border-radius: 18px 18px 0 0;
-    padding: 28px 20px 32px;
-    transform: translateY(100%); transition: transform 0.3s cubic-bezier(.22,.61,.36,1);
-  }
-  .j-modal-card::before {
-    content: ''; display: block; width: 40px; height: 4px;
-    background: rgba(255,255,255,0.18); border-radius: 2px;
-    margin: 0 auto 20px;
-  }
-  .j-modal-overlay.open .j-modal-card { transform: translateY(0); }
-  .j-modal-grid { grid-template-columns: 1fr; gap: 20px; }
-  .j-modal-name { font-size: 1.4rem; }
+  .map-desktop { display: none !important; }
+  .map-mobile-static { display: block; }
+  .stages-cards { display: block; }
+  .j-modal-overlay { display: none !important; }
 }
 
-/* JOURNEY CTA SECTION */
+/* JOURNEY CTA */
 .journey-cta {
-  background: var(--navy); padding: clamp(56px,8vw,88px) clamp(20px,4vw,48px);
-  text-align: center; border-top: 1px solid rgba(91,203,245,0.12);
+  background: var(--navy);
+  padding: clamp(56px,8vw,88px) clamp(20px,4vw,48px);
+  text-align: center;
+  border-top: 1px solid rgba(91,203,245,0.12);
 }
 .journey-cta-inner { max-width: 580px; margin: 0 auto; }
 .journey-cta h2 {
@@ -1664,7 +1862,8 @@ html{-webkit-text-size-adjust:100%;}
   line-height: 1.15; margin-bottom: 14px;
 }
 .journey-cta p {
-  font-weight: 200; font-size: 1rem; color: rgba(255,255,255,0.7);
+  font-weight: 200; font-size: 1rem;
+  color: rgba(255,255,255,0.7);
   line-height: 1.85; margin-bottom: 24px;
 }
 </style>
@@ -1750,33 +1949,34 @@ html{-webkit-text-size-adjust:100%;}
       <span class="journey-eyebrow-text">The Homebuyers' Journey</span>
     </div>
     <h1>Buying a home is a <em>journey.</em></h1>
-    <p>Nineteen stages from first registration to keys in hand. Tap any marker on the trail to see what happens, how long it takes, and what to expect.</p>
+    <p>Nineteen stages from first registration to keys in hand. Tap any spot on the trail to see what happens, how long it takes, and what to expect.</p>
     <span class="explore-hint">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
         <circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/>
         <path d="M6 4v3.5M6 3v.2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
       </svg>
-      Tap any marker on the map
+      Hover or tap any labeled box on the trail
     </span>
   </div>
 </section>
 
-<!-- DESKTOP MAP -->
+<!-- DESKTOP: full map with invisible hit zones -->
 <div class="map-desktop" id="desktopMap">
   <img src="/journey-map.jpg" srcset="/journey-map.jpg 1x, /journey-map@2x.jpg 2x" alt="The homebuyers journey illustrated as a mountain hiking trail with 19 stages" draggable="false">
   <div class="overlay" id="desktopOverlay"></div>
 </div>
 
-<!-- MOBILE MAP (pan/zoom) -->
-<div class="map-mobile" id="mobileMap">
-  <div class="map-mobile-inner" id="mobileInner">
-    <img src="/journey-map.jpg" srcset="/journey-map.jpg 1x, /journey-map@2x.jpg 2x" alt="The homebuyers journey map" draggable="false">
-    <div id="mobileDotsWrap"></div>
-  </div>
-  <div class="map-hint-pill" id="mapHint">Pinch and drag to explore  ·  Tap markers</div>
+<!-- MOBILE: small static map (display only) -->
+<div class="map-mobile-static">
+  <img src="/journey-map.jpg" srcset="/journey-map.jpg 1x, /journey-map@2x.jpg 2x" alt="The homebuyers journey map" draggable="false">
+  <p class="map-mobile-static-caption">Your Trail</p>
+  <p class="map-mobile-static-caption-sub">Scroll the cards below to walk through every stage.</p>
 </div>
 
-<!-- MODAL -->
+<!-- MOBILE: stage cards (one per stage, expandable) -->
+<section class="stages-cards" id="stagesCards"></section>
+
+<!-- DESKTOP MODAL -->
 <div class="j-modal-overlay" id="jModalOverlay" role="dialog" aria-modal="true" aria-labelledby="jModalNameEl">
   <div class="j-modal-card" id="jModalCard">
     <button class="j-modal-close" id="jModalClose" aria-label="Close">✕</button>
@@ -1785,7 +1985,6 @@ html{-webkit-text-size-adjust:100%;}
       <span class="j-modal-tag" id="jModalTag"></span>
       <button class="j-modal-nav-btn" id="jNextBtn">Next →</button>
     </div>
-    <div class="j-modal-icon" id="jModalIcon" aria-hidden="true"></div>
     <h2 class="j-modal-name" id="jModalNameEl"></h2>
     <div class="j-modal-grid">
       <div class="j-modal-section">
@@ -2179,124 +2378,180 @@ function submitFN() {
 
 
 <script>
-// ── JOURNEY STAGE DATA — 19 stages in your specified order ──
-// x/y = percentage of SVG canvas (1440 x 810), calibrated to map pin locations
+// ── STAGE DATA ──
+// Coordinates calibrated by Daryn from /journey-calibrate
+// Each stage: number, name, coordinates (% of 1440x810 image), summary (1-line for cards), full details
 const stages = [
-  { num: 1,  name: "Registration",            icon: "🏔️", x: 33.0, y: 79.0,
-    what:  "We lock your interest rate, register your loan with the lender, and open your file with escrow and title.",
-    time:  "Same day as your accepted offer",
-    expect: "A welcome from the full team, an introduction to escrow, and a clear closing timeline." },
-  { num: 2,  name: "Submission",              icon: "📋", x: 18.0, y: 87.0,
-    what:  "We package your complete loan file and submit it to underwriting for review.",
-    time:  "1 to 2 business days",
-    expect: "A confirmation of submission and an initial list of any conditions we will need to clear." },
-  { num: 3,  name: "Pre-Approved",            icon: "🏠", x: 8.0,  y: 83.0,
-    what:  "We review your income, assets, and credit to issue a formal pre-approval letter that sellers and agents take seriously.",
-    time:  "24 to 48 hours",
-    expect: "A clear number — exactly how much home you can comfortably buy and what your monthly payment will look like." },
-  { num: 4,  name: "Searching",               icon: "🔍", x: 7.0,  y: 71.0,
-    what:  "We stay on standby — answering financing questions, running payment scenarios, and responding fast when you find a home you want to offer on.",
-    time:  "Days to weeks",
-    expect: "Rapid turnaround on anything offer-related. We move at your speed." },
-  { num: 5,  name: "Contract",                icon: "📅", x: 5.0,  y: 68.0,
-    what:  "Your realtor finalizes your purchase agreement. We review every term to confirm it aligns with your loan structure.",
-    time:  "1 business day",
-    expect: "Confirmation that all contract terms are lender-approved and we are cleared to move forward." },
-  { num: 6,  name: "Open Escrow",             icon: "🏛️", x: 8.5,  y: 57.5,
-    what:  "Your escrow company opens the file, holds funds, and coordinates the transaction between all parties.",
-    time:  "1 to 2 business days",
-    expect: "Your escrow number and wire instructions for your earnest money deposit." },
-  { num: 7,  name: "Initial Loan Disclosure", icon: "📄", x: 15.5, y: 57.0,
-    what:  "We send your federal disclosure package, including your Loan Estimate, for electronic signature.",
-    time:  "Within 3 business days of application",
-    expect: "A clear breakdown of your rate, monthly payment, and estimated closing costs. No guessing." },
-  { num: 8,  name: "Inspections",             icon: "🔧", x: 21.5, y: 53.5,
-    what:  "Your realtor coordinates inspections within your contingency window. We connect you with trusted inspectors if needed.",
-    time:  "7 to 10 days after contract",
-    expect: "Results that may open a negotiation window on repairs or seller credits." },
-  { num: 9,  name: "Appraisal",               icon: "📊", x: 28.5, y: 47.5,
-    what:  "We order and track your home appraisal with a licensed independent appraiser.",
-    time:  "7 to 14 days",
-    expect: "An independent value confirmation of the property. We walk through the report with you when it arrives." },
-  { num: 10, name: "Loan Approved",           icon: "✅", x: 30.5, y: 43.0,
-    what:  "We receive the underwriter's decision and communicate any remaining conditions to clear.",
-    time:  "3 to 7 business days after file submission",
-    expect: "A conditional approval — a short, manageable list of final items to resolve." },
-  { num: 11, name: "Closing Disclosure",      icon: "📑", x: 35.5, y: 36.5,
-    what:  "We send your final loan terms and exact closing costs for your review and signature.",
-    time:  "At least 3 business days before closing — required by law",
-    expect: "Final, locked numbers. No surprises at the signing table." },
-  { num: 12, name: "Clear to Close",          icon: "🚦", x: 43.5, y: 31.5,
-    what:  "We confirm all conditions are satisfied and authorize loan documents to be drawn and sent to escrow.",
-    time:  "1 to 3 days before your closing date",
-    expect: "Your signing appointment gets scheduled. The finish line is in sight." },
-  { num: 13, name: "Closed",                  icon: "✍️", x: 49.5, y: 24.5,
-    what:  "You sign your loan documents at the title company or with a mobile notary.",
-    time:  "1 to 2 hours at the signing table",
-    expect: "A lot of signatures. We prep you in advance so nothing at the table catches you off guard." },
-  { num: 14, name: "Funded",                  icon: "💵", x: 53.5, y: 19.0,
-    what:  "We wire the loan funds to escrow so the transaction can record with the county.",
-    time:  "Same day or next business day after signing",
-    expect: "Confirmation that funds are in escrow and we are in the final queue to record." },
-  { num: 15, name: "Walk Through",            icon: "🚶", x: 57.5, y: 11.5,
-    what:  "Your realtor coordinates your final walkthrough of the property before closing.",
-    time:  "Day of or day before your closing appointment",
-    expect: "A last look to confirm the home is in the agreed condition. Your final checkpoint before keys." },
-  { num: 16, name: "Close Escrow",            icon: "🏁", x: 62.0, y: 5.5,
-    what:  "Escrow confirms recordation with the county and coordinates with your agent for key delivery.",
-    time:  "Same day as funding in most California counties",
-    expect: "Your agent calls you. You get the keys. This is the moment." },
-  { num: 17, name: "Keys",                    icon: "🔑", x: 66.5, y: 10.0,
-    what:  "Escrow formally closes, title transfers to your name, and the transaction is officially complete.",
-    time:  "Same day as recording",
-    expect: "Your final settlement statement and official confirmation that you are the owner." },
-  { num: 18, name: "Move In",                 icon: "📦", x: 73.5, y: 15.5,
-    what:  "You move into your new home. We celebrate with you and introduce what comes next in our relationship.",
-    time:  "Whenever you are ready",
-    expect: "A call from us within 30 days to check in and make sure everything is exactly as expected." },
-  { num: 19, name: "The Journey Continues",   icon: "🧭", x: 79.5, y: 21.0,
-    what:  "We monitor your rate, equity position, and market conditions through Mortgage Under Management — our ongoing advisory service.",
-    time:  "Ongoing, for as long as you own the home",
-    expect: "Proactive outreach when there is an opportunity. Refinance, equity access, or an annual review.",
-    link:  "/mortgage-under-management" }
+  { num:1,  name:"Registration",            x:32.40, y:72.96,
+    summary: "We lock your rate and open your file with escrow and title.",
+    what:    "We lock your interest rate, register your loan with the lender, and open your file with escrow and title.",
+    time:    "Same day as your accepted offer",
+    expect:  "A welcome from the full team, an introduction to escrow, and a clear closing timeline." },
+  { num:2,  name:"Submission",              x:19.62, y:83.33,
+    summary: "Your complete loan file goes to underwriting.",
+    what:    "We package your complete loan file and submit it to underwriting for review.",
+    time:    "1 to 2 business days",
+    expect:  "A confirmation of submission and an initial list of any conditions we will need to clear." },
+  { num:3,  name:"Pre-Approved",            x:7.74,  y:78.15,
+    summary: "Your formal pre-approval letter — ready for offers.",
+    what:    "We review your income, assets, and credit to issue a formal pre-approval letter that sellers and agents take seriously.",
+    time:    "24 to 48 hours",
+    expect:  "A clear number — exactly how much home you can comfortably buy and what your monthly payment will look like." },
+  { num:4,  name:"Searching",               x:8.16,  y:70.37,
+    summary: "We're on standby with fast scenarios while you tour homes.",
+    what:    "We stay on standby — answering financing questions, running payment scenarios, and responding fast when you find a home you want to offer on.",
+    time:    "Days to weeks",
+    expect:  "Rapid turnaround on anything offer-related. We move at your speed." },
+  { num:5,  name:"Contract",                x:4.97,  y:55.80,
+    summary: "Purchase agreement reviewed against your loan structure.",
+    what:    "Your realtor finalizes your purchase agreement. We review every term to confirm it aligns with your loan structure.",
+    time:    "1 business day",
+    expect:  "Confirmation that all contract terms are lender-approved and we are cleared to move forward." },
+  { num:6,  name:"Open Escrow",             x:8.23,  y:46.79,
+    summary: "Escrow opens the file and holds funds for the transaction.",
+    what:    "Your escrow company opens the file, holds funds, and coordinates the transaction between all parties.",
+    time:    "1 to 2 business days",
+    expect:  "Your escrow number and wire instructions for your earnest money deposit." },
+  { num:7,  name:"Initial Loan Disclosure", x:15.17, y:46.67,
+    summary: "Your federal disclosure package goes out for signature.",
+    what:    "We send your federal disclosure package, including your Loan Estimate, for electronic signature.",
+    time:    "Within 3 business days of application",
+    expect:  "A clear breakdown of your rate, monthly payment, and estimated closing costs. No guessing." },
+  { num:8,  name:"Inspections",             x:21.35, y:45.43,
+    summary: "Your realtor coordinates inspections within the contingency window.",
+    what:    "Your realtor coordinates inspections within your contingency window. We connect you with trusted inspectors if needed.",
+    time:    "7 to 10 days after contract",
+    expect:  "Results that may open a negotiation window on repairs or seller credits." },
+  { num:9,  name:"Appraisal",               x:26.63, y:37.65,
+    summary: "Independent home value confirmation.",
+    what:    "We order and track your home appraisal with a licensed independent appraiser.",
+    time:    "7 to 14 days",
+    expect:  "An independent value confirmation of the property. We walk through the report with you when it arrives." },
+  { num:10, name:"Loan Approved",           x:30.66, y:31.60,
+    summary: "Underwriter says yes — with a manageable list of conditions.",
+    what:    "We receive the underwriter's decision and communicate any remaining conditions to clear.",
+    time:    "3 to 7 business days after file submission",
+    expect:  "A conditional approval — a short, manageable list of final items to resolve." },
+  { num:11, name:"Closing Disclosure",      x:35.73, y:28.15,
+    summary: "Final loan terms locked. No surprises at the table.",
+    what:    "We send your final loan terms and exact closing costs for your review and signature.",
+    time:    "At least 3 business days before closing — required by law",
+    expect:  "Final, locked numbers. No surprises at the signing table." },
+  { num:12, name:"Clear to Close",          x:42.53, y:26.42,
+    summary: "All conditions satisfied. Loan docs go to escrow.",
+    what:    "We confirm all conditions are satisfied and authorize loan documents to be drawn and sent to escrow.",
+    time:    "1 to 3 days before your closing date",
+    expect:  "Your signing appointment gets scheduled. The finish line is in sight." },
+  { num:13, name:"Closed",                  x:48.44, y:20.74,
+    summary: "You sign your loan documents.",
+    what:    "You sign your loan documents at the title company or with a mobile notary.",
+    time:    "1 to 2 hours at the signing table",
+    expect:  "A lot of signatures. We prep you in advance so nothing at the table catches you off guard." },
+  { num:14, name:"Funded",                  x:52.26, y:16.91,
+    summary: "Loan funds wired to escrow.",
+    what:    "We wire the loan funds to escrow so the transaction can record with the county.",
+    time:    "Same day or next business day after signing",
+    expect:  "Confirmation that funds are in escrow and we are in the final queue to record." },
+  { num:15, name:"Walk Through",            x:55.87, y:11.11,
+    summary: "Final walkthrough before closing.",
+    what:    "Your realtor coordinates your final walkthrough of the property before closing.",
+    time:    "Day of or day before your closing appointment",
+    expect:  "A last look to confirm the home is in the agreed condition. Your final checkpoint before keys." },
+  { num:16, name:"Close Escrow",            x:61.35, y:4.44,
+    summary: "Recordation confirmed. Keys imminent.",
+    what:    "Escrow confirms recordation with the county and coordinates with your agent for key delivery.",
+    time:    "Same day as funding in most California counties",
+    expect:  "Your agent calls you. You get the keys. This is the moment." },
+  { num:17, name:"Keys",                    x:66.42, y:10.37,
+    summary: "Title transfers. The home is officially yours.",
+    what:    "Escrow formally closes, title transfers to your name, and the transaction is officially complete.",
+    time:    "Same day as recording",
+    expect:  "Your final settlement statement and official confirmation that you are the owner." },
+  { num:18, name:"Move In",                 x:73.16, y:13.58,
+    summary: "You move in. We celebrate. We check in within 30 days.",
+    what:    "You move into your new home. We celebrate with you and introduce what comes next in our relationship.",
+    time:    "Whenever you are ready",
+    expect:  "A call from us within 30 days to check in and make sure everything is exactly as expected." },
+  { num:19, name:"The Journey Continues",   x:79.27, y:21.36,
+    summary: "Ongoing rate, equity, and market monitoring through Mortgage Under Management.",
+    what:    "We monitor your rate, equity position, and market conditions through Mortgage Under Management — our ongoing advisory service.",
+    time:    "Ongoing, for as long as you own the home",
+    expect:  "Proactive outreach when there is an opportunity. Refinance, equity access, or an annual review.",
+    link:    "/mortgage-under-management" }
 ];
 
 let activeIndex = 0;
 
-// Build tap targets on both desktop and mobile maps
-function buildDots() {
-  const dOverlay = document.getElementById('desktopOverlay');
-  const mWrap    = document.getElementById('mobileDotsWrap');
-
+// ── BUILD DESKTOP HIT ZONES ──
+function buildHitZones() {
+  const overlay = document.getElementById('desktopOverlay');
+  if (!overlay) return;
   stages.forEach((s, i) => {
-    // Desktop button
-    const db = document.createElement('button');
-    db.className = 'stage-btn';
-    db.style.left = s.x + '%';
-    db.style.top  = s.y + '%';
-    db.setAttribute('aria-label', 'Stage ' + s.num + ': ' + s.name);
-    db.innerHTML = '<span class="stage-btn-num">' + s.num + '</span>';
-    db.addEventListener('click', () => openModal(i));
-    dOverlay.appendChild(db);
-
-    // Mobile button
-    const mb = document.createElement('button');
-    mb.className = 'mobile-btn';
-    mb.style.left = (s.x / 100 * 1440) + 'px';
-    mb.style.top  = (s.y / 100 * 810)  + 'px';
-    mb.setAttribute('aria-label', 'Stage ' + s.num + ': ' + s.name);
-    mb.setAttribute('data-stage', i);
-    mb.innerHTML = '<span class="mobile-btn-num">' + s.num + '</span>';
-    mWrap.appendChild(mb);
+    const btn = document.createElement('button');
+    btn.className = 'stage-hit';
+    btn.style.left = s.x + '%';
+    btn.style.top  = s.y + '%';
+    btn.setAttribute('aria-label', 'Stage ' + s.num + ': ' + s.name);
+    btn.setAttribute('data-name', s.num + '. ' + s.name);
+    btn.addEventListener('click', () => openModal(i));
+    overlay.appendChild(btn);
   });
 }
 
-// Modal control
+// ── BUILD MOBILE CARDS ──
+function buildCards() {
+  const wrap = document.getElementById('stagesCards');
+  if (!wrap) return;
+  stages.forEach((s, i) => {
+    const card = document.createElement('article');
+    card.className = 'stage-card';
+    card.setAttribute('data-index', i);
+
+    let ctaHtml = '';
+    if (s.link) {
+      ctaHtml = '<a href="' + s.link + '" class="expanded-cta-link">Learn about Mortgage Under Management →</a>';
+    }
+
+    card.innerHTML =
+      '<div class="stage-card-header">' +
+        '<div class="stage-card-num">' + s.num + '</div>' +
+        '<div class="stage-card-info">' +
+          '<div class="stage-card-name">' + s.name + '</div>' +
+          '<div class="stage-card-summary">' + s.summary + '</div>' +
+        '</div>' +
+        '<svg class="stage-card-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5 8 10 13 15 8"></polyline></svg>' +
+      '</div>' +
+      '<div class="stage-card-expanded">' +
+        '<div class="expanded-section">' +
+          '<h4>What We Do</h4>' +
+          '<p>' + s.what + '</p>' +
+        '</div>' +
+        '<div class="expanded-section">' +
+          '<h4>Timeline</h4>' +
+          '<span class="expanded-time-badge">' + s.time + '</span>' +
+        '</div>' +
+        '<div class="expanded-section">' +
+          '<h4>What to Expect</h4>' +
+          '<p>' + s.expect + '</p>' +
+          ctaHtml +
+        '</div>' +
+      '</div>';
+
+    card.addEventListener('click', (e) => {
+      // Don't toggle if user clicked a link inside the expanded area
+      if (e.target.tagName === 'A') return;
+      card.classList.toggle('open');
+    });
+
+    wrap.appendChild(card);
+  });
+}
+
+// ── DESKTOP MODAL ──
 function openModal(index) {
   activeIndex = index;
   const s = stages[index];
   document.getElementById('jModalTag').textContent    = 'Stage ' + s.num + ' of ' + stages.length;
-  document.getElementById('jModalIcon').textContent   = s.icon;
   document.getElementById('jModalNameEl').textContent = s.name;
   document.getElementById('jModalWhat').textContent   = s.what;
   document.getElementById('jModalTime').textContent   = s.time;
@@ -2332,99 +2587,14 @@ document.getElementById('jModalOverlay').addEventListener('click', e => {
 });
 document.addEventListener('keydown', e => {
   if (!document.getElementById('jModalOverlay').classList.contains('open')) return;
-  if (e.key === 'Escape')                                              closeModal();
-  if (e.key === 'ArrowLeft'  && activeIndex > 0)                        openModal(activeIndex - 1);
-  if (e.key === 'ArrowRight' && activeIndex < stages.length - 1)        openModal(activeIndex + 1);
+  if (e.key === 'Escape')                                       closeModal();
+  if (e.key === 'ArrowLeft'  && activeIndex > 0)                 openModal(activeIndex - 1);
+  if (e.key === 'ArrowRight' && activeIndex < stages.length - 1) openModal(activeIndex + 1);
 });
 
-// ── Mobile pan / zoom ──
-const MAP_W = 1440, MAP_H = 810;
-const MIN_SCALE = 0.27, MAX_SCALE = 3.0;
-let panX = 0, panY = 0, scale = 0.6;
-let startPanX = 0, startPanY = 0, startTX = 0, startTY = 0, startTTime = 0;
-let hasMoved = false, startDist = 0, startScale = 1;
-let pmxS = 0, pmyS = 0, ppxS = 0, ppyS = 0;
-
-function clampApply() {
-  const c = document.getElementById('mobileMap');
-  if (!c) return;
-  const cw = c.offsetWidth, ch = c.offsetHeight;
-  const iw = MAP_W * scale, ih = MAP_H * scale;
-  panX = iw <= cw ? (cw - iw) / 2 : Math.min(0, Math.max(panX, cw - iw));
-  panY = ih <= ch ? (ch - ih) / 2 : Math.min(0, Math.max(panY, ch - ih));
-  document.getElementById('mobileInner').style.transform =
-    'translate(' + panX + 'px,' + panY + 'px) scale(' + scale + ')';
-}
-
-function ptDist(a, b) { return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY); }
-
-function initMobile() {
-  const c = document.getElementById('mobileMap');
-  if (!c) return;
-  const ch = c.offsetHeight;
-  scale = Math.max(ch / MAP_H, MIN_SCALE);
-  panX = 0; panY = ch - MAP_H * scale;
-  clampApply();
-  c.addEventListener('touchstart', onTS, { passive: false });
-  c.addEventListener('touchmove',  onTM, { passive: false });
-  c.addEventListener('touchend',   onTE, { passive: false });
-  setTimeout(() => { const h = document.getElementById('mapHint'); if (h) h.style.opacity = '0'; }, 4000);
-}
-
-function onTS(e) {
-  e.preventDefault();
-  if (e.touches.length === 1) {
-    hasMoved = false; startTX = e.touches[0].clientX; startTY = e.touches[0].clientY;
-    startTTime = Date.now(); startPanX = panX; startPanY = panY;
-    document.getElementById('mobileMap').classList.add('grabbing');
-  } else if (e.touches.length === 2) {
-    startDist = ptDist(e.touches[0], e.touches[1]); startScale = scale;
-    pmxS = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-    pmyS = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-    ppxS = panX; ppyS = panY;
-  }
-}
-
-function onTM(e) {
-  e.preventDefault();
-  if (e.touches.length === 1) {
-    const dx = e.touches[0].clientX - startTX, dy = e.touches[0].clientY - startTY;
-    if (Math.abs(dx) > 5 || Math.abs(dy) > 5) hasMoved = true;
-    panX = startPanX + dx; panY = startPanY + dy; clampApply();
-  } else if (e.touches.length === 2) {
-    const d = ptDist(e.touches[0], e.touches[1]);
-    const ns = Math.min(MAX_SCALE, Math.max(MIN_SCALE, startScale * (d / startDist)));
-    const c = document.getElementById('mobileMap'), r = c.getBoundingClientRect();
-    const mx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - r.left;
-    const my = (e.touches[0].clientY + e.touches[1].clientY) / 2 - r.top;
-    const ox = (pmxS - r.left - ppxS) / startScale, oy = (pmyS - r.top - ppyS) / startScale;
-    panX = mx - ox * ns; panY = my - oy * ns; scale = ns; clampApply();
-  }
-}
-
-function onTE(e) {
-  e.preventDefault();
-  document.getElementById('mobileMap').classList.remove('grabbing');
-  if (!hasMoved && e.changedTouches.length === 1 && Date.now() - startTTime < 320) {
-    const t = e.changedTouches[0];
-    const el = document.elementFromPoint(t.clientX, t.clientY);
-    let target = el;
-    while (target && !target.classList.contains('mobile-btn')) target = target.parentElement;
-    if (target && target.classList.contains('mobile-btn')) {
-      const idx = parseInt(target.getAttribute('data-stage'), 10);
-      if (!isNaN(idx)) openModal(idx);
-    }
-  }
-  hasMoved = false;
-}
-
-// Init
-buildDots();
-if (window.innerWidth <= 768) initMobile();
-let rsz; window.addEventListener('resize', () => {
-  clearTimeout(rsz);
-  rsz = setTimeout(() => { if (window.innerWidth <= 768) initMobile(); }, 150);
-});
+// Initialize
+buildHitZones();
+buildCards();
 </script>
 
 </body>
