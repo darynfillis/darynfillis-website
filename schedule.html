@@ -1265,14 +1265,16 @@ footer { background: var(--ink); padding: 56px 48px 36px; }
   .nav-continue { padding: 8px 14px; font-size: 0.66rem; margin-left: 4px; }
 }
 
-/* Force alignment of all header elements */
+/* Force alignment of header elements (desktop only — mobile uses hamburger) */
 .nav-right { display: flex !important; align-items: center !important; gap: 12px !important; }
 .nav-right > *:not(.nav-toggle) { display: inline-flex !important; align-items: center !important; line-height: 1 !important; }
-.nav-links { display: flex !important; align-items: center !important; }
-.nav-links > a { display: inline-flex !important; align-items: center !important; line-height: 1 !important; }
 .nav-phone-icon-only { line-height: 1 !important; }
 .nav-signin { line-height: 1 !important; }
 .nav-continue { line-height: 1 !important; }
+@media (min-width: 961px) {
+  .nav-links { display: flex !important; align-items: center !important; }
+  .nav-links > a { display: inline-flex !important; align-items: center !important; line-height: 1 !important; }
+}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[

@@ -2,6 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QC0YG2MK2P"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QC0YG2MK2P');
+</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Favicon -->
@@ -1081,7 +1090,6 @@ footer { background: var(--ink); padding: 56px 48px 36px; }
   .review-grid{grid-template-columns:1fr !important}
   .community-cards{grid-template-columns:1fr !important}
   .fn-grid{grid-template-columns:1fr !important}
-  .btn-wobble{animation-name:wobble-sm !important}
   .refi-list-inner{grid-template-columns:1fr !important}
   .refi-rate-opts{grid-template-columns:repeat(2,1fr) !important}
   div[style*="padding:28px"]{padding:20px !important}
@@ -1294,7 +1302,6 @@ html{-webkit-text-size-adjust:100%;}
   .tcard{padding:28px 20px!important;}
   .mum-grid{grid-template-columns:1fr 1fr!important;}
   div[style*="display:flex"][style*="gap:16px;flex-wrap:wrap"]{flex-wrap:wrap!important;}
-  .btn-wobble{animation-name:wobble-sm!important;}
   .neo-tool-icon{width:36px!important;height:36px!important;}
 }
 
@@ -1435,14 +1442,16 @@ html{-webkit-text-size-adjust:100%;}
   .nav-continue { padding: 8px 14px; font-size: 0.66rem; margin-left: 4px; }
 }
 
-/* Force alignment of all header elements */
+/* Force alignment of header elements (desktop only — mobile uses hamburger) */
 .nav-right { display: flex !important; align-items: center !important; gap: 12px !important; }
-.nav-right > * { display: inline-flex !important; align-items: center !important; line-height: 1 !important; }
-.nav-links { display: flex !important; align-items: center !important; }
-.nav-links > a { display: inline-flex !important; align-items: center !important; line-height: 1 !important; }
+.nav-right > *:not(.nav-toggle) { display: inline-flex !important; align-items: center !important; line-height: 1 !important; }
 .nav-phone-icon-only { line-height: 1 !important; }
 .nav-signin { line-height: 1 !important; }
 .nav-continue { line-height: 1 !important; }
+@media (min-width: 961px) {
+  .nav-links { display: flex !important; align-items: center !important; }
+  .nav-links > a { display: inline-flex !important; align-items: center !important; line-height: 1 !important; }
+}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Article",
@@ -1461,6 +1470,8 @@ html{-webkit-text-size-adjust:100%;}
   {"@type":"ListItem","position":3,"name":"81% Regret","item":"https://darynfillis.com/field-notes/81-percent-regret"}
 ]}
 </script>
+</head>
+
 
 <body>
 <a href="#main-content" class="skip-to-main">Skip to main content</a>
