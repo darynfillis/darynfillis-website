@@ -2,6 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QC0YG2MK2P"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QC0YG2MK2P');
+</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Favicon -->
@@ -1434,7 +1443,7 @@ html{-webkit-text-size-adjust:100%;}
 
 /* Force alignment of all header elements */
 .nav-right { display: flex !important; align-items: center !important; gap: 12px !important; }
-.nav-right > * { display: inline-flex !important; align-items: center !important; line-height: 1 !important; }
+.nav-right > *:not(.nav-toggle) { display: inline-flex !important; align-items: center !important; line-height: 1 !important; }
 .nav-links { display: flex !important; align-items: center !important; }
 .nav-links > a { display: inline-flex !important; align-items: center !important; line-height: 1 !important; }
 .nav-phone-icon-only { line-height: 1 !important; }
@@ -1457,6 +1466,8 @@ html{-webkit-text-size-adjust:100%;}
   "inDefinedTermSet": "https://darynfillis.com/"
 }
 </script>
+</head>
+
 
 <body>
 <a href="#main-content" class="skip-to-main">Skip to main content</a>
