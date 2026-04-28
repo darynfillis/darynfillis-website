@@ -1317,6 +1317,117 @@ html{-webkit-text-size-adjust:100%;}
   .footer-socials { justify-content: center; gap: 10px; }
   .footer-socials-label { margin-right: 0; }
 }
+
+/* Header CTAs: Phone icon + Sign in (pill) + Continue (button) */
+/* All weights match nav-links (600) for visual unity */
+
+/* Phone dialer icon with pulsing arcs */
+.nav-phone-icon-only {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  margin-right: 4px;
+}
+.nav-phone-icon-only:hover { background: rgba(91,203,245,0.1); }
+.nav-phone-icon-only:focus-visible { outline: 2px solid var(--blue-dark); outline-offset: 2px; }
+.nav-phone-icon-only svg.phone-handset {
+  width: 16px;
+  height: 16px;
+  stroke: var(--ink);
+  stroke-width: 2;
+  fill: none;
+  position: relative;
+  z-index: 2;
+  transition: stroke 0.2s;
+}
+.nav-phone-icon-only:hover svg.phone-handset { stroke: var(--blue-dark); }
+.nav-phone-icon-only .arc1,
+.nav-phone-icon-only .arc2 {
+  position: absolute;
+  border: 1.5px solid var(--blue-dark);
+  border-radius: 50%;
+  border-color: var(--blue-dark) transparent transparent transparent;
+  opacity: 0;
+  animation: phoneArc 2s ease-out infinite;
+  pointer-events: none;
+}
+.nav-phone-icon-only .arc1 { width: 22px; height: 22px; animation-delay: 0s; }
+.nav-phone-icon-only .arc2 { width: 30px; height: 30px; animation-delay: 0.55s; }
+@keyframes phoneArc {
+  0% { opacity: 0; transform: rotate(45deg) scale(0.6); }
+  20% { opacity: 0.6; }
+  100% { opacity: 0; transform: rotate(45deg) scale(1.2); }
+}
+
+/* Sign in — pill-shaped text link */
+.nav-signin {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 18px;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.nav-signin:hover {
+  color: var(--navy);
+  background: rgba(91,203,245,0.08);
+  border-color: rgba(91,203,245,0.3);
+}
+.nav-signin:focus-visible {
+  outline: 2px solid var(--blue-dark);
+  outline-offset: 2px;
+}
+
+/* Continue — solid blue button */
+.nav-continue {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 20px;
+  background: var(--blue);
+  color: var(--navy);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 1px solid var(--blue);
+  transition: all 0.18s;
+  white-space: nowrap;
+  margin-left: 4px;
+}
+.nav-continue:hover {
+  background: var(--blue-dark);
+  border-color: var(--blue-dark);
+  color: var(--white);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(91,203,245,0.3);
+}
+.nav-continue:focus-visible {
+  outline: 3px solid var(--blue-dark);
+  outline-offset: 2px;
+}
+
+@media(max-width:768px) {
+  .nav-phone-icon-only { width: 32px; height: 32px; margin-right: 2px; }
+  .nav-phone-icon-only svg.phone-handset { width: 14px; height: 14px; }
+  .nav-signin { display: none; }
+  .nav-continue { padding: 8px 14px; font-size: 0.66rem; margin-left: 4px; }
+}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
@@ -1452,14 +1563,13 @@ html{-webkit-text-size-adjust:100%;}
     
   </div>
   <div class="nav-right">
-    <a href="tel:4243966967" class="nav-phone" aria-label="Call 424-396-6967">
-      <span class="nav-phone-num">424-396-6967</span>
-      <span class="nav-phone-icon">
-        <span class="arc1"></span>
-        <span class="arc2"></span>
-        <svg class="phone-handset" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .95h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-      </span>
+    <a href="tel:4243966967" class="nav-phone-icon-only" aria-label="Call 424-396-6967">
+      <span class="arc1"></span>
+      <span class="arc2"></span>
+      <svg class="phone-handset" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .95h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
     </a>
+    <a href="https://neohomeloans.com/account/sign-in" target="_blank" rel="noopener" class="nav-signin">Sign in</a>
+    <a href="https://neohomeloans.com/start/r/130676" target="_blank" rel="noopener" class="nav-continue">Continue</a>
     <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </nav>

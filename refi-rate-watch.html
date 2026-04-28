@@ -1315,6 +1315,117 @@ html{-webkit-text-size-adjust:100%;}
   .footer-socials { justify-content: center; gap: 10px; }
   .footer-socials-label { margin-right: 0; }
 }
+
+/* Header CTAs: Phone icon + Sign in (pill) + Continue (button) */
+/* All weights match nav-links (600) for visual unity */
+
+/* Phone dialer icon with pulsing arcs */
+.nav-phone-icon-only {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  margin-right: 4px;
+}
+.nav-phone-icon-only:hover { background: rgba(91,203,245,0.1); }
+.nav-phone-icon-only:focus-visible { outline: 2px solid var(--blue-dark); outline-offset: 2px; }
+.nav-phone-icon-only svg.phone-handset {
+  width: 16px;
+  height: 16px;
+  stroke: var(--ink);
+  stroke-width: 2;
+  fill: none;
+  position: relative;
+  z-index: 2;
+  transition: stroke 0.2s;
+}
+.nav-phone-icon-only:hover svg.phone-handset { stroke: var(--blue-dark); }
+.nav-phone-icon-only .arc1,
+.nav-phone-icon-only .arc2 {
+  position: absolute;
+  border: 1.5px solid var(--blue-dark);
+  border-radius: 50%;
+  border-color: var(--blue-dark) transparent transparent transparent;
+  opacity: 0;
+  animation: phoneArc 2s ease-out infinite;
+  pointer-events: none;
+}
+.nav-phone-icon-only .arc1 { width: 22px; height: 22px; animation-delay: 0s; }
+.nav-phone-icon-only .arc2 { width: 30px; height: 30px; animation-delay: 0.55s; }
+@keyframes phoneArc {
+  0% { opacity: 0; transform: rotate(45deg) scale(0.6); }
+  20% { opacity: 0.6; }
+  100% { opacity: 0; transform: rotate(45deg) scale(1.2); }
+}
+
+/* Sign in — pill-shaped text link */
+.nav-signin {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 18px;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.nav-signin:hover {
+  color: var(--navy);
+  background: rgba(91,203,245,0.08);
+  border-color: rgba(91,203,245,0.3);
+}
+.nav-signin:focus-visible {
+  outline: 2px solid var(--blue-dark);
+  outline-offset: 2px;
+}
+
+/* Continue — solid blue button */
+.nav-continue {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 20px;
+  background: var(--blue);
+  color: var(--navy);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 1px solid var(--blue);
+  transition: all 0.18s;
+  white-space: nowrap;
+  margin-left: 4px;
+}
+.nav-continue:hover {
+  background: var(--blue-dark);
+  border-color: var(--blue-dark);
+  color: var(--white);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(91,203,245,0.3);
+}
+.nav-continue:focus-visible {
+  outline: 3px solid var(--blue-dark);
+  outline-offset: 2px;
+}
+
+@media(max-width:768px) {
+  .nav-phone-icon-only { width: 32px; height: 32px; margin-right: 2px; }
+  .nav-phone-icon-only svg.phone-handset { width: 14px; height: 14px; }
+  .nav-signin { display: none; }
+  .nav-continue { padding: 8px 14px; font-size: 0.66rem; margin-left: 4px; }
+}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
@@ -1441,14 +1552,13 @@ html{-webkit-text-size-adjust:100%;}
     
   </div>
   <div class="nav-right">
-    <a href="tel:4243966967" class="nav-phone" aria-label="Call 424-396-6967">
-      <span class="nav-phone-num">424-396-6967</span>
-      <span class="nav-phone-icon">
-        <span class="arc1"></span>
-        <span class="arc2"></span>
-        <svg class="phone-handset" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .95h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-      </span>
+    <a href="tel:4243966967" class="nav-phone-icon-only" aria-label="Call 424-396-6967">
+      <span class="arc1"></span>
+      <span class="arc2"></span>
+      <svg class="phone-handset" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .95h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
     </a>
+    <a href="https://neohomeloans.com/account/sign-in" target="_blank" rel="noopener" class="nav-signin">Sign in</a>
+    <a href="https://neohomeloans.com/start/r/130676" target="_blank" rel="noopener" class="nav-continue">Continue</a>
     <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -1508,15 +1618,29 @@ html{-webkit-text-size-adjust:100%;}
         </div>
 
         <div>
-          <label for="rrw-name" style="display:block;font-size:0.7rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px">First name</label>
-          <input type="text" id="rrw-name" name="firstname" required placeholder="Daryn"
+          <label for="rrw-firstname" style="display:block;font-size:0.7rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px">First name</label>
+          <input type="text" id="rrw-firstname" name="firstname" required placeholder="Your first name"
             style="width:100%;padding:13px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(91,203,245,0.2);border-radius:8px;color:var(--white);font-family:var(--font);font-size:0.95rem;outline:none;transition:border 0.2s"
             onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(91,203,245,0.2)'">
         </div>
 
         <div>
-          <label for="rrw-contact" style="display:block;font-size:0.7rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px">Phone or email <span style="font-weight:200;text-transform:none;letter-spacing:0;color:rgba(255,255,255,0.35)">(I'll use whichever you give me)</span></label>
-          <input type="text" id="rrw-contact" name="contact" required placeholder="(424) 555-0123 or you@email.com"
+          <label for="rrw-lastname" style="display:block;font-size:0.7rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px">Last name</label>
+          <input type="text" id="rrw-lastname" name="lastname" required placeholder="Your last name"
+            style="width:100%;padding:13px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(91,203,245,0.2);border-radius:8px;color:var(--white);font-family:var(--font);font-size:0.95rem;outline:none;transition:border 0.2s"
+            onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(91,203,245,0.2)'">
+        </div>
+
+        <div>
+          <label for="rrw-email" style="display:block;font-size:0.7rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px">Email</label>
+          <input type="email" id="rrw-email" name="email" required placeholder="you@email.com"
+            style="width:100%;padding:13px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(91,203,245,0.2);border-radius:8px;color:var(--white);font-family:var(--font);font-size:0.95rem;outline:none;transition:border 0.2s"
+            onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(91,203,245,0.2)'">
+        </div>
+
+        <div>
+          <label for="rrw-phone" style="display:block;font-size:0.7rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px">Phone <span style="font-weight:200;text-transform:none;letter-spacing:0;color:rgba(255,255,255,0.35)">(optional, for faster outreach)</span></label>
+          <input type="tel" id="rrw-phone" name="phone" placeholder="(424) 555-0123"
             style="width:100%;padding:13px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(91,203,245,0.2);border-radius:8px;color:var(--white);font-family:var(--font);font-size:0.95rem;outline:none;transition:border 0.2s"
             onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(91,203,245,0.2)'">
         </div>
@@ -1605,7 +1729,7 @@ html{-webkit-text-size-adjust:100%;}
   <div class="max-w reveal" style="max-width:640px">
     <h2 style="font-weight:800;font-size:clamp(1.6rem,2.8vw,2.4rem);color:var(--white);letter-spacing:-0.025em;line-height:1.15;margin-bottom:16px">Most homeowners miss the rate window<br>because nobody told them.</h2>
     <p style="font-weight:200;font-size:1rem;color:rgba(255,255,255,0.55);line-height:1.8;margin-bottom:28px">You don't have to be one of them. Sign up above. Forget about it. I'll be there when it matters.</p>
-    <a href="#rrw-name" onclick="document.getElementById('rrw-name').focus();" class="btn btn-blue btn-wobble">Sign up free →</a>
+    <a href="#rrw-firstname" onclick="document.getElementById('rrw-firstname').focus();" class="btn btn-blue btn-wobble">Sign up free →</a>
   </div>
 </section>
 

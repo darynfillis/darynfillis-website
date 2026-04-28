@@ -382,6 +382,18 @@
   .footer-socials { justify-content: center; gap: 10px; }
   .footer-socials-label { margin-right: 0; }
 }
+
+/* Header CTAs: Sign in + Continue */
+.nav-signin { display: inline-flex; align-items: center; padding: 8px 14px; color: var(--ink); font-weight: 700; font-size: 0.86rem; text-decoration: none; transition: color 0.18s; white-space: nowrap; letter-spacing: -0.005em; }
+.nav-signin:hover { color: var(--blue-dark); }
+.nav-signin:focus-visible { outline: 2px solid var(--blue-dark); outline-offset: 3px; border-radius: 4px; }
+.nav-continue { display: inline-flex; align-items: center; padding: 10px 20px; background: var(--blue); color: var(--navy); font-weight: 800; font-size: 0.86rem; text-decoration: none; border-radius: 8px; transition: all 0.18s; white-space: nowrap; letter-spacing: -0.005em; border: 1px solid var(--blue); margin-left: 8px; }
+.nav-continue:hover { background: var(--blue-dark); border-color: var(--blue-dark); color: var(--white); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(91,203,245,0.3); }
+.nav-continue:focus-visible { outline: 3px solid var(--blue-dark); outline-offset: 2px; }
+@media(max-width:768px) {
+  .nav-signin { display: none; }
+  .nav-continue { padding: 8px 14px; font-size: 0.8rem; margin-left: 0; }
+}
 </style>
 </head>
 <body>

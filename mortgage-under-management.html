@@ -1317,6 +1317,117 @@ html{-webkit-text-size-adjust:100%;}
   .footer-socials { justify-content: center; gap: 10px; }
   .footer-socials-label { margin-right: 0; }
 }
+
+/* Header CTAs: Phone icon + Sign in (pill) + Continue (button) */
+/* All weights match nav-links (600) for visual unity */
+
+/* Phone dialer icon with pulsing arcs */
+.nav-phone-icon-only {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  margin-right: 4px;
+}
+.nav-phone-icon-only:hover { background: rgba(91,203,245,0.1); }
+.nav-phone-icon-only:focus-visible { outline: 2px solid var(--blue-dark); outline-offset: 2px; }
+.nav-phone-icon-only svg.phone-handset {
+  width: 16px;
+  height: 16px;
+  stroke: var(--ink);
+  stroke-width: 2;
+  fill: none;
+  position: relative;
+  z-index: 2;
+  transition: stroke 0.2s;
+}
+.nav-phone-icon-only:hover svg.phone-handset { stroke: var(--blue-dark); }
+.nav-phone-icon-only .arc1,
+.nav-phone-icon-only .arc2 {
+  position: absolute;
+  border: 1.5px solid var(--blue-dark);
+  border-radius: 50%;
+  border-color: var(--blue-dark) transparent transparent transparent;
+  opacity: 0;
+  animation: phoneArc 2s ease-out infinite;
+  pointer-events: none;
+}
+.nav-phone-icon-only .arc1 { width: 22px; height: 22px; animation-delay: 0s; }
+.nav-phone-icon-only .arc2 { width: 30px; height: 30px; animation-delay: 0.55s; }
+@keyframes phoneArc {
+  0% { opacity: 0; transform: rotate(45deg) scale(0.6); }
+  20% { opacity: 0.6; }
+  100% { opacity: 0; transform: rotate(45deg) scale(1.2); }
+}
+
+/* Sign in — pill-shaped text link */
+.nav-signin {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 18px;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.nav-signin:hover {
+  color: var(--navy);
+  background: rgba(91,203,245,0.08);
+  border-color: rgba(91,203,245,0.3);
+}
+.nav-signin:focus-visible {
+  outline: 2px solid var(--blue-dark);
+  outline-offset: 2px;
+}
+
+/* Continue — solid blue button */
+.nav-continue {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 20px;
+  background: var(--blue);
+  color: var(--navy);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 1px solid var(--blue);
+  transition: all 0.18s;
+  white-space: nowrap;
+  margin-left: 4px;
+}
+.nav-continue:hover {
+  background: var(--blue-dark);
+  border-color: var(--blue-dark);
+  color: var(--white);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(91,203,245,0.3);
+}
+.nav-continue:focus-visible {
+  outline: 3px solid var(--blue-dark);
+  outline-offset: 2px;
+}
+
+@media(max-width:768px) {
+  .nav-phone-icon-only { width: 32px; height: 32px; margin-right: 2px; }
+  .nav-phone-icon-only svg.phone-handset { width: 14px; height: 14px; }
+  .nav-signin { display: none; }
+  .nav-continue { padding: 8px 14px; font-size: 0.66rem; margin-left: 4px; }
+}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
@@ -1412,14 +1523,13 @@ html{-webkit-text-size-adjust:100%;}
     
   </div>
   <div class="nav-right">
-    <a href="tel:4243966967" class="nav-phone" aria-label="Call 424-396-6967">
-      <span class="nav-phone-num">424-396-6967</span>
-      <span class="nav-phone-icon">
-        <span class="arc1"></span>
-        <span class="arc2"></span>
-        <svg class="phone-handset" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .95h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-      </span>
+    <a href="tel:4243966967" class="nav-phone-icon-only" aria-label="Call 424-396-6967">
+      <span class="arc1"></span>
+      <span class="arc2"></span>
+      <svg class="phone-handset" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .95h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
     </a>
+    <a href="https://neohomeloans.com/account/sign-in" target="_blank" rel="noopener" class="nav-signin">Sign in</a>
+    <a href="https://neohomeloans.com/start/r/130676" target="_blank" rel="noopener" class="nav-continue">Continue</a>
     <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -1645,10 +1755,21 @@ html{-webkit-text-size-adjust:100%;}
             <input type="tel" id="wd-phone" name="phone" required placeholder="(424) 555-0123" style="width:100%;padding:13px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(91,203,245,0.2);border-radius:8px;color:var(--white);font-family:var(--font);font-size:0.95rem;outline:none;transition:border 0.2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(91,203,245,0.2)'">
           </div>
 
-          <div style="margin-bottom:18px">
-            <label for="wd-address" style="display:block;font-size:0.7rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px">Property address</label>
-            <input type="text" id="wd-address" name="address" required placeholder="Street, City, State, ZIP" style="width:100%;padding:13px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(91,203,245,0.2);border-radius:8px;color:var(--white);font-family:var(--font);font-size:0.95rem;outline:none;transition:border 0.2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(91,203,245,0.2)'">
-            <p style="font-size:0.72rem;font-weight:200;color:rgba(255,255,255,0.4);margin:6px 0 0;line-height:1.5">I use this to track your home's market data. Your address stays private and is only used to generate your digest.</p>
+          <div style="margin-bottom:14px">
+            <label for="wd-zip" style="display:block;font-size:0.7rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px">ZIP code</label>
+            <input type="text" id="wd-zip" name="zip" required pattern="[0-9]{5}" maxlength="5" inputmode="numeric" placeholder="e.g. 90250" autocomplete="postal-code" style="width:100%;padding:13px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(91,203,245,0.2);border-radius:8px;color:var(--white);font-family:var(--font);font-size:0.95rem;outline:none;transition:border 0.2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(91,203,245,0.2)'">
+            <p id="wd-zip-status" style="font-size:0.72rem;font-weight:200;color:rgba(255,255,255,0.4);margin:6px 0 0;line-height:1.5">Type your ZIP — I'll fill in city and state.</p>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:12px;margin-bottom:18px">
+            <div>
+              <label for="wd-city" style="display:block;font-size:0.7rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px">City</label>
+              <input type="text" id="wd-city" name="city" required placeholder="City" autocomplete="address-level2" style="width:100%;padding:13px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(91,203,245,0.2);border-radius:8px;color:var(--white);font-family:var(--font);font-size:0.95rem;outline:none;transition:border 0.2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(91,203,245,0.2)'">
+            </div>
+            <div>
+              <label for="wd-state" style="display:block;font-size:0.7rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px">State</label>
+              <input type="text" id="wd-state" name="state" required maxlength="2" placeholder="CA" autocomplete="address-level1" style="width:100%;padding:13px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(91,203,245,0.2);border-radius:8px;color:var(--white);font-family:var(--font);font-size:0.95rem;outline:none;transition:border 0.2s;text-transform:uppercase" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(91,203,245,0.2)'">
+            </div>
           </div>
 
           <button type="submit" style="width:100%;padding:15px 24px;background:var(--blue);color:var(--navy);border:none;border-radius:8px;font-family:var(--font);font-weight:800;font-size:0.95rem;cursor:pointer;transition:all 0.18s;letter-spacing:-0.01em" onmouseover="this.style.background='#7dd6f7';this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 20px rgba(91,203,245,0.3)'" onmouseout="this.style.background='var(--blue)';this.style.transform='translateY(0)';this.style.boxShadow='none'">Send me my Wealth Digest →</button>
@@ -1669,6 +1790,56 @@ html{-webkit-text-size-adjust:100%;}
 .skip-to-main{position:absolute;left:-9999px;top:0;z-index:9999;background:var(--blue);color:var(--navy);padding:14px 20px;font-weight:800;font-size:0.92rem;text-decoration:none;border-radius:0 0 8px 0}
 .skip-to-main:focus{left:0;outline:3px solid var(--blue);outline-offset:2px}
 </style>
+
+<script>
+// ZIP code auto-fill for Wealth Digest form (free Zippopotam.us API, no key required)
+(function() {
+  var zipInput = document.getElementById('wd-zip');
+  var cityInput = document.getElementById('wd-city');
+  var stateInput = document.getElementById('wd-state');
+  var statusEl = document.getElementById('wd-zip-status');
+  if (!zipInput) return;
+
+  var lookupTimeout = null;
+  zipInput.addEventListener('input', function(e) {
+    var zip = e.target.value.replace(/\D/g, '').slice(0, 5);
+    e.target.value = zip;
+    clearTimeout(lookupTimeout);
+
+    if (zip.length === 5) {
+      statusEl.textContent = 'Looking up...';
+      statusEl.style.color = 'rgba(255,255,255,0.55)';
+
+      lookupTimeout = setTimeout(function() {
+        fetch('https://api.zippopotam.us/us/' + zip)
+          .then(function(r) {
+            if (!r.ok) throw new Error('Not found');
+            return r.json();
+          })
+          .then(function(data) {
+            if (data.places && data.places.length > 0) {
+              var place = data.places[0];
+              cityInput.value = place['place name'];
+              stateInput.value = place['state abbreviation'];
+              statusEl.textContent = '\u2713 ' + place['place name'] + ', ' + place['state abbreviation'];
+              statusEl.style.color = 'rgba(91,203,245,0.85)';
+            }
+          })
+          .catch(function() {
+            statusEl.textContent = 'ZIP not recognized \u2014 please enter city and state manually.';
+            statusEl.style.color = 'rgba(255,200,100,0.7)';
+          });
+      }, 300);
+    } else if (zip.length > 0) {
+      statusEl.textContent = 'Keep typing ZIP...';
+      statusEl.style.color = 'rgba(255,255,255,0.4)';
+    } else {
+      statusEl.textContent = "Type your ZIP \u2014 I'll fill in city and state.";
+      statusEl.style.color = 'rgba(255,255,255,0.4)';
+    }
+  });
+})();
+</script>
 
 
 </main>
