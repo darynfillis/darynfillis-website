@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Journey Map Calibration | Daryn Fillis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:    #5bcbf5;
+      --navy:    #0A2540;
+      --white:   #ffffff;
+      --rule:    rgba(255,255,255,0.1);
+    }
+    html, body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      min-height: 100vh;
+    }
+
+    /* Layout: map on left, panel on right */
+    .calibrate-wrap {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 0;
+      min-height: 100vh;
+    }
+
+    /* Map area */
+    .map-area {
+      position: relative;
+      background: #061626;
+      padding: 24px;
+      overflow: auto;
+    }
+    .map-container {
+      position: relative;
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      cursor: crosshair;
+    }
+    .map-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .pin {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: 36px;
+      height: 36px;
+      background: var(--blue);
+      color: var(--navy);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      box-shadow: 0 0 0 4px rgba(10,37,64,0.85), 0 4px 12px rgba(0,0,0,0.5);
+      pointer-events: none;
+      z-index: 10;
+      animation: pinDrop 0.3s ease-out;
+    }
+    @keyframes pinDrop {
+      from { transform: translate(-50%, -120%) scale(0); opacity: 0; }
+      to   { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+    .pin.highlight {
+      background: #ffeb3b;
+      box-shadow: 0 0 0 4px rgba(10,37,64,0.85), 0 0 20px rgba(255,235,59,0.6);
+    }
+
+    /* Side panel */
+    .panel {
+      background: var(--navy);
+      border-left: 1px solid rgba(91,203,245,0.18);
+      padding: 24px;
+      overflow-y: auto;
+      max-height: 100vh;
+      position: sticky;
+      top: 0;
+    }
+    .panel-title {
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .panel-sub {
+      font-size: 0.78rem;
+      font-weight: 200;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(91,203,245,0.15);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--blue);
+      width: 0%;
+      transition: width 0.25s ease;
+    }
+    .current-prompt {
+      background: rgba(91,203,245,0.1);
+      border: 1px solid rgba(91,203,245,0.3);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .current-prompt .num {
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 4px;
+    }
+    .current-prompt .name {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .current-prompt .hint {
+      font-size: 0.74rem;
+      font-weight: 200;
+      color: rgba(255,255,255,0.6);
+      margin-top: 6px;
+      line-height: 1.55;
+    }
+
+    /* Capture list */
+    .capture-list {
+      list-style: none;
+      margin-bottom: 20px;
+    }
+    .capture-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+    .capture-item:hover { background: rgba(91,203,245,0.08); }
+    .capture-item.captured { color: var(--white); }
+    .capture-item.pending { color: rgba(255,255,255,0.4); }
+    .capture-item.active {
+      background: rgba(91,203,245,0.12);
+      border: 1px solid rgba(91,203,245,0.3);
+      padding: 7px 9px;
+    }
+    .capture-num {
+      width: 22px; height: 22px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 0.68rem; font-weight: 800;
+      flex-shrink: 0;
+    }
+    .capture-item.captured .capture-num { background: var(--blue); color: var(--navy); }
+    .capture-item.pending .capture-num { background: rgba(91,203,245,0.15); color: rgba(91,203,245,0.6); border: 1px solid rgba(91,203,245,0.25); }
+    .capture-name { flex: 1; font-weight: 600; }
+    .capture-coords {
+      font-size: 0.65rem;
+      font-weight: 200;
+      color: rgba(91,203,245,0.7);
+      font-family: monospace;
+    }
+
+    /* Buttons */
+    .btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .btn {
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: 1px solid;
+      transition: all 0.15s;
+    }
+    .btn-blue {
+      background: var(--blue);
+      color: var(--navy);
+      border-color: var(--blue);
+    }
+    .btn-blue:hover { background: #7dd6f7; transform: translateY(-1px); }
+    .btn-blue:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+    .btn-ghost {
+      background: transparent;
+      color: rgba(255,255,255,0.7);
+      border-color: rgba(255,255,255,0.2);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.05); border-color: rgba(91,203,245,0.4); }
+
+    /* Output */
+    .output-box {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(91,203,245,0.2);
+      border-radius: 8px;
+      padding: 14px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.72rem;
+      color: rgba(91,203,245,0.85);
+      max-height: 240px;
+      overflow-y: auto;
+      white-space: pre;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .output-box.empty {
+      color: rgba(255,255,255,0.3);
+      font-style: italic;
+      text-align: center;
+      padding: 30px 14px;
+    }
+
+    /* Mobile fallback */
+    @media (max-width: 900px) {
+      .calibrate-wrap { grid-template-columns: 1fr; }
+      .panel {
+        position: static;
+        border-left: none;
+        border-top: 1px solid rgba(91,203,245,0.18);
+        max-height: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="calibrate-wrap">
+
+  <!-- MAP -->
+  <div class="map-area">
+    <div class="map-container" id="mapContainer">
+      <img src="/journey-map.jpg" id="mapImg" alt="Journey map">
+      <!-- Pins inserted here -->
+    </div>
+  </div>
+
+  <!-- PANEL -->
+  <aside class="panel">
+    <h1 class="panel-title">Map Calibration</h1>
+    <p class="panel-sub">Click the CENTER of each labeled box on the map, in order. The pins will appear on the image as you go.</p>
+
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+    <div class="current-prompt" id="currentPrompt">
+      <div class="num">Click on Stage 1 of 19</div>
+      <div class="name" id="currentName">Registration</div>
+      <p class="hint">Click the center of the labeled box on the map for this stage.</p>
+    </div>
+
+    <ol class="capture-list" id="captureList"></ol>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" id="undoBtn" disabled>← Undo Last</button>
+      <button class="btn btn-ghost" id="restartBtn">Start Over</button>
+    </div>
+
+    <button class="btn btn-blue" id="copyBtn" disabled style="width:100%; margin-bottom:12px;">Copy Coordinates JSON</button>
+
+    <div class="output-box empty" id="outputBox">Output will appear here when you've clicked at least one stage.</div>
+  </aside>
+
+</div>
+
+<script>
+const stages = [
+  "Registration", "Submission", "Pre-Approved", "Searching", "Contract",
+  "Open Escrow", "Initial Loan Disclosure", "Inspections", "Appraisal",
+  "Loan Approved", "Closing Disclosure", "Clear to Close", "Closed",
+  "Funded", "Walk Through", "Close Escrow", "Keys", "Move In",
+  "The Journey Continues"
+];
+
+let captures = []; // { num, name, x, y }
+
+const mapContainer = document.getElementById('mapContainer');
+const mapImg       = document.getElementById('mapImg');
+const captureList  = document.getElementById('captureList');
+const progressFill = document.getElementById('progressFill');
+const currentName  = document.getElementById('currentName');
+const currentPrompt= document.getElementById('currentPrompt');
+const outputBox    = document.getElementById('outputBox');
+const undoBtn      = document.getElementById('undoBtn');
+const restartBtn   = document.getElementById('restartBtn');
+const copyBtn      = document.getElementById('copyBtn');
+
+function renderList() {
+  captureList.innerHTML = '';
+  stages.forEach((name, i) => {
+    const idx = i;
+    const captured = captures.find(c => c.num === idx + 1);
+    const isActive = !captured && idx === captures.length;
+
+    const li = document.createElement('li');
+    li.className = 'capture-item ' + (captured ? 'captured' : (isActive ? 'pending active' : 'pending'));
+
+    const nm = document.createElement('span');
+    nm.className = 'capture-num';
+    nm.textContent = idx + 1;
+
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'capture-name';
+    nameSpan.textContent = name;
+
+    const coordsSpan = document.createElement('span');
+    coordsSpan.className = 'capture-coords';
+    if (captured) {
+      coordsSpan.textContent = captured.x.toFixed(1) + '%, ' + captured.y.toFixed(1) + '%';
+    }
+
+    li.appendChild(nm);
+    li.appendChild(nameSpan);
+    li.appendChild(coordsSpan);
+    captureList.appendChild(li);
+  });
+}
+
+function renderPins() {
+  // Remove existing pins
+  mapContainer.querySelectorAll('.pin').forEach(p => p.remove());
+  // Add pins for each capture
+  captures.forEach(c => {
+    const pin = document.createElement('div');
+    pin.className = 'pin';
+    pin.style.left = c.x + '%';
+    pin.style.top = c.y + '%';
+    pin.textContent = c.num;
+    mapContainer.appendChild(pin);
+  });
+}
+
+function updateProgress() {
+  const pct = (captures.length / stages.length) * 100;
+  progressFill.style.width = pct + '%';
+
+  if (captures.length === stages.length) {
+    currentPrompt.innerHTML = '<div class="num" style="color:#5bcbf5">All 19 stages captured!</div><div class="name" style="font-size:0.95rem;font-weight:600;color:rgba(255,255,255,0.85);margin-top:4px">Click "Copy Coordinates JSON" below and paste into chat.</div>';
+  } else {
+    const next = captures.length;
+    currentPrompt.innerHTML = '<div class="num">Click on Stage ' + (next + 1) + ' of 19</div><div class="name">' + stages[next] + '</div><p class="hint">Click the center of the labeled box on the map for this stage.</p>';
+  }
+
+  undoBtn.disabled = captures.length === 0;
+  copyBtn.disabled = captures.length === 0;
+}
+
+function updateOutput() {
+  if (captures.length === 0) {
+    outputBox.classList.add('empty');
+    outputBox.textContent = 'Output will appear here when you\'ve clicked at least one stage.';
+    return;
+  }
+  outputBox.classList.remove('empty');
+  let json = '[\n';
+  captures.forEach((c, i) => {
+    json += '  { "num": ' + c.num + ', "name": "' + c.name + '", "x": ' + c.x.toFixed(2) + ', "y": ' + c.y.toFixed(2) + ' }';
+    if (i < captures.length - 1) json += ',';
+    json += '\n';
+  });
+  json += ']';
+  outputBox.textContent = json;
+}
+
+mapContainer.addEventListener('click', (e) => {
+  if (captures.length >= stages.length) return;
+
+  const rect = mapImg.getBoundingClientRect();
+  const xPx = e.clientX - rect.left;
+  const yPx = e.clientY - rect.top;
+  const xPct = (xPx / rect.width) * 100;
+  const yPct = (yPx / rect.height) * 100;
+
+  const num = captures.length + 1;
+  captures.push({ num, name: stages[num - 1], x: xPct, y: yPct });
+
+  renderList();
+  renderPins();
+  updateProgress();
+  updateOutput();
+});
+
+undoBtn.addEventListener('click', () => {
+  captures.pop();
+  renderList();
+  renderPins();
+  updateProgress();
+  updateOutput();
+});
+
+restartBtn.addEventListener('click', () => {
+  if (captures.length > 0 && !confirm('Start over? This will clear all captured coordinates.')) return;
+  captures = [];
+  renderList();
+  renderPins();
+  updateProgress();
+  updateOutput();
+});
+
+copyBtn.addEventListener('click', () => {
+  const text = outputBox.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = copyBtn.textContent;
+    copyBtn.textContent = '✓ Copied!';
+    setTimeout(() => copyBtn.textContent = orig, 1500);
+  }).catch(() => {
+    // Fallback: select the text in output box
+    const range = document.createRange();
+    range.selectNodeContents(outputBox);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    alert('Tap and hold the output box to copy manually.');
+  });
+});
+
+// Initialize
+renderList();
+updateProgress();
+updateOutput();
+</script>
+
+</body>
+</html>
