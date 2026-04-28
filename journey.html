@@ -1523,29 +1523,31 @@ html{-webkit-text-size-adjust:100%;}
   background: var(--navy);
   display: flex;
   justify-content: center;
-  /* Cap height to viewport minus header/breadcrumb space so map always fits */
-  max-height: calc(100vh - 200px);
+  align-items: flex-start;
   overflow: hidden;
 }
 .map-desktop-inner {
   position: relative;
-  /* Maintain 1440:810 aspect ratio (16:9 widescreen) */
-  width: 100%;
-  max-width: 100%;
-  /* Use aspect-ratio so map never exceeds viewport vertically */
-  aspect-ratio: 1920 / 1080;
+  /* Inner container shrinks to match the image's actual display size — no letterboxing */
+  display: inline-block;
+  /* Cap so map always fits in viewport vertically */
   max-height: calc(100vh - 200px);
+  max-width: 100%;
+  /* Aspect-ratio ensures container matches image when constrained by max-height */
+  aspect-ratio: 1920 / 1080;
 }
 .map-desktop-inner img {
+  /* Image fills the container exactly — no letterboxing because container matches aspect ratio */
   width: 100%;
   height: 100%;
-  object-fit: contain;
   display: block;
   user-select: none;
   -webkit-user-drag: none;
 }
 .map-desktop .overlay {
-  position: absolute; inset: 0;
+  /* Overlay covers the inner container (and therefore the image) exactly */
+  position: absolute;
+  inset: 0;
   pointer-events: none;
 }
 .stage-hit {
