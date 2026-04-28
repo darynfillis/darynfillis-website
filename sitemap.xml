@@ -163,4 +163,12 @@
     <priority>0.3</priority>
   </url>
 
+  <!-- Journey -->
+  <url>
+    <loc>https://darynfillis.com/journey</loc>
+    <lastmod>2026-04-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>

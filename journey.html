@@ -18,29 +18,29 @@
 <link rel="apple-touch-icon" href="/favicon.png">
 <link rel="shortcut icon" href="/favicon.png">
 
-<title>You fell off the trail | Daryn Fillis · NEO Home Loans</title>
-<meta name="description" content="The page you're looking for took a wrong turn. Let me help you find your way back.">>
+<title>The Homebuyers' Journey | Daryn Fillis · NEO Home Loans</title>
+<meta name="description" content="Map out the entire homebuying journey — 19 stages from first registration to keys in hand. See exactly what happens, how long it takes, and what to expect.">>
 
 <!-- Canonical -->
-<link rel="canonical" href="https://darynfillis.com/404">
+<link rel="canonical" href="https://darynfillis.com/journey">
 
 <!-- Open Graph — controls every social share preview -->
 <meta property="og:type"        content="website">
-<meta property="og:url"         content="https://darynfillis.com/404">
-<meta property="og:title"       content="You fell off the trail | Daryn Fillis">
-<meta property="og:description" content="The page you're looking for took a wrong turn. Let me help you find your way back.">>
+<meta property="og:url"         content="https://darynfillis.com/journey">
+<meta property="og:title"       content="The Homebuyers' Journey | Daryn Fillis">
+<meta property="og:description" content="Map out the entire homebuying journey — 19 stages from first registration to keys in hand.">>
 <meta property="og:image"       content="https://darynfillis.com/og-home.jpg">
 <meta property="og:locale"      content="en_US">
 <meta property="og:site_name"   content="Daryn Fillis | NEO Home Loans">
 
 <!-- Twitter / X card -->
 <meta name="twitter:card"        content="summary_large_image">
-<meta name="twitter:title"      content="You fell off the trail | Daryn Fillis">
-<meta name="twitter:description" content="The page you're looking for took a wrong turn.">>
+<meta name="twitter:title"      content="The Homebuyers' Journey | Daryn Fillis">
+<meta name="twitter:description" content="See every stage of the loan process — what we do, how long it takes, what to expect.">>
 <meta name="twitter:image"       content="https://darynfillis.com/og-home.jpg">
 
 <!-- Additional SEO signals -->
-<meta name="robots" content="noindex, follow">
+<meta name="robots"   content="index, follow">
 <meta name="author"   content="Daryn Fillis">
 <meta name="geo.region"       content="US-CA">
 <meta name="geo.placename"    content="Los Angeles, California">
@@ -1449,6 +1449,9 @@ html{-webkit-text-size-adjust:100%;}
   .nav-links { display: flex !important; align-items: center !important; }
   .nav-links > a { display: inline-flex !important; align-items: center !important; line-height: 1 !important; }
 }
+
+.skip-to-main{position:absolute;left:-9999px;top:0;z-index:9999;background:var(--blue);color:var(--navy);padding:14px 20px;font-weight:800;font-size:0.92rem;text-decoration:none;border-radius:0 0 8px 0}
+.skip-to-main:focus{left:0;outline:3px solid var(--blue);outline-offset:2px}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
@@ -1468,6 +1471,203 @@ html{-webkit-text-size-adjust:100%;}
 </script>
 </head>
 
+
+<style>
+/* ── JOURNEY PAGE STYLES ── */
+.journey-intro {
+  background: var(--navy);
+  padding: clamp(110px,14vw,150px) clamp(20px,4vw,48px) clamp(36px,5vw,56px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.journey-intro::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 80% at 50% 30%,rgba(91,203,245,0.08) 0%,transparent 60%);
+  pointer-events: none;
+}
+.journey-intro-inner { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+.journey-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-bottom: 18px; padding: 6px 14px;
+  border-radius: 20px; background: rgba(91,203,245,0.12);
+  border: 1px solid rgba(91,203,245,0.3);
+}
+.journey-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 8px var(--blue); }
+.journey-eyebrow-text { font-size: 0.66rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--blue); }
+.journey-intro h1 {
+  font-weight: 800; font-size: clamp(2rem,4.5vw,3.4rem);
+  color: var(--white); letter-spacing: -0.03em;
+  line-height: 1.05; margin-bottom: 18px;
+}
+.journey-intro h1 em { color: var(--blue); font-style: normal; }
+.journey-intro p {
+  font-weight: 200; font-size: clamp(1rem,1.4vw,1.15rem);
+  color: rgba(255,255,255,0.65); line-height: 1.85;
+  max-width: 560px; margin: 0 auto 22px;
+}
+.explore-hint {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(91,203,245,0.85); border: 1px solid rgba(91,203,245,0.3);
+  padding: 8px 16px; border-radius: 24px; background: rgba(91,203,245,0.05);
+}
+
+/* DESKTOP MAP */
+.map-desktop { position: relative; width: 100%; line-height: 0; background: var(--navy); }
+.map-desktop img { width: 100%; height: auto; display: block; }
+.map-desktop .overlay { position: absolute; inset: 0; pointer-events: none; }
+.stage-btn {
+  position: absolute; transform: translate(-50%, -50%);
+  width: 56px; height: 56px; background: transparent; border: none;
+  cursor: pointer; pointer-events: all; border-radius: 50%; padding: 0; z-index: 10;
+  -webkit-tap-highlight-color: transparent; outline: none;
+  transition: transform 0.18s;
+}
+.stage-btn:hover { transform: translate(-50%, -50%) scale(1.15); }
+.stage-btn:focus-visible { box-shadow: 0 0 0 3px rgba(91,203,245,0.55); }
+.stage-btn-num {
+  display: flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; margin: 12px auto;
+  background: var(--blue); color: var(--navy);
+  font-weight: 800; font-size: 0.85rem;
+  border-radius: 50%; box-shadow: 0 0 0 4px rgba(10,37,64,0.85), 0 4px 12px rgba(0,0,0,0.4);
+  transition: all 0.18s;
+}
+.stage-btn:hover .stage-btn-num { background: var(--white); }
+
+/* MOBILE MAP — pan/zoom */
+.map-mobile {
+  display: none; position: relative; width: 100%; height: 70vh;
+  min-height: 380px; overflow: hidden; touch-action: none; background: var(--navy); cursor: grab;
+}
+.map-mobile.grabbing { cursor: grabbing; }
+.map-mobile-inner { position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform; }
+.map-mobile-inner img { display: block; width: 1440px; pointer-events: none; user-select: none; -webkit-user-select: none; }
+.mobile-btn {
+  position: absolute; transform: translate(-50%, -50%);
+  width: 56px; height: 56px; background: transparent; border: none;
+  border-radius: 50%; cursor: pointer; pointer-events: all; z-index: 10;
+  -webkit-tap-highlight-color: transparent;
+}
+.mobile-btn-num {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; margin: 10px auto;
+  background: var(--blue); color: var(--navy);
+  font-weight: 800; font-size: 0.95rem;
+  border-radius: 50%; box-shadow: 0 0 0 5px rgba(10,37,64,0.9), 0 4px 12px rgba(0,0,0,0.5);
+}
+.map-hint-pill {
+  position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
+  background: rgba(10,37,64,0.92); border: 1px solid rgba(91,203,245,0.32);
+  color: rgba(255,255,255,0.85); font-size: 0.66rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 8px 16px; border-radius: 20px; white-space: nowrap;
+  pointer-events: none; z-index: 20; transition: opacity 0.7s ease;
+}
+
+/* MODAL */
+.j-modal-overlay {
+  position: fixed; inset: 0; background: rgba(6,22,40,0.85);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  z-index: 500; display: flex; align-items: center; justify-content: center;
+  padding: 24px; opacity: 0; pointer-events: none; transition: opacity 0.22s ease;
+}
+.j-modal-overlay.open { opacity: 1; pointer-events: all; }
+.j-modal-card {
+  background: var(--navy); border: 1px solid rgba(91,203,245,0.22);
+  border-radius: 14px; width: 100%; max-width: 660px; max-height: 88vh;
+  overflow-y: auto; padding: 36px; position: relative;
+  transform: translateY(16px) scale(0.975); transition: transform 0.22s ease;
+}
+.j-modal-overlay.open .j-modal-card { transform: translateY(0) scale(1); }
+.j-modal-close {
+  position: absolute; top: 18px; right: 18px;
+  background: rgba(255,255,255,0.07); border: none; color: rgba(255,255,255,0.6);
+  width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+  font-size: 0.85rem; display: flex; align-items: center; justify-content: center;
+  font-family: inherit; transition: all 0.15s;
+}
+.j-modal-close:hover { background: rgba(91,203,245,0.18); color: var(--white); }
+.j-modal-nav-row {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;
+}
+.j-modal-nav-btn {
+  background: rgba(91,203,245,0.09); border: 1px solid rgba(91,203,245,0.22);
+  color: var(--blue); font-size: 0.66rem; font-weight: 800;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 6px 14px; border-radius: 6px; cursor: pointer;
+  font-family: inherit; transition: background 0.15s;
+}
+.j-modal-nav-btn:hover:not(:disabled) { background: rgba(91,203,245,0.18); }
+.j-modal-nav-btn:disabled { opacity: 0.22; cursor: default; }
+.j-modal-tag { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(91,203,245,0.7); }
+.j-modal-icon { font-size: 2rem; margin-bottom: 8px; line-height: 1; }
+.j-modal-name {
+  font-size: 1.7rem; font-weight: 800; color: var(--white);
+  line-height: 1.1; margin-bottom: 24px; padding-bottom: 20px;
+  border-bottom: 1px solid rgba(91,203,245,0.16);
+}
+.j-modal-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 26px; }
+.j-modal-section h3 {
+  font-size: 0.62rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 8px;
+}
+.j-modal-section p {
+  font-size: 0.9rem; font-weight: 200; line-height: 1.65;
+  color: rgba(255,255,255,0.85);
+}
+.j-time-badge {
+  display: inline-block; background: rgba(91,203,245,0.1); border: 1px solid rgba(91,203,245,0.32);
+  color: var(--blue); font-size: 0.78rem; font-weight: 700;
+  padding: 6px 12px; border-radius: 6px; line-height: 1.4;
+}
+.j-modal-cta {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 24px;
+  color: var(--blue); font-size: 0.82rem; font-weight: 700;
+  text-decoration: none; border-bottom: 1px solid rgba(91,203,245,0.35);
+  padding-bottom: 2px; transition: opacity 0.15s;
+}
+.j-modal-cta:hover { opacity: 0.7; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .map-desktop { display: none; }
+  .map-mobile  { display: block; }
+  .j-modal-overlay { align-items: flex-end; padding: 0; }
+  .j-modal-card {
+    max-width: 100%; max-height: 80vh; border-radius: 18px 18px 0 0;
+    padding: 28px 20px 32px;
+    transform: translateY(100%); transition: transform 0.3s cubic-bezier(.22,.61,.36,1);
+  }
+  .j-modal-card::before {
+    content: ''; display: block; width: 40px; height: 4px;
+    background: rgba(255,255,255,0.18); border-radius: 2px;
+    margin: 0 auto 20px;
+  }
+  .j-modal-overlay.open .j-modal-card { transform: translateY(0); }
+  .j-modal-grid { grid-template-columns: 1fr; gap: 20px; }
+  .j-modal-name { font-size: 1.4rem; }
+}
+
+/* JOURNEY CTA SECTION */
+.journey-cta {
+  background: var(--navy); padding: clamp(56px,8vw,88px) clamp(20px,4vw,48px);
+  text-align: center; border-top: 1px solid rgba(91,203,245,0.12);
+}
+.journey-cta-inner { max-width: 580px; margin: 0 auto; }
+.journey-cta h2 {
+  font-weight: 800; font-size: clamp(1.6rem,2.6vw,2.2rem);
+  color: var(--white); letter-spacing: -0.025em;
+  line-height: 1.15; margin-bottom: 14px;
+}
+.journey-cta p {
+  font-weight: 200; font-size: 1rem; color: rgba(255,255,255,0.7);
+  line-height: 1.85; margin-bottom: 24px;
+}
+</style>
 
 <body>
 <a href="#main-content" class="skip-to-main">Skip to main content</a>
@@ -1533,95 +1733,84 @@ html{-webkit-text-size-adjust:100%;}
     <a href="/" class="breadcrumb-item">Home</a><span class="breadcrumb-sep">›</span><a href="/#strategies" class="breadcrumb-item">Strategies</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-item current" aria-current="page">No-Cost Refinance</span>
   </div>
 </nav>
+<nav class="breadcrumb-bar" aria-label="Breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="/" class="breadcrumb-item">Home</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-item current" aria-current="page">The Journey</span>
+  </div>
+</nav>
 <main id="main-content">
 
-<!-- 404 HERO -->
-<section style="background:var(--navy);padding:clamp(120px,16vw,180px) clamp(20px,4vw,48px) clamp(72px,10vw,112px);position:relative;overflow:hidden;min-height:80vh;display:flex;align-items:center;justify-content:center">
-  <!-- Subtle radial glow -->
-  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 50% 30%,rgba(91,203,245,0.1) 0%,transparent 60%);pointer-events:none"></div>
-
-  <!-- Faint trail-like grid texture -->
-  <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(91,203,245,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(91,203,245,0.025) 1px,transparent 1px);background-size:48px 48px;pointer-events:none"></div>
-
-  <div class="max-w" style="max-width:760px;position:relative;z-index:1;text-align:center">
-
-    <!-- Big 404 -->
-    <div style="font-weight:800;font-size:clamp(5rem,14vw,9rem);color:rgba(91,203,245,0.18);letter-spacing:-0.06em;line-height:0.9;margin-bottom:8px;font-family:var(--font)">404</div>
-
-    <div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:24px;padding:6px 14px;border-radius:20px;background:rgba(91,203,245,0.12);border:1px solid rgba(91,203,245,0.25)">
-      <span style="width:6px;height:6px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px var(--blue)"></span>
-      <span style="font-size:0.66rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue)">Page Not Found</span>
+<!-- INTRO -->
+<section class="journey-intro">
+  <div class="journey-intro-inner">
+    <div class="journey-eyebrow">
+      <span class="journey-eyebrow-dot"></span>
+      <span class="journey-eyebrow-text">The Homebuyers' Journey</span>
     </div>
+    <h1>Buying a home is a <em>journey.</em></h1>
+    <p>Nineteen stages from first registration to keys in hand. Tap any marker on the trail to see what happens, how long it takes, and what to expect.</p>
+    <span class="explore-hint">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+        <circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M6 4v3.5M6 3v.2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      Tap any marker on the map
+    </span>
+  </div>
+</section>
 
-    <h1 style="font-weight:800;font-size:clamp(2.2rem,5vw,3.6rem);color:var(--white);letter-spacing:-0.03em;line-height:1.05;margin-bottom:20px">Hey, you fell off the trail.</h1>
+<!-- DESKTOP MAP -->
+<div class="map-desktop" id="desktopMap">
+  <img src="/journey-map.jpg" srcset="/journey-map.jpg 1x, /journey-map@2x.jpg 2x" alt="The homebuyers journey illustrated as a mountain hiking trail with 19 stages" draggable="false">
+  <div class="overlay" id="desktopOverlay"></div>
+</div>
 
-    <p style="font-weight:200;font-size:clamp(1rem,1.5vw,1.2rem);color:rgba(255,255,255,0.65);line-height:1.85;max-width:520px;margin:0 auto 36px">The page you're looking for took a wrong turn or never existed. Need help finding your way?</p>
+<!-- MOBILE MAP (pan/zoom) -->
+<div class="map-mobile" id="mobileMap">
+  <div class="map-mobile-inner" id="mobileInner">
+    <img src="/journey-map.jpg" srcset="/journey-map.jpg 1x, /journey-map@2x.jpg 2x" alt="The homebuyers journey map" draggable="false">
+    <div id="mobileDotsWrap"></div>
+  </div>
+  <div class="map-hint-pill" id="mapHint">Pinch and drag to explore  ·  Tap markers</div>
+</div>
 
-    <!-- Primary actions -->
-    <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:48px">
-      <a href="/" class="btn btn-blue btn-wobble">Back to home</a>
-      <a href="/schedule" style="display:inline-flex;align-items:center;justify-content:center;padding:13px 28px;background:transparent;color:var(--white);border:1px solid rgba(255,255,255,0.3);border-radius:8px;font-weight:800;font-size:0.95rem;text-decoration:none;transition:all 0.2s" onmouseover="this.style.background='rgba(255,255,255,0.08)';this.style.borderColor='var(--white)'" onmouseout="this.style.background='transparent';this.style.borderColor='rgba(255,255,255,0.3)'">Talk it through</a>
+<!-- MODAL -->
+<div class="j-modal-overlay" id="jModalOverlay" role="dialog" aria-modal="true" aria-labelledby="jModalNameEl">
+  <div class="j-modal-card" id="jModalCard">
+    <button class="j-modal-close" id="jModalClose" aria-label="Close">✕</button>
+    <div class="j-modal-nav-row">
+      <button class="j-modal-nav-btn" id="jPrevBtn">← Prev</button>
+      <span class="j-modal-tag" id="jModalTag"></span>
+      <button class="j-modal-nav-btn" id="jNextBtn">Next →</button>
     </div>
-
-    <!-- Quick links to common destinations -->
-    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(91,203,245,0.18);border-radius:12px;padding:28px 24px;text-align:left">
-      <div style="font-size:0.66rem;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue);margin-bottom:18px;text-align:center">Where you might be heading</div>
-
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px">
-
-        <a href="/about" style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(91,203,245,0.12);border-radius:8px;text-decoration:none;color:var(--white);transition:all 0.18s" onmouseover="this.style.background='rgba(91,203,245,0.08)';this.style.borderColor='rgba(91,203,245,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.03)';this.style.borderColor='rgba(91,203,245,0.12)'">
-          <span style="color:var(--blue);font-weight:800;font-size:0.85rem">→</span>
-          <div>
-            <div style="font-weight:800;font-size:0.88rem;color:var(--white)">About Daryn</div>
-            <div style="font-weight:200;font-size:0.74rem;color:rgba(255,255,255,0.5)">The story behind the work</div>
-          </div>
-        </a>
-
-        <a href="/schedule" style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(91,203,245,0.12);border-radius:8px;text-decoration:none;color:var(--white);transition:all 0.18s" onmouseover="this.style.background='rgba(91,203,245,0.08)';this.style.borderColor='rgba(91,203,245,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.03)';this.style.borderColor='rgba(91,203,245,0.12)'">
-          <span style="color:var(--blue);font-weight:800;font-size:0.85rem">→</span>
-          <div>
-            <div style="font-weight:800;font-size:0.88rem;color:var(--white)">Book a call</div>
-            <div style="font-weight:200;font-size:0.74rem;color:rgba(255,255,255,0.5)">Free 15-minute call</div>
-          </div>
-        </a>
-
-        <a href="/first-time-buyers" style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(91,203,245,0.12);border-radius:8px;text-decoration:none;color:var(--white);transition:all 0.18s" onmouseover="this.style.background='rgba(91,203,245,0.08)';this.style.borderColor='rgba(91,203,245,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.03)';this.style.borderColor='rgba(91,203,245,0.12)'">
-          <span style="color:var(--blue);font-weight:800;font-size:0.85rem">→</span>
-          <div>
-            <div style="font-weight:800;font-size:0.88rem;color:var(--white)">First-time buyers</div>
-            <div style="font-weight:200;font-size:0.74rem;color:rgba(255,255,255,0.5)">What no one tells you</div>
-          </div>
-        </a>
-
-        <a href="/self-employed" style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(91,203,245,0.12);border-radius:8px;text-decoration:none;color:var(--white);transition:all 0.18s" onmouseover="this.style.background='rgba(91,203,245,0.08)';this.style.borderColor='rgba(91,203,245,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.03)';this.style.borderColor='rgba(91,203,245,0.12)'">
-          <span style="color:var(--blue);font-weight:800;font-size:0.85rem">→</span>
-          <div>
-            <div style="font-weight:800;font-size:0.88rem;color:var(--white)">Self-employed</div>
-            <div style="font-weight:200;font-size:0.74rem;color:rgba(255,255,255,0.5)">Bank statement, DSCR, NINE</div>
-          </div>
-        </a>
-
-        <a href="/military-veterans" style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(91,203,245,0.12);border-radius:8px;text-decoration:none;color:var(--white);transition:all 0.18s" onmouseover="this.style.background='rgba(91,203,245,0.08)';this.style.borderColor='rgba(91,203,245,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.03)';this.style.borderColor='rgba(91,203,245,0.12)'">
-          <span style="color:var(--blue);font-weight:800;font-size:0.85rem">→</span>
-          <div>
-            <div style="font-weight:800;font-size:0.88rem;color:var(--white)">Military &amp; Veterans</div>
-            <div style="font-weight:200;font-size:0.74rem;color:rgba(255,255,255,0.5)">VA loans done right</div>
-          </div>
-        </a>
-
-        <a href="/field-notes" style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(91,203,245,0.12);border-radius:8px;text-decoration:none;color:var(--white);transition:all 0.18s" onmouseover="this.style.background='rgba(91,203,245,0.08)';this.style.borderColor='rgba(91,203,245,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.03)';this.style.borderColor='rgba(91,203,245,0.12)'">
-          <span style="color:var(--blue);font-weight:800;font-size:0.85rem">→</span>
-          <div>
-            <div style="font-weight:800;font-size:0.88rem;color:var(--white)">Field Notes</div>
-            <div style="font-weight:200;font-size:0.74rem;color:rgba(255,255,255,0.5)">Strategy I write down</div>
-          </div>
-        </a>
-
+    <div class="j-modal-icon" id="jModalIcon" aria-hidden="true"></div>
+    <h2 class="j-modal-name" id="jModalNameEl"></h2>
+    <div class="j-modal-grid">
+      <div class="j-modal-section">
+        <h3>What We Do</h3>
+        <p id="jModalWhat"></p>
+      </div>
+      <div class="j-modal-section">
+        <h3>Timeline</h3>
+        <span class="j-time-badge" id="jModalTime"></span>
+      </div>
+      <div class="j-modal-section">
+        <h3>What to Expect</h3>
+        <p id="jModalExpect"></p>
       </div>
     </div>
+    <div id="jModalCtaWrap"></div>
+  </div>
+</div>
 
-    <p style="font-weight:200;font-size:0.84rem;color:rgba(255,255,255,0.45);margin-top:32px">Or reach out direct: <a href="tel:4243966967" style="color:var(--blue);text-decoration:none;font-weight:800">424-396-6967</a></p>
-
+<!-- BOTTOM CTA -->
+<section class="journey-cta">
+  <div class="journey-cta-inner">
+    <h2>Ready to start your journey?</h2>
+    <p>The first stage takes less than 5 minutes. Let's talk through your situation and see if we're a fit.</p>
+    <a href="/schedule" class="btn btn-blue btn-wobble">Book a 15-minute call</a>
   </div>
 </section>
 
@@ -1986,6 +2175,256 @@ function submitFN() {
   document.getElementById('fnSubForm').style.display = 'none';
   document.getElementById('fnSubConfirm').style.display = 'block';
 }
+</script>
+
+
+<script>
+// ── JOURNEY STAGE DATA — 19 stages in your specified order ──
+// x/y = percentage of SVG canvas (1440 x 810), calibrated to map pin locations
+const stages = [
+  { num: 1,  name: "Registration",            icon: "🏔️", x: 33.0, y: 79.0,
+    what:  "We lock your interest rate, register your loan with the lender, and open your file with escrow and title.",
+    time:  "Same day as your accepted offer",
+    expect: "A welcome from the full team, an introduction to escrow, and a clear closing timeline." },
+  { num: 2,  name: "Submission",              icon: "📋", x: 18.0, y: 87.0,
+    what:  "We package your complete loan file and submit it to underwriting for review.",
+    time:  "1 to 2 business days",
+    expect: "A confirmation of submission and an initial list of any conditions we will need to clear." },
+  { num: 3,  name: "Pre-Approved",            icon: "🏠", x: 8.0,  y: 83.0,
+    what:  "We review your income, assets, and credit to issue a formal pre-approval letter that sellers and agents take seriously.",
+    time:  "24 to 48 hours",
+    expect: "A clear number — exactly how much home you can comfortably buy and what your monthly payment will look like." },
+  { num: 4,  name: "Searching",               icon: "🔍", x: 7.0,  y: 71.0,
+    what:  "We stay on standby — answering financing questions, running payment scenarios, and responding fast when you find a home you want to offer on.",
+    time:  "Days to weeks",
+    expect: "Rapid turnaround on anything offer-related. We move at your speed." },
+  { num: 5,  name: "Contract",                icon: "📅", x: 5.0,  y: 68.0,
+    what:  "Your realtor finalizes your purchase agreement. We review every term to confirm it aligns with your loan structure.",
+    time:  "1 business day",
+    expect: "Confirmation that all contract terms are lender-approved and we are cleared to move forward." },
+  { num: 6,  name: "Open Escrow",             icon: "🏛️", x: 8.5,  y: 57.5,
+    what:  "Your escrow company opens the file, holds funds, and coordinates the transaction between all parties.",
+    time:  "1 to 2 business days",
+    expect: "Your escrow number and wire instructions for your earnest money deposit." },
+  { num: 7,  name: "Initial Loan Disclosure", icon: "📄", x: 15.5, y: 57.0,
+    what:  "We send your federal disclosure package, including your Loan Estimate, for electronic signature.",
+    time:  "Within 3 business days of application",
+    expect: "A clear breakdown of your rate, monthly payment, and estimated closing costs. No guessing." },
+  { num: 8,  name: "Inspections",             icon: "🔧", x: 21.5, y: 53.5,
+    what:  "Your realtor coordinates inspections within your contingency window. We connect you with trusted inspectors if needed.",
+    time:  "7 to 10 days after contract",
+    expect: "Results that may open a negotiation window on repairs or seller credits." },
+  { num: 9,  name: "Appraisal",               icon: "📊", x: 28.5, y: 47.5,
+    what:  "We order and track your home appraisal with a licensed independent appraiser.",
+    time:  "7 to 14 days",
+    expect: "An independent value confirmation of the property. We walk through the report with you when it arrives." },
+  { num: 10, name: "Loan Approved",           icon: "✅", x: 30.5, y: 43.0,
+    what:  "We receive the underwriter's decision and communicate any remaining conditions to clear.",
+    time:  "3 to 7 business days after file submission",
+    expect: "A conditional approval — a short, manageable list of final items to resolve." },
+  { num: 11, name: "Closing Disclosure",      icon: "📑", x: 35.5, y: 36.5,
+    what:  "We send your final loan terms and exact closing costs for your review and signature.",
+    time:  "At least 3 business days before closing — required by law",
+    expect: "Final, locked numbers. No surprises at the signing table." },
+  { num: 12, name: "Clear to Close",          icon: "🚦", x: 43.5, y: 31.5,
+    what:  "We confirm all conditions are satisfied and authorize loan documents to be drawn and sent to escrow.",
+    time:  "1 to 3 days before your closing date",
+    expect: "Your signing appointment gets scheduled. The finish line is in sight." },
+  { num: 13, name: "Closed",                  icon: "✍️", x: 49.5, y: 24.5,
+    what:  "You sign your loan documents at the title company or with a mobile notary.",
+    time:  "1 to 2 hours at the signing table",
+    expect: "A lot of signatures. We prep you in advance so nothing at the table catches you off guard." },
+  { num: 14, name: "Funded",                  icon: "💵", x: 53.5, y: 19.0,
+    what:  "We wire the loan funds to escrow so the transaction can record with the county.",
+    time:  "Same day or next business day after signing",
+    expect: "Confirmation that funds are in escrow and we are in the final queue to record." },
+  { num: 15, name: "Walk Through",            icon: "🚶", x: 57.5, y: 11.5,
+    what:  "Your realtor coordinates your final walkthrough of the property before closing.",
+    time:  "Day of or day before your closing appointment",
+    expect: "A last look to confirm the home is in the agreed condition. Your final checkpoint before keys." },
+  { num: 16, name: "Close Escrow",            icon: "🏁", x: 62.0, y: 5.5,
+    what:  "Escrow confirms recordation with the county and coordinates with your agent for key delivery.",
+    time:  "Same day as funding in most California counties",
+    expect: "Your agent calls you. You get the keys. This is the moment." },
+  { num: 17, name: "Keys",                    icon: "🔑", x: 66.5, y: 10.0,
+    what:  "Escrow formally closes, title transfers to your name, and the transaction is officially complete.",
+    time:  "Same day as recording",
+    expect: "Your final settlement statement and official confirmation that you are the owner." },
+  { num: 18, name: "Move In",                 icon: "📦", x: 73.5, y: 15.5,
+    what:  "You move into your new home. We celebrate with you and introduce what comes next in our relationship.",
+    time:  "Whenever you are ready",
+    expect: "A call from us within 30 days to check in and make sure everything is exactly as expected." },
+  { num: 19, name: "The Journey Continues",   icon: "🧭", x: 79.5, y: 21.0,
+    what:  "We monitor your rate, equity position, and market conditions through Mortgage Under Management — our ongoing advisory service.",
+    time:  "Ongoing, for as long as you own the home",
+    expect: "Proactive outreach when there is an opportunity. Refinance, equity access, or an annual review.",
+    link:  "/mortgage-under-management" }
+];
+
+let activeIndex = 0;
+
+// Build tap targets on both desktop and mobile maps
+function buildDots() {
+  const dOverlay = document.getElementById('desktopOverlay');
+  const mWrap    = document.getElementById('mobileDotsWrap');
+
+  stages.forEach((s, i) => {
+    // Desktop button
+    const db = document.createElement('button');
+    db.className = 'stage-btn';
+    db.style.left = s.x + '%';
+    db.style.top  = s.y + '%';
+    db.setAttribute('aria-label', 'Stage ' + s.num + ': ' + s.name);
+    db.innerHTML = '<span class="stage-btn-num">' + s.num + '</span>';
+    db.addEventListener('click', () => openModal(i));
+    dOverlay.appendChild(db);
+
+    // Mobile button
+    const mb = document.createElement('button');
+    mb.className = 'mobile-btn';
+    mb.style.left = (s.x / 100 * 1440) + 'px';
+    mb.style.top  = (s.y / 100 * 810)  + 'px';
+    mb.setAttribute('aria-label', 'Stage ' + s.num + ': ' + s.name);
+    mb.setAttribute('data-stage', i);
+    mb.innerHTML = '<span class="mobile-btn-num">' + s.num + '</span>';
+    mWrap.appendChild(mb);
+  });
+}
+
+// Modal control
+function openModal(index) {
+  activeIndex = index;
+  const s = stages[index];
+  document.getElementById('jModalTag').textContent    = 'Stage ' + s.num + ' of ' + stages.length;
+  document.getElementById('jModalIcon').textContent   = s.icon;
+  document.getElementById('jModalNameEl').textContent = s.name;
+  document.getElementById('jModalWhat').textContent   = s.what;
+  document.getElementById('jModalTime').textContent   = s.time;
+  document.getElementById('jModalExpect').textContent = s.expect;
+
+  const ctaWrap = document.getElementById('jModalCtaWrap');
+  ctaWrap.innerHTML = '';
+  if (s.link) {
+    const a = document.createElement('a');
+    a.className   = 'j-modal-cta';
+    a.href        = s.link;
+    a.textContent = 'Learn about Mortgage Under Management →';
+    ctaWrap.appendChild(a);
+  }
+
+  document.getElementById('jPrevBtn').disabled = (index === 0);
+  document.getElementById('jNextBtn').disabled = (index === stages.length - 1);
+  document.getElementById('jModalCard').scrollTop = 0;
+  document.getElementById('jModalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('jModalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('jModalClose').addEventListener('click', closeModal);
+document.getElementById('jPrevBtn').addEventListener('click', () => openModal(activeIndex - 1));
+document.getElementById('jNextBtn').addEventListener('click', () => openModal(activeIndex + 1));
+document.getElementById('jModalOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('jModalOverlay')) closeModal();
+});
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('jModalOverlay').classList.contains('open')) return;
+  if (e.key === 'Escape')                                              closeModal();
+  if (e.key === 'ArrowLeft'  && activeIndex > 0)                        openModal(activeIndex - 1);
+  if (e.key === 'ArrowRight' && activeIndex < stages.length - 1)        openModal(activeIndex + 1);
+});
+
+// ── Mobile pan / zoom ──
+const MAP_W = 1440, MAP_H = 810;
+const MIN_SCALE = 0.27, MAX_SCALE = 3.0;
+let panX = 0, panY = 0, scale = 0.6;
+let startPanX = 0, startPanY = 0, startTX = 0, startTY = 0, startTTime = 0;
+let hasMoved = false, startDist = 0, startScale = 1;
+let pmxS = 0, pmyS = 0, ppxS = 0, ppyS = 0;
+
+function clampApply() {
+  const c = document.getElementById('mobileMap');
+  if (!c) return;
+  const cw = c.offsetWidth, ch = c.offsetHeight;
+  const iw = MAP_W * scale, ih = MAP_H * scale;
+  panX = iw <= cw ? (cw - iw) / 2 : Math.min(0, Math.max(panX, cw - iw));
+  panY = ih <= ch ? (ch - ih) / 2 : Math.min(0, Math.max(panY, ch - ih));
+  document.getElementById('mobileInner').style.transform =
+    'translate(' + panX + 'px,' + panY + 'px) scale(' + scale + ')';
+}
+
+function ptDist(a, b) { return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY); }
+
+function initMobile() {
+  const c = document.getElementById('mobileMap');
+  if (!c) return;
+  const ch = c.offsetHeight;
+  scale = Math.max(ch / MAP_H, MIN_SCALE);
+  panX = 0; panY = ch - MAP_H * scale;
+  clampApply();
+  c.addEventListener('touchstart', onTS, { passive: false });
+  c.addEventListener('touchmove',  onTM, { passive: false });
+  c.addEventListener('touchend',   onTE, { passive: false });
+  setTimeout(() => { const h = document.getElementById('mapHint'); if (h) h.style.opacity = '0'; }, 4000);
+}
+
+function onTS(e) {
+  e.preventDefault();
+  if (e.touches.length === 1) {
+    hasMoved = false; startTX = e.touches[0].clientX; startTY = e.touches[0].clientY;
+    startTTime = Date.now(); startPanX = panX; startPanY = panY;
+    document.getElementById('mobileMap').classList.add('grabbing');
+  } else if (e.touches.length === 2) {
+    startDist = ptDist(e.touches[0], e.touches[1]); startScale = scale;
+    pmxS = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+    pmyS = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+    ppxS = panX; ppyS = panY;
+  }
+}
+
+function onTM(e) {
+  e.preventDefault();
+  if (e.touches.length === 1) {
+    const dx = e.touches[0].clientX - startTX, dy = e.touches[0].clientY - startTY;
+    if (Math.abs(dx) > 5 || Math.abs(dy) > 5) hasMoved = true;
+    panX = startPanX + dx; panY = startPanY + dy; clampApply();
+  } else if (e.touches.length === 2) {
+    const d = ptDist(e.touches[0], e.touches[1]);
+    const ns = Math.min(MAX_SCALE, Math.max(MIN_SCALE, startScale * (d / startDist)));
+    const c = document.getElementById('mobileMap'), r = c.getBoundingClientRect();
+    const mx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - r.left;
+    const my = (e.touches[0].clientY + e.touches[1].clientY) / 2 - r.top;
+    const ox = (pmxS - r.left - ppxS) / startScale, oy = (pmyS - r.top - ppyS) / startScale;
+    panX = mx - ox * ns; panY = my - oy * ns; scale = ns; clampApply();
+  }
+}
+
+function onTE(e) {
+  e.preventDefault();
+  document.getElementById('mobileMap').classList.remove('grabbing');
+  if (!hasMoved && e.changedTouches.length === 1 && Date.now() - startTTime < 320) {
+    const t = e.changedTouches[0];
+    const el = document.elementFromPoint(t.clientX, t.clientY);
+    let target = el;
+    while (target && !target.classList.contains('mobile-btn')) target = target.parentElement;
+    if (target && target.classList.contains('mobile-btn')) {
+      const idx = parseInt(target.getAttribute('data-stage'), 10);
+      if (!isNaN(idx)) openModal(idx);
+    }
+  }
+  hasMoved = false;
+}
+
+// Init
+buildDots();
+if (window.innerWidth <= 768) initMobile();
+let rsz; window.addEventListener('resize', () => {
+  clearTimeout(rsz);
+  rsz = setTimeout(() => { if (window.innerWidth <= 768) initMobile(); }, 150);
+});
 </script>
 
 </body>
