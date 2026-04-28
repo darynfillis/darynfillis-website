@@ -1223,7 +1223,7 @@ footer { background: var(--ink); padding: 56px 48px 36px; }
 .nav-continue {
   display: inline-flex;
   align-items: center;
-  padding: 9px 20px;
+  padding: 9px 22px;
   background: var(--blue);
   color: var(--navy);
   font-weight: 600;
@@ -1231,7 +1231,7 @@ footer { background: var(--ink); padding: 56px 48px 36px; }
   letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 999px;
   border: 1px solid var(--blue);
   transition: all 0.18s;
   white-space: nowrap;
@@ -1255,6 +1255,15 @@ footer { background: var(--ink); padding: 56px 48px 36px; }
   .nav-signin { display: none; }
   .nav-continue { padding: 8px 14px; font-size: 0.66rem; margin-left: 4px; }
 }
+
+/* Force alignment of all header elements */
+.nav-right { display: flex !important; align-items: center !important; gap: 12px !important; }
+.nav-right > * { display: inline-flex !important; align-items: center !important; line-height: 1 !important; }
+.nav-links { display: flex !important; align-items: center !important; }
+.nav-links > a { display: inline-flex !important; align-items: center !important; line-height: 1 !important; }
+.nav-phone-icon-only { line-height: 1 !important; }
+.nav-signin { line-height: 1 !important; }
+.nav-continue { line-height: 1 !important; }
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
