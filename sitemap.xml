@@ -171,4 +171,12 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Move-Up Method strategy -->
+  <url>
+    <loc>https://darynfillis.com/move-up-method</loc>
+    <lastmod>2026-04-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
