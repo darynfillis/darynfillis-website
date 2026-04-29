@@ -1495,7 +1495,19 @@ html{-webkit-text-size-adjust:100%;}
   border-radius: 20px; background: rgba(91,203,245,0.12);
   border: 1px solid rgba(91,203,245,0.3);
 }
-.journey-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 8px var(--blue); }
+.journey-eyebrow-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 0 8px var(--blue);
+  animation: dotPulse 2.4s ease-in-out infinite;
+}
+@keyframes dotPulse {
+  0%, 100% { opacity: 1;   box-shadow: 0 0 8px var(--blue); }
+  50%      { opacity: 0.45; box-shadow: 0 0 14px var(--blue); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .journey-eyebrow-dot { animation: none; }
+}
 .journey-eyebrow-text { font-size: 0.66rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--blue); }
 .journey-intro h1 {
   font-weight: 800; font-size: clamp(2rem,4.5vw,3.4rem);
