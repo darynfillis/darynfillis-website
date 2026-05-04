@@ -2,30 +2,50 @@
 User-agent: *
 Allow: /
 
+# Lead magnet content (gated, do not index directly)
+Disallow: /decoding-2026-housing-market.pdf
+Disallow: /decode3-confirmed
+
 # Sitemap
 Sitemap: https://darynfillis.com/sitemap.xml
 
 # AI/LLM crawlers explicitly permitted
 User-agent: GPTBot
 Allow: /
+Disallow: /decoding-2026-housing-market.pdf
+Disallow: /decode3-confirmed
 
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /decoding-2026-housing-market.pdf
+Disallow: /decode3-confirmed
 
 User-agent: Claude-Web
 Allow: /
+Disallow: /decoding-2026-housing-market.pdf
+Disallow: /decode3-confirmed
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /decoding-2026-housing-market.pdf
+Disallow: /decode3-confirmed
 
 User-agent: anthropic-ai
 Allow: /
+Disallow: /decoding-2026-housing-market.pdf
+Disallow: /decode3-confirmed
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /decoding-2026-housing-market.pdf
+Disallow: /decode3-confirmed
 
 User-agent: Google-Extended
 Allow: /
+Disallow: /decoding-2026-housing-market.pdf
+Disallow: /decode3-confirmed
 
 User-agent: CCBot
 Allow: /
+Disallow: /decoding-2026-housing-market.pdf
+Disallow: /decode3-confirmed

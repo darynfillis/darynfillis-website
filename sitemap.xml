@@ -201,4 +201,12 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Lead magnet: 2026 buyer's guide capture -->
+  <url>
+    <loc>https://darynfillis.com/decode3</loc>
+    <lastmod>2026-04-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>
