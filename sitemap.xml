@@ -179,4 +179,26 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Field Notes: trending topic blogs -->
+  <url>
+    <loc>https://darynfillis.com/field-notes/moving-with-a-low-mortgage-rate</loc>
+    <lastmod>2026-04-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://darynfillis.com/field-notes/california-home-insurance-affordability</loc>
+    <lastmod>2026-04-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://darynfillis.com/field-notes/when-an-arm-makes-sense</loc>
+    <lastmod>2026-04-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>
