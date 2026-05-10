@@ -2744,18 +2744,66 @@ html{-webkit-text-size-adjust:100%;}
   text-decoration: underline;
 }
 
+
+/* Itemized closing costs */
+.closing-item-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 0;
+  border-bottom: 1px dotted var(--rule);
+}
+.closing-item-row:last-child { border-bottom: none; }
+.closing-item-row label {
+  font-size: 0.86rem;
+  color: var(--body);
+  font-weight: 400;
+}
+.closing-item-row .input-with-prefix {
+  width: 130px;
+  position: relative;
+}
+.closing-item-row .closing-item {
+  width: 100%;
+  padding: 5px 8px 5px 22px;
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  font-size: 0.85rem;
+  color: var(--navy);
+  font-family: inherit;
+  background: var(--white);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+.closing-item-row .closing-item:focus { outline: none; border-color: var(--blue); }
+.closing-item-row .input-prefix {
+  left: 6px;
+  font-size: 0.78rem;
+}
+#closingItemized summary::-webkit-details-marker { display: none; }
+#closingItemized[open] summary span:last-child { content: '−'; }
+
 /* Disclaimer */
 .disclaimer-section {
-  background: var(--bg);
-  padding: clamp(40px,5vw,60px) clamp(20px,4vw,48px);
-  border-top: 1px solid var(--rule);
+  background: var(--white);
+  padding: clamp(32px,4vw,48px) clamp(20px,4vw,48px);
 }
 .disclaimer-inner {
-  max-width: 880px; margin: 0 auto;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 28px;
+  background: var(--bg);
+  border-radius: 10px;
+  border: 1px solid var(--rule);
 }
 .disclaimer-text {
-  font-size: 0.84rem; color: var(--muted);
-  line-height: 1.75; font-weight: 200;
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.65;
+  font-weight: 400;
+  margin: 0;
 }
 </style>
 
@@ -2841,7 +2889,7 @@ html{-webkit-text-size-adjust:100%;}
       <span class="calc-hero-dot"></span>
       <span class="calc-hero-eyebrow-text">Educational Tool · All Loan Programs</span>
     </div>
-    <h1>Mortgage calculator <em>built to teach</em>.</h1>
+    <h1>Mortgage calculator <em>built to teach.</em></h1>
     <p>An educational tool that walks you through how every part of a mortgage payment works. FHA mortgage insurance, VA funding fee tiers, conventional PMI, and county-specific loan limits all built in. Hover the question marks to learn what each input means.</p>
     <div style="margin-top:24px;display:inline-flex;align-items:center;gap:10px;padding:8px 16px;background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.35);border-radius:24px;font-size:0.78rem;color:#fbbf24;font-weight:700;letter-spacing:0.04em">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -2891,9 +2939,6 @@ html{-webkit-text-size-adjust:100%;}
   <div style="font-size:0.78rem;color:var(--muted);font-weight:200;margin-top:8px;font-style:italic">
     Generated <span id="printDate"></span>
   </div>
-</div>
-
-  <p style="font-size:0.78rem;color:var(--body);font-weight:400;line-height:1.7;margin:0">This is an educational estimate, not a loan offer or commitment to lend. Your actual monthly payment depends on your finalized interest rate (subject to lock), mortgage insurance factor (varies by lender, credit score, and program), property tax assessment by your county, your specific homeowners insurance quote, and any HOA dues. Final loan terms are determined at lock and disclosed in your Loan Estimate. To get an accurate quote for your situation, contact me directly. NEO Home Loans powered by Better Mortgage Corporation. Equal Housing Opportunity. Branch NMLS #2733710 · 222 Pacific Coast Hwy, 10th Floor, Suite 135, El Segundo, CA 90245.</p>
 </div>
 
 <!-- MAIN CALCULATOR -->
@@ -3107,13 +3152,13 @@ html{-webkit-text-size-adjust:100%;}
           <input type="date" id="closingDate">
         </div>
         <div>
-          <label class="input-label" for="closingCostsPct">
-            Closing costs
-            <span class="help-icon" tabindex="0" data-tooltip="Closing costs typically run 2 to 3 percent of loan amount in California. Includes lender fees, title, escrow, recording, appraisal, and so on. Default 2.5 percent is a reasonable estimate.">?</span>
+          <label class="input-label" for="closingCostsTotal">
+            Closing costs total
+            <span class="help-icon" tabindex="0" data-tooltip="Total calculated from the itemized breakdown below. Edit individual items to adjust.">?</span>
           </label>
-          <div class="input-with-suffix">
-            <input type="text" id="closingCostsPct" inputmode="decimal" value="2.5">
-            <span class="input-suffix">% of loan</span>
+          <div class="input-with-prefix" style="position:relative">
+            <span class="input-prefix">$</span>
+            <input type="text" id="closingCostsTotal" inputmode="numeric" value="0" readonly style="background:var(--bg);color:var(--navy);font-weight:700">
           </div>
         </div>
       </div>
@@ -3122,14 +3167,13 @@ html{-webkit-text-size-adjust:100%;}
         <div>
           <label class="input-label" for="taxEscrowMonths">
             Tax escrow reserve
-            <span class="help-icon" tabindex="0" data-tooltip="Lenders typically collect 2 to 3 months of property taxes upfront to seed your escrow account. The exact amount depends on the closing month and when taxes are due in your area.">?</span>
+            <span class="help-icon" tabindex="0" data-tooltip="In California, the number of months lenders collect upfront varies by closing date because of the CA tax calendar (1st installment due Nov 1, 2nd installment due Feb 1). Auto-calculated based on your closing date.">?</span>
           </label>
-          <select id="taxEscrowMonths">
-            <option value="2">2 months</option>
-            <option value="3" selected>3 months</option>
-            <option value="4">4 months</option>
-            <option value="6">6 months</option>
-          </select>
+          <div style="padding:11px 14px;border:1.5px solid var(--rule);border-radius:8px;background:var(--bg);color:var(--navy);font-size:0.95rem;font-weight:600;display:flex;align-items:center;gap:8px">
+            <span id="taxEscrowMonthsDisplay">3 months</span>
+            <span style="font-size:0.72rem;color:var(--muted);font-weight:400">(CA auto)</span>
+          </div>
+          <input type="hidden" id="taxEscrowMonths" value="3">
         </div>
         <div>
           <label class="input-label" for="insuranceEscrowMonths">
@@ -3166,6 +3210,105 @@ html{-webkit-text-size-adjust:100%;}
           </div>
         </div>
       </div>
+
+      <!-- Itemized closing costs breakdown -->
+      <details id="closingItemized" open style="margin-top:18px;background:var(--bg);border:1px solid var(--rule);border-radius:8px;padding:0;overflow:hidden">
+        <summary style="cursor:pointer;padding:14px 16px;font-weight:700;color:var(--navy);font-size:0.92rem;letter-spacing:-0.01em;list-style:none;display:flex;align-items:center;justify-content:space-between">
+          <span>Itemized closing costs</span>
+          <span style="color:var(--blue);font-size:1.2rem;font-weight:300">−</span>
+        </summary>
+        <div style="padding:0 16px 16px 16px">
+
+          <div style="font-size:0.7rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);margin:8px 0 8px 0">Lender Fees</div>
+
+          <div class="closing-item-row">
+            <label>Origination fee <span class="help-icon" tabindex="0" data-tooltip="Lender fee for processing your loan. Often 0 to 1 percent of loan amount. Many lenders charge nothing here and earn on the rate instead.">?</span></label>
+            <div class="input-with-prefix"><span class="input-prefix">$</span><input type="text" class="closing-item" data-key="origination" inputmode="numeric" value="0"></div>
+          </div>
+
+          <div class="closing-item-row">
+            <label>Underwriting fee <span class="help-icon" tabindex="0" data-tooltip="Lender fee for reviewing and approving your loan file. Usually a flat fee between $800 and $1,200.">?</span></label>
+            <div class="input-with-prefix"><span class="input-prefix">$</span><input type="text" class="closing-item" data-key="underwriting" inputmode="numeric" value="995"></div>
+          </div>
+
+          <div class="closing-item-row">
+            <label>Processing fee <span class="help-icon" tabindex="0" data-tooltip="Lender fee for preparing and submitting your loan package. Usually a flat fee between $500 and $1,500.">?</span></label>
+            <div class="input-with-prefix"><span class="input-prefix">$</span><input type="text" class="closing-item" data-key="processing" inputmode="numeric" value="1,295"></div>
+          </div>
+
+          <div class="closing-item-row">
+            <label>Appraisal <span class="help-icon" tabindex="0" data-tooltip="Third-party fee to determine the property value. Required by lenders. Typically $700 to $1,200 depending on property complexity.">?</span></label>
+            <div class="input-with-prefix"><span class="input-prefix">$</span><input type="text" class="closing-item" data-key="appraisal" inputmode="numeric" value="750"></div>
+          </div>
+
+          <div class="closing-item-row">
+            <label>Credit report <span class="help-icon" tabindex="0" data-tooltip="Lender pulls your credit report from all three bureaus. Usually $100 to $200.">?</span></label>
+            <div class="input-with-prefix"><span class="input-prefix">$</span><input type="text" class="closing-item" data-key="credit" inputmode="numeric" value="150"></div>
+          </div>
+
+          <div class="closing-item-row">
+            <label>Other (lender) <span class="help-icon" tabindex="0" data-tooltip="Add any other lender fee not listed above. Examples: rate lock fee, document prep, wire transfer.">?</span></label>
+            <div class="input-with-prefix"><span class="input-prefix">$</span><input type="text" class="closing-item" data-key="otherLender" inputmode="numeric" value="0"></div>
+          </div>
+
+          <div style="font-size:0.7rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);margin:14px 0 8px 0">Title &amp; Escrow</div>
+
+          <div class="closing-item-row">
+            <label>Lender's title insurance <span class="help-icon" tabindex="0" data-tooltip="Insurance that protects the lender against title defects. Required. Cost varies by loan amount.">?</span></label>
+            <div class="input-with-prefix"><span class="input-prefix">$</span><input type="text" class="closing-item" data-key="lenderTitle" inputmode="numeric" value="1,200"></div>
+          </div>
+
+          <div class="closing-item-row">
+            <label>Owner's title insurance <span class="help-icon" tabindex="0" data-tooltip="Optional insurance that protects YOU against title defects. Highly recommended in California. One-time premium based on purchase price.">?</span></label>
+            <div class="input-with-prefix"><span class="input-prefix">$</span><input type="text" class="closing-item" data-key="ownerTitle" inputmode="numeric" value="2,200"></div>
+          </div>
+
+          <div class="closing-item-row">
+            <label>Escrow fee <span class="help-icon" tabindex="0" data-tooltip="Fee paid to the neutral third party who handles all the paperwork and money at closing. In CA, often split with seller. Varies by sales price.">?</span></label>
+            <div class="input-with-prefix"><span class="input-prefix">$</span><input type="text" class="closing-item" data-key="escrowFee" inputmode="numeric" value="2,500"></div>
+          </div>
+
+          <div class="closing-item-row">
+            <label>Settlement fee <span class="help-icon" tabindex="0" data-tooltip="Fee for finalizing all closing paperwork. Sometimes included in escrow fee, sometimes separate.">?</span></label>
+            <div class="input-with-prefix"><span class="input-prefix">$</span><input type="text" class="closing-item" data-key="settlement" inputmode="numeric" value="500"></div>
+          </div>
+
+          <div class="closing-item-row">
+            <label>Other (title &amp; escrow) <span class="help-icon" tabindex="0" data-tooltip="Add any other title or escrow fee not listed above. Examples: notary, courier, endorsements.">?</span></label>
+            <div class="input-with-prefix"><span class="input-prefix">$</span><input type="text" class="closing-item" data-key="otherTitle" inputmode="numeric" value="0"></div>
+          </div>
+
+          <div style="font-size:0.7rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);margin:14px 0 8px 0">Government</div>
+
+          <div class="closing-item-row">
+            <label>Recording fees <span class="help-icon" tabindex="0" data-tooltip="County fee to record the new deed and mortgage. Flat fee, usually $200 to $600.">?</span></label>
+            <div class="input-with-prefix"><span class="input-prefix">$</span><input type="text" class="closing-item" data-key="recording" inputmode="numeric" value="450"></div>
+          </div>
+
+          <div class="closing-item-row">
+            <label>Other (government) <span class="help-icon" tabindex="0" data-tooltip="Add any other government fee not listed above. Examples: city stamp tax, special assessments.">?</span></label>
+            <div class="input-with-prefix"><span class="input-prefix">$</span><input type="text" class="closing-item" data-key="otherGov" inputmode="numeric" value="0"></div>
+          </div>
+
+          <div style="font-size:0.7rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);margin:14px 0 8px 0">HOA &amp; Other</div>
+
+          <div class="closing-item-row">
+            <label>HOA Questionnaire <span class="help-icon" tabindex="0" data-tooltip="If buying a condo or HOA-governed home, the HOA charges to provide the questionnaire and documents the lender needs. Usually $200 to $500.">?</span></label>
+            <div class="input-with-prefix"><span class="input-prefix">$</span><input type="text" class="closing-item" data-key="hoaQuestionnaire" inputmode="numeric" value="0"></div>
+          </div>
+
+          <div class="closing-item-row">
+            <label>Other <span class="help-icon" tabindex="0" data-tooltip="Add any other closing-related fee not listed above.">?</span></label>
+            <div class="input-with-prefix"><span class="input-prefix">$</span><input type="text" class="closing-item" data-key="otherMisc" inputmode="numeric" value="0"></div>
+          </div>
+
+          <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline">
+            <span style="font-weight:800;font-size:0.92rem;color:var(--navy)">Total closing costs</span>
+            <span style="font-weight:800;font-size:1.05rem;color:var(--navy);font-variant-numeric:tabular-nums" id="closingItemsTotal">$0</span>
+          </div>
+        </div>
+      </details>
+
       </div>
     </div>
 
@@ -3370,6 +3513,14 @@ html{-webkit-text-size-adjust:100%;}
 </div>
 
 
+<!-- DISCLAIMER -->
+<section class="disclaimer-section">
+  <div class="disclaimer-inner">
+    <h3 style="font-weight:800;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);margin:0 0 10px 0">Important disclaimer</h3>
+    <p class="disclaimer-text">This is an educational estimate, not a loan offer or commitment to lend. Your actual monthly payment depends on your finalized interest rate (subject to lock), mortgage insurance factor (varies by lender, credit score, and program), property tax assessment by your county, your specific homeowners insurance quote, and any HOA dues. Final loan terms are determined at lock and disclosed in your Loan Estimate. To get an accurate quote for your situation, contact me directly. NEO Home Loans powered by Better Mortgage Corporation. Equal Housing Opportunity. Branch NMLS #2733710 · 222 Pacific Coast Hwy, 10th Floor, Suite 135, El Segundo, CA 90245.</p>
+  </div>
+</section>
+
 <!-- A NOTE FROM DARYN (visible on screen) -->
 <section class="daryn-note">
   <div class="daryn-note-inner">
@@ -3377,15 +3528,7 @@ html{-webkit-text-size-adjust:100%;}
     <p><strong>Here is what I want you to know.</strong></p>
     <p>This number is one version of your future. There are others. The version where you buy this exact home. The version where you wait six months and buy something better. The version where you use equity to wipe out debt first. The version where a 5% down payment with the right strategy beats a 20% down payment by itself. Calculators do not pick between those. Advisors do.</p>
     <p>You do not have to know what you want before we talk. You just have to want to talk. Fifteen minutes, no commitment, no hard sell.</p>
-    <p><a href="/schedule">darynfillis.com/schedule</a></p>
-  </div>
-</section>
-
-<!-- DISCLAIMER -->
-<section class="disclaimer-section">
-  <div class="disclaimer-inner">
-    <h3 style="font-weight:800;font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--navy);margin-bottom:14px">Important disclaimer</h3>
-    <p class="disclaimer-text">This calculator is for educational and informational purposes only. The estimates shown are based on industry-standard formulas and current published mortgage insurance factors, but they do not represent a loan offer or commitment to lend. Your actual monthly payment will depend on your finalized interest rate, mortgage insurance factor (which varies by lender, credit score, and program), property tax assessment by your county, your specific homeowners insurance quote, and any HOA dues. Final loan terms are determined at lock and disclosed in your Loan Estimate. To get an accurate quote for your situation, contact me directly. Daryn Fillis · NMLS #1988371 · NEO Home Loans powered by Better Mortgage Corporation · Equal Housing Opportunity.</p>
+    
   </div>
 </section>
 
@@ -4590,14 +4733,55 @@ function calcCashToClose(homePrice, loanAmount, dpDollars, dpPct, rate, taxPct, 
   // Pull cash-to-close inputs
   const closingDateInput = document.getElementById('closingDate');
   const closingDateStr = closingDateInput ? closingDateInput.value : '';
-  const closingCostsPct = parseNum(document.getElementById('closingCostsPct').value) || 2.5;
-  const taxEscrowMonths = parseInt(document.getElementById('taxEscrowMonths').value) || 3;
-  const insEscrowMonths = parseInt(document.getElementById('insuranceEscrowMonths').value) || 2;
   const lenderCredits = parseNum(document.getElementById('lenderCredits').value);
   const sellerCredits = parseNum(document.getElementById('sellerCredits').value);
+  const insEscrowMonths = parseInt(document.getElementById('insuranceEscrowMonths').value) || 2;
 
-  // Closing costs
-  const closingCosts = loanAmount * (closingCostsPct / 100);
+  // ── Closing costs: sum of itemized fields ──
+  let closingCosts = 0;
+  document.querySelectorAll('.closing-item').forEach(function(input) {
+    closingCosts += parseNum(input.value);
+  });
+  // Update the total display in itemized panel
+  const itemsTotalEl = document.getElementById('closingItemsTotal');
+  if (itemsTotalEl) itemsTotalEl.textContent = fmt(closingCosts);
+  // Update the read-only summary field
+  const totalSummaryEl = document.getElementById('closingCostsTotal');
+  if (totalSummaryEl) totalSummaryEl.value = closingCosts.toLocaleString('en-US');
+
+  // ── CA Tax Impound Schedule (auto by closing month) ──
+  // Source: CA fiscal year (Jul-Jun); 1st installment due Nov 1, 2nd installment due Feb 1
+  let taxEscrowMonths = 3; // default
+  if (closingDateStr) {
+    const closing = new Date(closingDateStr + 'T00:00:00');
+    const month = closing.getMonth(); // 0=Jan, 11=Dec
+    const day = closing.getDate();
+
+    // Standard CA impound schedule (months collected at closing):
+    // January (0): 7  | February (1): 7 before Feb 1, 2 after
+    // March (2):   3  | April (3):    4
+    // May (4):     5  | June (5):     6
+    // July (6):    7  | August (7):   8
+    // September (8): 9 | October (9): 10 before Nov 1, 4 after
+    // November (10): 5 | December (11): 6
+    const standardSchedule = [7, 7, 3, 4, 5, 6, 7, 8, 9, 10, 5, 6];
+    taxEscrowMonths = standardSchedule[month];
+
+    // Special cases (mid-month transitions)
+    // February: 2 months only if closing on/after Feb 1 (both installments paid)
+    // But Feb is always "after Feb 1" essentially, so use 7 (1st paid, 2nd not yet)
+    // unless closing very late in Feb after second installment is paid
+    // (which only happens if buyer/seller paid early — uncommon)
+    // We'll use 7 for Feb consistently.
+
+    // October: 10 months if both installments paid (closing before Nov 1)
+    //          4 months if 1st installment not yet paid (closing Nov 1+)
+    // Since October closings happen before Nov 1, use 10.
+  }
+  document.getElementById('taxEscrowMonths').value = taxEscrowMonths;
+  const taxDisplay = document.getElementById('taxEscrowMonthsDisplay');
+  if (taxDisplay) taxDisplay.textContent = taxEscrowMonths + ' months';
+
 
   // Prepaid interest + first payment date
   let prepaidInterest = 0;
@@ -4654,7 +4838,7 @@ function calcCashToClose(homePrice, loanAmount, dpDollars, dpPct, rate, taxPct, 
   setText('ctcFirstPay', 'First payment due: ' + firstPaymentDate);
   setText('ctcDown', fmt(dpDollars));
   setText('ctcClosing', fmt(closingCosts));
-  setText('ctcClosingDetail', closingCostsPct + '%');
+  setText('ctcClosingDetail', loanAmount > 0 ? (closingCosts / loanAmount * 100).toFixed(2) + '% of loan' : 'itemized');
   setText('ctcPrepaid', fmt(prepaidInterest));
   setText('ctcPrepaidDetail', daysOfInterest + ' days');
   setText('ctcTax', fmt(taxEscrowSetup));
@@ -4686,8 +4870,14 @@ function init() {
     dateInput.value = future.toISOString().split('T')[0];
   }
 
+  // Wire up itemized closing cost inputs
+  document.querySelectorAll('.closing-item').forEach(function(input) {
+    input.addEventListener('input', function() { userInteracted = true; calculate(); });
+    input.addEventListener('blur', function() { formatCurrencyInput(this); calculate(); });
+  });
+
   // Wire up cash-to-close inputs to trigger recalculation
-  ['closingDate', 'closingCostsPct', 'taxEscrowMonths', 'insuranceEscrowMonths', 'lenderCredits', 'sellerCredits'].forEach(function(id) {
+  ['closingDate', 'insuranceEscrowMonths', 'lenderCredits', 'sellerCredits'].forEach(function(id) {
     const el = document.getElementById(id);
     if (el) {
       el.addEventListener('input', function() { userInteracted = true; calculate(); });
@@ -4916,7 +5106,12 @@ window.preparePrint = function() {
   } else {
     setText('printClosingDate', '—');
   }
-  setText('printClosingCosts', parseNum(document.getElementById('closingCostsPct').value) + '% of loan');
+  // Sum itemized closing costs for print summary
+  let printClosingTotal = 0;
+  document.querySelectorAll('.closing-item').forEach(function(input) {
+    printClosingTotal += parseNum(input.value);
+  });
+  setText('printClosingCosts', '$' + printClosingTotal.toLocaleString('en-US'));
 
   // Trigger print
   window.print();
