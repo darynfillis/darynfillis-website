@@ -1753,6 +1753,151 @@ html{-webkit-text-size-adjust:100%;}
   font-weight: 200;
 }
 
+.results-loan-callout {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(91,203,245,0.15);
+}
+.results-loan-callout-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(91,203,245,0.85);
+}
+.results-loan-callout-value {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+
+
+
+/* Jumbo vs Conforming comparison */
+.jumbo-comparison-header {
+  text-align: center;
+  margin-bottom: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(91,203,245,0.2);
+}
+.jumbo-comparison-eyebrow {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fbbf24;
+  margin-bottom: 4px;
+}
+.jumbo-comparison-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.jumbo-comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+@media (max-width: 540px) { .jumbo-comparison-grid { grid-template-columns: 1fr; } }
+.jumbo-option {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.jumbo-option.recommended {
+  background: rgba(91,203,245,0.08);
+  border-color: rgba(91,203,245,0.4);
+}
+.jumbo-option-label {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 4px;
+}
+.jumbo-option.recommended .jumbo-option-label { color: var(--blue); }
+.jumbo-option-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.01em;
+  margin-bottom: 10px;
+  line-height: 1.25;
+}
+.jumbo-option-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.jumbo-option-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.7);
+  font-weight: 200;
+  padding: 3px 0;
+}
+.jumbo-option-row-emphasis {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 6px;
+  margin-top: 4px;
+  font-weight: 700;
+  color: var(--white);
+  font-size: 0.86rem;
+}
+.jumbo-option-value {
+  color: var(--white);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.jumbo-comparison-note {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: rgba(91,203,245,0.06);
+  border-left: 2px solid var(--blue);
+  border-radius: 0 4px 4px 0;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.55;
+  font-weight: 200;
+}
+
+.rate-alert {
+  background: rgba(245,158,11,0.08);
+  border-left: 3px solid #f59e0b;
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.85);
+}
+.rate-alert:last-child { margin-bottom: 0; }
+.rate-alert-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fbbf24;
+  margin-bottom: 4px;
+}
+.rate-alert-text strong {
+  color: #fbbf24;
+  font-weight: 700;
+}
+
 /* Quick breakdown inside results card */
 .quick-breakdown {
   display: grid;
@@ -1953,7 +2098,9 @@ html{-webkit-text-size-adjust:100%;}
     display: none !important;
   }
   main > .print-header,
-  main > .print-disclaimer {
+  main > .print-disclaimer,
+  main > .print-five-laws,
+  main > .cashtoclose-section {
     display: block !important;
   }
   main > .calc-section {
@@ -2108,6 +2255,27 @@ html{-webkit-text-size-adjust:100%;}
     color: #6b7280 !important;
     font-weight: 200 !important;
   }
+  /* Show loan amount callout in print */
+  .results-loan-callout {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 8pt !important;
+    margin-top: 5pt !important;
+    padding-top: 4pt !important;
+    border-top: 0.5pt solid #cbd5e0 !important;
+  }
+  .results-loan-callout-label {
+    font-size: 7pt !important;
+    color: #4a5568 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+  }
+  .results-loan-callout-value {
+    font-size: 11pt !important;
+    color: #0A2540 !important;
+    font-weight: 800 !important;
+  }
 
   /* 4-column quick breakdown */
   .quick-breakdown {
@@ -2220,8 +2388,367 @@ html{-webkit-text-size-adjust:100%;}
     line-height: 1.35 !important;
   }
 
+
+  /* Rate alerts in print */
+  #rateAlerts {
+    margin-top: 6pt !important;
+  }
+  .rate-alert {
+    background: #fffbeb !important;
+    border-left: 1.5pt solid #d97706 !important;
+    border-radius: 0 3pt 3pt 0 !important;
+    padding: 5pt 8pt !important;
+    margin-bottom: 4pt !important;
+    font-size: 7.5pt !important;
+    line-height: 1.4 !important;
+    color: #2b2f2e !important;
+    page-break-inside: avoid !important;
+  }
+  .rate-alert-label {
+    font-size: 6.5pt !important;
+    color: #92400e !important;
+    margin-bottom: 2pt !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    font-weight: 800 !important;
+  }
+  .rate-alert-text strong {
+    color: #92400e !important;
+    font-weight: 700 !important;
+  }
+
+
+  /* Jumbo comparison in print */
+  #jumboComparison {
+    margin-top: 6pt !important;
+    padding-top: 6pt !important;
+    border-top: 0.5pt solid #cbd5e0 !important;
+    page-break-inside: avoid !important;
+  }
+  .jumbo-comparison-header {
+    text-align: center !important;
+    margin-bottom: 5pt !important;
+    padding-top: 0 !important;
+    border-top: none !important;
+  }
+  .jumbo-comparison-eyebrow {
+    font-size: 6pt !important;
+    color: #d97706 !important;
+    margin-bottom: 1pt !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    font-weight: 800 !important;
+  }
+  .jumbo-comparison-title {
+    font-size: 8.5pt !important;
+    color: #0A2540 !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+  }
+  .jumbo-comparison-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6pt !important;
+  }
+  .jumbo-option {
+    background: #f7f9fc !important;
+    border: 0.5pt solid #cbd5e0 !important;
+    border-radius: 3pt !important;
+    padding: 6pt 8pt !important;
+  }
+  .jumbo-option.recommended {
+    background: #f0f9ff !important;
+    border-color: #5bcbf5 !important;
+  }
+  .jumbo-option-label {
+    font-size: 5.5pt !important;
+    color: #6b7280 !important;
+    margin-bottom: 1pt !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    font-weight: 800 !important;
+  }
+  .jumbo-option.recommended .jumbo-option-label { color: #0A2540 !important; }
+  .jumbo-option-title {
+    font-size: 7.5pt !important;
+    color: #0A2540 !important;
+    font-weight: 700 !important;
+    margin-bottom: 4pt !important;
+    line-height: 1.25 !important;
+  }
+  .jumbo-option-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    font-size: 7pt !important;
+    color: #4a5568 !important;
+    padding: 1pt 0 !important;
+  }
+  .jumbo-option-row-emphasis {
+    border-top: 0.25pt solid #cbd5e0 !important;
+    padding-top: 2pt !important;
+    margin-top: 2pt !important;
+    font-weight: 700 !important;
+    color: #0A2540 !important;
+    font-size: 7.5pt !important;
+  }
+  .jumbo-option-value {
+    color: #0A2540 !important;
+    font-weight: 700 !important;
+  }
+  .jumbo-comparison-note {
+    margin-top: 4pt !important;
+    padding: 3pt 6pt !important;
+    background: #f0f9ff !important;
+    border-left: 1.5pt solid #5bcbf5 !important;
+    border-radius: 0 2pt 2pt 0 !important;
+    font-size: 6.5pt !important;
+    color: #2b2f2e !important;
+    line-height: 1.4 !important;
+  }
+
   /* Hide the print buttons inside the panel */
   .print-row { display: none !important; }
+
+
+  /* Five Laws / Personal Note */
+  main > .print-five-laws {
+    display: block !important;
+    margin: 6pt 0 0 0 !important;
+    padding: 6pt 12pt !important;
+    background: #fffbeb !important;
+    border: 0.5pt solid #fcd34d !important;
+    border-radius: 3pt !important;
+    page-break-inside: avoid !important;
+  }
+  .print-five-laws-eyebrow {
+    font-size: 6.5pt !important;
+    color: #92400e !important;
+    margin-bottom: 2pt !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    font-weight: 800 !important;
+  }
+  .print-five-laws-text {
+    font-size: 7.5pt !important;
+    color: #2b2f2e !important;
+    line-height: 1.5 !important;
+  }
+  .print-five-laws-text p {
+    margin: 0 0 4pt 0 !important;
+    font-size: 7.5pt !important;
+    line-height: 1.5 !important;
+    color: #2b2f2e !important;
+  }
+  .print-five-laws-text p:last-child {
+    margin-bottom: 0 !important;
+  }
+  .print-five-laws-text strong {
+    color: #92400e !important;
+    font-weight: 700 !important;
+  }
+  .print-five-laws-text a {
+    color: #92400e !important;
+    text-decoration: none !important;
+    font-weight: 700 !important;
+  }
+
+
+  /* Cash to Close in print (second page) */
+  main > .cashtoclose-section {
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    page-break-before: always !important;
+  }
+  .cashtoclose-inner {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .cashtoclose-header {
+    text-align: center !important;
+    margin-bottom: 6pt !important;
+    padding: 4pt 14pt 6pt !important;
+    border-bottom: 0.75pt solid #0A2540 !important;
+  }
+  .cashtoclose-header .eyebrow {
+    font-size: 6.5pt !important;
+    color: #5bcbf5 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    font-weight: 800 !important;
+    display: block !important;
+    margin-bottom: 2pt !important;
+  }
+  .cashtoclose-header h2 {
+    font-size: 13pt !important;
+    color: #0A2540 !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em !important;
+    line-height: 1.15 !important;
+    margin: 0 0 3pt 0 !important;
+  }
+  .cashtoclose-header p {
+    font-size: 8pt !important;
+    color: #4a5568 !important;
+    line-height: 1.4 !important;
+    margin: 0 auto !important;
+    max-width: 600pt !important;
+    font-weight: 400 !important;
+  }
+  .cashtoclose-grid {
+    display: grid !important;
+    grid-template-columns: 0.85fr 1.15fr !important;
+    gap: 10pt !important;
+    padding: 0 14pt !important;
+    margin: 0 !important;
+  }
+  .cashtoclose-input-panel {
+    background: #f7f9fc !important;
+    border: 0.5pt solid #cbd5e0 !important;
+    border-radius: 4pt !important;
+    padding: 8pt 10pt !important;
+    box-shadow: none !important;
+  }
+  .cashtoclose-input-panel .calc-panel-heading {
+    font-size: 6.5pt !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    color: #5bcbf5 !important;
+    font-weight: 800 !important;
+    margin-bottom: 1pt !important;
+  }
+  .cashtoclose-input-panel .calc-panel-title {
+    font-size: 9pt !important;
+    color: #0A2540 !important;
+    font-weight: 800 !important;
+    margin-bottom: 6pt !important;
+    letter-spacing: -0.01em !important;
+  }
+  .cashtoclose-input-panel .input-row,
+  .cashtoclose-input-panel .input-row.split {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6pt !important;
+    margin-bottom: 5pt !important;
+  }
+  .cashtoclose-input-panel .input-label {
+    font-size: 6.5pt !important;
+    color: #4a5568 !important;
+    margin-bottom: 1pt !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+  }
+  .cashtoclose-input-panel .help-icon { display: none !important; }
+  .cashtoclose-input-panel input[type="text"],
+  .cashtoclose-input-panel input[type="number"],
+  .cashtoclose-input-panel input[type="date"],
+  .cashtoclose-input-panel select {
+    font-size: 8pt !important;
+    padding: 3pt 5pt !important;
+    border: 0.5pt solid #cbd5e0 !important;
+    border-radius: 2pt !important;
+    background: white !important;
+    color: #0A2540 !important;
+    font-weight: 700 !important;
+  }
+  .cashtoclose-input-panel .input-with-prefix .input-prefix,
+  .cashtoclose-input-panel .input-with-suffix .input-suffix {
+    font-size: 7.5pt !important;
+    color: #6b7280 !important;
+  }
+  .cashtoclose-results {
+    background: white !important;
+    color: #0A2540 !important;
+    border: 1pt solid #0A2540 !important;
+    border-radius: 4pt !important;
+    padding: 8pt 10pt !important;
+    box-shadow: none !important;
+  }
+  .cashtoclose-total {
+    text-align: center !important;
+    padding-bottom: 5pt !important;
+    border-bottom: 0.5pt solid #cbd5e0 !important;
+  }
+  .cashtoclose-total-label {
+    font-size: 7pt !important;
+    color: #4a5568 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    margin-bottom: 1pt !important;
+  }
+  .cashtoclose-total-value {
+    font-size: 22pt !important;
+    color: #0A2540 !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em !important;
+    line-height: 1 !important;
+    margin-bottom: 2pt !important;
+  }
+  .cashtoclose-total-sub {
+    font-size: 7pt !important;
+    color: #6b7280 !important;
+    font-weight: 400 !important;
+  }
+  .cashtoclose-breakdown {
+    margin-top: 5pt !important;
+    gap: 0 !important;
+  }
+  .cashtoclose-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: baseline !important;
+    padding: 2pt 0 !important;
+    border-bottom: 0.25pt solid #e5e7eb !important;
+  }
+  .cashtoclose-row-name {
+    font-size: 7.5pt !important;
+    color: #4a5568 !important;
+    font-weight: 600 !important;
+  }
+  .cashtoclose-row-detail {
+    font-size: 6pt !important;
+    color: #9ca3af !important;
+    font-weight: 400 !important;
+  }
+  .cashtoclose-row-value {
+    font-size: 8pt !important;
+    color: #0A2540 !important;
+    font-weight: 700 !important;
+  }
+  .cashtoclose-row-credit { color: #5bcbf5 !important; }
+  .cashtoclose-row-total {
+    border-top: 1pt solid #0A2540 !important;
+    border-bottom: none !important;
+    padding-top: 4pt !important;
+    margin-top: 3pt !important;
+  }
+  .cashtoclose-row-total .cashtoclose-row-name {
+    font-size: 8.5pt !important;
+    color: #0A2540 !important;
+    font-weight: 800 !important;
+  }
+  .cashtoclose-row-total .cashtoclose-row-value {
+    font-size: 11pt !important;
+    color: #0A2540 !important;
+    font-weight: 800 !important;
+  }
+  .cashtoclose-context-note {
+    margin-top: 5pt !important;
+    padding: 4pt 7pt !important;
+    background: #f0f9ff !important;
+    border-left: 1.5pt solid #5bcbf5 !important;
+    border-radius: 0 2pt 2pt 0 !important;
+    font-size: 7pt !important;
+    color: #2b2f2e !important;
+    line-height: 1.4 !important;
+    font-weight: 400 !important;
+  }
+  .cashtoclose-context-note strong {
+    color: #0A2540 !important;
+    font-weight: 700 !important;
+  }
 
   /* Disclaimer at very bottom */
   .print-disclaimer {
@@ -2249,9 +2776,152 @@ html{-webkit-text-size-adjust:100%;}
 }
 
 /* Hide print-only elements during normal screen viewing */
-.print-header, .print-disclaimer, .print-inputs { display: none; }
+.print-header, .print-disclaimer, .print-inputs, .print-five-laws { display: none; }
 .print-header { display: none; }
 
+
+
+
+/* ── CASH TO CLOSE CALCULATOR ── */
+.cashtoclose-section {
+  background: var(--white);
+  padding: clamp(56px,8vw,88px) clamp(20px,4vw,48px);
+  border-top: 1px solid var(--rule);
+}
+.cashtoclose-inner { max-width: 1180px; margin: 0 auto; }
+.cashtoclose-header { text-align: center; margin-bottom: 36px; }
+
+.cashtoclose-grid {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 28px;
+  align-items: start;
+}
+@media (max-width: 920px) { .cashtoclose-grid { grid-template-columns: 1fr; gap: 24px; } }
+
+.cashtoclose-input-panel {
+  background: var(--bg);
+  border-radius: 14px;
+  padding: clamp(24px,3vw,32px);
+  box-shadow: 0 4px 24px rgba(10,37,64,0.04);
+}
+.cashtoclose-input-panel input[type="date"] {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: var(--navy);
+  font-family: inherit;
+  background: var(--white);
+}
+
+/* Results panel: navy like main results */
+.cashtoclose-results {
+  background: var(--navy);
+  border-radius: 14px;
+  padding: clamp(24px,3vw,32px);
+  color: var(--white);
+  box-shadow: 0 8px 30px rgba(10,37,64,0.15);
+}
+.cashtoclose-total {
+  text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(91,203,245,0.15);
+}
+.cashtoclose-total-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(91,203,245,0.85);
+  margin-bottom: 8px;
+}
+.cashtoclose-total-value {
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.cashtoclose-total-sub {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.65);
+  font-weight: 200;
+  letter-spacing: 0.02em;
+}
+
+.cashtoclose-breakdown {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cashtoclose-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.cashtoclose-row:last-child { border-bottom: none; }
+.cashtoclose-row-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cashtoclose-row-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.95);
+}
+.cashtoclose-row-detail {
+  font-size: 0.74rem;
+  color: rgba(255,255,255,0.5);
+  font-weight: 200;
+}
+.cashtoclose-row-value {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.cashtoclose-row-credit { color: #5bcbf5; }
+.cashtoclose-row-total {
+  margin-top: 8px;
+  padding-top: 14px;
+  border-top: 1.5px solid rgba(91,203,245,0.3) !important;
+  border-bottom: none !important;
+}
+.cashtoclose-row-total .cashtoclose-row-name {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--white);
+}
+.cashtoclose-row-total .cashtoclose-row-value {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #5bcbf5;
+}
+
+.cashtoclose-context-note {
+  margin-top: 18px;
+  padding: 14px 18px;
+  background: rgba(91,203,245,0.06);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 8px 8px 0;
+  font-size: 0.84rem;
+  color: rgba(255,255,255,0.85);
+  font-weight: 200;
+  line-height: 1.7;
+}
+.cashtoclose-context-note strong {
+  color: var(--blue);
+  font-weight: 700;
+}
 
 /* ── DEBT STRATEGY CALCULATOR ── */
 .debt-section {
@@ -2594,7 +3264,7 @@ html{-webkit-text-size-adjust:100%;}
       <span class="calc-hero-eyebrow-text">Educational Tool · All Loan Programs</span>
     </div>
     <h1>Mortgage calculator <em>built to teach</em>.</h1>
-    <p>An educational tool that walks you through how every part of a mortgage payment works. Real PMI factors, real FHA mortgage insurance, real VA funding fee tiers, and the loan limits for your specific county. Hover the question marks to learn what each input means.</p>
+    <p>An educational tool that walks you through how every part of a mortgage payment works. FHA mortgage insurance, VA funding fee tiers, conventional PMI, and county-specific loan limits all built in. Hover the question marks to learn what each input means.</p>
     <div style="margin-top:24px;display:inline-flex;align-items:center;gap:10px;padding:8px 16px;background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.35);border-radius:24px;font-size:0.78rem;color:#fbbf24;font-weight:700;letter-spacing:0.04em">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="12" cy="12" r="10"></circle>
@@ -2645,9 +3315,6 @@ html{-webkit-text-size-adjust:100%;}
   </div>
 </div>
 
-<!-- PRINT-ONLY DISCLAIMER (at bottom of printed page) -->
-<div class="print-disclaimer">
-  <div style="font-size:0.82rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy);margin-bottom:8px">Important Disclaimer</div>
   <p style="font-size:0.78rem;color:var(--body);font-weight:400;line-height:1.7;margin:0">This is an educational estimate, not a loan offer or commitment to lend. Your actual monthly payment depends on your finalized interest rate (subject to lock), mortgage insurance factor (varies by lender, credit score, and program), property tax assessment by your county, your specific homeowners insurance quote, and any HOA dues. Final loan terms are determined at lock and disclosed in your Loan Estimate. To get an accurate quote for your situation, contact me directly. NEO Home Loans powered by Better Mortgage Corporation. Equal Housing Opportunity. Branch NMLS #2733710 · 222 Pacific Coast Hwy, 10th Floor, Suite 135, El Segundo, CA 90245.</p>
 </div>
 
@@ -2873,6 +3540,10 @@ html{-webkit-text-size-adjust:100%;}
         <div class="results-monthly-label">Estimated Monthly Payment</div>
         <div class="results-monthly-value" id="totalMonthly">$0</div>
         <div class="results-monthly-sub" id="totalMonthlyDetail">Principal, Interest, Tax, Insurance, MI</div>
+        <div class="results-loan-callout">
+          <span class="results-loan-callout-label">Loan amount</span>
+          <span class="results-loan-callout-value" id="totalMonthlyLoanAmount">$0</span>
+        </div>
 
         <!-- Inline quick breakdown -->
         <div class="quick-breakdown">
@@ -2918,6 +3589,42 @@ html{-webkit-text-size-adjust:100%;}
       <div class="what-this-means">
         <div class="what-this-means-label">What this means</div>
         <div class="what-this-means-text" id="explanation">Your monthly payment will be calculated based on the inputs above.</div>
+      </div>
+
+      <!-- Rate adjustment alerts (shown contextually based on county + property) -->
+      <div id="rateAlerts" style="display:none;margin-top:14px"></div>
+
+      <!-- Jumbo vs. Conforming comparison (shown when loan exceeds county limit) -->
+      <div id="jumboComparison" style="display:none;margin-top:14px">
+        <div class="jumbo-comparison-header">
+          <div class="jumbo-comparison-eyebrow">Two Paths Forward</div>
+          <div class="jumbo-comparison-title">Your loan is above your county's limit. Here are your options.</div>
+        </div>
+        <div class="jumbo-comparison-grid">
+          <div class="jumbo-option" id="jumboOptionA">
+            <div class="jumbo-option-label">Option A · Current Setup</div>
+            <div class="jumbo-option-title">Stay with Jumbo</div>
+            <div class="jumbo-option-rows">
+              <div class="jumbo-option-row"><span>Down payment</span><span class="jumbo-option-value" id="jumboADown">$0</span></div>
+              <div class="jumbo-option-row"><span>Loan amount</span><span class="jumbo-option-value" id="jumboALoan">$0</span></div>
+              <div class="jumbo-option-row"><span>Loan type</span><span class="jumbo-option-value" id="jumboAType">Jumbo</span></div>
+              <div class="jumbo-option-row jumbo-option-row-emphasis"><span>Est. monthly P&amp;I</span><span class="jumbo-option-value" id="jumboAPayment">$0</span></div>
+            </div>
+          </div>
+          <div class="jumbo-option recommended" id="jumboOptionB">
+            <div class="jumbo-option-label">Option B · Conforming</div>
+            <div class="jumbo-option-title">Increase down to fit county limit</div>
+            <div class="jumbo-option-rows">
+              <div class="jumbo-option-row"><span>Down payment</span><span class="jumbo-option-value" id="jumboBDown">$0</span></div>
+              <div class="jumbo-option-row"><span>Loan amount</span><span class="jumbo-option-value" id="jumboBLoan">$0</span></div>
+              <div class="jumbo-option-row"><span>Loan type</span><span class="jumbo-option-value" id="jumboBType">Conforming</span></div>
+              <div class="jumbo-option-row jumbo-option-row-emphasis"><span>Est. monthly P&amp;I</span><span class="jumbo-option-value" id="jumboBPayment">$0</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="jumbo-comparison-note" id="jumboComparisonNote">
+          Conforming loans typically have lower rates than jumbo. The tradeoff is needing more cash up front. Talk it through with me to see which path fits your situation.
+        </div>
       </div>
 
       <!-- Action buttons -->
@@ -3063,6 +3770,177 @@ html{-webkit-text-size-adjust:100%;}
     </div>
   </div>
 </section>
+
+
+
+
+
+<!-- CASH TO CLOSE CALCULATOR -->
+<section class="cashtoclose-section" id="cash-to-close">
+  <div class="cashtoclose-inner">
+    <div class="cashtoclose-header">
+      <span class="eyebrow" style="color:var(--blue);display:inline-block;margin-bottom:14px">The Question Most Buyers Ask Last</span>
+      <h2 style="font-weight:800;font-size:clamp(1.8rem,3vw,2.4rem);color:var(--navy);letter-spacing:-0.025em;line-height:1.15;margin-bottom:14px">Cash to close. The real number.</h2>
+      <p style="font-weight:200;font-size:1.02rem;color:var(--body);line-height:1.85;max-width:680px;margin:0 auto">Down payment is just one piece. The actual cash you need on closing day includes closing costs, prepaid interest, and money set aside for property taxes and insurance. This is the number people are surprised by when they have not been advised properly.</p>
+    </div>
+
+    <div class="cashtoclose-grid">
+      <!-- Inputs -->
+      <div class="cashtoclose-input-panel">
+        <div class="calc-panel-heading">Closing details</div>
+        <div class="calc-panel-title">When and how.</div>
+
+        <div class="input-row split">
+          <div>
+            <label class="input-label" for="closingDate">
+              Estimated closing date
+              <span class="help-icon" tabindex="0" data-tooltip="Pick the date you expect to close. Most purchase contracts close 30-45 days from accepted offer. The closing date affects how much prepaid interest you owe.">?</span>
+            </label>
+            <input type="date" id="closingDate">
+          </div>
+          <div>
+            <label class="input-label" for="closingCostsPct">
+              Closing costs %
+              <span class="help-icon" tabindex="0" data-tooltip="Closing costs typically run 2-3% of loan amount in California. Includes lender fees, title, escrow, recording, appraisal, and so on. We default to 2.5% as a reasonable estimate.">?</span>
+            </label>
+            <div class="input-with-suffix">
+              <input type="text" id="closingCostsPct" inputmode="decimal" value="2.5">
+              <span class="input-suffix">% of loan</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-row split">
+          <div>
+            <label class="input-label" for="taxEscrowMonths">
+              Tax escrow reserve
+              <span class="help-icon" tabindex="0" data-tooltip="Lenders typically collect 2-3 months of property taxes upfront to seed your escrow account. The exact amount depends on the closing month and when taxes are due in your area.">?</span>
+            </label>
+            <select id="taxEscrowMonths">
+              <option value="2">2 months</option>
+              <option value="3" selected>3 months</option>
+              <option value="4">4 months</option>
+              <option value="6">6 months</option>
+            </select>
+          </div>
+          <div>
+            <label class="input-label" for="insuranceEscrowMonths">
+              Insurance escrow reserve
+              <span class="help-icon" tabindex="0" data-tooltip="Lenders typically collect 2-3 months of homeowners insurance upfront, in addition to the first year prepaid at closing. We default to 2 months reserve plus 12 months prepaid.">?</span>
+            </label>
+            <select id="insuranceEscrowMonths">
+              <option value="2" selected>2 months</option>
+              <option value="3">3 months</option>
+              <option value="4">4 months</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-row split">
+          <div>
+            <label class="input-label" for="lenderCredits">
+              Lender credits
+              <span class="help-icon" tabindex="0" data-tooltip="Money the lender contributes toward closing costs in exchange for a slightly higher rate. Common values are 0.5% to 1.5% of loan amount. Set to 0 if no lender credit.">?</span>
+            </label>
+            <div class="input-with-prefix">
+              <span class="input-prefix">$</span>
+              <input type="text" id="lenderCredits" inputmode="numeric" value="0">
+            </div>
+          </div>
+          <div>
+            <label class="input-label" for="sellerCredits">
+              Seller credits
+              <span class="help-icon" tabindex="0" data-tooltip="Money the seller contributes toward your closing costs as part of the purchase agreement. Maximums vary by program (FHA up to 6%, Conventional 3-9% depending on down payment).">?</span>
+            </label>
+            <div class="input-with-prefix">
+              <span class="input-prefix">$</span>
+              <input type="text" id="sellerCredits" inputmode="numeric" value="0">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div class="cashtoclose-results">
+        <div class="cashtoclose-total">
+          <div class="cashtoclose-total-label">Estimated Cash to Close</div>
+          <div class="cashtoclose-total-value" id="cashToCloseTotal">$0</div>
+          <div class="cashtoclose-total-sub" id="cashToCloseDate">First payment due: —</div>
+        </div>
+
+        <div class="cashtoclose-breakdown">
+          <div class="cashtoclose-row">
+            <div class="cashtoclose-row-label">
+              <span class="cashtoclose-row-name">Down payment</span>
+              <span class="cashtoclose-row-detail" id="ctcDownDetail">20% of purchase price</span>
+            </div>
+            <div class="cashtoclose-row-value" id="ctcDownValue">$0</div>
+          </div>
+          <div class="cashtoclose-row">
+            <div class="cashtoclose-row-label">
+              <span class="cashtoclose-row-name">Closing costs</span>
+              <span class="cashtoclose-row-detail" id="ctcClosingDetail">Lender, title, escrow, etc.</span>
+            </div>
+            <div class="cashtoclose-row-value" id="ctcClosingValue">$0</div>
+          </div>
+          <div class="cashtoclose-row">
+            <div class="cashtoclose-row-label">
+              <span class="cashtoclose-row-name">Prepaid interest</span>
+              <span class="cashtoclose-row-detail" id="ctcPrepaidDetail">Days from closing to month-end</span>
+            </div>
+            <div class="cashtoclose-row-value" id="ctcPrepaidValue">$0</div>
+          </div>
+          <div class="cashtoclose-row">
+            <div class="cashtoclose-row-label">
+              <span class="cashtoclose-row-name">Tax escrow setup</span>
+              <span class="cashtoclose-row-detail" id="ctcTaxDetail">3 months reserve</span>
+            </div>
+            <div class="cashtoclose-row-value" id="ctcTaxValue">$0</div>
+          </div>
+          <div class="cashtoclose-row">
+            <div class="cashtoclose-row-label">
+              <span class="cashtoclose-row-name">Insurance escrow setup</span>
+              <span class="cashtoclose-row-detail" id="ctcInsDetail">12 months prepaid + 2 months reserve</span>
+            </div>
+            <div class="cashtoclose-row-value" id="ctcInsValue">$0</div>
+          </div>
+          <div class="cashtoclose-row" id="ctcCreditsRow" style="display:none">
+            <div class="cashtoclose-row-label">
+              <span class="cashtoclose-row-name">Less: Lender + Seller credits</span>
+              <span class="cashtoclose-row-detail">Reduces cash needed</span>
+            </div>
+            <div class="cashtoclose-row-value cashtoclose-row-credit" id="ctcCreditsValue">-$0</div>
+          </div>
+          <div class="cashtoclose-row cashtoclose-row-total">
+            <div class="cashtoclose-row-label">
+              <span class="cashtoclose-row-name">Total cash needed at closing</span>
+            </div>
+            <div class="cashtoclose-row-value" id="ctcTotalValue">$0</div>
+          </div>
+        </div>
+
+        <div class="cashtoclose-context-note">
+          <strong style="color:var(--navy);font-weight:700">First mortgage payment:</strong> Your first payment is typically due on the <strong>1st of the second month</strong> after closing. So if you close on March 15, your first payment is due May 1. This gap is why prepaid interest is collected at closing &mdash; it covers the interest from your closing date to month-end.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINT-ONLY: Five Laws / Personal Note -->
+<div class="print-five-laws">
+  <div class="print-five-laws-eyebrow">A Note From Daryn</div>
+  <div class="print-five-laws-text">
+    <p style="margin:0 0 6pt 0"><strong>Here is what I want you to know.</strong></p>
+    <p style="margin:0 0 6pt 0">This number is one version of your future. There are others. The version where you buy this exact home. The version where you wait six months and buy something better. The version where you use equity to wipe out debt first. The version where a 5% down payment with the right strategy beats a 20% down payment by itself. Calculators do not pick between those. Advisors do.</p>
+    <p style="margin:0 0 6pt 0">You do not have to know what you want before we talk. You just have to want to talk. Fifteen minutes, no commitment, no hard sell.</p>
+    <p style="margin:0;font-weight:700"><a href="https://darynfillis.com/schedule" style="color:#92400e;text-decoration:none">darynfillis.com/schedule</a></p>
+  </div>
+</div>
+
+<!-- PRINT-ONLY DISCLAIMER (at bottom of printed page) -->
+<div class="print-disclaimer">
+  <div style="font-size:0.82rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy);margin-bottom:8px">Important Disclaimer</div>
 
 
 
@@ -4229,11 +5107,11 @@ function calculate() {
 
   // Loan summary
   document.getElementById('purchasePrice').textContent = fmt(homePrice);
+  document.getElementById('totalMonthlyLoanAmount').textContent = fmt(loanAmount);
   document.getElementById('loanAmount').textContent = fmt(loanAmount);
 
 
-  // Determine loan category for use in plain-language explanation
-  // (no longer displayed as a row, but used in the educational note below)
+  // Determine loan category for use in plain-language explanation + rate alerts
   let categoryInfo = { category: 'conforming', label: 'Conforming' };
   if (currentCounty) {
     const limits = getCountyLimits(currentCounty.key);
@@ -4241,6 +5119,12 @@ function calculate() {
   } else {
     categoryInfo = categorizeLoan(loanAmount, NATIONAL_BASELINE);
   }
+
+  // Update rate adjustment alerts (educational notes based on context)
+  updateRateAlerts(categoryInfo);
+
+  // Update jumbo comparison panel (only shown when loan > county limit)
+  updateJumboComparison(homePrice, loanAmount, rate, term, categoryInfo);
 
   // Plain-language explanation
   let explanation = '';
@@ -4411,6 +5295,158 @@ function calcMoveUp() {
 // EVENT WIRING
 // ════════════════════════════════════════════════════════════
 
+
+
+// ════════════════════════════════════════════════════════════
+// CASH TO CLOSE CALCULATOR
+// Comprehensive breakdown of money needed at closing:
+// - Down payment
+// - Closing costs (% of loan)
+// - Prepaid interest (days from closing to month-end × daily interest)
+// - Tax escrow setup (months × monthly tax)
+// - Insurance escrow (12 months prepaid + N months reserve)
+// - Lender + seller credits (subtractions)
+// - First mortgage payment date
+// ════════════════════════════════════════════════════════════
+
+function calcCashToClose() {
+  // Pull values from main calculator
+  const homePrice = parseNum(document.getElementById('homePrice').value);
+  const dpDollars = parseNum(document.getElementById('downPaymentDollars').value);
+  const dpPct     = parseNum(document.getElementById('downPaymentPct').value);
+  const rate      = parseNum(document.getElementById('interestRate').value);
+  const taxPct    = parseNum(document.getElementById('propertyTax').value);
+  const insPct    = parseNum(document.getElementById('insurance').value);
+  const loanAmount = homePrice - dpDollars;
+
+  // Pull cash-to-close inputs
+  const closingDateInput = document.getElementById('closingDate');
+  const closingDateStr = closingDateInput ? closingDateInput.value : '';
+  const closingCostsPct = parseNum(document.getElementById('closingCostsPct').value) || 2.5;
+  const taxEscrowMonths = parseInt(document.getElementById('taxEscrowMonths').value) || 3;
+  const insEscrowMonths = parseInt(document.getElementById('insuranceEscrowMonths').value) || 2;
+  const lenderCredits = parseNum(document.getElementById('lenderCredits').value);
+  const sellerCredits = parseNum(document.getElementById('sellerCredits').value);
+
+  // Calculate components
+  const closingCosts = loanAmount * (closingCostsPct / 100);
+
+  // Prepaid interest: days from closing to month-end × daily interest rate × loan amount
+  let prepaidInterest = 0;
+  let firstPaymentDate = '—';
+  let daysOfInterest = 15; // default if no closing date
+
+  if (closingDateStr) {
+    const closing = new Date(closingDateStr + 'T00:00:00');
+    const closingDay = closing.getDate();
+    const closingMonth = closing.getMonth();
+    const closingYear = closing.getFullYear();
+
+    // Days remaining in closing month (including closing day)
+    const daysInMonth = new Date(closingYear, closingMonth + 1, 0).getDate();
+    daysOfInterest = (daysInMonth - closingDay) + 1;
+
+    // Daily interest = annual rate / 360 (industry standard) × loan amount
+    const dailyInterest = (loanAmount * (rate / 100)) / 360;
+    prepaidInterest = dailyInterest * daysOfInterest;
+
+    // First payment due: 1st of the second month after closing
+    const firstPayMonth = (closingMonth + 2) % 12;
+    const firstPayYear = closingYear + Math.floor((closingMonth + 2) / 12);
+    const firstPay = new Date(firstPayYear, firstPayMonth, 1);
+    const opts = { year: 'numeric', month: 'long', day: 'numeric' };
+    firstPaymentDate = firstPay.toLocaleDateString('en-US', opts);
+  } else {
+    // Without a closing date, estimate ~15 days of prepaid interest
+    const dailyInterest = (loanAmount * (rate / 100)) / 360;
+    prepaidInterest = dailyInterest * daysOfInterest;
+  }
+
+  // Tax escrow: months × (annual tax / 12)
+  const annualTax = homePrice * (taxPct / 100);
+  const monthlyTax = annualTax / 12;
+  const taxEscrowSetup = monthlyTax * taxEscrowMonths;
+
+  // Insurance: 12 months prepaid (first year) + N months reserve
+  const annualInsurance = homePrice * (insPct / 100);
+  const monthlyInsurance = annualInsurance / 12;
+  const insSetup = annualInsurance + (monthlyInsurance * insEscrowMonths);
+
+  // Total credits
+  const totalCredits = lenderCredits + sellerCredits;
+
+  // Total cash to close
+  const total = dpDollars + closingCosts + prepaidInterest + taxEscrowSetup + insSetup - totalCredits;
+
+  // ── Render ──
+  document.getElementById('cashToCloseTotal').textContent = fmt(total);
+  document.getElementById('cashToCloseDate').textContent = 'First payment due: ' + firstPaymentDate;
+
+  document.getElementById('ctcDownValue').textContent = fmt(dpDollars);
+  document.getElementById('ctcDownDetail').textContent = dpPct + '% of purchase price';
+
+  document.getElementById('ctcClosingValue').textContent = fmt(closingCosts);
+  document.getElementById('ctcClosingDetail').textContent = closingCostsPct + '% of loan amount';
+
+  document.getElementById('ctcPrepaidValue').textContent = fmt(prepaidInterest);
+  document.getElementById('ctcPrepaidDetail').textContent = daysOfInterest + ' days of interest at ' + rate + '%';
+
+  document.getElementById('ctcTaxValue').textContent = fmt(taxEscrowSetup);
+  document.getElementById('ctcTaxDetail').textContent = taxEscrowMonths + ' months × ' + fmt(monthlyTax) + '/mo';
+
+  document.getElementById('ctcInsValue').textContent = fmt(insSetup);
+  document.getElementById('ctcInsDetail').textContent = '12 months prepaid (' + fmt(annualInsurance) + ') + ' + insEscrowMonths + ' months reserve';
+
+  // Credits (only show row if there are credits)
+  const creditsRow = document.getElementById('ctcCreditsRow');
+  if (totalCredits > 0) {
+    creditsRow.style.display = 'flex';
+    document.getElementById('ctcCreditsValue').textContent = '-' + fmt(totalCredits);
+  } else {
+    creditsRow.style.display = 'none';
+  }
+
+  document.getElementById('ctcTotalValue').textContent = fmt(total);
+}
+
+function initCashToCloseCalculator() {
+  // Set default closing date to ~30 days from today
+  const dateInput = document.getElementById('closingDate');
+  if (dateInput) {
+    const future = new Date();
+    future.setDate(future.getDate() + 30);
+    dateInput.value = future.toISOString().split('T')[0];
+  }
+
+  // Wire up listeners on the cash-to-close fields
+  ['closingDate', 'closingCostsPct', 'taxEscrowMonths', 'insuranceEscrowMonths', 'lenderCredits', 'sellerCredits'].forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', calcCashToClose);
+      el.addEventListener('change', calcCashToClose);
+    }
+  });
+
+  // Format dollar inputs on blur
+  ['lenderCredits', 'sellerCredits'].forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('blur', function() { formatCurrencyInput(this); });
+    }
+  });
+
+  // When main calc inputs change, also recalculate cash-to-close
+  ['homePrice', 'downPaymentPct', 'downPaymentDollars', 'interestRate', 'propertyTax', 'insurance'].forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', calcCashToClose);
+      el.addEventListener('change', calcCashToClose);
+    }
+  });
+
+  // Initial calculation
+  calcCashToClose();
+}
 
 // ════════════════════════════════════════════════════════════
 // DEBT STRATEGY CALCULATOR
@@ -4604,6 +5640,139 @@ function initDebtCalculator() {
   calcDebtScenarios();
 }
 
+// ════════════════════════════════════════════════════════════
+// RATE ADJUSTMENT ALERTS
+// Educational notes about scenarios that typically affect interest rate
+// ════════════════════════════════════════════════════════════
+
+function updateRateAlerts(categoryInfo) {
+  const container = document.getElementById('rateAlerts');
+  if (!container) return;
+
+  const alerts = [];
+  const propertyType = document.getElementById('propertyType').value;
+
+  // High-Balance loan alert
+  if (categoryInfo.category === 'high-balance') {
+    alerts.push({
+      label: 'High-Balance Loan',
+      text: 'Your loan exceeds the standard conforming limit ($' + NATIONAL_BASELINE.conforming.toLocaleString() + ') but stays within your county\'s higher limit. <strong>High-balance loans typically price 0.25 to 0.50 higher</strong> than standard conforming loans. Some lenders also have stricter reserve requirements.'
+    });
+  }
+
+  // Jumbo loan alert (above county limit)
+  if (categoryInfo.category === 'jumbo') {
+    alerts.push({
+      label: 'Jumbo Loan',
+      text: 'Your loan amount exceeds your county\'s conforming limit, making this a jumbo loan. <strong>Jumbo loans typically have stricter qualifying requirements</strong> (higher credit, more reserves) and rates can vary significantly between lenders. The good news: jumbo rates can sometimes be lower than conforming for very strong borrowers.'
+    });
+  }
+
+  // Condo alert
+  if (propertyType === 'condo') {
+    alerts.push({
+      label: 'Condo Property',
+      text: '<strong>Condos typically get a +0.125 to +0.25 rate adjustment</strong> compared to single-family homes. This is because of project approval requirements (Fannie/Freddie warrantability) and slightly higher risk. The exact adjustment depends on your LTV, credit score, and the specific project.'
+    });
+  }
+
+  // 2-4 unit property alert
+  if (propertyType === '2-unit' || propertyType === '3-unit' || propertyType === '4-unit') {
+    const units = propertyType.charAt(0);
+    alerts.push({
+      label: units + '-Unit Property',
+      text: 'Multi-unit residential properties typically get a <strong>+0.5 to +1.25 rate adjustment</strong> over single-family homes. Down payment requirements are also higher (15-25% owner-occupied, 25-30% for investment).'
+    });
+  }
+
+  // Manufactured home alert
+  if (propertyType === 'manufactured') {
+    alerts.push({
+      label: 'Manufactured Home',
+      text: '<strong>Manufactured homes typically have rates 0.5 to 1.5 higher</strong> than site-built homes. The home must be permanently affixed and titled as real property. Many lenders do not offer manufactured home loans, so options can be limited.'
+    });
+  }
+
+  // Render
+  if (alerts.length === 0) {
+    container.style.display = 'none';
+    container.innerHTML = '';
+  } else {
+    container.style.display = 'block';
+    container.innerHTML = alerts.map(function(a) {
+      return '<div class="rate-alert">' +
+        '<div class="rate-alert-label">' + a.label + '</div>' +
+        '<div class="rate-alert-text">' + a.text + '</div>' +
+      '</div>';
+    }).join('');
+  }
+}
+
+
+// ════════════════════════════════════════════════════════════
+// JUMBO vs CONFORMING COMPARISON
+// Shown when loan amount exceeds the county conforming limit
+// Compares two paths: stay jumbo, or increase down payment to fit conforming
+// ════════════════════════════════════════════════════════════
+
+function updateJumboComparison(homePrice, loanAmount, rate, term, categoryInfo) {
+  const container = document.getElementById('jumboComparison');
+  if (!container) return;
+
+  // Only show when category is jumbo
+  if (categoryInfo.category !== 'jumbo') {
+    container.style.display = 'none';
+    return;
+  }
+
+  // Determine the county conforming limit
+  let conformingLimit = NATIONAL_BASELINE.conforming;
+  if (currentCounty && currentCounty.key) {
+    const limits = getCountyLimits(currentCounty.key);
+    conformingLimit = limits.conforming;
+  }
+
+  // Option A: Current setup (Jumbo)
+  // Estimated rate = user's rate + 0.25 (jumbo bump, conservative estimate)
+  const aDown = homePrice - loanAmount;
+  const aLoan = loanAmount;
+  const aRate = rate; // Use the rate user entered (assumed accurate)
+  const aPI = calcMonthlyPI(aLoan, aRate, term);
+
+  // Determine if county has a high-balance tier (limit > national baseline)
+  const hasHighBalance = conformingLimit > NATIONAL_BASELINE.conforming;
+  const optionBLabel = hasHighBalance ? 'High-Balance Conforming' : 'Conforming';
+
+  // Option B: Increase down payment so loan = conforming limit
+  const bLoan = conformingLimit;
+  const bDown = homePrice - bLoan;
+  const bRate = rate; // Same assumed rate; in reality would likely be lower
+  const bPI = calcMonthlyPI(bLoan, bRate, term);
+  const bDownPct = (bDown / homePrice) * 100;
+  const aDownPct = (aDown / homePrice) * 100;
+
+  // Render
+  document.getElementById('jumboADown').textContent = fmt(aDown) + ' (' + aDownPct.toFixed(1) + '%)';
+  document.getElementById('jumboALoan').textContent = fmt(aLoan);
+  document.getElementById('jumboAType').textContent = 'Jumbo';
+  document.getElementById('jumboAPayment').textContent = fmt(aPI) + '/mo';
+
+  document.getElementById('jumboBDown').textContent = fmt(bDown) + ' (' + bDownPct.toFixed(1) + '%)';
+  document.getElementById('jumboBLoan').textContent = fmt(bLoan);
+  document.getElementById('jumboBType').textContent = optionBLabel;
+  document.getElementById('jumboBPayment').textContent = fmt(bPI) + '/mo';
+
+  // Update note based on context
+  const extraDown = bDown - aDown;
+  const note = document.getElementById('jumboComparisonNote');
+  if (note) {
+    note.textContent = 'Option B requires ' + fmt(extraDown) + ' more cash up front but typically gets a lower rate (jumbo loans can be 0.25 to 0.50 higher than ' + optionBLabel.toLowerCase() + '). The right choice depends on your cash position and the actual rate spread between programs at lock. Talk it through with me.';
+  }
+
+  container.style.display = 'block';
+}
+
+
 function init() {
   // Program selector
   document.querySelectorAll('.program-btn').forEach(btn => {
@@ -4743,6 +5912,7 @@ function init() {
   // Initial calculation
   calculate();
   calcMoveUp();
+  initCashToCloseCalculator();
   initDebtCalculator();
 }
 
