@@ -209,4 +209,12 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Mortgage calculator (interactive tool) -->
+  <url>
+    <loc>https://darynfillis.com/calculator</loc>
+    <lastmod>2026-04-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>

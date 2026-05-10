@@ -18,26 +18,25 @@
 <link rel="apple-touch-icon" href="/favicon.png">
 <link rel="shortcut icon" href="/favicon.png">
 
-<title>Buy a Home in 90 Days | Daryn Fillis · NEO Home Loans</title>
-<meta name="description" content="A 90-day plan to buy your first home. Day 1 you reach out, Day 90 you have keys. Here is exactly what happens each month, what I do, and what you do.">>
+<title>Mortgage Calculator | All Loan Programs | Daryn Fillis</title>
+<meta name="description" content="An educational mortgage calculator built to teach you how every part of a mortgage payment works. Conventional, FHA, VA, Jumbo, Bank Statement, DSCR, plus the Move-Up Method calculator for buy-before-sell scenarios. Educational tooltips on every field.">>
 
 <!-- Canonical -->
-<meta name="robots" content="noindex, follow">
-<link rel="canonical" href="https://darynfillis.com/3months">
+<link rel="canonical" href="https://darynfillis.com/calculator">
 
 <!-- Open Graph — controls every social share preview -->
 <meta property="og:type"        content="website">
-<meta property="og:url"         content="https://darynfillis.com/3months">
-<meta property="og:title"       content="Buy a Home in 90 Days | Daryn Fillis">
-<meta property="og:description" content="A 90-day plan to buy your first home. From first call to keys in hand.">>
+<meta property="og:url"         content="https://darynfillis.com/calculator">
+<meta property="og:title"       content="Mortgage Calculator | All Loan Programs | Daryn Fillis">
+<meta property="og:description" content="An educational mortgage calculator built to teach you how mortgage payments work. All loan programs plus Move-Up Method.">>
 <meta property="og:image"       content="https://darynfillis.com/og-home.jpg">
 <meta property="og:locale"      content="en_US">
 <meta property="og:site_name"   content="Daryn Fillis | NEO Home Loans">
 
 <!-- Twitter / X card -->
 <meta name="twitter:card"        content="summary_large_image">
-<meta name="twitter:title"      content="Buy a Home in 90 Days | Daryn Fillis">
-<meta name="twitter:description" content="A 90-day plan to buy your first home. From first call to keys in hand.">>
+<meta name="twitter:title"       content="No-Cost Refinance Explained | Daryn Fillis · LA">
+<meta name="twitter:description" content="Educational mortgage calculator with all loan programs, ZIP-based loan limits, and the Move-Up Method calculator.">
 <meta name="twitter:image"       content="https://darynfillis.com/og-home.jpg">
 
 <!-- Additional SEO signals -->
@@ -1472,29 +1471,30 @@ html{-webkit-text-size-adjust:100%;}
 </script>
 </head>
 
-
 <style>
-.three-months-intro {
+/* ── CALCULATOR PAGE STYLES ── */
+
+.calc-hero {
   background: var(--navy);
-  padding: clamp(110px,14vw,150px) clamp(20px,4vw,48px) clamp(56px,8vw,88px);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+  padding: clamp(110px,14vw,150px) clamp(20px,4vw,48px) clamp(40px,5vw,56px);
+  position: relative; overflow: hidden;
 }
-.three-months-intro::before {
-  content: '';
-  position: absolute; inset: 0;
+.calc-hero::before {
+  content: ''; position: absolute; inset: 0;
   background: radial-gradient(ellipse 70% 80% at 50% 30%,rgba(91,203,245,0.08) 0%,transparent 60%);
   pointer-events: none;
 }
-.three-months-intro-inner { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
-.three-months-eyebrow {
+.calc-hero-inner {
+  max-width: 880px; margin: 0 auto; text-align: center;
+  position: relative; z-index: 1;
+}
+.calc-hero-eyebrow {
   display: inline-flex; align-items: center; gap: 10px;
   margin-bottom: 18px; padding: 6px 14px;
   border-radius: 20px; background: rgba(91,203,245,0.12);
   border: 1px solid rgba(91,203,245,0.3);
 }
-.three-months-eyebrow-dot {
+.calc-hero-dot {
   width: 6px; height: 6px; border-radius: 50%;
   background: var(--blue); box-shadow: 0 0 8px var(--blue);
   animation: dotPulse 2.4s ease-in-out infinite;
@@ -1503,141 +1503,718 @@ html{-webkit-text-size-adjust:100%;}
   0%, 100% { opacity: 1;   box-shadow: 0 0 8px var(--blue); }
   50%      { opacity: 0.45; box-shadow: 0 0 14px var(--blue); }
 }
-@media (prefers-reduced-motion: reduce) {
-  .three-months-eyebrow-dot { animation: none; }
-}
-.three-months-eyebrow-text { font-size: 0.66rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--blue); }
-.three-months-intro h1 {
-  font-weight: 800; font-size: clamp(2rem,4.5vw,3.4rem);
+@media (prefers-reduced-motion: reduce) { .calc-hero-dot { animation: none; } }
+.calc-hero-eyebrow-text { font-size: 0.66rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--blue); }
+.calc-hero h1 {
+  font-weight: 800; font-size: clamp(1.9rem,4vw,3rem);
   color: var(--white); letter-spacing: -0.03em;
-  line-height: 1.05; margin-bottom: 18px;
+  line-height: 1.05; margin-bottom: 16px;
 }
-.three-months-intro h1 em { color: var(--blue); font-style: normal; }
-.three-months-intro p {
+.calc-hero h1 em { color: var(--blue); font-style: normal; }
+.calc-hero p {
   font-weight: 200; font-size: clamp(1rem,1.4vw,1.15rem);
-  color: rgba(255,255,255,0.7); line-height: 1.85;
-  max-width: 580px; margin: 0 auto 28px;
-}
-
-/* Phase blocks */
-.phase-section { padding: clamp(56px,8vw,88px) clamp(20px,4vw,48px); }
-.phase-section.alt { background: var(--bg); }
-.phase-inner { max-width: 1080px; margin: 0 auto; }
-.phase-header { text-align: center; margin-bottom: 48px; }
-.phase-tag {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(91,203,245,0.12);
-  border: 1px solid rgba(91,203,245,0.3);
-  color: var(--blue);
-  font-size: 0.7rem; font-weight: 800;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  padding: 8px 16px; border-radius: 24px;
-  margin-bottom: 16px;
-}
-.phase-day-range {
-  font-family: monospace; font-size: 0.78rem;
-  color: var(--blue); font-weight: 700;
-}
-.phase-h2 {
-  font-weight: 800; font-size: clamp(1.8rem,3vw,2.4rem);
-  color: var(--navy); letter-spacing: -0.025em;
-  line-height: 1.1; margin-bottom: 14px;
-}
-.phase-sub {
-  font-weight: 200; font-size: 1.02rem;
-  color: var(--body); line-height: 1.85;
+  color: rgba(255,255,255,0.65); line-height: 1.85;
   max-width: 640px; margin: 0 auto;
 }
 
-.parallel-grid {
+/* Main calculator section */
+.calc-section { padding: clamp(48px,6vw,72px) clamp(20px,4vw,48px); background: var(--bg); }
+.calc-grid {
+  max-width: 1180px; margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 28px;
 }
-@media (max-width: 768px) {
-  .parallel-grid { grid-template-columns: 1fr; gap: 18px; }
-}
-.parallel-col {
+@media (max-width: 920px) { .calc-grid { grid-template-columns: 1fr; gap: 24px; } }
+
+/* Input panel */
+.calc-panel {
   background: var(--white);
-  border: 1px solid var(--rule);
   border-radius: 14px;
-  padding: 32px;
-  box-shadow: var(--shadow-sm);
+  padding: clamp(24px,3vw,32px);
+  box-shadow: 0 4px 24px rgba(10,37,64,0.06);
 }
-.parallel-col.you   { border-top: 4px solid var(--blue); }
-.parallel-col.daryn { border-top: 4px solid var(--navy); }
-.parallel-label {
-  display: inline-block;
-  font-size: 0.66rem; font-weight: 800;
+.calc-panel-heading {
+  font-weight: 800; font-size: 0.7rem;
   letter-spacing: 0.16em; text-transform: uppercase;
-  margin-bottom: 14px;
+  color: var(--blue); margin-bottom: 14px;
 }
-.parallel-col.you   .parallel-label { color: var(--blue); }
-.parallel-col.daryn .parallel-label { color: var(--navy); }
-.parallel-col h3 {
-  font-weight: 800; font-size: 1.25rem;
-  color: var(--navy); letter-spacing: -0.015em;
-  line-height: 1.2; margin-bottom: 18px;
-}
-.parallel-col ul {
-  list-style: none; padding: 0; margin: 0;
-}
-.parallel-col li {
-  font-weight: 200; font-size: 0.95rem;
-  color: var(--body); line-height: 1.65;
-  padding-left: 22px; position: relative;
-  margin-bottom: 12px;
-}
-.parallel-col li::before {
-  content: ''; position: absolute;
-  left: 0; top: 9px;
-  width: 8px; height: 8px;
-  background: var(--blue);
-  border-radius: 50%;
+.calc-panel-title {
+  font-weight: 800; font-size: clamp(1.3rem,2vw,1.6rem);
+  color: var(--navy); letter-spacing: -0.02em;
+  line-height: 1.2; margin-bottom: 24px;
 }
 
-/* Milestone callout */
-.milestone {
-  margin-top: 32px;
-  background: var(--navy);
-  border-radius: 14px;
-  padding: 24px 28px;
-  text-align: center;
-  color: var(--white);
+/* Loan program selector */
+.program-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 6px; margin-bottom: 24px;
 }
-.milestone-label {
+.program-btn {
+  padding: 10px 8px;
+  background: var(--bg);
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  font-size: 0.8rem; font-weight: 700;
+  color: var(--navy);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+}
+.program-btn:hover { border-color: var(--blue); }
+.program-btn.active {
+  background: var(--navy); color: var(--blue);
+  border-color: var(--navy);
+}
+.program-btn { position: relative; }
+.program-help {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: rgba(10,37,64,0.15);
+  color: inherit;
+  font-size: 0.65rem; font-weight: 800;
+  margin-left: 4px;
+  vertical-align: middle;
+  cursor: help;
+}
+.program-btn.active .program-help {
+  background: rgba(91,203,245,0.25);
+  color: var(--blue);
+}
+.program-btn[data-tooltip]:hover::after,
+.program-btn[data-tooltip]:focus::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%);
+  background: var(--navy); color: var(--white);
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 0.78rem; font-weight: 200;
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1.55;
+  white-space: normal;
+  width: 240px;
+  z-index: 100;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  text-align: left;
+}
+.program-btn[data-tooltip]:hover::before,
+.program-btn[data-tooltip]:focus::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 2px); left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--navy);
+  z-index: 100;
+}
+
+.program-desc {
+  font-size: 0.85rem; color: var(--body);
+  font-weight: 200; line-height: 1.6;
+  padding: 12px 14px;
+  background: rgba(91,203,245,0.06);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 24px;
+}
+
+/* Input rows */
+.input-row { margin-bottom: 18px; }
+.input-row.split {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.input-label {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.74rem; font-weight: 800;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--navy); margin-bottom: 6px;
+}
+
+/* Tooltip help icon */
+.help-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--rule); color: var(--navy);
+  font-size: 0.7rem; font-weight: 800;
+  cursor: help;
+  position: relative;
+  transition: background 0.15s;
+}
+.help-icon:hover { background: var(--blue); }
+.help-icon::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%);
+  background: var(--navy); color: var(--white);
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 0.78rem; font-weight: 200;
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1.55;
+  white-space: normal;
+  width: 260px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+  z-index: 100;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+.help-icon::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 2px); left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--navy);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+.help-icon:hover::after, .help-icon:hover::before, .help-icon:focus::after, .help-icon:focus::before {
+  opacity: 1;
+}
+
+/* Inputs */
+.input-row input[type="text"], .input-row input[type="number"], .input-row select {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: var(--navy);
+  font-family: inherit;
+  background: var(--white);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.input-row input:focus, .input-row select:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(91,203,245,0.18);
+}
+.input-with-prefix, .input-with-suffix { position: relative; }
+.input-row .input-with-prefix input[type="text"], .input-row .input-with-prefix input[type="number"] { padding-left: 36px !important; }
+.input-row .input-with-suffix input[type="text"], .input-row .input-with-suffix input[type="number"] { padding-right: 44px !important; }
+.input-prefix, .input-suffix {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  color: var(--muted); font-weight: 500; font-size: 0.95rem;
+  pointer-events: none;
+  z-index: 1;
+}
+.input-prefix { left: 14px; }
+.input-suffix { right: 12px; }
+
+.advanced-toggle {
+  background: none; border: none;
+  color: var(--blue); font-weight: 700;
+  font-size: 0.85rem; cursor: pointer;
+  padding: 6px 0;
+  display: flex; align-items: center; gap: 6px;
+  margin-top: 8px;
+}
+.advanced-toggle:hover { text-decoration: underline; }
+.advanced-section { display: none; padding-top: 12px; border-top: 1px solid var(--rule); margin-top: 16px; }
+.advanced-section.open { display: block; }
+
+/* Results panel */
+.results-panel {
+  background: var(--navy);
+  color: var(--white);
+  border-radius: 14px;
+  padding: clamp(24px,3vw,36px);
+  position: sticky;
+  top: 96px;
+}
+.results-monthly {
+  text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(91,203,245,0.2);
+  margin-bottom: 24px;
+}
+.results-monthly-label {
+  font-size: 0.66rem; font-weight: 800;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 8px;
+}
+.results-monthly-value {
+  font-weight: 800; font-size: clamp(2.5rem,5vw,3.4rem);
+  letter-spacing: -0.03em; line-height: 1;
+  color: var(--white); margin-bottom: 4px;
+}
+.results-monthly-sub {
+  font-size: 0.82rem; color: rgba(255,255,255,0.55);
+  font-weight: 200;
+}
+
+/* Quick breakdown inside results card */
+.quick-breakdown {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(91,203,245,0.15);
+}
+.quick-breakdown-item {
+  text-align: center;
+  padding: 4px 2px;
+}
+.quick-breakdown-label {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(91,203,245,0.75);
+  margin-bottom: 4px;
+}
+.quick-breakdown-value {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+@media (max-width: 480px) {
+  .quick-breakdown-value { font-size: 0.85rem; }
+}
+
+
+/* Breakdown */
+.breakdown-list { list-style: none; padding: 0; margin: 0; }
+.breakdown-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(91,203,245,0.12);
+}
+.breakdown-item:last-child { border-bottom: none; }
+.breakdown-label {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.92rem; font-weight: 200;
+  color: rgba(255,255,255,0.85);
+}
+.breakdown-color {
+  width: 12px; height: 12px; border-radius: 3px;
+  flex-shrink: 0;
+}
+.breakdown-value {
+  font-weight: 700; font-size: 0.95rem;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Stacked bar chart */
+.bar-chart {
+  height: 14px; border-radius: 7px; overflow: hidden;
+  display: flex; margin: 20px 0;
+  background: rgba(91,203,245,0.1);
+}
+.bar-segment {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Loan summary */
+.loan-summary {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(91,203,245,0.2);
+}
+.loan-summary-row {
+  display: flex; justify-content: space-between;
+  padding: 6px 0;
+  font-size: 0.88rem;
+}
+.loan-summary-label { font-weight: 200; color: rgba(255,255,255,0.6); }
+.loan-summary-value { font-weight: 700; color: var(--white); font-variant-numeric: tabular-nums; }
+
+/* What this means */
+.what-this-means {
+  margin-top: 24px;
+  padding: 16px;
+  background: rgba(91,203,245,0.08);
+  border-radius: 8px;
+  border-left: 3px solid var(--blue);
+}
+.what-this-means-label {
   font-size: 0.66rem; font-weight: 800;
   letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--blue); margin-bottom: 6px;
 }
-.milestone-text {
-  font-weight: 600; font-size: 1.05rem;
-  letter-spacing: -0.01em;
+.what-this-means-text {
+  font-size: 0.86rem; color: rgba(255,255,255,0.85);
+  line-height: 1.65; font-weight: 200;
 }
 
-/* Reality check section */
-.reality-check {
+/* Print button area */
+.print-row {
+  display: flex; gap: 10px; margin-top: 22px;
+  padding-top: 20px; border-top: 1px solid rgba(91,203,245,0.2);
+}
+.print-btn {
+  flex: 1;
+  padding: 11px 16px;
+  background: var(--blue); color: var(--navy);
+  border: none; border-radius: 8px;
+  font-weight: 800; font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.15s;
+  font-family: inherit;
+}
+.print-btn:hover { transform: translateY(-1px); }
+.print-btn.secondary {
+  background: transparent; color: var(--blue);
+  border: 1.5px solid var(--blue);
+}
+
+/* Move-Up Method calc section */
+.moveup-section {
   background: var(--white);
   padding: clamp(56px,8vw,88px) clamp(20px,4vw,48px);
 }
-.reality-inner { max-width: 880px; margin: 0 auto; text-align: center; }
+.moveup-inner { max-width: 1180px; margin: 0 auto; }
+.moveup-header { text-align: center; margin-bottom: 36px; }
+.moveup-strategy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 8px; margin-bottom: 24px;
+}
+.moveup-comparison {
+  background: var(--bg);
+  border-radius: 14px;
+  padding: clamp(24px,3vw,36px);
+  margin-top: 24px;
+}
+.moveup-comparison-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 720px) { .moveup-comparison-grid { grid-template-columns: 1fr; } }
+.moveup-card {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 20px;
+}
+.moveup-card.recommended { border-top: 4px solid var(--blue); }
+.moveup-card-label {
+  font-size: 0.66rem; font-weight: 800;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 8px;
+}
+.moveup-card.recommended .moveup-card-label { color: var(--blue); }
+.moveup-card-title {
+  font-weight: 800; font-size: 1.05rem;
+  color: var(--navy); margin-bottom: 14px;
+  letter-spacing: -0.01em;
+}
+.moveup-card-amount {
+  font-weight: 800; font-size: 1.8rem;
+  color: var(--navy); letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1; margin-bottom: 6px;
+}
+.moveup-card-amount-label {
+  font-size: 0.78rem; color: var(--muted);
+  margin-bottom: 14px;
+}
+.moveup-card-detail {
+  font-size: 0.84rem; color: var(--body);
+  font-weight: 200; line-height: 1.65;
+  padding-top: 12px; border-top: 1px solid var(--rule);
+}
 
-/* CTA */
-.three-months-cta {
-  background: var(--navy);
+/* Print styles */
+@media print {
+  .nav, .breadcrumb-bar, footer, .print-row, .calc-hero { display: none !important; }
+  body { background: white !important; padding: 0 !important; }
+  .calc-section, .moveup-section { padding: 12px !important; background: white !important; }
+  .results-panel {
+    background: white !important; color: var(--navy) !important;
+    box-shadow: 0 0 0 1px var(--rule);
+    page-break-inside: avoid;
+    position: static !important;
+  }
+  .results-monthly-label, .breakdown-label, .loan-summary-label {
+    color: var(--muted) !important;
+  }
+  .results-monthly-value, .breakdown-value, .loan-summary-value, .what-this-means-text {
+    color: var(--navy) !important;
+  }
+  .what-this-means {
+    background: var(--bg) !important;
+  }
+  .what-this-means-text { color: var(--body) !important; }
+  .breakdown-item { border-color: var(--rule) !important; }
+  .calc-panel { box-shadow: none; border: 1px solid var(--rule); page-break-inside: avoid; }
+  .program-selector, .advanced-toggle, .help-icon { display: none !important; }
+  /* Add print-only branding header */
+  .print-header { display: block !important; text-align: center; padding: 20px 0 30px; border-bottom: 2px solid var(--navy); margin-bottom: 30px; }
+}
+.print-header { display: none; }
+
+
+/* ── DEBT STRATEGY CALCULATOR ── */
+.debt-section {
+  background: var(--bg);
   padding: clamp(56px,8vw,88px) clamp(20px,4vw,48px);
+  border-top: 1px solid var(--rule);
+}
+.debt-inner { max-width: 1180px; margin: 0 auto; }
+.debt-header { text-align: center; margin-bottom: 36px; }
+
+.debt-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+@media (max-width: 920px) { .debt-grid { grid-template-columns: 1fr; gap: 24px; } }
+
+.debt-input-panel {
+  background: var(--white);
+  border-radius: 14px;
+  padding: clamp(24px,3vw,32px);
+  box-shadow: 0 4px 24px rgba(10,37,64,0.06);
+}
+
+.debt-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 14px 0;
+}
+.debt-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 32px;
+  gap: 8px;
+  align-items: end;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.debt-row:first-child { padding-top: 0; }
+.debt-row:last-child { border-bottom: none; }
+@media (max-width: 720px) {
+  .debt-row {
+    grid-template-columns: 1fr 1fr 32px;
+    gap: 8px 8px;
+  }
+  .debt-row .debt-field-name { grid-column: 1 / -1; }
+  .debt-row .debt-field-min { grid-column: 1 / 3; }
+  .debt-row .debt-remove { grid-row: 2; grid-column: 3; align-self: end; }
+}
+.debt-field { display: flex; flex-direction: column; }
+.debt-field-label {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.debt-field input {
+  padding: 8px 10px;
+  border: 1.5px solid var(--rule);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: var(--navy);
+  font-family: inherit;
+  background: var(--white);
+  width: 100%;
+  transition: border-color 0.15s;
+}
+.debt-field input:focus { outline: none; border-color: var(--blue); }
+.debt-field-name input { font-weight: 600; }
+.debt-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.4rem;
+  line-height: 1;
+  transition: background 0.15s, color 0.15s;
+  font-family: inherit;
+}
+.debt-remove:hover { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
+.debt-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: rgba(91,203,245,0.1);
+  border: 1.5px dashed rgba(91,203,245,0.5);
+  color: var(--blue-dark);
+  font-weight: 700;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-family: inherit;
+}
+.debt-add-btn:hover { background: rgba(91,203,245,0.18); }
+
+.debt-summary {
+  margin-top: 18px;
+  padding: 16px;
+  background: var(--bg);
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
   text-align: center;
-  border-top: 1px solid rgba(91,203,245,0.12);
 }
-.three-months-cta h2 {
-  font-weight: 800; font-size: clamp(1.6rem,2.6vw,2.2rem);
-  color: var(--white); letter-spacing: -0.025em;
-  line-height: 1.15; margin-bottom: 14px;
+.debt-summary-item {}
+.debt-summary-label {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
 }
-.three-months-cta p {
-  font-weight: 200; font-size: 1rem;
-  color: rgba(255,255,255,0.7); line-height: 1.85;
-  max-width: 560px; margin: 0 auto 24px;
+.debt-summary-value {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+.debt-summary-blended { color: var(--blue-dark); }
+
+/* Comparison panel */
+.debt-comparison {
+  background: var(--white);
+  border-radius: 14px;
+  padding: clamp(24px,3vw,32px);
+  box-shadow: 0 4px 24px rgba(10,37,64,0.06);
+}
+
+.debt-scenario {
+  padding: 18px;
+  border-radius: 10px;
+  border: 1.5px solid var(--rule);
+  margin-bottom: 14px;
+}
+.debt-scenario.recommended {
+  border-color: var(--blue);
+  background: linear-gradient(135deg, rgba(91,203,245,0.05) 0%, rgba(91,203,245,0.01) 100%);
+}
+.debt-scenario-label {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.debt-scenario.recommended .debt-scenario-label { color: var(--blue-dark); }
+.debt-scenario-title {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+  line-height: 1.25;
+}
+.debt-scenario-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.debt-scenario-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.86rem;
+  padding: 4px 0;
+}
+.debt-scenario-row.total {
+  border-top: 1px solid var(--rule);
+  padding-top: 10px;
+  margin-top: 4px;
+  font-weight: 800;
+  color: var(--navy);
+  font-size: 0.95rem;
+}
+.debt-scenario-row-label {
+  font-weight: 200;
+  color: var(--body);
+}
+.debt-scenario-row-value {
+  font-weight: 700;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.debt-savings-banner {
+  margin-top: 18px;
+  padding: 18px 20px;
+  background: var(--navy);
+  color: var(--white);
+  border-radius: 10px;
+  text-align: center;
+}
+.debt-savings-label {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 8px;
+}
+.debt-savings-value {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.debt-savings-direction {
+  font-size: 0.85rem;
+  font-weight: 200;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.5;
+}
+
+.debt-context-note {
+  margin-top: 18px;
+  padding: 14px 18px;
+  background: rgba(91,203,245,0.06);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 8px 8px 0;
+  font-size: 0.86rem;
+  color: var(--body);
+  font-weight: 200;
+  line-height: 1.7;
+}
+
+
+/* Disclaimer */
+.disclaimer-section {
+  background: var(--bg);
+  padding: clamp(40px,5vw,60px) clamp(20px,4vw,48px);
+  border-top: 1px solid var(--rule);
+}
+.disclaimer-inner {
+  max-width: 880px; margin: 0 auto;
+}
+.disclaimer-text {
+  font-size: 0.84rem; color: var(--muted);
+  line-height: 1.75; font-weight: 200;
 }
 </style>
 
@@ -1705,193 +2282,2119 @@ html{-webkit-text-size-adjust:100%;}
     <a href="/" class="breadcrumb-item">Home</a><span class="breadcrumb-sep">›</span><a href="/#strategies" class="breadcrumb-item">Strategies</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-item current" aria-current="page">No-Cost Refinance</span>
   </div>
 </nav>
+
 <nav class="breadcrumb-bar" aria-label="Breadcrumb">
   <div class="breadcrumb-inner">
     <a href="/" class="breadcrumb-item">Home</a>
     <span class="breadcrumb-sep">›</span>
-    <span class="breadcrumb-item current" aria-current="page">90 Days to Keys</span>
+    <span class="breadcrumb-item current">Mortgage Calculator</span>
   </div>
 </nav>
+
 <main id="main-content">
 
-<!-- INTRO -->
-<section class="three-months-intro">
-  <div class="three-months-intro-inner">
-    <div class="three-months-eyebrow">
-      <span class="three-months-eyebrow-dot"></span>
-      <span class="three-months-eyebrow-text">90 Days to Keys</span>
+<!-- HERO -->
+<section class="calc-hero">
+  <div class="calc-hero-inner">
+    <div class="calc-hero-eyebrow">
+      <span class="calc-hero-dot"></span>
+      <span class="calc-hero-eyebrow-text">Educational Tool · All Loan Programs</span>
     </div>
-    <h1>From first call to <em>keys in hand</em> in 90 days.</h1>
-    <p>Day 1 you reach out. Day 90 you walk into your home. Here is exactly what happens each month, what I do, and what you do alongside me. No mystery, no surprises, no "we'll figure it out as we go."</p>
-    <a href="/schedule" class="btn btn-blue btn-wobble">Start your 90 days today</a>
-  </div>
-</section>
-
-<!-- MONTH 1: FOUNDATION -->
-<section class="phase-section alt">
-  <div class="phase-inner">
-    <div class="phase-header">
-      <div class="phase-tag">
-        <span class="phase-day-range">Days 1 to 30</span>
-      </div>
-      <h2 class="phase-h2">Month 1: Foundation.</h2>
-      <p class="phase-sub">We get fully pre-approved, build your strategy, and connect you with an agent if you do not have one. By the end of Month 1, you are ready to make offers that sellers take seriously.</p>
-    </div>
-
-    <div class="parallel-grid">
-      <div class="parallel-col you">
-        <span class="parallel-label">What you do</span>
-        <h3>Hand me the picture, not perfect.</h3>
-        <ul>
-          <li>Schedule our first call (15 minutes, no pressure)</li>
-          <li>Send me your most recent pay stubs, last two years of W-2s or tax returns, and recent bank statements</li>
-          <li>Run your credit if you have not in the last six months (we will look at it together)</li>
-          <li>Tell me what you want this home to do for you, not just what you can afford</li>
-          <li>Start watching homes online so you know what your money buys in your area</li>
-        </ul>
-      </div>
-
-      <div class="parallel-col daryn">
-        <span class="parallel-label">What I do</span>
-        <h3>Build your approval and your strategy.</h3>
-        <ul>
-          <li>Run a full review of your income, credit, and savings</li>
-          <li>Issue your fully verified pre-approval, not just a soft prequal</li>
-          <li>Show you exactly how much home you can comfortably buy and what your monthly payment will look like</li>
-          <li>Map out your loan strategy before you write a single offer</li>
-          <li>Connect you with a strong realtor partner if you need one</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="milestone">
-      <div class="milestone-label">Day 30 Milestone</div>
-      <div class="milestone-text">You have a fully verified pre-approval and a strategy. You are ready to shop with confidence.</div>
+    <h1>Mortgage calculator <em>built to teach</em>.</h1>
+    <p>An educational tool that walks you through how every part of a mortgage payment works. Real PMI factors, real FHA mortgage insurance, real VA funding fee tiers, and the loan limits for your specific county. Hover the question marks to learn what each input means.</p>
+    <div style="margin-top:24px;display:inline-flex;align-items:center;gap:10px;padding:8px 16px;background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.35);border-radius:24px;font-size:0.78rem;color:#fbbf24;font-weight:700;letter-spacing:0.04em">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      For educational purposes only. Not a rate quote.
     </div>
   </div>
 </section>
 
-<!-- MONTH 2: SEARCH AND OFFER -->
-<section class="phase-section">
-  <div class="phase-inner">
-    <div class="phase-header">
-      <div class="phase-tag">
-        <span class="phase-day-range">Days 31 to 60</span>
-      </div>
-      <h2 class="phase-h2">Month 2: Search and offer.</h2>
-      <p class="phase-sub">You tour homes. I run real numbers in real time. When you find the one, we structure an offer that wins, not just an offer that gets submitted.</p>
-    </div>
-
-    <div class="parallel-grid">
-      <div class="parallel-col you">
-        <span class="parallel-label">What you do</span>
-        <h3>Tour, narrow, decide.</h3>
-        <ul>
-          <li>Tour homes with your agent and start ranking what matters to you</li>
-          <li>Send me listings you are seriously considering so I can run the numbers fast</li>
-          <li>Tell me when something feels off about a property so we can investigate before you offer</li>
-          <li>Make the call when the right home shows up</li>
-          <li>Trust the process when you write your first offer (and the second one if needed)</li>
-        </ul>
-      </div>
-
-      <div class="parallel-col daryn">
-        <span class="parallel-label">What I do</span>
-        <h3>Stand by with answers and structure.</h3>
-        <ul>
-          <li>Run real time payment scenarios for every property you are considering</li>
-          <li>Update your pre-approval letter for the exact home and price when you offer</li>
-          <li>Help you structure the offer to compete (rate buydown options, faster closing, stronger terms)</li>
-          <li>Move at your pace, not the bank's schedule</li>
-          <li>Talk to listing agents on your behalf to back up your offer if it helps</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="milestone">
-      <div class="milestone-label">Day 60 Milestone</div>
-      <div class="milestone-text">Your offer is accepted. Escrow is open. The countdown to closing has begun.</div>
-    </div>
-  </div>
-</section>
-
-<!-- MONTH 3: CLOSE AND MOVE IN -->
-<section class="phase-section alt">
-  <div class="phase-inner">
-    <div class="phase-header">
-      <div class="phase-tag">
-        <span class="phase-day-range">Days 61 to 90</span>
-      </div>
-      <h2 class="phase-h2">Month 3: Close and move in.</h2>
-      <p class="phase-sub">Your file goes to underwriting. You handle inspections and appraisal coordination with your agent. We clear conditions, sign documents, and you get the keys.</p>
-    </div>
-
-    <div class="parallel-grid">
-      <div class="parallel-col you">
-        <span class="parallel-label">What you do</span>
-        <h3>Sign, send, and stay in touch.</h3>
-        <ul>
-          <li>Sign your initial loan disclosures within three business days of contract</li>
-          <li>Send any additional documents underwriting requests as they come up</li>
-          <li>Coordinate inspections within your contingency window with your agent</li>
-          <li>Schedule your final walkthrough with your agent the day before closing</li>
-          <li>Show up to sign at the title company or with a mobile notary</li>
-        </ul>
-      </div>
-
-      <div class="parallel-col daryn">
-        <span class="parallel-label">What I do</span>
-        <h3>Underwrite, clear, and close.</h3>
-        <ul>
-          <li>Submit your file to underwriting and track every condition until cleared</li>
-          <li>Order the appraisal and review the report with you when it arrives</li>
-          <li>Send your closing disclosure with locked final numbers at least three business days before closing</li>
-          <li>Get you cleared to close and confirm signing day</li>
-          <li>Wire the loan funds and confirm recordation so you get the keys</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="milestone">
-      <div class="milestone-label">Day 90 Milestone</div>
-      <div class="milestone-text">You walk into your new home with the keys. The journey continues from here.</div>
-    </div>
-  </div>
-</section>
-
-<!-- REALITY CHECK -->
-<section class="reality-check">
-  <div class="reality-inner">
-    <span class="eyebrow" style="color:var(--blue);display:inline-block;margin-bottom:14px">Honest reality check</span>
-    <h2 style="font-weight:800;font-size:clamp(1.7rem,2.6vw,2.2rem);color:var(--navy);letter-spacing:-0.02em;line-height:1.2;margin-bottom:18px">90 days is realistic. It is not guaranteed.</h2>
-    <p style="font-weight:200;font-size:1rem;color:var(--body);line-height:1.85;margin-bottom:14px">In a typical Los Angeles market, 90 days from first call to keys is a real timeline for a buyer who is ready to move. Sometimes it is faster. Sometimes a tough market or a tricky home stretches it longer.</p>
-    <p style="font-weight:200;font-size:1rem;color:var(--body);line-height:1.85;margin-bottom:14px">Most of the things that slow a 90-day plan down are predictable: missing tax returns, credit surprises, low inventory in your price range, contingent offers that get passed over, or appraisal issues. We address those upfront so they do not surprise you mid-process.</p>
-    <p style="font-weight:200;font-size:1rem;color:var(--body);line-height:1.85">If your situation needs more time, I will tell you on the first call. No false promises. No "we'll see." Just a clear answer about what is realistic for you.</p>
-  </div>
-</section>
-
-<!-- MOVE-UP BUYER NOTE -->
-<section style="background:var(--bg);padding:clamp(56px,8vw,88px) clamp(20px,4vw,48px)">
+<!-- FIRST TIME HERE? FRIENDLY INTRO -->
+<section style="background:var(--white);padding:clamp(40px,5vw,56px) clamp(20px,4vw,48px);border-bottom:1px solid var(--rule)">
   <div style="max-width:880px;margin:0 auto">
-    <div style="background:linear-gradient(135deg,rgba(91,203,245,0.08) 0%,rgba(91,203,245,0.03) 100%);border:1px solid rgba(91,203,245,0.25);border-radius:14px;padding:clamp(28px,5vw,44px)">
-      <span class="eyebrow" style="color:var(--blue);display:inline-block;margin-bottom:10px">Already own a home?</span>
-      <h3 style="font-weight:800;font-size:clamp(1.3rem,2vw,1.7rem);color:var(--navy);letter-spacing:-0.015em;line-height:1.2;margin-bottom:14px">The same 90-day map works for move-up buyers.</h3>
-      <p style="font-weight:200;font-size:1rem;color:var(--body);line-height:1.85;margin-bottom:14px">If you are buying your next home before selling the current one, the timeline is the same. The financing strategy is different. We layer in a HELOC, bridge loan, cross-collateralization, or rental conversion so your offer wins without writing a contingent offer that sellers reject.</p>
-      <a href="/move-up-method" style="display:inline-flex;align-items:center;gap:6px;color:var(--blue);font-size:0.9rem;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(91,203,245,0.35);padding-bottom:2px">See the Move-Up Method →</a>
+    <details id="firstTimeIntro" style="background:linear-gradient(135deg,rgba(91,203,245,0.06) 0%,rgba(91,203,245,0.02) 100%);border:1px solid rgba(91,203,245,0.25);border-radius:12px;padding:0;overflow:hidden">
+      <summary style="cursor:pointer;padding:18px 24px;font-weight:700;color:var(--navy);display:flex;align-items:center;justify-content:space-between;gap:12px;list-style:none">
+        <span style="display:flex;align-items:center;gap:10px">
+          <span style="display:inline-flex;width:32px;height:32px;background:var(--blue);color:var(--navy);border-radius:50%;align-items:center;justify-content:center;font-weight:800;font-size:1rem;flex-shrink:0">?</span>
+          <span style="font-size:0.95rem">First time here? Read this 30-second primer.</span>
+        </span>
+        <span style="color:var(--blue);font-size:1.2rem;font-weight:300;line-height:1" id="firstTimeArrow">+</span>
+      </summary>
+      <div style="padding:0 24px 24px 24px;border-top:1px solid rgba(91,203,245,0.2)">
+        <p style="font-weight:200;font-size:0.95rem;color:var(--body);line-height:1.85;margin-top:18px;margin-bottom:14px">A mortgage payment has 4 to 5 parts. We call this <strong style="color:var(--navy);font-weight:700">PITI plus MI</strong>:</p>
+        <ul style="font-weight:200;font-size:0.92rem;color:var(--body);line-height:1.8;margin-bottom:14px;padding-left:24px">
+          <li><strong style="color:var(--navy);font-weight:700">Principal</strong> — the amount you borrowed, paid back over the life of the loan</li>
+          <li><strong style="color:var(--navy);font-weight:700">Interest</strong> — what the lender charges to lend you the money</li>
+          <li><strong style="color:var(--navy);font-weight:700">Taxes</strong> — annual property tax, paid monthly through your lender into an escrow account</li>
+          <li><strong style="color:var(--navy);font-weight:700">Insurance</strong> — homeowners insurance, also paid monthly through escrow</li>
+          <li><strong style="color:var(--navy);font-weight:700">Mortgage Insurance (MI)</strong> — only required if you put less than 20% down on a conventional loan, or for any FHA loan</li>
+        </ul>
+        <p style="font-weight:200;font-size:0.92rem;color:var(--body);line-height:1.8;margin-bottom:0">Pick your loan program below, enter your numbers, and the calculator will show you each piece. Hover any <strong style="color:var(--blue);font-weight:700">?</strong> icon to learn what that field means. When in doubt, leave the defaults and just change the home price and interest rate.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- PRINT-ONLY HEADER -->
+<div class="print-header">
+  <div style="font-size:1.4rem;font-weight:800;color:var(--navy);letter-spacing:-0.02em;margin-bottom:4px">Mortgage Payment Estimate</div>
+  <div style="font-size:0.85rem;color:var(--muted);font-weight:200">Daryn Fillis · NEO Home Loans · NMLS #1988371 · darynfillis.com</div>
+</div>
+
+<!-- MAIN CALCULATOR -->
+<section class="calc-section">
+  <div class="calc-grid">
+
+    <!-- INPUT PANEL -->
+    <div class="calc-panel">
+      <div class="calc-panel-heading">Step 1</div>
+      <div class="calc-panel-title">Pick your loan program.</div>
+
+      <div class="program-selector" id="programSelector">
+        <button type="button" class="program-btn active" data-program="conventional" data-tooltip="Most common loan type. Backed by Fannie Mae or Freddie Mac. 3-20% down. Requires PMI if you put less than 20% down. Best for most buyers with good credit.">Conventional <span class="program-help">?</span></button>
+        <button type="button" class="program-btn" data-program="fha" data-tooltip="Government-backed loan. 3.5% minimum down. Easier credit requirements (down to 580 FICO). Includes both upfront and monthly mortgage insurance. Often used by first-time buyers.">FHA <span class="program-help">?</span></button>
+        <button type="button" class="program-btn" data-program="va" data-tooltip="For eligible veterans, active-duty military, and surviving spouses. 0% down possible. No monthly mortgage insurance. One-time funding fee (waived for service-connected disability).">VA <span class="program-help">?</span></button>
+        <button type="button" class="program-btn" data-program="jumbo" data-tooltip="For loan amounts above the conforming limit in your county. Typically 10-20% down. No mortgage insurance. Stricter credit and reserve requirements.">Jumbo <span class="program-help">?</span></button>
+        <button type="button" class="program-btn" data-program="bankstatement" data-tooltip="For self-employed buyers. Uses 12-24 months of bank statements instead of tax returns to qualify. Higher rates but more flexible. 10-20% down typical.">Bank Statement <span class="program-help">?</span></button>
+        <button type="button" class="program-btn" data-program="dscr" data-tooltip="For investment property purchases. Qualifies based on the property's rental income, not your personal income. 20-25% down typical. Used by investors building rental portfolios.">DSCR <span class="program-help">?</span></button>
+      </div>
+      <div class="program-desc" id="programDesc">For most buyers with conventional financing. 3% to 20% down. PMI required when down payment is under 20%.</div>
+
+      <div class="calc-panel-heading" style="margin-top:24px">Step 2</div>
+      <div class="calc-panel-title">Where and what.</div>
+
+      <div class="input-row split">
+        <div>
+          <label class="input-label" for="zipCode">
+            ZIP Code
+            <span class="help-icon" tabindex="0" data-tooltip="Your ZIP code is used to look up your county's specific conforming loan limit. This determines whether your loan is conforming, high-balance, or jumbo.">?</span>
+          </label>
+          <input type="text" id="zipCode" inputmode="numeric" maxlength="5" placeholder="90245" value="90245">
+        </div>
+        <div>
+          <label class="input-label" for="propertyType">
+            Property Type
+            <span class="help-icon" tabindex="0" data-tooltip="Single Family is most common (no rate adjustment). Condos typically get +0.125 to +0.25 rate adjustment. Townhomes work like single family. Multi-unit (2-4 units) properties require larger down payment and have higher rates. Manufactured homes have specialized lending requirements.">?</span>
+          </label>
+          <select id="propertyType">
+            <option value="single-family" selected>Single Family</option>
+            <option value="condo">Condo</option>
+            <option value="townhome">Townhome</option>
+            <option value="2-unit">2-Unit (Duplex)</option>
+            <option value="3-unit">3-Unit (Triplex)</option>
+            <option value="4-unit">4-Unit (Quadplex)</option>
+            <option value="manufactured">Manufactured Home</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Property type info note (shown when type affects pricing) -->
+      <div id="propertyTypeNote" style="background:rgba(245,158,11,0.06);border-left:3px solid #f59e0b;border-radius:0 8px 8px 0;padding:12px 14px;margin-bottom:18px;font-size:0.84rem;line-height:1.6;display:none">
+        <div style="font-weight:800;font-size:0.66rem;letter-spacing:0.14em;text-transform:uppercase;color:#d97706;margin-bottom:4px">Property type note</div>
+        <div id="propertyTypeNoteText" style="color:var(--body);font-weight:200"></div>
+      </div>
+
+      <!-- County info display (filled by JS after ZIP lookup) -->
+      <div id="countyInfo" style="background:var(--bg);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:18px;font-size:0.86rem;line-height:1.65;display:none">
+        <div style="font-weight:800;font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue);margin-bottom:6px">Your county</div>
+        <div id="countyInfoText" style="color:var(--body);font-weight:200">Looking up your county...</div>
+      </div>
+
+      <div class="calc-panel-heading" style="margin-top:24px">Step 3</div>
+      <div class="calc-panel-title">Enter your numbers.</div>
+
+      <div class="input-row">
+        <label class="input-label" for="homePrice">
+          Home Price
+          <span class="help-icon" tabindex="0" data-tooltip="The purchase price of the home. For refinances, use your current home value (we have a separate refinance calculator on the way).">?</span>
+        </label>
+        <div class="input-with-prefix">
+          <span class="input-prefix">$</span>
+          <input type="text" id="homePrice" inputmode="numeric" value="800,000">
+        </div>
+      </div>
+
+      <div class="input-row split">
+        <div>
+          <label class="input-label" for="downPaymentPct">
+            Down Payment
+            <span class="help-icon" tabindex="0" data-tooltip="The cash you put toward the purchase. Conventional minimum is 3%, FHA is 3.5%, VA can be 0% with eligibility, jumbo typically 10-20%.">?</span>
+          </label>
+          <div class="input-with-suffix">
+            <input type="text" id="downPaymentPct" inputmode="decimal" value="20">
+            <span class="input-suffix">%</span>
+          </div>
+        </div>
+        <div>
+          <label class="input-label" for="downPaymentDollars" style="visibility:hidden">$</label>
+          <div class="input-with-prefix">
+            <span class="input-prefix">$</span>
+            <input type="text" id="downPaymentDollars" inputmode="numeric" value="160,000">
+          </div>
+        </div>
+      </div>
+
+      <div class="input-row split">
+        <div>
+          <label class="input-label" for="interestRate">
+            Interest Rate
+            <span class="help-icon" tabindex="0" data-tooltip="The annual interest rate on your loan. Use today's market rate. Your final rate depends on your credit score, loan-to-value ratio, occupancy, and program. Subject to change at lock.">?</span>
+          </label>
+          <div class="input-with-suffix">
+            <input type="text" id="interestRate" inputmode="decimal" value="6.625">
+            <span class="input-suffix">%</span>
+          </div>
+        </div>
+        <div>
+          <label class="input-label" for="loanTerm">
+            Loan Term
+            <span class="help-icon" tabindex="0" data-tooltip="How long you take to pay off the loan. 30-year is most common (lowest payment). 15-year saves significant interest but doubles the monthly principal payment.">?</span>
+          </label>
+          <select id="loanTerm">
+            <option value="30">30 years</option>
+            <option value="20">20 years</option>
+            <option value="15">15 years</option>
+            <option value="10">10 years</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="button" class="advanced-toggle" id="advancedToggle">
+        <span id="advancedToggleText">Show advanced options</span>
+      </button>
+
+      <div class="advanced-section" id="advancedSection">
+        <div class="input-row split">
+          <div>
+            <label class="input-label" for="propertyTax">
+              Property Tax
+              <span class="help-icon" tabindex="0" data-tooltip="Annual property tax as a percentage of home value. California averages 1.25%. Texas can be 2.5%. Your county assessor sets the actual rate.">?</span>
+            </label>
+            <div class="input-with-suffix">
+              <input type="text" id="propertyTax" inputmode="decimal" value="1.25">
+              <span class="input-suffix">%/yr</span>
+            </div>
+          </div>
+          <div>
+            <label class="input-label" for="insurance">
+              Home Insurance
+              <span class="help-icon" tabindex="0" data-tooltip="Annual homeowners insurance premium. California averages 0.3 to 0.7 percent of home value, higher in fire zones. Get an actual quote before making an offer.">?</span>
+            </label>
+            <div class="input-with-prefix">
+              <span class="input-prefix">$</span>
+              <input type="text" id="insurance" inputmode="numeric" value="2,400">
+              <span class="input-suffix" style="right:8px;font-size:0.75rem">/yr</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-row split">
+          <div>
+            <label class="input-label" for="hoa">
+              HOA Dues
+              <span class="help-icon" tabindex="0" data-tooltip="Monthly homeowners association dues for condos, townhomes, or planned communities. Set to 0 if no HOA.">?</span>
+            </label>
+            <div class="input-with-prefix">
+              <span class="input-prefix">$</span>
+              <input type="text" id="hoa" inputmode="numeric" value="0">
+              <span class="input-suffix" style="right:8px;font-size:0.75rem">/mo</span>
+            </div>
+          </div>
+          <div>
+            <label class="input-label" for="creditScore">
+              Credit Score
+              <span class="help-icon" tabindex="0" data-tooltip="Your FICO score. Higher scores get better PMI factors and rates. Used to estimate PMI for conventional loans under 20% down.">?</span>
+            </label>
+            <select id="creditScore">
+              <option value="780">780+</option>
+              <option value="740">740 to 779</option>
+              <option value="720" selected>720 to 739</option>
+              <option value="700">700 to 719</option>
+              <option value="680">680 to 699</option>
+              <option value="660">660 to 679</option>
+              <option value="640">620 to 659</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- VA-specific -->
+        <div class="input-row" id="vaFundingFeeRow" style="display:none">
+          <label class="input-label" for="vaFundingType">
+            VA Funding Fee Tier
+            <span class="help-icon" tabindex="0" data-tooltip="VA charges a one-time funding fee based on whether you used your VA loan benefit before, your down payment, and disability status. Disabled veterans are exempt.">?</span>
+          </label>
+          <select id="vaFundingType">
+            <option value="firstuse_0_5">First use, less than 5% down (2.15%)</option>
+            <option value="firstuse_5_10">First use, 5% to 9.99% down (1.5%)</option>
+            <option value="firstuse_10">First use, 10%+ down (1.25%)</option>
+            <option value="subsequent_0_5">Subsequent use, less than 5% (3.3%)</option>
+            <option value="subsequent_5_10">Subsequent use, 5% to 9.99% (1.5%)</option>
+            <option value="subsequent_10">Subsequent use, 10%+ (1.25%)</option>
+            <option value="exempt">Exempt (Purple Heart, service-connected disability)</option>
+          </select>
+        </div>
+
+        <!-- FHA-specific -->
+        <div class="input-row" id="fhaUpfrontRow" style="display:none">
+          <label class="input-label" for="fhaUpfront">
+            FHA Upfront MIP
+            <span class="help-icon" tabindex="0" data-tooltip="FHA charges 1.75% of the loan amount upfront. You can finance it into the loan or pay it at closing. Most buyers finance it.">?</span>
+          </label>
+          <select id="fhaUpfront">
+            <option value="financed">Finance into loan (most common)</option>
+            <option value="paid">Pay at closing</option>
+          </select>
+        </div>
+
+        <!-- Bank Statement-specific -->
+        <div class="input-row" id="bankStatementRow" style="display:none">
+          <label class="input-label" for="bankStatementMonths">
+            Statement Months
+            <span class="help-icon" tabindex="0" data-tooltip="Bank statement loans use 12 or 24 months of business or personal bank statements to calculate qualifying income. 12-month programs typically have higher rates.">?</span>
+          </label>
+          <select id="bankStatementMonths">
+            <option value="24" selected>24 months (typical)</option>
+            <option value="12">12 months</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS PANEL -->
+    <div class="results-panel">
+      <div class="results-monthly">
+        <div class="results-monthly-label">Estimated Monthly Payment</div>
+        <div class="results-monthly-value" id="totalMonthly">$0</div>
+        <div class="results-monthly-sub" id="totalMonthlyDetail">Principal, Interest, Tax, Insurance, MI</div>
+
+        <!-- Inline quick breakdown -->
+        <div class="quick-breakdown">
+          <div class="quick-breakdown-item">
+            <div class="quick-breakdown-label">P&amp;I</div>
+            <div class="quick-breakdown-value" id="quickPI">$0</div>
+          </div>
+          <div class="quick-breakdown-item">
+            <div class="quick-breakdown-label">Tax</div>
+            <div class="quick-breakdown-value" id="quickTax">$0</div>
+          </div>
+          <div class="quick-breakdown-item">
+            <div class="quick-breakdown-label">Ins</div>
+            <div class="quick-breakdown-value" id="quickIns">$0</div>
+          </div>
+          <div class="quick-breakdown-item">
+            <div class="quick-breakdown-label" id="quickMILabel">MI</div>
+            <div class="quick-breakdown-value" id="quickMI">$0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bar chart -->
+      <div class="bar-chart" id="barChart" role="img" aria-label="Payment breakdown bar chart"></div>
+
+      <!-- Breakdown -->
+      <ul class="breakdown-list" id="breakdownList"></ul>
+
+      <!-- Loan summary -->
+      <div class="loan-summary">
+        <div class="loan-summary-row">
+          <span class="loan-summary-label">Loan amount</span>
+          <span class="loan-summary-value" id="loanAmount">$0</span>
+        </div>
+        <div class="loan-summary-row">
+          <span class="loan-summary-label">Total interest paid (over loan term)</span>
+          <span class="loan-summary-value" id="totalInterest">$0</span>
+        </div>
+        <div class="loan-summary-row">
+          <span class="loan-summary-label">Total cost of loan</span>
+          <span class="loan-summary-value" id="totalCost">$0</span>
+        </div>
+        <div class="loan-summary-row" id="ltvRow">
+          <span class="loan-summary-label">Loan-to-value (LTV)</span>
+          <span class="loan-summary-value" id="ltvValue">80%</span>
+        </div>
+        <div class="loan-summary-row" id="categoryRow">
+          <span class="loan-summary-label">Loan category</span>
+          <span class="loan-summary-value" id="loanCategory">Conforming</span>
+        </div>
+      </div>
+
+      <!-- Plain language explanation -->
+      <div class="what-this-means">
+        <div class="what-this-means-label">What this means</div>
+        <div class="what-this-means-text" id="explanation">Your monthly payment will be calculated based on the inputs above.</div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="print-row">
+        <button type="button" class="print-btn" onclick="window.print()">Print or save as PDF</button>
+      </div>
+
+
+    </div>
+
+  </div>
+</section>
+
+<!-- POST-CALCULATOR CTA BANNER -->
+<section style="background:var(--white);padding:clamp(40px,5vw,56px) clamp(20px,4vw,48px);border-top:1px solid var(--rule)">
+  <div style="max-width:880px;margin:0 auto">
+    <div style="background:linear-gradient(135deg,var(--navy) 0%,#0d2b4d 100%);border-radius:14px;padding:clamp(28px,4vw,40px);text-align:center;position:relative;overflow:hidden">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(91,203,245,0.08) 0%,transparent 60%);pointer-events:none"></div>
+      <div style="position:relative;z-index:1">
+        <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:20px;background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.4);margin-bottom:18px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span style="font-size:0.74rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#fbbf24">This is not a rate quote</span>
+        </div>
+        <h2 style="font-weight:800;font-size:clamp(1.5rem,2.4vw,2rem);color:var(--white);letter-spacing:-0.025em;line-height:1.2;margin-bottom:14px">Want a real number for your situation?</h2>
+        <p style="font-weight:200;font-size:1rem;color:rgba(255,255,255,0.7);line-height:1.85;margin-bottom:24px;max-width:580px;margin-left:auto;margin-right:auto">The numbers above are estimates based on industry-standard formulas. Your actual rate, mortgage insurance, and total payment depend on your full financial picture and the specific home. The fastest way to get accurate numbers is a 15-minute call.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <a href="/schedule" class="btn btn-blue btn-wobble">Get started, talk to me</a>
+          <a href="https://neohomeloans.com/start/r/130676" class="btn" style="background:transparent;color:var(--blue);border:1.5px solid var(--blue)" target="_blank" rel="noopener">Apply now</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="three-months-cta">
-  <div style="max-width:560px;margin:0 auto">
-    <h2>Ready to start the 90 days?</h2>
-    <p>The first call takes 15 minutes. By the end of it, you will know if I am the right advisor for your situation and what your next move looks like.</p>
-    <a href="/schedule" class="btn btn-blue btn-wobble">Book your first call</a>
+<!-- MOVE-UP METHOD CALCULATOR -->
+<section class="moveup-section" id="moveup">
+  <div class="moveup-inner">
+    <div class="moveup-header">
+      <span class="eyebrow" style="color:var(--blue);display:inline-block;margin-bottom:14px">For Move-Up Buyers</span>
+      <h2 style="font-weight:800;font-size:clamp(1.8rem,3vw,2.4rem);color:var(--navy);letter-spacing:-0.025em;line-height:1.15;margin-bottom:14px">The Move-Up Method calculator.</h2>
+      <p style="font-weight:200;font-size:1.02rem;color:var(--body);line-height:1.85;max-width:640px;margin:0 auto">Already own a home? Compare the four ways to buy your next home before selling the current one. See which strategy preserves your equity and keeps your monthly payment manageable.</p>
+    </div>
+
+    <div class="calc-grid">
+      <!-- MOVE-UP INPUTS -->
+      <div class="calc-panel">
+        <div class="calc-panel-heading">Your situation</div>
+        <div class="calc-panel-title">Two homes, two financings.</div>
+
+        <div class="input-row">
+          <label class="input-label" for="muCurrentValue">
+            Current home value
+            <span class="help-icon" tabindex="0" data-tooltip="What your current home would sell for today. Use a realistic estimate, not Zillow's most optimistic guess.">?</span>
+          </label>
+          <div class="input-with-prefix">
+            <span class="input-prefix">$</span>
+            <input type="text" id="muCurrentValue" inputmode="numeric" value="900,000">
+          </div>
+        </div>
+
+        <div class="input-row split">
+          <div>
+            <label class="input-label" for="muCurrentBalance">
+              Current mortgage balance
+              <span class="help-icon" tabindex="0" data-tooltip="What you still owe on your current home's mortgage. Check your latest statement.">?</span>
+            </label>
+            <div class="input-with-prefix">
+              <span class="input-prefix">$</span>
+              <input type="text" id="muCurrentBalance" inputmode="numeric" value="350,000">
+            </div>
+          </div>
+          <div>
+            <label class="input-label" for="muCurrentRate">
+              Current rate
+              <span class="help-icon" tabindex="0" data-tooltip="The interest rate on your current mortgage. The lock-in effect of a low rate is a big factor in this analysis.">?</span>
+            </label>
+            <div class="input-with-suffix">
+              <input type="text" id="muCurrentRate" inputmode="decimal" value="3.25">
+              <span class="input-suffix">%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-row split">
+          <div>
+            <label class="input-label" for="muNewPrice">
+              New home price
+              <span class="help-icon" tabindex="0" data-tooltip="The purchase price of the home you want to move up to.">?</span>
+            </label>
+            <div class="input-with-prefix">
+              <span class="input-prefix">$</span>
+              <input type="text" id="muNewPrice" inputmode="numeric" value="1,500,000">
+            </div>
+          </div>
+          <div>
+            <label class="input-label" for="muNewRate">
+              New loan rate
+              <span class="help-icon" tabindex="0" data-tooltip="Today's market rate for your new mortgage. Subject to your credit, loan-to-value, and program at lock.">?</span>
+            </label>
+            <div class="input-with-suffix">
+              <input type="text" id="muNewRate" inputmode="decimal" value="6.625">
+              <span class="input-suffix">%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <label class="input-label" for="muRentalIncome">
+            Estimated rental income (if keeping current home)
+            <span class="help-icon" tabindex="0" data-tooltip="What you could rent your current home for monthly. Lenders typically use 75% of market rent for qualifying.">?</span>
+          </label>
+          <div class="input-with-prefix">
+            <span class="input-prefix">$</span>
+            <input type="text" id="muRentalIncome" inputmode="numeric" value="4,500">
+            <span class="input-suffix" style="right:8px;font-size:0.75rem">/mo</span>
+          </div>
+        </div>
+
+        <div style="font-size:0.78rem;color:var(--muted);font-weight:200;line-height:1.6;padding:10px 14px;background:var(--bg);border-radius:6px;margin-top:10px">
+          The calculator below assumes you would put 20% down on the new home if you sold first. Your actual scenario may differ.
+        </div>
+      </div>
+
+      <!-- MOVE-UP COMPARISON -->
+      <div class="moveup-comparison" style="margin-top:0">
+        <div style="text-align:center;margin-bottom:20px">
+          <div style="font-size:0.66rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue);margin-bottom:8px">Strategy comparison</div>
+          <h3 style="font-weight:800;font-size:1.3rem;color:var(--navy);letter-spacing:-0.015em;line-height:1.2">Net monthly cost during transition.</h3>
+        </div>
+
+        <div class="moveup-comparison-grid" id="moveupResults">
+          <!-- Populated by JS -->
+        </div>
+
+        <div style="margin-top:22px;padding:14px 18px;background:rgba(91,203,245,0.06);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;font-size:0.86rem;color:var(--body);font-weight:200;line-height:1.7">
+          <strong style="color:var(--navy);font-weight:700">Note:</strong> These are estimates based on simplified scenarios. The right strategy depends on your full financial picture, equity goals, and timing. <a href="/move-up-method" style="color:var(--blue);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(91,203,245,0.4);padding-bottom:1px">Learn about the Move-Up Method &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- DEBT STRATEGY CALCULATOR -->
+<section class="debt-section" id="debt-strategy">
+  <div class="debt-inner">
+    <div class="debt-header">
+      <span class="eyebrow" style="color:var(--blue);display:inline-block;margin-bottom:14px">Strategy Most Lenders Skip</span>
+      <h2 style="font-weight:800;font-size:clamp(1.8rem,3vw,2.4rem);color:var(--navy);letter-spacing:-0.025em;line-height:1.15;margin-bottom:14px">Debt strategy. The household conversation.</h2>
+      <p style="font-weight:200;font-size:1.02rem;color:var(--body);line-height:1.85;max-width:680px;margin:0 auto">Most loan officers ignore your other debt. They focus on the down payment and ignore the credit cards, auto loans, and student loans dragging on your monthly cash flow. The smarter play is often to use part of your equity to wipe out high-rate debt instead of maximizing the down payment. Here is the math.</p>
+    </div>
+
+    <div class="debt-grid">
+      <!-- INPUT PANEL -->
+      <div class="debt-input-panel">
+        <div class="calc-panel-heading">Your debts today</div>
+        <div class="calc-panel-title">List what you owe.</div>
+
+        <ul class="debt-list" id="debtList">
+          <!-- Pre-filled with realistic example debts -->
+          <li class="debt-row" data-debt-id="1">
+            <div class="debt-field debt-field-name">
+              <label class="debt-field-label">Description</label>
+              <input type="text" class="debt-name" value="Credit cards">
+            </div>
+            <div class="debt-field">
+              <label class="debt-field-label">Balance</label>
+              <input type="text" class="debt-balance" inputmode="numeric" value="40,000">
+            </div>
+            <div class="debt-field">
+              <label class="debt-field-label">Rate %</label>
+              <input type="text" class="debt-rate" inputmode="decimal" value="22">
+            </div>
+            <div class="debt-field debt-field-min">
+              <label class="debt-field-label">Min Pay</label>
+              <input type="text" class="debt-min" inputmode="numeric" value="800">
+            </div>
+            <button type="button" class="debt-remove" aria-label="Remove debt">&times;</button>
+          </li>
+
+          <li class="debt-row" data-debt-id="2">
+            <div class="debt-field debt-field-name">
+              <label class="debt-field-label">Description</label>
+              <input type="text" class="debt-name" value="Auto loan">
+            </div>
+            <div class="debt-field">
+              <label class="debt-field-label">Balance</label>
+              <input type="text" class="debt-balance" inputmode="numeric" value="25,000">
+            </div>
+            <div class="debt-field">
+              <label class="debt-field-label">Rate %</label>
+              <input type="text" class="debt-rate" inputmode="decimal" value="7">
+            </div>
+            <div class="debt-field debt-field-min">
+              <label class="debt-field-label">Min Pay</label>
+              <input type="text" class="debt-min" inputmode="numeric" value="525">
+            </div>
+            <button type="button" class="debt-remove" aria-label="Remove debt">&times;</button>
+          </li>
+
+          <li class="debt-row" data-debt-id="3">
+            <div class="debt-field debt-field-name">
+              <label class="debt-field-label">Description</label>
+              <input type="text" class="debt-name" value="Student loan">
+            </div>
+            <div class="debt-field">
+              <label class="debt-field-label">Balance</label>
+              <input type="text" class="debt-balance" inputmode="numeric" value="20,000">
+            </div>
+            <div class="debt-field">
+              <label class="debt-field-label">Rate %</label>
+              <input type="text" class="debt-rate" inputmode="decimal" value="6">
+            </div>
+            <div class="debt-field debt-field-min">
+              <label class="debt-field-label">Min Pay</label>
+              <input type="text" class="debt-min" inputmode="numeric" value="240">
+            </div>
+            <button type="button" class="debt-remove" aria-label="Remove debt">&times;</button>
+          </li>
+        </ul>
+
+        <button type="button" class="debt-add-btn" id="debtAddBtn">
+          <span style="font-size:1.1rem;line-height:1">+</span>
+          <span>Add another debt</span>
+        </button>
+
+        <div class="debt-summary" id="debtSummary">
+          <div class="debt-summary-item">
+            <div class="debt-summary-label">Total Balance</div>
+            <div class="debt-summary-value" id="debtTotalBalance">$0</div>
+          </div>
+          <div class="debt-summary-item">
+            <div class="debt-summary-label">Blended Rate</div>
+            <div class="debt-summary-value debt-summary-blended" id="debtBlendedRate">0.00%</div>
+          </div>
+          <div class="debt-summary-item">
+            <div class="debt-summary-label">Total Monthly</div>
+            <div class="debt-summary-value" id="debtTotalMonthly">$0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMPARISON PANEL -->
+      <div class="debt-comparison">
+        <div style="text-align:center;margin-bottom:18px">
+          <div style="font-size:0.66rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue);margin-bottom:8px">Two paths</div>
+          <h3 style="font-weight:800;font-size:1.3rem;color:var(--navy);letter-spacing:-0.015em;line-height:1.2">Maximize down vs. pay off debt.</h3>
+        </div>
+
+        <!-- Scenario A: Max down, keep debt -->
+        <div class="debt-scenario" id="debtScenarioA">
+          <div class="debt-scenario-label">Scenario A</div>
+          <div class="debt-scenario-title">Maximize down payment, keep household debt.</div>
+          <div class="debt-scenario-rows">
+            <div class="debt-scenario-row">
+              <span class="debt-scenario-row-label">Down payment</span>
+              <span class="debt-scenario-row-value" id="debtAdown">$0</span>
+            </div>
+            <div class="debt-scenario-row">
+              <span class="debt-scenario-row-label">New mortgage payment</span>
+              <span class="debt-scenario-row-value" id="debtAmortgage">$0</span>
+            </div>
+            <div class="debt-scenario-row">
+              <span class="debt-scenario-row-label">Existing debt payments</span>
+              <span class="debt-scenario-row-value" id="debtAdebt">$0</span>
+            </div>
+            <div class="debt-scenario-row total">
+              <span class="debt-scenario-row-label">Total monthly outflow</span>
+              <span class="debt-scenario-row-value" id="debtAtotal">$0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scenario B: Lower down, pay off debt -->
+        <div class="debt-scenario recommended" id="debtScenarioB">
+          <div class="debt-scenario-label">Scenario B · Often Smarter</div>
+          <div class="debt-scenario-title">Pay off all debt, lower down payment.</div>
+          <div class="debt-scenario-rows">
+            <div class="debt-scenario-row">
+              <span class="debt-scenario-row-label">Down payment</span>
+              <span class="debt-scenario-row-value" id="debtBdown">$0</span>
+            </div>
+            <div class="debt-scenario-row">
+              <span class="debt-scenario-row-label">New mortgage payment</span>
+              <span class="debt-scenario-row-value" id="debtBmortgage">$0</span>
+            </div>
+            <div class="debt-scenario-row">
+              <span class="debt-scenario-row-label">Existing debt payments</span>
+              <span class="debt-scenario-row-value" id="debtBdebt">$0</span>
+            </div>
+            <div class="debt-scenario-row total">
+              <span class="debt-scenario-row-label">Total monthly outflow</span>
+              <span class="debt-scenario-row-value" id="debtBtotal">$0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Savings banner -->
+        <div class="debt-savings-banner" id="debtSavingsBanner">
+          <div class="debt-savings-label">Monthly Cash Flow Impact</div>
+          <div class="debt-savings-value" id="debtSavingsValue">$0/mo</div>
+          <div class="debt-savings-direction" id="debtSavingsDirection">Pick a scenario, see the math.</div>
+        </div>
+
+        <div class="debt-context-note">
+          <strong style="color:var(--navy);font-weight:700">Why this works:</strong> Credit cards at 20%+ are wealth destroyers. Auto loans at 7% drain cash flow. By using equity to wipe out high-rate debt, you trade expensive debt for a slightly larger mortgage at a much lower rate. The new mortgage interest is also tax-deductible (consult your CPA) while credit card interest is not. <strong style="color:var(--navy);font-weight:700">When this does not work:</strong> If your low-rate debt (student loans under 4%, 0% promotional CC offers) is already cheaper than mortgage rates. Talk it through with me.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- DISCLAIMER -->
+<section class="disclaimer-section">
+  <div class="disclaimer-inner">
+    <h3 style="font-weight:800;font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--navy);margin-bottom:14px">Important disclaimer</h3>
+    <p class="disclaimer-text">This calculator is for educational and informational purposes only. The estimates shown are based on industry-standard formulas and current published mortgage insurance factors, but they do not represent a loan offer or commitment to lend. Your actual monthly payment will depend on your finalized interest rate, mortgage insurance factor (which varies by lender, credit score, and program), property tax assessment by your county, your specific homeowners insurance quote, and any HOA dues. Final loan terms are determined at lock and disclosed in your Loan Estimate. To get an accurate quote for your situation, contact me directly. Daryn Fillis · NMLS #1988371 · NEO Home Loans powered by Better Mortgage Corporation · Equal Housing Opportunity.</p>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section style="background:var(--navy);padding:clamp(56px,8vw,88px) clamp(20px,4vw,48px);text-align:center">
+  <div style="max-width:580px;margin:0 auto">
+    <h2 style="font-weight:800;font-size:clamp(1.6rem,2.6vw,2.2rem);color:var(--white);letter-spacing:-0.025em;line-height:1.15;margin-bottom:14px">Want me to verify these numbers for your situation?</h2>
+    <p style="font-weight:200;font-size:1rem;color:rgba(255,255,255,0.7);line-height:1.85;margin-bottom:24px">A 15-minute call with me converts these estimates into the real numbers for the specific home you are looking at, including the actual mortgage insurance factor, real insurance quote, and county-specific property tax.</p>
+    <a href="/schedule" class="btn btn-blue btn-wobble">Book a 15-minute call</a>
   </div>
 </section>
 
 </main>
+
+
+
+<script>
+(function() {
+'use strict';
+
+// ════════════════════════════════════════════════════════════
+// MORTGAGE CALCULATOR ENGINE
+// ════════════════════════════════════════════════════════════
+
+// ════════════════════════════════════════════════════════════
+// 2026 CONFORMING LOAN LIMITS DATABASE
+// Source: FHFA published limits effective January 1, 2026
+// Last verified: January 2026
+//
+// Structure: county name (lowercase) + state code -> { conforming, fha }
+// VA loans no longer have hard caps for full-entitlement borrowers
+//
+// Coverage:
+//   - All 58 California counties
+//   - Major US metros (NYC, Bay Area, Boston, DC, Chicago, Seattle, etc.)
+//   - Other counties fall back to national baseline
+//
+// MAINTENANCE: FHFA publishes new limits each November for the following year.
+// Update this table annually.
+// ════════════════════════════════════════════════════════════
+
+const NATIONAL_BASELINE = {
+  conforming: 806500,    // 2026 baseline
+  fha: 524225            // 2026 FHA floor
+};
+
+const COUNTY_LIMITS = {
+  // ═══ CALIFORNIA (all 58 counties) ═══
+  // High-cost CA counties get the conforming ceiling of $1,209,750
+  'alameda-ca':       { conforming: 1209750, fha: 1209750 },
+  'alpine-ca':        { conforming: 806500,  fha: 524225  },
+  'amador-ca':        { conforming: 806500,  fha: 524225  },
+  'butte-ca':         { conforming: 806500,  fha: 524225  },
+  'calaveras-ca':     { conforming: 806500,  fha: 524225  },
+  'colusa-ca':        { conforming: 806500,  fha: 524225  },
+  'contra costa-ca':  { conforming: 1209750, fha: 1209750 },
+  'del norte-ca':     { conforming: 806500,  fha: 524225  },
+  'el dorado-ca':     { conforming: 806500,  fha: 778450  },
+  'fresno-ca':        { conforming: 806500,  fha: 524225  },
+  'glenn-ca':         { conforming: 806500,  fha: 524225  },
+  'humboldt-ca':      { conforming: 806500,  fha: 524225  },
+  'imperial-ca':      { conforming: 806500,  fha: 524225  },
+  'inyo-ca':          { conforming: 806500,  fha: 524225  },
+  'kern-ca':          { conforming: 806500,  fha: 524225  },
+  'kings-ca':         { conforming: 806500,  fha: 524225  },
+  'lake-ca':          { conforming: 806500,  fha: 524225  },
+  'lassen-ca':        { conforming: 806500,  fha: 524225  },
+  'los angeles-ca':   { conforming: 1209750, fha: 1209750 },
+  'madera-ca':        { conforming: 806500,  fha: 524225  },
+  'marin-ca':         { conforming: 1209750, fha: 1209750 },
+  'mariposa-ca':      { conforming: 806500,  fha: 524225  },
+  'mendocino-ca':     { conforming: 806500,  fha: 524225  },
+  'merced-ca':        { conforming: 806500,  fha: 524225  },
+  'modoc-ca':         { conforming: 806500,  fha: 524225  },
+  'mono-ca':          { conforming: 806500,  fha: 745050  },
+  'monterey-ca':      { conforming: 990000,  fha: 990000  },
+  'napa-ca':          { conforming: 1209750, fha: 1209750 },
+  'nevada-ca':        { conforming: 806500,  fha: 614100  },
+  'orange-ca':        { conforming: 1209750, fha: 1209750 },
+  'placer-ca':        { conforming: 806500,  fha: 778450  },
+  'plumas-ca':        { conforming: 806500,  fha: 524225  },
+  'riverside-ca':     { conforming: 806500,  fha: 644000  },
+  'sacramento-ca':    { conforming: 806500,  fha: 778450  },
+  'san benito-ca':    { conforming: 1209750, fha: 1209750 },
+  'san bernardino-ca':{ conforming: 806500,  fha: 644000  },
+  'san diego-ca':     { conforming: 1077550, fha: 1077550 },
+  'san francisco-ca': { conforming: 1209750, fha: 1209750 },
+  'san joaquin-ca':   { conforming: 806500,  fha: 654400  },
+  'san luis obispo-ca':{ conforming: 990000, fha: 990000  },
+  'san mateo-ca':     { conforming: 1209750, fha: 1209750 },
+  'santa barbara-ca': { conforming: 935600,  fha: 935600  },
+  'santa clara-ca':   { conforming: 1209750, fha: 1209750 },
+  'santa cruz-ca':    { conforming: 1209750, fha: 1209750 },
+  'shasta-ca':        { conforming: 806500,  fha: 524225  },
+  'sierra-ca':        { conforming: 806500,  fha: 524225  },
+  'siskiyou-ca':      { conforming: 806500,  fha: 524225  },
+  'solano-ca':        { conforming: 806500,  fha: 730750  },
+  'sonoma-ca':        { conforming: 877450,  fha: 877450  },
+  'stanislaus-ca':    { conforming: 806500,  fha: 524225  },
+  'sutter-ca':        { conforming: 806500,  fha: 524225  },
+  'tehama-ca':        { conforming: 806500,  fha: 524225  },
+  'trinity-ca':       { conforming: 806500,  fha: 524225  },
+  'tulare-ca':        { conforming: 806500,  fha: 524225  },
+  'tuolumne-ca':      { conforming: 806500,  fha: 524225  },
+  'ventura-ca':       { conforming: 1077550, fha: 1077550 },
+  'yolo-ca':          { conforming: 806500,  fha: 778450  },
+  'yuba-ca':          { conforming: 806500,  fha: 524225  },
+
+  // ═══ NEW YORK METRO ═══
+  'new york-ny':      { conforming: 1209750, fha: 1209750 }, // Manhattan
+  'kings-ny':         { conforming: 1209750, fha: 1209750 }, // Brooklyn
+  'queens-ny':        { conforming: 1209750, fha: 1209750 },
+  'bronx-ny':         { conforming: 1209750, fha: 1209750 },
+  'richmond-ny':      { conforming: 1209750, fha: 1209750 }, // Staten Island
+  'nassau-ny':        { conforming: 1209750, fha: 1209750 },
+  'suffolk-ny':       { conforming: 1209750, fha: 1209750 },
+  'westchester-ny':   { conforming: 1209750, fha: 1209750 },
+  'rockland-ny':      { conforming: 1209750, fha: 1209750 },
+  'bergen-nj':        { conforming: 1209750, fha: 1209750 },
+  'hudson-nj':        { conforming: 1209750, fha: 1209750 },
+  'essex-nj':         { conforming: 1209750, fha: 1209750 },
+  'union-nj':         { conforming: 1209750, fha: 1209750 },
+  'middlesex-nj':     { conforming: 1209750, fha: 1209750 },
+  'monmouth-nj':      { conforming: 1209750, fha: 1209750 },
+  'passaic-nj':       { conforming: 1209750, fha: 1209750 },
+  'morris-nj':        { conforming: 1209750, fha: 1209750 },
+  'somerset-nj':      { conforming: 1209750, fha: 1209750 },
+  'sussex-nj':        { conforming: 1209750, fha: 1209750 },
+  'pike-pa':          { conforming: 1209750, fha: 1209750 },
+  'fairfield-ct':     { conforming: 906300,  fha: 906300  },
+  'litchfield-ct':    { conforming: 806500,  fha: 524225  },
+
+  // ═══ BOSTON METRO ═══
+  'suffolk-ma':       { conforming: 989900,  fha: 989900  }, // Boston
+  'middlesex-ma':     { conforming: 989900,  fha: 989900  },
+  'norfolk-ma':       { conforming: 989900,  fha: 989900  },
+  'essex-ma':         { conforming: 989900,  fha: 989900  },
+  'plymouth-ma':      { conforming: 989900,  fha: 989900  },
+  'rockingham-nh':    { conforming: 989900,  fha: 989900  },
+  'strafford-nh':     { conforming: 989900,  fha: 989900  },
+
+  // ═══ WASHINGTON DC METRO ═══
+  'district of columbia-dc': { conforming: 1209750, fha: 1209750 },
+  'montgomery-md':    { conforming: 1209750, fha: 1209750 },
+  'prince georges-md':{ conforming: 1209750, fha: 1209750 },
+  'frederick-md':     { conforming: 1209750, fha: 1209750 },
+  'charles-md':       { conforming: 1209750, fha: 1209750 },
+  'arlington-va':     { conforming: 1209750, fha: 1209750 },
+  'fairfax-va':       { conforming: 1209750, fha: 1209750 },
+  'loudoun-va':       { conforming: 1209750, fha: 1209750 },
+  'prince william-va':{ conforming: 1209750, fha: 1209750 },
+  'stafford-va':      { conforming: 1209750, fha: 1209750 },
+  'spotsylvania-va':  { conforming: 1209750, fha: 1209750 },
+
+  // ═══ SEATTLE METRO ═══
+  'king-wa':          { conforming: 1077550, fha: 1077550 }, // Seattle
+  'pierce-wa':        { conforming: 1077550, fha: 1077550 },
+  'snohomish-wa':     { conforming: 1077550, fha: 1077550 },
+
+  // ═══ DENVER METRO ═══
+  'denver-co':        { conforming: 921250,  fha: 921250  },
+  'arapahoe-co':      { conforming: 921250,  fha: 921250  },
+  'jefferson-co':     { conforming: 921250,  fha: 921250  },
+  'douglas-co':       { conforming: 921250,  fha: 921250  },
+  'adams-co':         { conforming: 921250,  fha: 921250  },
+  'boulder-co':       { conforming: 921250,  fha: 921250  },
+  'broomfield-co':    { conforming: 921250,  fha: 921250  },
+  'pitkin-co':        { conforming: 1209750, fha: 1209750 }, // Aspen
+  'eagle-co':         { conforming: 1209750, fha: 1209750 }, // Vail
+
+  // ═══ CHICAGO METRO ═══
+  'cook-il':          { conforming: 806500,  fha: 524225  },
+  'dupage-il':        { conforming: 806500,  fha: 524225  },
+  'lake-il':          { conforming: 806500,  fha: 524225  },
+  'kane-il':          { conforming: 806500,  fha: 524225  },
+  'will-il':          { conforming: 806500,  fha: 524225  },
+  'mchenry-il':       { conforming: 806500,  fha: 524225  },
+
+  // ═══ TEXAS METROS ═══
+  'harris-tx':        { conforming: 806500,  fha: 524225  }, // Houston
+  'dallas-tx':        { conforming: 806500,  fha: 524225  },
+  'tarrant-tx':       { conforming: 806500,  fha: 524225  }, // Fort Worth
+  'collin-tx':        { conforming: 806500,  fha: 524225  },
+  'denton-tx':        { conforming: 806500,  fha: 524225  },
+  'travis-tx':        { conforming: 806500,  fha: 597250  }, // Austin
+  'williamson-tx':    { conforming: 806500,  fha: 597250  }, // Austin metro
+  'hays-tx':          { conforming: 806500,  fha: 597250  }, // Austin metro
+  'bexar-tx':         { conforming: 806500,  fha: 524225  }, // San Antonio
+
+  // ═══ FLORIDA METROS ═══
+  'miami-dade-fl':    { conforming: 806500,  fha: 696500  },
+  'broward-fl':       { conforming: 806500,  fha: 696500  },
+  'palm beach-fl':    { conforming: 806500,  fha: 696500  },
+  'monroe-fl':        { conforming: 967750,  fha: 967750  }, // Florida Keys
+  'collier-fl':       { conforming: 806500,  fha: 730750  }, // Naples
+  'orange-fl':        { conforming: 806500,  fha: 524225  }, // Orlando
+  'osceola-fl':       { conforming: 806500,  fha: 524225  },
+  'seminole-fl':      { conforming: 806500,  fha: 524225  },
+  'hillsborough-fl':  { conforming: 806500,  fha: 524225  }, // Tampa
+  'pinellas-fl':      { conforming: 806500,  fha: 524225  },
+  'duval-fl':         { conforming: 806500,  fha: 524225  }, // Jacksonville
+
+  // ═══ ARIZONA METROS ═══
+  'maricopa-az':      { conforming: 806500,  fha: 530300  }, // Phoenix
+  'pima-az':          { conforming: 806500,  fha: 524225  }, // Tucson
+
+  // ═══ NEVADA ═══
+  'clark-nv':         { conforming: 806500,  fha: 524225  }, // Las Vegas
+  'washoe-nv':        { conforming: 806500,  fha: 612750  }, // Reno
+
+  // ═══ UTAH ═══
+  'salt lake-ut':     { conforming: 806500,  fha: 717450  },
+  'utah-ut':          { conforming: 806500,  fha: 717450  },
+  'davis-ut':         { conforming: 806500,  fha: 717450  },
+  'summit-ut':        { conforming: 1209750, fha: 1209750 }, // Park City
+  'wasatch-ut':       { conforming: 1209750, fha: 1209750 },
+
+  // ═══ OREGON ═══
+  'multnomah-or':     { conforming: 806500,  fha: 681700  }, // Portland
+  'washington-or':    { conforming: 806500,  fha: 681700  },
+  'clackamas-or':     { conforming: 806500,  fha: 681700  },
+  'deschutes-or':     { conforming: 806500,  fha: 633350  }, // Bend
+  'hood river-or':    { conforming: 806500,  fha: 681700  },
+
+  // ═══ HAWAII ═══
+  'honolulu-hi':      { conforming: 1209750, fha: 1209750 },
+  'maui-hi':          { conforming: 1209750, fha: 1209750 },
+  'kauai-hi':         { conforming: 1209750, fha: 1209750 },
+  'hawaii-hi':        { conforming: 1209750, fha: 1149825 },
+
+  // ═══ ALASKA ═══
+  'anchorage-ak':     { conforming: 1209750, fha: 786750  },
+  'matanuska-susitna-ak': { conforming: 1209750, fha: 786750 },
+
+  // ═══ OTHER NOTABLE METROS ═══
+  'mecklenburg-nc':   { conforming: 806500,  fha: 524225  }, // Charlotte
+  'wake-nc':          { conforming: 806500,  fha: 524225  }, // Raleigh
+  'durham-nc':        { conforming: 806500,  fha: 524225  },
+  'fulton-ga':        { conforming: 806500,  fha: 524225  }, // Atlanta
+  'dekalb-ga':        { conforming: 806500,  fha: 524225  },
+  'cobb-ga':          { conforming: 806500,  fha: 524225  },
+  'gwinnett-ga':      { conforming: 806500,  fha: 524225  },
+  'clayton-ga':       { conforming: 806500,  fha: 524225  },
+  'jefferson-ky':     { conforming: 806500,  fha: 524225  }, // Louisville
+  'davidson-tn':      { conforming: 806500,  fha: 580650  }, // Nashville
+  'williamson-tn':    { conforming: 806500,  fha: 580650  },
+  'shelby-tn':        { conforming: 806500,  fha: 524225  }, // Memphis
+  'st louis-mo':      { conforming: 806500,  fha: 524225  },
+  'st charles-mo':    { conforming: 806500,  fha: 524225  },
+  'jackson-mo':       { conforming: 806500,  fha: 524225  }, // Kansas City
+  'platte-mo':        { conforming: 806500,  fha: 524225  },
+  'douglas-ne':       { conforming: 806500,  fha: 524225  }, // Omaha
+  'hennepin-mn':      { conforming: 806500,  fha: 524225  }, // Minneapolis
+  'ramsey-mn':        { conforming: 806500,  fha: 524225  }, // St Paul
+  'milwaukee-wi':     { conforming: 806500,  fha: 524225  },
+  'dane-wi':          { conforming: 806500,  fha: 524225  }, // Madison
+  'wayne-mi':         { conforming: 806500,  fha: 524225  }, // Detroit
+  'oakland-mi':       { conforming: 806500,  fha: 524225  },
+  'macomb-mi':        { conforming: 806500,  fha: 524225  },
+  'cuyahoga-oh':      { conforming: 806500,  fha: 524225  }, // Cleveland
+  'franklin-oh':      { conforming: 806500,  fha: 524225  }, // Columbus
+  'hamilton-oh':      { conforming: 806500,  fha: 524225  }, // Cincinnati
+  'allegheny-pa':     { conforming: 806500,  fha: 524225  }, // Pittsburgh
+  'philadelphia-pa':  { conforming: 806500,  fha: 524225  },
+  'montgomery-pa':    { conforming: 806500,  fha: 524225  },
+  'chester-pa':       { conforming: 806500,  fha: 524225  },
+  'delaware-pa':      { conforming: 806500,  fha: 524225  },
+  'bucks-pa':         { conforming: 806500,  fha: 524225  },
+  'baltimore-md':     { conforming: 1209750, fha: 1209750 },
+  'baltimore city-md':{ conforming: 1209750, fha: 1209750 },
+  'anne arundel-md':  { conforming: 1209750, fha: 1209750 },
+  'howard-md':        { conforming: 1209750, fha: 1209750 },
+  'new castle-de':    { conforming: 1209750, fha: 1209750 }, // Wilmington
+  'providence-ri':    { conforming: 806500,  fha: 524225  },
+
+  // ═══ NEW MEXICO ═══
+  'bernalillo-nm':    { conforming: 806500,  fha: 524225  }, // Albuquerque
+  'santa fe-nm':      { conforming: 806500,  fha: 524225  },
+};
+
+const LIMITS_VERIFIED_DATE = '2026-01-15';// PMI factor lookup (annual % of loan, conventional under 80% LTV)
+// Source: industry-standard MGIC/Genworth published rates
+function getPMIFactor(creditScore, ltv) {
+  // ltv = loan-to-value (0 to 1)
+  if (ltv <= 0.80) return 0;
+  if (creditScore >= 760) {
+    if (ltv <= 0.85) return 0.0019;
+    if (ltv <= 0.90) return 0.0023;
+    if (ltv <= 0.95) return 0.0030;
+    return 0.0037;
+  } else if (creditScore >= 740) {
+    if (ltv <= 0.85) return 0.0024;
+    if (ltv <= 0.90) return 0.0030;
+    if (ltv <= 0.95) return 0.0040;
+    return 0.0050;
+  } else if (creditScore >= 720) {
+    if (ltv <= 0.85) return 0.0030;
+    if (ltv <= 0.90) return 0.0040;
+    if (ltv <= 0.95) return 0.0055;
+    return 0.0066;
+  } else if (creditScore >= 700) {
+    if (ltv <= 0.85) return 0.0040;
+    if (ltv <= 0.90) return 0.0055;
+    if (ltv <= 0.95) return 0.0072;
+    return 0.0089;
+  } else if (creditScore >= 680) {
+    if (ltv <= 0.85) return 0.0055;
+    if (ltv <= 0.90) return 0.0080;
+    if (ltv <= 0.95) return 0.0098;
+    return 0.0115;
+  } else {
+    // 620-679
+    if (ltv <= 0.85) return 0.0080;
+    if (ltv <= 0.90) return 0.0118;
+    if (ltv <= 0.95) return 0.0148;
+    return 0.0175;
+  }
+}
+
+// VA funding fee table
+function getVAFundingFee(category) {
+  const map = {
+    'firstuse_0_5':   0.0215,
+    'firstuse_5_10':  0.0150,
+    'firstuse_10':    0.0125,
+    'subsequent_0_5': 0.0330,
+    'subsequent_5_10':0.0150,
+    'subsequent_10':  0.0125,
+    'exempt': 0
+  };
+  return map[category] || 0;
+}
+
+// FHA mortgage insurance (current as of 2024 updates)
+function getFHA_MIP(loanAmount, ltv, term) {
+  // Annual MIP factor depends on loan amount, LTV, and term
+  // Loans <= $726,200 (2024 FHA conforming limit, varies; use simpler tier)
+  // Most owner-occupied 30-year FHA loans: 0.55% annual MIP
+  // 15-year terms get lower factors
+  if (term <= 15) {
+    if (ltv <= 0.90) return 0.0015;
+    return 0.0040;
+  }
+  // 30-year (most common)
+  if (ltv <= 0.95) return 0.0050;
+  return 0.0055;
+}
+
+// Format currency
+function fmt(n, decimals) {
+  if (decimals === undefined) decimals = 0;
+  return '$' + Math.round(n).toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+}
+
+// Format percent
+function fmtPct(n) {
+  return n.toFixed(2) + '%';
+}
+
+// Parse number from formatted input (strips commas, $, %)
+function parseNum(str) {
+  if (typeof str === 'number') return str;
+  if (!str) return 0;
+  return parseFloat(String(str).replace(/[^0-9.\-]/g, '')) || 0;
+}
+
+// Standard mortgage payment formula
+// M = P * [r(1+r)^n] / [(1+r)^n - 1]
+function calcMonthlyPI(principal, annualRate, years) {
+  if (annualRate === 0) return principal / (years * 12);
+  const r = annualRate / 100 / 12;
+  const n = years * 12;
+  const m = principal * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+  return m;
+}
+
+// Format input as user types ($XXX,XXX)
+function formatCurrencyInput(input) {
+  const raw = parseNum(input.value);
+  if (raw === 0 && input.value !== '0') {
+    input.value = '';
+    return;
+  }
+  input.value = Math.round(raw).toLocaleString('en-US');
+}
+
+
+// ════════════════════════════════════════════════════════════
+// ZIP CODE → COUNTY LOOKUP (LOCAL TABLE, NO API)
+// Uses ZIP3 prefix mapping. No external network calls.
+// ════════════════════════════════════════════════════════════
+
+
+// ════════════════════════════════════════════════════════════
+// ZIP CODE → COUNTY MAPPING
+// Maps ZIP prefixes (3-digit) and specific ZIPs to counties
+// Coverage matches our COUNTY_LIMITS database
+// ════════════════════════════════════════════════════════════
+
+// ZIP3 prefixes that map definitively to a single county
+// Format: { 'XXX': 'county-state' }
+// When a ZIP3 spans multiple counties, we use the most populous county
+// or fall back to the broader county lookup function below
+
+const ZIP3_TO_COUNTY = {
+  // CALIFORNIA
+  '900': 'los angeles-ca', '901': 'los angeles-ca', '902': 'los angeles-ca',
+  '903': 'los angeles-ca', '904': 'los angeles-ca', '905': 'los angeles-ca',
+  '906': 'los angeles-ca', '907': 'los angeles-ca', '908': 'los angeles-ca',
+  '910': 'los angeles-ca', '911': 'los angeles-ca', '912': 'los angeles-ca',
+  '913': 'los angeles-ca', '914': 'los angeles-ca', '915': 'los angeles-ca',
+  '916': 'los angeles-ca', '917': 'los angeles-ca', '918': 'los angeles-ca',
+  '919': 'san diego-ca',   '920': 'san diego-ca',   '921': 'san diego-ca',
+  '922': 'riverside-ca',
+  '923': 'san bernardino-ca', '924': 'san bernardino-ca', '925': 'riverside-ca',
+  '926': 'orange-ca',      '927': 'orange-ca',      '928': 'orange-ca',
+  '930': 'ventura-ca',     '931': 'santa barbara-ca', '932': 'kern-ca',
+  '933': 'kern-ca',        '934': 'santa barbara-ca', '935': 'kern-ca',
+  '936': 'fresno-ca',      '937': 'fresno-ca',      '938': 'tulare-ca',
+  '939': 'monterey-ca',    '940': 'san francisco-ca', '941': 'san francisco-ca',
+  '942': 'sacramento-ca',  '943': 'san mateo-ca',   '944': 'san mateo-ca',
+  '945': 'alameda-ca',     '946': 'alameda-ca',     '947': 'alameda-ca',
+  '948': 'contra costa-ca', '949': 'marin-ca',      '950': 'santa clara-ca',
+  '951': 'santa clara-ca', '952': 'san joaquin-ca', '953': 'san joaquin-ca',
+  '954': 'sonoma-ca',      '955': 'humboldt-ca',    '956': 'sacramento-ca',
+  '957': 'sacramento-ca',  '958': 'sacramento-ca',  '959': 'sacramento-ca',
+  '960': 'shasta-ca',      '961': 'lassen-ca',
+
+  // NEW YORK METRO
+  '100': 'new york-ny',    '101': 'new york-ny',    '102': 'new york-ny',
+  '103': 'richmond-ny',    '104': 'bronx-ny',       '105': 'westchester-ny',
+  '106': 'westchester-ny', '107': 'westchester-ny', '108': 'westchester-ny',
+  '109': 'rockland-ny',
+  '110': 'queens-ny',      '111': 'queens-ny',      '112': 'kings-ny',
+  '113': 'queens-ny',      '114': 'queens-ny',      '115': 'nassau-ny',
+  '116': 'queens-ny',      '117': 'suffolk-ny',     '118': 'suffolk-ny',
+  '119': 'suffolk-ny',
+  // NJ
+  '070': 'essex-nj',       '071': 'essex-nj',       '072': 'union-nj',
+  '073': 'hudson-nj',      '074': 'passaic-nj',     '075': 'passaic-nj',
+  '076': 'bergen-nj',      '077': 'monmouth-nj',    '078': 'union-nj',
+  '079': 'passaic-nj',
+  '080': 'camden-nj',      '085': 'middlesex-nj',   '086': 'middlesex-nj',
+  '087': 'middlesex-nj',   '088': 'middlesex-nj',   '089': 'middlesex-nj',
+
+  // BOSTON / MASSACHUSETTS
+  '021': 'middlesex-ma',   '022': 'norfolk-ma',     '023': 'plymouth-ma',
+  '024': 'norfolk-ma',     '025': 'plymouth-ma',    '026': 'plymouth-ma',
+  '027': 'plymouth-ma',
+  '019': 'essex-ma',       '020': 'norfolk-ma',
+  // Boston city (Suffolk)
+  '021': 'suffolk-ma',  // overlaps; we'll use suffolk for downtown
+
+  // CONNECTICUT
+  '060': 'hartford-ct',    '061': 'hartford-ct',    '062': 'tolland-ct',
+  '063': 'new london-ct',  '064': 'new london-ct',  '065': 'new haven-ct',
+  '066': 'fairfield-ct',   '067': 'fairfield-ct',   '068': 'fairfield-ct',
+  '069': 'fairfield-ct',
+
+  // DC METRO
+  '200': 'district of columbia-dc', '202': 'district of columbia-dc',
+  '203': 'district of columbia-dc', '204': 'district of columbia-dc',
+  '205': 'district of columbia-dc',
+  '206': 'montgomery-md',  '207': 'montgomery-md',  '208': 'montgomery-md',
+  '209': 'montgomery-md',
+  '220': 'arlington-va',   '221': 'fairfax-va',     '222': 'arlington-va',
+  '223': 'fairfax-va',     '224': 'fairfax-va',
+  // Maryland
+  '210': 'anne arundel-md', '211': 'baltimore-md',  '212': 'baltimore city-md',
+  '214': 'baltimore-md',   '215': 'howard-md',      '216': 'baltimore-md',
+  '217': 'frederick-md',   '218': 'baltimore-md',
+  // Virginia
+  '226': 'loudoun-va',     '230': 'prince william-va',
+
+  // SEATTLE
+  '980': 'king-wa',        '981': 'king-wa',        '982': 'snohomish-wa',
+  '983': 'pierce-wa',      '984': 'pierce-wa',      '985': 'snohomish-wa',
+
+  // DENVER
+  '800': 'denver-co',      '801': 'denver-co',      '802': 'denver-co',
+  '803': 'jefferson-co',   '804': 'arapahoe-co',    '805': 'arapahoe-co',
+  '806': 'jefferson-co',   '807': 'denver-co',      '808': 'douglas-co',
+
+  // CHICAGO
+  '600': 'cook-il',        '601': 'cook-il',        '602': 'cook-il',
+  '603': 'cook-il',        '604': 'cook-il',        '605': 'cook-il',
+  '606': 'cook-il',        '607': 'cook-il',        '608': 'cook-il',
+  '609': 'will-il',
+  // Illinois suburbs
+  '601': 'dupage-il',      '604': 'lake-il',
+
+  // TEXAS METROS
+  '770': 'harris-tx',      '771': 'harris-tx',      '772': 'harris-tx',
+  '773': 'harris-tx',      '774': 'harris-tx',      '775': 'harris-tx',
+  '751': 'dallas-tx',      '752': 'dallas-tx',      '753': 'dallas-tx',
+  '754': 'tarrant-tx',     '755': 'tarrant-tx',     '760': 'tarrant-tx',
+  '761': 'tarrant-tx',     '762': 'tarrant-tx',
+  '750': 'collin-tx',      '787': 'travis-tx',      '786': 'travis-tx',
+  '785': 'travis-tx',      '782': 'bexar-tx',       '780': 'bexar-tx',
+  '781': 'bexar-tx',
+
+  // FLORIDA
+  '331': 'miami-dade-fl',  '332': 'miami-dade-fl',  '333': 'broward-fl',
+  '334': 'palm beach-fl',  '328': 'orange-fl',      '329': 'orange-fl',
+  '347': 'orange-fl',      '335': 'hillsborough-fl', '336': 'hillsborough-fl',
+  '337': 'pinellas-fl',    '322': 'duval-fl',       '320': 'duval-fl',
+  '339': 'monroe-fl',
+
+  // PHOENIX, LAS VEGAS
+  '850': 'maricopa-az',    '851': 'maricopa-az',    '852': 'maricopa-az',
+  '853': 'maricopa-az',    '857': 'pima-az',
+  '889': 'clark-nv',       '890': 'clark-nv',       '891': 'clark-nv',
+  '894': 'washoe-nv',      '895': 'washoe-nv',
+
+  // UTAH
+  '840': 'salt lake-ut',   '841': 'salt lake-ut',   '842': 'utah-ut',
+  '843': 'davis-ut',       '844': 'salt lake-ut',
+  '840': 'summit-ut',  // overlap; Park City
+
+  // PORTLAND / OREGON
+  '970': 'multnomah-or',   '971': 'multnomah-or',   '972': 'washington-or',
+  '973': 'washington-or',  '974': 'clackamas-or',   '977': 'deschutes-or',
+
+  // HAWAII / ALASKA
+  '967': 'honolulu-hi',    '968': 'honolulu-hi',
+  '995': 'anchorage-ak',   '996': 'anchorage-ak',
+
+  // ATLANTA
+  '300': 'fulton-ga',      '301': 'fulton-ga',      '302': 'dekalb-ga',
+  '303': 'fulton-ga',      '305': 'cobb-ga',        '306': 'gwinnett-ga',
+
+  // NORTH CAROLINA
+  '280': 'mecklenburg-nc', '281': 'mecklenburg-nc', '282': 'mecklenburg-nc',
+  '275': 'wake-nc',        '276': 'durham-nc',      '277': 'durham-nc',
+
+  // TENNESSEE
+  '372': 'davidson-tn',    '370': 'davidson-tn',    '371': 'davidson-tn',
+  '380': 'shelby-tn',      '381': 'shelby-tn',
+
+  // PENNSYLVANIA
+  '190': 'philadelphia-pa', '191': 'philadelphia-pa', '194': 'montgomery-pa',
+  '193': 'chester-pa',     '152': 'allegheny-pa',   '150': 'allegheny-pa',
+
+  // MICHIGAN
+  '480': 'wayne-mi',       '481': 'wayne-mi',       '482': 'wayne-mi',
+  '483': 'oakland-mi',     '480': 'oakland-mi',     '480': 'macomb-mi',
+
+  // OHIO
+  '441': 'cuyahoga-oh',    '440': 'cuyahoga-oh',    '432': 'franklin-oh',
+  '430': 'franklin-oh',    '452': 'hamilton-oh',    '450': 'hamilton-oh',
+
+  // MISSOURI
+  '631': 'st louis-mo',    '630': 'st louis-mo',    '633': 'st charles-mo',
+  '640': 'jackson-mo',     '641': 'jackson-mo',
+
+  // MINNESOTA
+  '554': 'hennepin-mn',    '555': 'hennepin-mn',    '551': 'ramsey-mn',
+
+  // WISCONSIN
+  '532': 'milwaukee-wi',   '537': 'dane-wi',
+
+  // NEW MEXICO
+  '871': 'bernalillo-nm',  '870': 'bernalillo-nm',  '875': 'santa fe-nm',
+};
+
+
+// ZIP3 → state code (USPS standard, covers all 50 states + DC)
+const ZIP3_TO_STATE = {
+  '004':'NY','005':'NY','007':'PR','008':'VI','009':'PR',
+  '010':'MA','011':'MA','012':'MA','013':'MA','014':'MA','015':'MA','016':'MA','017':'MA','018':'MA','019':'MA',
+  '020':'MA','021':'MA','022':'MA','023':'MA','024':'MA','025':'MA','026':'MA','027':'MA',
+  '028':'RI','029':'RI',
+  '030':'NH','031':'NH','032':'NH','033':'NH','034':'NH','038':'NH',
+  '035':'VT','036':'VT','037':'VT','050':'VT','051':'VT','052':'VT','053':'VT','054':'VT','056':'VT','057':'VT','058':'VT','059':'VT',
+  '039':'ME','040':'ME','041':'ME','042':'ME','043':'ME','044':'ME','045':'ME','046':'ME','047':'ME','048':'ME','049':'ME',
+  '060':'CT','061':'CT','062':'CT','063':'CT','064':'CT','065':'CT','066':'CT','067':'CT','068':'CT','069':'CT',
+  '070':'NJ','071':'NJ','072':'NJ','073':'NJ','074':'NJ','075':'NJ','076':'NJ','077':'NJ','078':'NJ','079':'NJ',
+  '080':'NJ','081':'NJ','082':'NJ','083':'NJ','084':'NJ','085':'NJ','086':'NJ','087':'NJ','088':'NJ','089':'NJ',
+  '100':'NY','101':'NY','102':'NY','103':'NY','104':'NY','105':'NY','106':'NY','107':'NY','108':'NY','109':'NY',
+  '110':'NY','111':'NY','112':'NY','113':'NY','114':'NY','115':'NY','116':'NY','117':'NY','118':'NY','119':'NY',
+  '120':'NY','121':'NY','122':'NY','123':'NY','124':'NY','125':'NY','126':'NY','127':'NY','128':'NY','129':'NY',
+  '130':'NY','131':'NY','132':'NY','133':'NY','134':'NY','135':'NY','136':'NY','137':'NY','138':'NY','139':'NY',
+  '140':'NY','141':'NY','142':'NY','143':'NY','144':'NY','145':'NY','146':'NY','147':'NY','148':'NY','149':'NY',
+  '150':'PA','151':'PA','152':'PA','153':'PA','154':'PA','155':'PA','156':'PA','157':'PA','158':'PA','159':'PA',
+  '160':'PA','161':'PA','162':'PA','163':'PA','164':'PA','165':'PA','166':'PA','167':'PA','168':'PA','169':'PA',
+  '170':'PA','171':'PA','172':'PA','173':'PA','174':'PA','175':'PA','176':'PA','177':'PA','178':'PA','179':'PA',
+  '180':'PA','181':'PA','182':'PA','183':'PA','184':'PA','185':'PA','186':'PA','187':'PA','188':'PA','189':'PA',
+  '190':'PA','191':'PA','193':'PA','194':'PA','195':'PA','196':'PA',
+  '197':'DE','198':'DE','199':'DE',
+  '200':'DC','202':'DC','203':'DC','204':'DC','205':'DC',
+  '206':'MD','207':'MD','208':'MD','209':'MD','210':'MD','211':'MD','212':'MD','214':'MD','215':'MD','216':'MD','217':'MD','218':'MD','219':'MD',
+  '220':'VA','221':'VA','222':'VA','223':'VA','224':'VA','225':'VA','226':'VA','227':'VA','228':'VA','229':'VA',
+  '230':'VA','231':'VA','232':'VA','233':'VA','234':'VA','235':'VA','236':'VA','237':'VA','238':'VA','239':'VA','240':'VA','241':'VA','242':'VA','243':'VA','244':'VA','245':'VA','246':'VA',
+  '247':'WV','248':'WV','249':'WV','250':'WV','251':'WV','252':'WV','253':'WV','254':'WV','255':'WV','256':'WV','257':'WV','258':'WV','259':'WV','260':'WV','261':'WV','262':'WV','263':'WV','264':'WV','265':'WV','266':'WV','267':'WV','268':'WV',
+  '270':'NC','271':'NC','272':'NC','273':'NC','274':'NC','275':'NC','276':'NC','277':'NC','278':'NC','279':'NC',
+  '280':'NC','281':'NC','282':'NC','283':'NC','284':'NC','285':'NC','286':'NC','287':'NC','288':'NC','289':'NC',
+  '290':'SC','291':'SC','292':'SC','293':'SC','294':'SC','295':'SC','296':'SC','297':'SC','298':'SC','299':'SC',
+  '300':'GA','301':'GA','302':'GA','303':'GA','304':'GA','305':'GA','306':'GA','307':'GA','308':'GA','309':'GA',
+  '310':'GA','311':'GA','312':'GA','313':'GA','314':'GA','315':'GA','316':'GA','317':'GA','318':'GA','319':'GA','398':'GA','399':'GA',
+  '320':'FL','321':'FL','322':'FL','323':'FL','324':'FL','325':'FL','326':'FL','327':'FL','328':'FL','329':'FL',
+  '330':'FL','331':'FL','332':'FL','333':'FL','334':'FL','335':'FL','336':'FL','337':'FL','338':'FL','339':'FL','340':'FL','341':'FL','342':'FL','344':'FL','346':'FL','347':'FL','349':'FL',
+  '350':'AL','351':'AL','352':'AL','354':'AL','355':'AL','356':'AL','357':'AL','358':'AL','359':'AL','360':'AL','361':'AL','362':'AL','363':'AL','364':'AL','365':'AL','366':'AL','367':'AL','368':'AL','369':'AL',
+  '370':'TN','371':'TN','372':'TN','373':'TN','374':'TN','375':'TN','376':'TN','377':'TN','378':'TN','379':'TN','380':'TN','381':'TN','382':'TN','383':'TN','384':'TN','385':'TN',
+  '386':'MS','387':'MS','388':'MS','389':'MS','390':'MS','391':'MS','392':'MS','393':'MS','394':'MS','395':'MS','396':'MS','397':'MS',
+  '400':'KY','401':'KY','402':'KY','403':'KY','404':'KY','405':'KY','406':'KY','407':'KY','408':'KY','409':'KY','410':'KY','411':'KY','412':'KY','413':'KY','414':'KY','415':'KY','416':'KY','417':'KY','418':'KY','420':'KY','421':'KY','422':'KY','423':'KY','424':'KY','425':'KY','426':'KY','427':'KY',
+  '430':'OH','431':'OH','432':'OH','433':'OH','434':'OH','435':'OH','436':'OH','437':'OH','438':'OH','439':'OH','440':'OH','441':'OH','442':'OH','443':'OH','444':'OH','445':'OH','446':'OH','447':'OH','448':'OH','449':'OH','450':'OH','451':'OH','452':'OH','453':'OH','454':'OH','455':'OH','456':'OH','457':'OH','458':'OH',
+  '460':'IN','461':'IN','462':'IN','463':'IN','464':'IN','465':'IN','466':'IN','467':'IN','468':'IN','469':'IN','470':'IN','471':'IN','472':'IN','473':'IN','474':'IN','475':'IN','476':'IN','477':'IN','478':'IN','479':'IN',
+  '480':'MI','481':'MI','482':'MI','483':'MI','484':'MI','485':'MI','486':'MI','487':'MI','488':'MI','489':'MI','490':'MI','491':'MI','492':'MI','493':'MI','494':'MI','495':'MI','496':'MI','497':'MI','498':'MI','499':'MI',
+  '500':'IA','501':'IA','502':'IA','503':'IA','504':'IA','505':'IA','506':'IA','507':'IA','508':'IA','509':'IA','510':'IA','511':'IA','512':'IA','513':'IA','514':'IA','515':'IA','516':'IA','520':'IA','521':'IA','522':'IA','523':'IA','524':'IA','525':'IA','526':'IA','527':'IA','528':'IA',
+  '530':'WI','531':'WI','532':'WI','534':'WI','535':'WI','537':'WI','538':'WI','539':'WI','540':'WI','541':'WI','542':'WI','543':'WI','544':'WI','545':'WI','546':'WI','547':'WI','548':'WI','549':'WI',
+  '550':'MN','551':'MN','553':'MN','554':'MN','555':'MN','556':'MN','557':'MN','558':'MN','559':'MN','560':'MN','561':'MN','562':'MN','563':'MN','564':'MN','565':'MN','566':'MN','567':'MN',
+  '570':'SD','571':'SD','572':'SD','573':'SD','574':'SD','575':'SD','576':'SD','577':'SD',
+  '580':'ND','581':'ND','582':'ND','583':'ND','584':'ND','585':'ND','586':'ND','587':'ND','588':'ND',
+  '590':'MT','591':'MT','592':'MT','593':'MT','594':'MT','595':'MT','596':'MT','597':'MT','598':'MT','599':'MT',
+  '600':'IL','601':'IL','602':'IL','603':'IL','604':'IL','605':'IL','606':'IL','607':'IL','608':'IL','609':'IL','610':'IL','611':'IL','612':'IL','613':'IL','614':'IL','615':'IL','616':'IL','617':'IL','618':'IL','619':'IL','620':'IL','622':'IL','623':'IL','624':'IL','625':'IL','626':'IL','627':'IL','628':'IL','629':'IL',
+  '630':'MO','631':'MO','633':'MO','634':'MO','635':'MO','636':'MO','637':'MO','638':'MO','639':'MO','640':'MO','641':'MO','644':'MO','645':'MO','646':'MO','647':'MO','648':'MO','650':'MO','651':'MO','652':'MO','653':'MO','654':'MO','655':'MO','656':'MO','657':'MO','658':'MO',
+  '660':'KS','661':'KS','662':'KS','664':'KS','665':'KS','666':'KS','667':'KS','668':'KS','669':'KS','670':'KS','671':'KS','672':'KS','673':'KS','674':'KS','675':'KS','676':'KS','677':'KS','678':'KS','679':'KS',
+  '680':'NE','681':'NE','683':'NE','684':'NE','685':'NE','686':'NE','687':'NE','688':'NE','689':'NE','690':'NE','691':'NE','692':'NE','693':'NE',
+  '700':'LA','701':'LA','703':'LA','704':'LA','705':'LA','706':'LA','707':'LA','708':'LA','710':'LA','711':'LA','712':'LA','713':'LA','714':'LA',
+  '716':'AR','717':'AR','718':'AR','719':'AR','720':'AR','721':'AR','722':'AR','723':'AR','724':'AR','725':'AR','726':'AR','727':'AR','728':'AR','729':'AR',
+  '730':'OK','731':'OK','734':'OK','735':'OK','736':'OK','737':'OK','738':'OK','739':'OK','740':'OK','741':'OK','743':'OK','744':'OK','745':'OK','746':'OK','747':'OK','748':'OK','749':'OK',
+  '750':'TX','751':'TX','752':'TX','753':'TX','754':'TX','755':'TX','756':'TX','757':'TX','758':'TX','759':'TX','760':'TX','761':'TX','762':'TX','763':'TX','764':'TX','765':'TX','766':'TX','767':'TX','768':'TX','769':'TX','770':'TX','771':'TX','772':'TX','773':'TX','774':'TX','775':'TX','776':'TX','777':'TX','778':'TX','779':'TX','780':'TX','781':'TX','782':'TX','783':'TX','784':'TX','785':'TX','786':'TX','787':'TX','788':'TX','789':'TX','790':'TX','791':'TX','792':'TX','793':'TX','794':'TX','795':'TX','796':'TX','797':'TX','798':'TX','799':'TX',
+  '800':'CO','801':'CO','802':'CO','803':'CO','804':'CO','805':'CO','806':'CO','807':'CO','808':'CO','809':'CO','810':'CO','811':'CO','812':'CO','813':'CO','814':'CO','815':'CO','816':'CO',
+  '820':'WY','821':'WY','822':'WY','823':'WY','824':'WY','825':'WY','826':'WY','827':'WY','828':'WY','829':'WY','830':'WY','831':'WY',
+  '832':'ID','833':'ID','834':'ID','835':'ID','836':'ID','837':'ID','838':'ID',
+  '840':'UT','841':'UT','842':'UT','843':'UT','844':'UT','845':'UT','846':'UT','847':'UT',
+  '850':'AZ','851':'AZ','852':'AZ','853':'AZ','855':'AZ','856':'AZ','857':'AZ','859':'AZ','860':'AZ','863':'AZ','864':'AZ','865':'AZ',
+  '870':'NM','871':'NM','873':'NM','874':'NM','875':'NM','877':'NM','878':'NM','879':'NM','880':'NM','881':'NM','882':'NM','883':'NM','884':'NM',
+  '889':'NV','890':'NV','891':'NV','893':'NV','894':'NV','895':'NV','897':'NV','898':'NV',
+  '900':'CA','901':'CA','902':'CA','903':'CA','904':'CA','905':'CA','906':'CA','907':'CA','908':'CA','910':'CA','911':'CA','912':'CA','913':'CA','914':'CA','915':'CA','916':'CA','917':'CA','918':'CA','919':'CA','920':'CA','921':'CA','922':'CA','923':'CA','924':'CA','925':'CA','926':'CA','927':'CA','928':'CA','930':'CA','931':'CA','932':'CA','933':'CA','934':'CA','935':'CA','936':'CA','937':'CA','938':'CA','939':'CA','940':'CA','941':'CA','942':'CA','943':'CA','944':'CA','945':'CA','946':'CA','947':'CA','948':'CA','949':'CA','950':'CA','951':'CA','952':'CA','953':'CA','954':'CA','955':'CA','956':'CA','957':'CA','958':'CA','959':'CA','960':'CA','961':'CA',
+  '967':'HI','968':'HI',
+  '970':'OR','971':'OR','972':'OR','973':'OR','974':'OR','975':'OR','976':'OR','977':'OR','978':'OR','979':'OR',
+  '980':'WA','981':'WA','982':'WA','983':'WA','984':'WA','985':'WA','986':'WA','988':'WA','989':'WA','990':'WA','991':'WA','992':'WA','993':'WA','994':'WA',
+  '995':'AK','996':'AK','997':'AK','998':'AK','999':'AK'
+};
+
+let currentCounty = null;
+
+function lookupZIPLocal(zip) {
+  if (!zip || zip.length !== 5 || !/^\d{5}$/.test(zip)) return null;
+
+  const zip3 = zip.substring(0, 3);
+  const countyKey = ZIP3_TO_COUNTY[zip3];
+  const stateAbbr = ZIP3_TO_STATE[zip3] || '';
+
+  if (countyKey) {
+    const parts = countyKey.split('-');
+    return {
+      zip3: zip3,
+      state: (parts[1] || '').toUpperCase(),
+      stateAbbr: parts[1] || '',
+      county: parts[0],
+      key: countyKey,
+      hasSpecificCounty: true
+    };
+  } else if (stateAbbr) {
+    return {
+      zip3: zip3,
+      state: stateAbbr,
+      stateAbbr: stateAbbr.toLowerCase(),
+      county: null,
+      key: null,
+      hasSpecificCounty: false
+    };
+  }
+  return null;
+}
+
+function getCountyLimits(countyKey) {
+  if (!countyKey) return Object.assign({}, NATIONAL_BASELINE, { source: 'baseline' });
+  const lookup = COUNTY_LIMITS[countyKey];
+  if (lookup) return Object.assign({}, lookup, { source: 'county' });
+  return Object.assign({}, NATIONAL_BASELINE, { source: 'baseline' });
+}
+
+function categorizeLoan(loanAmount, limits) {
+  if (loanAmount <= limits.conforming) {
+    if (limits.conforming > NATIONAL_BASELINE.conforming && loanAmount > NATIONAL_BASELINE.conforming) {
+      return { category: 'high-balance', label: 'High-Balance Conforming' };
+    }
+    return { category: 'conforming', label: 'Conforming' };
+  }
+  return { category: 'jumbo', label: 'Jumbo' };
+}
+
+function titleCase(str) {
+  if (!str) return '';
+  return str.split(' ').map(function(w) { return w.charAt(0).toUpperCase() + w.slice(1); }).join(' ');
+}
+
+function handleZIPInput() {
+  const zipInput = document.getElementById('zipCode');
+  const zip = zipInput.value.trim();
+
+  if (zip.length !== 5) {
+    document.getElementById('countyInfo').style.display = 'none';
+    currentCounty = null;
+    calculate();
+    return;
+  }
+
+  const countyInfo = document.getElementById('countyInfo');
+  const countyText = document.getElementById('countyInfoText');
+  countyInfo.style.display = 'block';
+
+  const result = lookupZIPLocal(zip);
+
+  if (!result) {
+    countyText.innerHTML = '<span style="color:var(--muted)">ZIP ' + zip + ' not recognized. Using national baseline limit of $' + NATIONAL_BASELINE.conforming.toLocaleString() + '.</span>';
+    currentCounty = { county: null, state: null, key: null };
+  } else if (result.hasSpecificCounty) {
+    currentCounty = result;
+    const limits = getCountyLimits(result.key);
+    const sourceNote = limits.source === 'county'
+      ? 'Verified data for ' + titleCase(result.county) + ' County, ' + result.state
+      : 'Using national baseline. Verify with FHFA.gov for exact limit.';
+    countyText.innerHTML =
+      '<div style="color:var(--navy);font-weight:700;margin-bottom:4px">' + titleCase(result.county) + ' County, ' + result.state + '</div>' +
+      '<div style="color:var(--body);font-weight:200">Conforming limit: $' + limits.conforming.toLocaleString() + ' &middot; FHA limit: $' + limits.fha.toLocaleString() + '</div>' +
+      '<div style="color:var(--muted);font-weight:200;font-size:0.78rem;margin-top:4px">' + sourceNote + '</div>';
+  } else {
+    currentCounty = result;
+    countyText.innerHTML =
+      '<div style="color:var(--navy);font-weight:700;margin-bottom:4px">' + result.state + ' (county-specific data unavailable)</div>' +
+      '<div style="color:var(--body);font-weight:200">National baseline limit: $' + NATIONAL_BASELINE.conforming.toLocaleString() + ' &middot; FHA: $' + NATIONAL_BASELINE.fha.toLocaleString() + '</div>' +
+      '<div style="color:var(--muted);font-weight:200;font-size:0.78rem;margin-top:4px">Your county may have a higher limit. Verify with FHFA.gov or contact me directly.</div>';
+  }
+  calculate();
+}
+
+// ════════════════════════════════════════════════════════════
+// PROPERTY TYPE HANDLER
+// Auto-fills HOA for condo/townhome and shows educational rate notes
+// ════════════════════════════════════════════════════════════
+
+let userChangedHOA = false;
+
+const PROPERTY_TYPE_NOTES = {
+  'single-family': null,
+  'condo': {
+    text: 'Condos typically get a +0.125 to +0.25 rate adjustment. Your actual rate depends on credit score, LTV, and whether the project is Fannie/Freddie warrantable. We auto-set HOA to $450; adjust based on your actual building.',
+    autoHOA: 450
+  },
+  'townhome': {
+    text: 'Townhomes typically price the same as single-family unless they are in a condo regime. Most have HOA dues for shared amenities. We auto-set HOA to $450; adjust based on your actual community.',
+    autoHOA: 450
+  },
+  '2-unit': {
+    text: 'Duplex (2-unit) properties typically get a +0.5 to +1.0 rate adjustment vs single family. Down payment requirements are higher (15-25% for owner-occupied, 25%+ for investment).',
+    autoHOA: 0
+  },
+  '3-unit': {
+    text: 'Triplex (3-unit) properties typically get a +0.75 to +1.25 rate adjustment. Down payment is 20-25% for owner-occupied, 25-30% for investment. Lender reserves often required.',
+    autoHOA: 0
+  },
+  '4-unit': {
+    text: 'Quadplex (4-unit) properties typically get a +0.75 to +1.25 rate adjustment. This is the largest property still considered residential. Down payment is 20-25% owner-occupied, 25-30% investment.',
+    autoHOA: 0
+  },
+  'manufactured': {
+    text: 'Manufactured homes have specialized lending requirements. Rates are typically +0.5 to +1.5 higher than site-built homes. The home must be permanently affixed and titled as real property. Many lenders do not offer these loans.',
+    autoHOA: 0
+  }
+};
+
+function handlePropertyTypeChange() {
+  const propertyType = document.getElementById('propertyType').value;
+  const note = PROPERTY_TYPE_NOTES[propertyType];
+  const noteContainer = document.getElementById('propertyTypeNote');
+  const noteText = document.getElementById('propertyTypeNoteText');
+  const hoaInput = document.getElementById('hoa');
+
+  if (!note) {
+    noteContainer.style.display = 'none';
+  } else {
+    noteText.textContent = note.text;
+    noteContainer.style.display = 'block';
+
+    if (!userChangedHOA && note.autoHOA !== undefined) {
+      hoaInput.value = note.autoHOA > 0 ? note.autoHOA.toLocaleString('en-US') : '0';
+    }
+  }
+
+  calculate();
+}
+
+// ════════════════════════════════════════════════════════════
+// MAIN CALCULATION
+// ════════════════════════════════════════════════════════════
+
+let currentProgram = 'conventional';
+let userInteracted = false;
+
+const programDescriptions = {
+  conventional: 'For most buyers with conventional financing. 3% to 20% down. PMI required when down payment is under 20%.',
+  fha:          'Government-backed loan for buyers with lower credit or smaller down payment. 3.5% minimum down. Includes upfront and monthly mortgage insurance.',
+  va:           'For eligible veterans and active-duty military. 0% down possible. No monthly mortgage insurance. One-time funding fee (waived for disabled veterans).',
+  jumbo:        'For loan amounts above the conforming limit (typically $766,550 nationally, $1,149,825 in high-cost areas). 10-20% down typical. No mortgage insurance.',
+  bankstatement:'Self-employed buyers using 12 or 24 months of bank statements instead of tax returns. Higher rates but more flexible qualifying. 10-20% down typical.',
+  dscr:         'Investment property loans qualified by the property\'s rental income, not your personal income. Used for buying rental properties. 20-25% down typical.'
+};
+
+function calculate() {
+  const homePrice = parseNum(document.getElementById('homePrice').value);
+  const downPct = parseNum(document.getElementById('downPaymentPct').value);
+  const downDollars = parseNum(document.getElementById('downPaymentDollars').value);
+  const rate = parseNum(document.getElementById('interestRate').value);
+  const term = parseInt(document.getElementById('loanTerm').value);
+  const taxRate = parseNum(document.getElementById('propertyTax').value);
+  const insurance = parseNum(document.getElementById('insurance').value);
+  const hoa = parseNum(document.getElementById('hoa').value);
+  const creditScore = parseInt(document.getElementById('creditScore').value);
+
+  let downPayment = downDollars;
+  if (downPct > 0 && downDollars === 0) {
+    downPayment = homePrice * (downPct / 100);
+  }
+
+  let baseLoanAmount = homePrice - downPayment;
+  let loanAmount = baseLoanAmount;
+  let upfrontMI = 0;
+  let monthlyMI = 0;
+  let ltv = (loanAmount / homePrice);
+
+  // Program-specific adjustments
+  if (currentProgram === 'fha') {
+    const upfrontChoice = document.getElementById('fhaUpfront').value;
+    upfrontMI = baseLoanAmount * 0.0175;
+    if (upfrontChoice === 'financed') {
+      loanAmount = baseLoanAmount + upfrontMI;
+    }
+    const fhaMipFactor = getFHA_MIP(loanAmount, ltv, term);
+    monthlyMI = (loanAmount * fhaMipFactor) / 12;
+  } else if (currentProgram === 'va') {
+    const fundingType = document.getElementById('vaFundingType').value;
+    const fundingFee = getVAFundingFee(fundingType);
+    upfrontMI = baseLoanAmount * fundingFee;
+    loanAmount = baseLoanAmount + upfrontMI;
+    monthlyMI = 0; // VA has no monthly MI
+  } else if (currentProgram === 'conventional') {
+    if (ltv > 0.80) {
+      const pmiFactor = getPMIFactor(creditScore, ltv);
+      monthlyMI = (loanAmount * pmiFactor) / 12;
+    }
+  } else if (currentProgram === 'bankstatement') {
+    // Bank statement loans: typically no MI, slightly higher rate is already in input
+    monthlyMI = 0;
+    // Add 1% in additional rate buffer if user didn't already
+    // (nope, leave the rate as user input. Don't second-guess.)
+  } else if (currentProgram === 'jumbo') {
+    monthlyMI = 0;
+  } else if (currentProgram === 'dscr') {
+    monthlyMI = 0;
+  }
+
+  const monthlyPI = calcMonthlyPI(loanAmount, rate, term);
+  const monthlyTax = (homePrice * taxRate / 100) / 12;
+  const monthlyInsurance = insurance / 12;
+  const totalMonthly = monthlyPI + monthlyTax + monthlyInsurance + monthlyMI + hoa;
+
+  const totalPayments = monthlyPI * term * 12;
+  const totalInterest = totalPayments - loanAmount;
+  const totalCost = totalPayments + (upfrontMI > 0 && currentProgram === 'va' ? 0 : (currentProgram === 'fha' && document.getElementById('fhaUpfront').value === 'paid' ? upfrontMI : 0));
+
+  // Render results
+  document.getElementById('totalMonthly').textContent = fmt(totalMonthly);
+
+  let detailParts = ['Principal & Interest', 'Tax', 'Insurance'];
+  if (monthlyMI > 0) detailParts.push('Mortgage Insurance');
+  if (hoa > 0) detailParts.push('HOA');
+  document.getElementById('totalMonthlyDetail').textContent = detailParts.join(', ');
+
+  // Quick breakdown values inside the card
+  document.getElementById('quickPI').textContent = fmt(monthlyPI);
+  document.getElementById('quickTax').textContent = fmt(monthlyTax);
+  document.getElementById('quickIns').textContent = fmt(monthlyInsurance);
+
+  // MI label changes based on program
+  let miLabel = 'MI';
+  let miValue = monthlyMI;
+  if (currentProgram === 'fha') {
+    miLabel = 'MIP';
+  } else if (currentProgram === 'conventional') {
+    miLabel = 'PMI';
+  } else if (currentProgram === 'va') {
+    miLabel = 'VA Fee';
+    miValue = 0; // VA has no monthly MI; funding fee is one-time
+  } else if (currentProgram === 'jumbo' || currentProgram === 'bankstatement' || currentProgram === 'dscr') {
+    miLabel = 'No MI';
+    miValue = 0;
+  }
+  document.getElementById('quickMILabel').textContent = miLabel;
+  document.getElementById('quickMI').textContent = miValue > 0 ? fmt(miValue) : (miValue === 0 && miLabel === 'No MI' ? '$0' : fmt(miValue));
+
+  // Breakdown
+  const breakdownData = [
+    { label: 'Principal & Interest', value: monthlyPI, color: '#5bcbf5' },
+    { label: 'Property Tax',         value: monthlyTax, color: '#3b9eff' },
+    { label: 'Home Insurance',       value: monthlyInsurance, color: '#22c55e' }
+  ];
+  if (monthlyMI > 0) {
+    const miLabel = currentProgram === 'fha' ? 'FHA Mortgage Insurance' : (currentProgram === 'conventional' ? 'PMI' : 'Mortgage Insurance');
+    breakdownData.push({ label: miLabel, value: monthlyMI, color: '#f59e0b' });
+  }
+  if (hoa > 0) {
+    breakdownData.push({ label: 'HOA Dues', value: hoa, color: '#a855f7' });
+  }
+
+  // Render breakdown list
+  const list = document.getElementById('breakdownList');
+  list.innerHTML = breakdownData.map(item => `
+    <li class="breakdown-item">
+      <span class="breakdown-label"><span class="breakdown-color" style="background:${item.color}"></span>${item.label}</span>
+      <span class="breakdown-value">${fmt(item.value)}/mo</span>
+    </li>
+  `).join('');
+
+  // Render bar chart
+  const total = breakdownData.reduce((s, i) => s + i.value, 0);
+  const chart = document.getElementById('barChart');
+  chart.innerHTML = breakdownData.map(item => {
+    const pct = (item.value / total * 100).toFixed(2);
+    return `<div class="bar-segment" style="width:${pct}%;background:${item.color}" title="${item.label}: ${fmt(item.value)}/mo"></div>`;
+  }).join('');
+
+  // Loan summary
+  document.getElementById('loanAmount').textContent = fmt(loanAmount);
+  document.getElementById('totalInterest').textContent = fmt(totalInterest);
+  document.getElementById('totalCost').textContent = fmt(loanAmount + totalInterest);
+  document.getElementById('ltvValue').textContent = fmtPct(ltv * 100);
+
+  // Loan category (based on county limits)
+  let categoryInfo = { category: 'conforming', label: 'Conforming' };
+  if (currentCounty) {
+    const limits = getCountyLimits(currentCounty.key);
+    categoryInfo = categorizeLoan(loanAmount, limits);
+  } else {
+    // No ZIP yet, use national baseline
+    categoryInfo = categorizeLoan(loanAmount, NATIONAL_BASELINE);
+  }
+  document.getElementById('loanCategory').textContent = categoryInfo.label;
+  // Color code the category
+  const categoryEl = document.getElementById('loanCategory');
+  if (categoryInfo.category === 'jumbo') {
+    categoryEl.style.color = '#fbbf24';
+  } else if (categoryInfo.category === 'high-balance') {
+    categoryEl.style.color = '#5bcbf5';
+  } else {
+    categoryEl.style.color = '#ffffff';
+  }
+
+  // Plain-language explanation
+  let explanation = '';
+  if (currentProgram === 'conventional') {
+    let baseExplain = '';
+    if (ltv > 0.80) {
+      baseExplain = `With ${fmtPct(downPct)} down, your loan-to-value is ${fmtPct(ltv * 100)}, which means you'll pay PMI of about ${fmt(monthlyMI)} per month until you reach 80% LTV. PMI typically drops off automatically at 78% LTV based on the original purchase price. You can also request removal earlier with an appraisal.`;
+    } else {
+      baseExplain = `With 20% or more down, you avoid PMI entirely. Your monthly payment of ${fmt(totalMonthly)} consists of principal, interest, property tax, and homeowners insurance.`;
+    }
+    // Add category context
+    if (categoryInfo.category === 'jumbo') {
+      baseExplain += ` Your loan amount of ${fmt(loanAmount)} is above your county's conforming limit, making this a jumbo loan. Jumbo loans typically have stricter qualifying requirements.`;
+    } else if (categoryInfo.category === 'high-balance') {
+      baseExplain += ` Your loan amount qualifies as high-balance conforming for your county, which may have a slightly higher rate than standard conforming.`;
+    }
+    explanation = baseExplain;
+  } else if (currentProgram === 'fha') {
+    explanation = `FHA requires both upfront and monthly mortgage insurance. The upfront 1.75% (${fmt(upfrontMI)}) is ${document.getElementById('fhaUpfront').value === 'financed' ? 'financed into your loan' : 'paid at closing'}. Monthly MIP of ${fmt(monthlyMI)} stays for the life of the loan if your down payment is less than 10%. You can refinance to conventional once you have 20% equity to drop MIP.`;
+  } else if (currentProgram === 'va') {
+    if (parseNum(document.getElementById('vaFundingType').value === 'exempt' ? 0 : 1) === 0) {
+      explanation = `As an exempt veteran (Purple Heart, service-connected disability), you pay no funding fee. VA loans never require monthly mortgage insurance, regardless of down payment.`;
+    } else {
+      explanation = `Your VA funding fee of ${fmt(upfrontMI)} is financed into the loan. VA never requires monthly mortgage insurance, which is why VA payments are typically lower than FHA or conventional with similar down payment.`;
+    }
+  } else if (currentProgram === 'jumbo') {
+    explanation = `Jumbo loans don't require mortgage insurance regardless of down payment. Your rate may be slightly different from conforming rates, and qualifying typically requires stronger credit and reserves.`;
+  } else if (currentProgram === 'bankstatement') {
+    explanation = `Bank statement loans typically don't include mortgage insurance, but rates are usually 0.5% to 1.5% higher than conventional to offset the alternative qualifying. Best for self-employed buyers whose tax returns understate their actual income.`;
+  } else if (currentProgram === 'dscr') {
+    explanation = `DSCR loans qualify based on the rental income of the property, not your personal income. No mortgage insurance, but rates are higher and 20-25% down is typical. The rental income must cover the mortgage payment (DSCR ratio of 1.0 or higher).`;
+  }
+  document.getElementById('explanation').textContent = explanation;
+
+}
+
+// ════════════════════════════════════════════════════════════
+// MOVE-UP METHOD CALCULATOR
+// ════════════════════════════════════════════════════════════
+
+function calcMoveUp() {
+  const currentValue = parseNum(document.getElementById('muCurrentValue').value);
+  const currentBalance = parseNum(document.getElementById('muCurrentBalance').value);
+  const currentRate = parseNum(document.getElementById('muCurrentRate').value);
+  const newPrice = parseNum(document.getElementById('muNewPrice').value);
+  const newRate = parseNum(document.getElementById('muNewRate').value);
+  const rentalIncome = parseNum(document.getElementById('muRentalIncome').value);
+
+  const equity = currentValue - currentBalance;
+  const sellingCosts = currentValue * 0.07; // ~7% (commission + closing costs)
+  const netSaleProceeds = currentValue - currentBalance - sellingCosts;
+
+  // Estimate current monthly payment (P&I only, simplified)
+  // Assume 25 years remaining on average
+  const currentPI = calcMonthlyPI(currentBalance, currentRate, 25);
+
+  // Strategy A: Sell first, buy after (traditional)
+  // 20% down on new home from sale proceeds
+  const downA = newPrice * 0.20;
+  const newLoanA = newPrice - downA;
+  const newPI_A = calcMonthlyPI(newLoanA, newRate, 30);
+  // Net cost = new PI (no carrying costs for old home)
+  const monthlyA = newPI_A;
+
+  // Strategy B: HELOC on current home for down payment, then sell
+  // Use HELOC rate (typically ~1.5-2.5% over prime; assume 8.5% for now)
+  const helocRate = 8.5;
+  const helocAmount = newPrice * 0.20; // Use HELOC for 20% down
+  const helocPayment = (helocAmount * helocRate / 100) / 12; // Interest-only HELOC payment
+  const newLoanB = newPrice - helocAmount;
+  const newPI_B = calcMonthlyPI(newLoanB, newRate, 30);
+  // During transition: paying current PI + HELOC interest + new PI
+  const monthlyB_transition = currentPI + helocPayment + newPI_B;
+
+  // Strategy C: Bridge loan for down payment
+  // Bridge typically 8-12%; assume 9.5%
+  const bridgeRate = 9.5;
+  const bridgeAmount = newPrice * 0.20;
+  const bridgePayment = (bridgeAmount * bridgeRate / 100) / 12;
+  const newLoanC = newPrice - bridgeAmount;
+  const newPI_C = calcMonthlyPI(newLoanC, newRate, 30);
+  const monthlyC_transition = currentPI + bridgePayment + newPI_C;
+
+  // Strategy D: Cross-collateralization (one loan, both homes)
+  // Effectively reduces down payment needed; equity in old home counts
+  // Simplified: assume 10% effective down on new home using old home's equity
+  const downD = newPrice * 0.10;
+  const newLoanD = newPrice - downD;
+  const newPI_D = calcMonthlyPI(newLoanD, newRate, 30);
+  // Carrying both: current PI + new PI
+  const monthlyD = currentPI + newPI_D;
+
+  // Strategy E: Keep current as rental, qualify with rental income
+  // Use 75% of rental income as offset against current mortgage
+  const rentalOffset = rentalIncome * 0.75;
+  // Effective monthly cost = new PI + (current PI - rental offset, if positive)
+  const currentNetCost = Math.max(0, currentPI - rentalOffset);
+  const newLoanE = newPrice - (newPrice * 0.20); // 20% down
+  const newPI_E = calcMonthlyPI(newLoanE, newRate, 30);
+  const monthlyE = newPI_E + currentNetCost;
+
+  // Determine recommended strategy (lowest monthly + highest equity preserved)
+  const strategies = [
+    {
+      key: 'sell-first',
+      title: 'Sell first, buy after',
+      label: 'Traditional path',
+      monthly: monthlyA,
+      detail: `Sell current home, take ${fmt(netSaleProceeds)} in proceeds, put 20% down on new home. Requires temporary housing or contingent offer.`
+    },
+    {
+      key: 'heloc',
+      title: 'HELOC on current home',
+      label: 'Strategy 1, HELOC',
+      monthly: monthlyB_transition,
+      detail: `Open ${fmt(helocAmount)} HELOC at ~${helocRate}%, use for new home down payment, sell current home after closing. HELOC paid off with sale proceeds. Transition period: 3-6 months.`
+    },
+    {
+      key: 'bridge',
+      title: 'Bridge loan',
+      label: 'Strategy 2, Bridge',
+      monthly: monthlyC_transition,
+      detail: `Take ${fmt(bridgeAmount)} bridge loan at ~${bridgeRate}%, fund new purchase, sell current home, pay off bridge. Cleaner than HELOC for tight timing.`
+    },
+    {
+      key: 'cross',
+      title: 'Cross-collateralization',
+      label: 'Strategy 3, Cross-collat',
+      monthly: monthlyD,
+      detail: `Single mortgage uses both homes as collateral. Lower down payment (10%), keep both homes. Sell current home anytime; loan adjusts.`
+    },
+    {
+      key: 'rental',
+      title: 'Keep as rental',
+      label: 'Strategy 4, Rental',
+      monthly: monthlyE,
+      detail: `Rent your current home for ~${fmt(rentalIncome)}/mo. Lender uses ${fmt(rentalOffset)}/mo for qualifying. Net carrying cost: ${fmt(currentNetCost)}/mo. Long-term wealth strategy.`
+    }
+  ];
+
+  // Find the strategy with lowest monthly during transition
+  let recommended = strategies[0];
+  let lowestMonthly = strategies[0].monthly;
+  strategies.forEach(s => {
+    if (s.key !== 'sell-first' && s.monthly < lowestMonthly) {
+      lowestMonthly = s.monthly;
+      recommended = s;
+    }
+  });
+
+  // Render
+  const container = document.getElementById('moveupResults');
+  container.innerHTML = strategies.map(s => {
+    const isRecommended = s.key === recommended.key && s.key !== 'sell-first';
+    return `
+      <div class="moveup-card${isRecommended ? ' recommended' : ''}">
+        <div class="moveup-card-label">${s.label}${isRecommended ? ' · Recommended' : ''}</div>
+        <div class="moveup-card-title">${s.title}</div>
+        <div class="moveup-card-amount">${fmt(s.monthly)}</div>
+        <div class="moveup-card-amount-label">monthly during transition</div>
+        <div class="moveup-card-detail">${s.detail}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ════════════════════════════════════════════════════════════
+// EVENT WIRING
+// ════════════════════════════════════════════════════════════
+
+
+// ════════════════════════════════════════════════════════════
+// DEBT STRATEGY CALCULATOR
+// Lets users enter household debts and see two scenarios:
+// A: Max down payment, keep all debt
+// B: Use equity to pay off debt, smaller down payment
+// ════════════════════════════════════════════════════════════
+
+let nextDebtId = 4; // pre-filled with IDs 1-3
+
+function getDebts() {
+  const rows = document.querySelectorAll('.debt-row');
+  const debts = [];
+  rows.forEach(row => {
+    const balance = parseNum(row.querySelector('.debt-balance').value);
+    const rate = parseNum(row.querySelector('.debt-rate').value);
+    const min = parseNum(row.querySelector('.debt-min').value);
+    if (balance > 0) {
+      debts.push({ balance, rate, min });
+    }
+  });
+  return debts;
+}
+
+function calcDebtSummary() {
+  const debts = getDebts();
+  const totalBalance = debts.reduce((s, d) => s + d.balance, 0);
+  const totalMonthly = debts.reduce((s, d) => s + d.min, 0);
+
+  // Blended rate = sum of (balance * rate) / total balance
+  let blendedRate = 0;
+  if (totalBalance > 0) {
+    const weightedSum = debts.reduce((s, d) => s + (d.balance * d.rate), 0);
+    blendedRate = weightedSum / totalBalance;
+  }
+
+  return { totalBalance, totalMonthly, blendedRate, debts };
+}
+
+function calcDebtScenarios() {
+  const debt = calcDebtSummary();
+
+  // Update summary display
+  document.getElementById('debtTotalBalance').textContent = fmt(debt.totalBalance);
+  document.getElementById('debtBlendedRate').textContent = debt.blendedRate.toFixed(2) + '%';
+  document.getElementById('debtTotalMonthly').textContent = fmt(debt.totalMonthly) + '/mo';
+
+  // Pull from the main calculator: home price, current rate, term
+  const homePrice = parseNum(document.getElementById('homePrice').value);
+  const rate = parseNum(document.getElementById('interestRate').value);
+  const term = parseInt(document.getElementById('loanTerm').value);
+  const userDownPct = parseNum(document.getElementById('downPaymentPct').value);
+
+  if (homePrice <= 0 || rate <= 0) {
+    return;
+  }
+
+  // ────────────────────────────────────────────────────────────
+  // SCENARIO A: User puts down their selected % (or 20% if higher)
+  // and keeps all debt
+  // ────────────────────────────────────────────────────────────
+  // Use the user's chosen down payment %, or floor at 20% for fair comparison
+  const aDownPct = Math.max(userDownPct, 20);
+  const aDownAmount = homePrice * (aDownPct / 100);
+  const aLoanAmount = homePrice - aDownAmount;
+  const aMortgagePI = calcMonthlyPI(aLoanAmount, rate, term);
+  const aDebtMonthly = debt.totalMonthly;
+  const aTotal = aMortgagePI + aDebtMonthly;
+
+  // ────────────────────────────────────────────────────────────
+  // SCENARIO B: Use what would have been the extra down payment
+  // to pay off debt instead. Down payment goes down by debt.totalBalance
+  // (but never below a reasonable minimum like 10%)
+  // ────────────────────────────────────────────────────────────
+  const bDownAmount = Math.max(aDownAmount - debt.totalBalance, homePrice * 0.10);
+  const bDownPct = (bDownAmount / homePrice) * 100;
+  const bLoanAmount = homePrice - bDownAmount;
+  const bMortgagePI = calcMonthlyPI(bLoanAmount, rate, term);
+  const bDebtMonthly = 0; // all debt paid off
+  const bTotal = bMortgagePI + bDebtMonthly;
+
+  // Render Scenario A
+  document.getElementById('debtAdown').textContent = fmt(aDownAmount) + ' (' + aDownPct.toFixed(1) + '%)';
+  document.getElementById('debtAmortgage').textContent = fmt(aMortgagePI) + '/mo';
+  document.getElementById('debtAdebt').textContent = fmt(aDebtMonthly) + '/mo';
+  document.getElementById('debtAtotal').textContent = fmt(aTotal) + '/mo';
+
+  // Render Scenario B
+  document.getElementById('debtBdown').textContent = fmt(bDownAmount) + ' (' + bDownPct.toFixed(1) + '%)';
+  document.getElementById('debtBmortgage').textContent = fmt(bMortgagePI) + '/mo';
+  document.getElementById('debtBdebt').textContent = '$0/mo';
+  document.getElementById('debtBtotal').textContent = fmt(bTotal) + '/mo';
+
+  // Calculate the savings
+  const monthlyDiff = aTotal - bTotal;
+  const banner = document.getElementById('debtSavingsBanner');
+  const valueEl = document.getElementById('debtSavingsValue');
+  const directionEl = document.getElementById('debtSavingsDirection');
+
+  if (debt.totalBalance === 0) {
+    valueEl.textContent = 'No debt to compare';
+    directionEl.textContent = 'Add household debt above to see the comparison.';
+    banner.style.background = 'var(--bg)';
+    valueEl.style.color = 'var(--muted)';
+    directionEl.style.color = 'var(--muted)';
+  } else if (monthlyDiff > 0) {
+    valueEl.textContent = '+' + fmt(monthlyDiff) + '/mo';
+    directionEl.textContent = 'Scenario B saves you ' + fmt(monthlyDiff) + ' per month by paying off debt with equity. Over 12 months that is ' + fmt(monthlyDiff * 12) + '. Plus your DTI improves dramatically, which often means better rates and easier qualifying.';
+    banner.style.background = 'var(--navy)';
+    valueEl.style.color = 'var(--white)';
+    directionEl.style.color = 'rgba(255,255,255,0.7)';
+  } else if (monthlyDiff < 0) {
+    valueEl.textContent = fmt(Math.abs(monthlyDiff)) + '/mo more';
+    directionEl.textContent = 'Scenario A saves you ' + fmt(Math.abs(monthlyDiff)) + ' per month in this case. This usually means your debt is at low rates that beat the mortgage rate. Talk to me about whether the qualifying advantage of paying off debt still makes Scenario B worth it.';
+    banner.style.background = 'var(--bg)';
+    valueEl.style.color = 'var(--navy)';
+    directionEl.style.color = 'var(--body)';
+  } else {
+    valueEl.textContent = 'Roughly equal';
+    directionEl.textContent = 'Both scenarios produce similar monthly cash flow. Scenario B still has the qualifying advantage (lower DTI) and simplifies your finances.';
+    banner.style.background = 'var(--bg)';
+    valueEl.style.color = 'var(--navy)';
+    directionEl.style.color = 'var(--body)';
+  }
+}
+
+function addDebtRow() {
+  const list = document.getElementById('debtList');
+  const id = nextDebtId++;
+  const row = document.createElement('li');
+  row.className = 'debt-row';
+  row.dataset.debtId = id;
+  row.innerHTML = '' +
+    '<div class="debt-field debt-field-name">' +
+      '<label class="debt-field-label">Description</label>' +
+      '<input type="text" class="debt-name" value="">' +
+    '</div>' +
+    '<div class="debt-field">' +
+      '<label class="debt-field-label">Balance</label>' +
+      '<input type="text" class="debt-balance" inputmode="numeric" value="0">' +
+    '</div>' +
+    '<div class="debt-field">' +
+      '<label class="debt-field-label">Rate %</label>' +
+      '<input type="text" class="debt-rate" inputmode="decimal" value="0">' +
+    '</div>' +
+    '<div class="debt-field debt-field-min">' +
+      '<label class="debt-field-label">Min Pay</label>' +
+      '<input type="text" class="debt-min" inputmode="numeric" value="0">' +
+    '</div>' +
+    '<button type="button" class="debt-remove" aria-label="Remove debt">&times;</button>';
+  list.appendChild(row);
+  wireDebtRow(row);
+}
+
+function wireDebtRow(row) {
+  row.querySelectorAll('input').forEach(input => {
+    input.addEventListener('input', calcDebtScenarios);
+    if (input.classList.contains('debt-balance') || input.classList.contains('debt-min')) {
+      input.addEventListener('blur', function() { formatCurrencyInput(this); });
+    }
+  });
+  const removeBtn = row.querySelector('.debt-remove');
+  if (removeBtn) {
+    removeBtn.addEventListener('click', () => {
+      row.remove();
+      calcDebtScenarios();
+    });
+  }
+}
+
+function initDebtCalculator() {
+  // Wire up existing pre-filled rows
+  document.querySelectorAll('.debt-row').forEach(wireDebtRow);
+
+  // Add button
+  const addBtn = document.getElementById('debtAddBtn');
+  if (addBtn) {
+    addBtn.addEventListener('click', addDebtRow);
+  }
+
+  // When the main calculator's home price or rate changes, debt scenarios should recalculate too
+  ['homePrice', 'interestRate', 'loanTerm', 'downPaymentPct'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', calcDebtScenarios);
+      el.addEventListener('change', calcDebtScenarios);
+    }
+  });
+
+  // Initial calculation
+  calcDebtScenarios();
+}
+
+function init() {
+  // Program selector
+  document.querySelectorAll('.program-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.program-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentProgram = btn.dataset.program;
+      document.getElementById('programDesc').textContent = programDescriptions[currentProgram];
+
+      // Show/hide program-specific fields
+      document.getElementById('vaFundingFeeRow').style.display = currentProgram === 'va' ? 'block' : 'none';
+      document.getElementById('fhaUpfrontRow').style.display = currentProgram === 'fha' ? 'block' : 'none';
+      document.getElementById('bankStatementRow').style.display = currentProgram === 'bankstatement' ? 'block' : 'none';
+
+      // Adjust default down payment for VA
+      if (currentProgram === 'va') {
+        document.getElementById('downPaymentPct').value = '0';
+        document.getElementById('downPaymentDollars').value = '0';
+      } else if (currentProgram === 'fha' && parseNum(document.getElementById('downPaymentPct').value) < 3.5) {
+        document.getElementById('downPaymentPct').value = '3.5';
+        const homePrice = parseNum(document.getElementById('homePrice').value);
+        document.getElementById('downPaymentDollars').value = Math.round(homePrice * 0.035).toLocaleString('en-US');
+      }
+
+      userInteracted = true;
+      calculate();
+    });
+  });
+
+  // Sync down payment % and $ fields
+  // ZIP code listener
+  const zipInput = document.getElementById('zipCode');
+  if (zipInput) {
+    zipInput.addEventListener('input', handleZIPInput);
+    // Trigger initial lookup if there's a default value
+    if (zipInput.value) handleZIPInput();
+  }
+
+  const homePriceInput = document.getElementById('homePrice');
+  const downPctInput = document.getElementById('downPaymentPct');
+  const downDollarsInput = document.getElementById('downPaymentDollars');
+
+  function syncFromPct() {
+    const homePrice = parseNum(homePriceInput.value);
+    const pct = parseNum(downPctInput.value);
+    const dollars = Math.round(homePrice * pct / 100);
+    downDollarsInput.value = dollars.toLocaleString('en-US');
+  }
+  function syncFromDollars() {
+    const homePrice = parseNum(homePriceInput.value);
+    const dollars = parseNum(downDollarsInput.value);
+    if (homePrice > 0) {
+      const pct = (dollars / homePrice * 100);
+      downPctInput.value = pct.toFixed(2).replace(/\.?0+$/, '');
+    }
+  }
+
+  downPctInput.addEventListener('input', () => { syncFromPct(); userInteracted = true; calculate(); });
+  downDollarsInput.addEventListener('blur', () => { formatCurrencyInput(downDollarsInput); });
+  downDollarsInput.addEventListener('input', () => { userInteracted = true; syncFromDollars(); calculate(); });
+
+  homePriceInput.addEventListener('blur', () => { formatCurrencyInput(homePriceInput); });
+  homePriceInput.addEventListener('input', () => { userInteracted = true; syncFromPct(); calculate(); });
+
+  // All other inputs
+  ['interestRate', 'loanTerm', 'propertyTax', 'insurance', 'creditScore', 'vaFundingType', 'fhaUpfront', 'bankStatementMonths'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', () => { userInteracted = true; calculate(); });
+      el.addEventListener('change', () => { userInteracted = true; calculate(); });
+    }
+  });
+
+  // HOA: track manual user changes so we don't overwrite when property type changes
+  const hoaInput = document.getElementById('hoa');
+  if (hoaInput) {
+    hoaInput.addEventListener('input', () => {
+      userChangedHOA = true;
+      userInteracted = true;
+      calculate();
+    });
+    hoaInput.addEventListener('change', () => {
+      userChangedHOA = true;
+      userInteracted = true;
+      calculate();
+    });
+  }
+
+  // Property type: triggers the special handler with auto-HOA + educational note
+  const propertyTypeEl = document.getElementById('propertyType');
+  if (propertyTypeEl) {
+    propertyTypeEl.addEventListener('change', () => {
+      userInteracted = true;
+      handlePropertyTypeChange();
+    });
+  }
+
+  // Format insurance and HOA on blur
+  ['insurance', 'hoa'].forEach(id => {
+    document.getElementById(id).addEventListener('blur', function() { formatCurrencyInput(this); });
+  });
+
+  // Advanced toggle
+  document.getElementById('advancedToggle').addEventListener('click', () => {
+    const section = document.getElementById('advancedSection');
+    const text = document.getElementById('advancedToggleText');
+    section.classList.toggle('open');
+    text.textContent = section.classList.contains('open') ? 'Hide advanced options' : 'Show advanced options';
+  });
+
+  // Move-Up Method calculator
+  ['muCurrentValue', 'muCurrentBalance', 'muCurrentRate', 'muNewPrice', 'muNewRate', 'muRentalIncome'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', calcMoveUp);
+    if (el && (id === 'muCurrentValue' || id === 'muCurrentBalance' || id === 'muNewPrice' || id === 'muRentalIncome')) {
+      el.addEventListener('blur', function() { formatCurrencyInput(this); calcMoveUp(); });
+    }
+  });
+
+  // Initial calculation
+  calculate();
+  calcMoveUp();
+  initDebtCalculator();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+
+})();
+</script>
 
 <!-- ══ FOOTER ══ -->
 <footer>
