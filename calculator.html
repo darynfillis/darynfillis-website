@@ -1932,31 +1932,324 @@ html{-webkit-text-size-adjust:100%;}
 
 /* Print styles */
 @media print {
-  .nav, .breadcrumb-bar, footer, .print-row, .calc-hero { display: none !important; }
-  body { background: white !important; padding: 0 !important; }
-  .calc-section, .moveup-section { padding: 12px !important; background: white !important; }
-  .results-panel {
-    background: white !important; color: var(--navy) !important;
-    box-shadow: 0 0 0 1px var(--rule);
+  /* ── Page setup: landscape letter ── */
+  @page {
+    size: letter landscape;
+    margin: 0.3in 0.35in;
+  }
+
+  /* ── HIDE EVERYTHING in body by default (display:none collapses layout) ── */
+  body > * {
+    display: none !important;
+  }
+
+  /* ── Show only main (and within it: print-header, calc-section, print-disclaimer) ── */
+  body > main {
+    display: block !important;
+  }
+
+  /* Inside main, hide everything except print-header, calc-section, print-disclaimer */
+  main > * {
+    display: none !important;
+  }
+  main > .print-header,
+  main > .print-disclaimer {
+    display: block !important;
+  }
+  main > .calc-section {
+    display: block !important;
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Inside calc-section, only show the calc-grid (which contains print-inputs + results-panel) */
+  .calc-section > * {
+    display: none !important;
+  }
+  .calc-section > .calc-grid {
+    display: grid !important;
+    grid-template-columns: 0.85fr 1.15fr !important;
+    gap: 10pt !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Inside calc-grid: hide on-screen input panel; show print-inputs + results-panel */
+  .calc-grid > .calc-panel {
+    display: none !important;
+  }
+  .calc-grid > .print-inputs,
+  .calc-grid > .results-panel {
+    display: block !important;
+  }
+
+  /* ── Body base styling ── */
+  body {
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 9pt !important;
+    line-height: 1.3 !important;
+    color: #0A2540 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* ── Print header (placed at top of body via JS) ── */
+  .print-header {
+    text-align: center;
+    padding: 3pt 14pt 4pt;
+    border-bottom: 0.75pt solid #0A2540;
+    margin-bottom: 6pt;
+    page-break-after: avoid;
+  }
+  .print-header > div:first-child {
+    font-size: 12pt !important;
+    font-weight: 800 !important;
+    color: #0A2540 !important;
+    margin-bottom: 0pt !important;
+  }
+  .print-header > div:nth-child(2) {
+    font-size: 8.5pt !important;
+    font-weight: 700 !important;
+    color: #0A2540 !important;
+    margin-bottom: 0pt !important;
+  }
+  .print-header > div:nth-child(3) {
+    font-size: 7pt !important;
+    line-height: 1.3 !important;
+    color: #2b2f2e !important;
+  }
+  .print-header > div:nth-child(4) {
+    font-size: 6.5pt !important;
+    margin-top: 1pt !important;
+    color: #6b7280 !important;
+  }
+
+  /* ── Inputs column ── */
+  .print-inputs {
+    padding: 8pt 10pt !important;
+    background: #f7f9fc !important;
+    border: 0.5pt solid #cbd5e0 !important;
+    border-radius: 4pt !important;
     page-break-inside: avoid;
+  }
+  .print-inputs h3 {
+    font-size: 8pt !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    color: #0A2540 !important;
+    margin: 0 0 5pt 0 !important;
+    padding-bottom: 3pt !important;
+    border-bottom: 0.5pt solid #cbd5e0 !important;
+  }
+  .print-input-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: baseline !important;
+    padding: 2pt 0 !important;
+    font-size: 8.5pt !important;
+    border-bottom: 0.25pt dotted #e5e7eb !important;
+  }
+  .print-input-row:last-child { border-bottom: none !important; }
+  .print-input-label {
+    font-weight: 400 !important;
+    color: #4a5568 !important;
+  }
+  .print-input-value {
+    font-weight: 700 !important;
+    color: #0A2540 !important;
+    font-variant-numeric: tabular-nums !important;
+    text-align: right !important;
+  }
+
+  /* ── Results column ── */
+  .results-panel {
+    background: white !important;
+    color: #0A2540 !important;
+    border: 1pt solid #0A2540 !important;
+    border-radius: 4pt !important;
+    box-shadow: none !important;
+    padding: 8pt 10pt !important;
+    margin: 0 !important;
+    page-break-inside: avoid;
+    max-width: none !important;
     position: static !important;
   }
-  .results-monthly-label, .breakdown-label, .loan-summary-label {
-    color: var(--muted) !important;
+
+  /* Big monthly number block */
+  .results-monthly {
+    padding: 0 0 5pt 0 !important;
+    margin: 0 0 5pt 0 !important;
+    text-align: center !important;
+    border-bottom: 0.5pt solid #cbd5e0 !important;
   }
-  .results-monthly-value, .breakdown-value, .loan-summary-value, .what-this-means-text {
-    color: var(--navy) !important;
+  .results-monthly-label {
+    font-size: 7pt !important;
+    color: #4a5568 !important;
+    margin-bottom: 1pt !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
   }
+  .results-monthly-value {
+    font-size: 22pt !important;
+    line-height: 1 !important;
+    color: #0A2540 !important;
+    font-weight: 800 !important;
+    margin-bottom: 1pt !important;
+    letter-spacing: -0.02em !important;
+  }
+  .results-monthly-sub {
+    font-size: 7pt !important;
+    color: #6b7280 !important;
+    font-weight: 200 !important;
+  }
+
+  /* 4-column quick breakdown */
+  .quick-breakdown {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 4pt !important;
+    margin-top: 5pt !important;
+    padding-top: 5pt !important;
+    border-top: 0.5pt solid #cbd5e0 !important;
+  }
+  .quick-breakdown-item { padding: 0 !important; text-align: center !important; }
+  .quick-breakdown-label {
+    font-size: 6pt !important;
+    color: #4a5568 !important;
+    margin-bottom: 1pt !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    font-weight: 800 !important;
+  }
+  .quick-breakdown-value {
+    font-size: 9pt !important;
+    color: #0A2540 !important;
+    font-weight: 700 !important;
+  }
+
+  /* Bar chart */
+  .bar-chart {
+    height: 6pt !important;
+    margin: 6pt 0 5pt !important;
+    background: #e5e7eb !important;
+    border-radius: 3pt !important;
+    overflow: hidden !important;
+    display: flex !important;
+  }
+  .bar-segment {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    height: 100% !important;
+  }
+
+  /* Detailed breakdown list */
+  .breakdown-list {
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+  }
+  .breakdown-item {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 2pt 0 !important;
+    border-bottom: 0.25pt solid #e5e7eb !important;
+    font-size: 8pt !important;
+  }
+  .breakdown-item:last-child { border-bottom: none !important; }
+  .breakdown-label {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4pt !important;
+    color: #4a5568 !important;
+  }
+  .breakdown-value {
+    color: #0A2540 !important;
+    font-weight: 700 !important;
+  }
+  .breakdown-color {
+    width: 6pt !important;
+    height: 6pt !important;
+    border-radius: 1pt !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Loan summary (Purchase price + Loan amount) */
+  .loan-summary {
+    margin-top: 5pt !important;
+    padding-top: 5pt !important;
+    border-top: 0.5pt solid #cbd5e0 !important;
+  }
+  .loan-summary-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    padding: 1.5pt 0 !important;
+    font-size: 8pt !important;
+  }
+  .loan-summary-label { color: #4a5568 !important; }
+  .loan-summary-value {
+    color: #0A2540 !important;
+    font-weight: 700 !important;
+  }
+
+  /* Plain-language explanation */
   .what-this-means {
-    background: var(--bg) !important;
+    margin-top: 6pt !important;
+    padding: 5pt 7pt !important;
+    background: #f7f9fc !important;
+    border-left: 1.5pt solid #5bcbf5 !important;
+    border-radius: 0 3pt 3pt 0 !important;
   }
-  .what-this-means-text { color: var(--body) !important; }
-  .breakdown-item { border-color: var(--rule) !important; }
-  .calc-panel { box-shadow: none; border: 1px solid var(--rule); page-break-inside: avoid; }
-  .program-selector, .advanced-toggle, .help-icon { display: none !important; }
-  /* Add print-only branding header */
-  .print-header { display: block !important; text-align: center; padding: 20px 0 30px; border-bottom: 2px solid var(--navy); margin-bottom: 30px; }
+  .what-this-means-label {
+    font-size: 6.5pt !important;
+    color: #0A2540 !important;
+    margin-bottom: 1pt !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    font-weight: 800 !important;
+  }
+  .what-this-means-text {
+    font-size: 7.5pt !important;
+    color: #2b2f2e !important;
+    line-height: 1.35 !important;
+  }
+
+  /* Hide the print buttons inside the panel */
+  .print-row { display: none !important; }
+
+  /* Disclaimer at very bottom */
+  .print-disclaimer {
+    margin: 6pt 0 0 0 !important;
+    padding: 4pt 10pt !important;
+    background: #f7f9fc !important;
+    border: 0.5pt solid #cbd5e0 !important;
+    border-radius: 3pt !important;
+    page-break-inside: avoid;
+  }
+  .print-disclaimer > div:first-child {
+    font-size: 6.5pt !important;
+    margin-bottom: 2pt !important;
+    color: #0A2540 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    font-weight: 800 !important;
+  }
+  .print-disclaimer p {
+    font-size: 6.5pt !important;
+    line-height: 1.35 !important;
+    color: #4a5568 !important;
+    margin: 0 !important;
+  }
 }
+
+/* Hide print-only elements during normal screen viewing */
+.print-header, .print-disclaimer, .print-inputs { display: none; }
 .print-header { display: none; }
 
 
@@ -2341,8 +2634,21 @@ html{-webkit-text-size-adjust:100%;}
 
 <!-- PRINT-ONLY HEADER -->
 <div class="print-header">
-  <div style="font-size:1.4rem;font-weight:800;color:var(--navy);letter-spacing:-0.02em;margin-bottom:4px">Mortgage Payment Estimate</div>
-  <div style="font-size:0.85rem;color:var(--muted);font-weight:200">Daryn Fillis · NEO Home Loans · NMLS #1988371 · darynfillis.com</div>
+  <div style="font-size:1.6rem;font-weight:800;color:var(--navy);letter-spacing:-0.02em;margin-bottom:6px">Mortgage Payment Estimate</div>
+  <div style="font-size:1rem;color:var(--navy);font-weight:700;margin-bottom:4px">Prepared by Daryn Fillis</div>
+  <div style="font-size:0.88rem;color:var(--body);font-weight:400;line-height:1.6">
+    Certified Mortgage Advisor · NEO Home Loans · NMLS #1988371<br>
+    darynfillis.com · myadvisors@neohomeloans.com · 424-396-6967
+  </div>
+  <div style="font-size:0.78rem;color:var(--muted);font-weight:200;margin-top:8px;font-style:italic">
+    Generated <span id="printDate"></span>
+  </div>
+</div>
+
+<!-- PRINT-ONLY DISCLAIMER (at bottom of printed page) -->
+<div class="print-disclaimer">
+  <div style="font-size:0.82rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy);margin-bottom:8px">Important Disclaimer</div>
+  <p style="font-size:0.78rem;color:var(--body);font-weight:400;line-height:1.7;margin:0">This is an educational estimate, not a loan offer or commitment to lend. Your actual monthly payment depends on your finalized interest rate (subject to lock), mortgage insurance factor (varies by lender, credit score, and program), property tax assessment by your county, your specific homeowners insurance quote, and any HOA dues. Final loan terms are determined at lock and disclosed in your Loan Estimate. To get an accurate quote for your situation, contact me directly. NEO Home Loans powered by Better Mortgage Corporation. Equal Housing Opportunity. Branch NMLS #2733710 · 222 Pacific Coast Hwy, 10th Floor, Suite 135, El Segundo, CA 90245.</p>
 </div>
 
 <!-- MAIN CALCULATOR -->
@@ -2414,7 +2720,7 @@ html{-webkit-text-size-adjust:100%;}
         </label>
         <div class="input-with-prefix">
           <span class="input-prefix">$</span>
-          <input type="text" id="homePrice" inputmode="numeric" value="800,000">
+          <input type="text" id="homePrice" inputmode="numeric" value="949,000">
         </div>
       </div>
 
@@ -2433,7 +2739,7 @@ html{-webkit-text-size-adjust:100%;}
           <label class="input-label" for="downPaymentDollars" style="visibility:hidden">$</label>
           <div class="input-with-prefix">
             <span class="input-prefix">$</span>
-            <input type="text" id="downPaymentDollars" inputmode="numeric" value="160,000">
+            <input type="text" id="downPaymentDollars" inputmode="numeric" value="189,800">
           </div>
         </div>
       </div>
@@ -2482,42 +2788,24 @@ html{-webkit-text-size-adjust:100%;}
           <div>
             <label class="input-label" for="insurance">
               Home Insurance
-              <span class="help-icon" tabindex="0" data-tooltip="Annual homeowners insurance premium. California averages 0.3 to 0.7 percent of home value, higher in fire zones. Get an actual quote before making an offer.">?</span>
+              <span class="help-icon" tabindex="0" data-tooltip="Annual homeowners insurance as a percentage of home value. California averages 0.3% (default), but fire zones and high-value homes can be 0.5% to 1.0% or more. Get an actual quote before making an offer.">?</span>
             </label>
-            <div class="input-with-prefix">
-              <span class="input-prefix">$</span>
-              <input type="text" id="insurance" inputmode="numeric" value="2,400">
-              <span class="input-suffix" style="right:8px;font-size:0.75rem">/yr</span>
+            <div class="input-with-suffix">
+              <input type="text" id="insurance" inputmode="decimal" value="0.3">
+              <span class="input-suffix">%/yr</span>
             </div>
           </div>
         </div>
 
-        <div class="input-row split">
-          <div>
-            <label class="input-label" for="hoa">
-              HOA Dues
-              <span class="help-icon" tabindex="0" data-tooltip="Monthly homeowners association dues for condos, townhomes, or planned communities. Set to 0 if no HOA.">?</span>
-            </label>
-            <div class="input-with-prefix">
-              <span class="input-prefix">$</span>
-              <input type="text" id="hoa" inputmode="numeric" value="0">
-              <span class="input-suffix" style="right:8px;font-size:0.75rem">/mo</span>
-            </div>
-          </div>
-          <div>
-            <label class="input-label" for="creditScore">
-              Credit Score
-              <span class="help-icon" tabindex="0" data-tooltip="Your FICO score. Higher scores get better PMI factors and rates. Used to estimate PMI for conventional loans under 20% down.">?</span>
-            </label>
-            <select id="creditScore">
-              <option value="780">780+</option>
-              <option value="740">740 to 779</option>
-              <option value="720" selected>720 to 739</option>
-              <option value="700">700 to 719</option>
-              <option value="680">680 to 699</option>
-              <option value="660">660 to 679</option>
-              <option value="640">620 to 659</option>
-            </select>
+        <div class="input-row">
+          <label class="input-label" for="hoa">
+            HOA Dues
+            <span class="help-icon" tabindex="0" data-tooltip="Monthly homeowners association dues for condos, townhomes, or planned communities. Set to 0 if no HOA.">?</span>
+          </label>
+          <div class="input-with-prefix">
+            <span class="input-prefix">$</span>
+            <input type="text" id="hoa" inputmode="numeric" value="0">
+            <span class="input-suffix" style="right:8px;font-size:0.75rem">/mo</span>
           </div>
         </div>
 
@@ -2564,6 +2852,21 @@ html{-webkit-text-size-adjust:100%;}
       </div>
     </div>
 
+    <!-- PRINT-ONLY INPUTS SUMMARY (populated by JS when printing) -->
+    <div class="print-inputs">
+      <h3>Your Inputs</h3>
+      <div class="print-input-row"><span class="print-input-label">Loan program</span><span class="print-input-value" id="printProgram">—</span></div>
+      <div class="print-input-row"><span class="print-input-label">ZIP code</span><span class="print-input-value" id="printZip">—</span></div>
+      <div class="print-input-row"><span class="print-input-label">Property type</span><span class="print-input-value" id="printPropertyType">—</span></div>
+      <div class="print-input-row"><span class="print-input-label">Home price</span><span class="print-input-value" id="printHomePrice">—</span></div>
+      <div class="print-input-row"><span class="print-input-label">Down payment</span><span class="print-input-value" id="printDown">—</span></div>
+      <div class="print-input-row"><span class="print-input-label">Loan term</span><span class="print-input-value" id="printTerm">—</span></div>
+      <div class="print-input-row"><span class="print-input-label">Interest rate</span><span class="print-input-value" id="printRate">—</span></div>
+      <div class="print-input-row"><span class="print-input-label">Property tax</span><span class="print-input-value" id="printTax">—</span></div>
+      <div class="print-input-row"><span class="print-input-label">Home insurance</span><span class="print-input-value" id="printInsurance">—</span></div>
+      <div class="print-input-row"><span class="print-input-label">HOA dues</span><span class="print-input-value" id="printHOA">—</span></div>
+    </div>
+
     <!-- RESULTS PANEL -->
     <div class="results-panel">
       <div class="results-monthly">
@@ -2601,25 +2904,14 @@ html{-webkit-text-size-adjust:100%;}
       <!-- Loan summary -->
       <div class="loan-summary">
         <div class="loan-summary-row">
+          <span class="loan-summary-label">Purchase price</span>
+          <span class="loan-summary-value" id="purchasePrice">$0</span>
+        </div>
+        <div class="loan-summary-row">
           <span class="loan-summary-label">Loan amount</span>
           <span class="loan-summary-value" id="loanAmount">$0</span>
         </div>
-        <div class="loan-summary-row">
-          <span class="loan-summary-label">Total interest paid (over loan term)</span>
-          <span class="loan-summary-value" id="totalInterest">$0</span>
-        </div>
-        <div class="loan-summary-row">
-          <span class="loan-summary-label">Total cost of loan</span>
-          <span class="loan-summary-value" id="totalCost">$0</span>
-        </div>
-        <div class="loan-summary-row" id="ltvRow">
-          <span class="loan-summary-label">Loan-to-value (LTV)</span>
-          <span class="loan-summary-value" id="ltvValue">80%</span>
-        </div>
-        <div class="loan-summary-row" id="categoryRow">
-          <span class="loan-summary-label">Loan category</span>
-          <span class="loan-summary-value" id="loanCategory">Conforming</span>
-        </div>
+        
       </div>
 
       <!-- Plain language explanation -->
@@ -2630,7 +2922,7 @@ html{-webkit-text-size-adjust:100%;}
 
       <!-- Action buttons -->
       <div class="print-row">
-        <button type="button" class="print-btn" onclick="window.print()">Print or save as PDF</button>
+        <button type="button" class="print-btn" onclick="preparePrint()">Print or save as PDF</button>
       </div>
 
 
@@ -3747,9 +4039,70 @@ const programDescriptions = {
   fha:          'Government-backed loan for buyers with lower credit or smaller down payment. 3.5% minimum down. Includes upfront and monthly mortgage insurance.',
   va:           'For eligible veterans and active-duty military. 0% down possible. No monthly mortgage insurance. One-time funding fee (waived for disabled veterans).',
   jumbo:        'For loan amounts above the conforming limit (typically $766,550 nationally, $1,149,825 in high-cost areas). 10-20% down typical. No mortgage insurance.',
-  bankstatement:'Self-employed buyers using 12 or 24 months of bank statements instead of tax returns. Higher rates but more flexible qualifying. 10-20% down typical.',
+  bankstatement:'Self-employed buyers using 12 or 24 months of bank statements instead of tax returns. Higher rates but more flexible qualifying. 15-20% down typical.',
   dscr:         'Investment property loans qualified by the property\'s rental income, not your personal income. Used for buying rental properties. 20-25% down typical.'
 };
+
+// Minimum down payment percentages per loan program (industry standard floors)
+const MIN_DOWN_BY_PROGRAM = {
+  'conventional': 3.0,   // HomeReady/Home Possible 3%
+  'fha':          3.5,   // FHA minimum (with 580+ FICO)
+  'va':           0.0,   // VA full entitlement
+  'jumbo':        10.0,  // Jumbo lender minimums vary, 10% floor
+  'bankstatement':15.0,  // Bank statement program minimum
+  'dscr':         20.0   // DSCR investment property
+};
+
+function getMinDownPct() {
+  return MIN_DOWN_BY_PROGRAM[currentProgram] || 0;
+}
+
+function enforceMinDown() {
+  const pctInput = document.getElementById('downPaymentPct');
+  const dollarsInput = document.getElementById('downPaymentDollars');
+  const homePrice = parseNum(document.getElementById('homePrice').value);
+  const minPct = getMinDownPct();
+  const currentPct = parseNum(pctInput.value);
+
+  if (currentPct < minPct) {
+    pctInput.value = minPct;
+    if (homePrice > 0) {
+      dollarsInput.value = Math.round(homePrice * minPct / 100).toLocaleString('en-US');
+    }
+    showMinDownWarning(minPct);
+    return true; // adjusted
+  }
+  hideMinDownWarning();
+  return false;
+}
+
+function showMinDownWarning(minPct) {
+  let warning = document.getElementById('minDownWarning');
+  if (!warning) {
+    warning = document.createElement('div');
+    warning.id = 'minDownWarning';
+    warning.style.cssText = 'background:rgba(245,158,11,0.08);border-left:3px solid #f59e0b;border-radius:0 6px 6px 0;padding:8px 12px;margin-top:6px;font-size:0.78rem;color:#92400e;font-weight:600;line-height:1.4';
+    const pctInput = document.getElementById('downPaymentPct');
+    pctInput.closest('.input-row').appendChild(warning);
+  }
+  const programName = currentProgram === 'conventional' ? 'Conventional' :
+                      currentProgram === 'fha' ? 'FHA' :
+                      currentProgram === 'va' ? 'VA' :
+                      currentProgram === 'jumbo' ? 'Jumbo' :
+                      currentProgram === 'bankstatement' ? 'Bank Statement' :
+                      currentProgram === 'dscr' ? 'DSCR' : currentProgram;
+  warning.textContent = programName + ' requires a minimum of ' + minPct + '% down. Adjusted to minimum.';
+  warning.style.display = 'block';
+  // Hide after 3 seconds
+  setTimeout(function() {
+    if (warning) warning.style.display = 'none';
+  }, 3000);
+}
+
+function hideMinDownWarning() {
+  const warning = document.getElementById('minDownWarning');
+  if (warning) warning.style.display = 'none';
+}
 
 function calculate() {
   const homePrice = parseNum(document.getElementById('homePrice').value);
@@ -3758,9 +4111,9 @@ function calculate() {
   const rate = parseNum(document.getElementById('interestRate').value);
   const term = parseInt(document.getElementById('loanTerm').value);
   const taxRate = parseNum(document.getElementById('propertyTax').value);
-  const insurance = parseNum(document.getElementById('insurance').value);
+  const insurancePct = parseNum(document.getElementById('insurance').value);
   const hoa = parseNum(document.getElementById('hoa').value);
-  const creditScore = parseInt(document.getElementById('creditScore').value);
+  // Credit score field removed; PMI uses LTV-only lookup with assumed 720+ FICO
 
   let downPayment = downDollars;
   if (downPct > 0 && downDollars === 0) {
@@ -3790,7 +4143,7 @@ function calculate() {
     monthlyMI = 0; // VA has no monthly MI
   } else if (currentProgram === 'conventional') {
     if (ltv > 0.80) {
-      const pmiFactor = getPMIFactor(creditScore, ltv);
+      const pmiFactor = getPMIFactor(720, ltv); // Assumed 720+ FICO since credit score field was removed
       monthlyMI = (loanAmount * pmiFactor) / 12;
     }
   } else if (currentProgram === 'bankstatement') {
@@ -3806,7 +4159,7 @@ function calculate() {
 
   const monthlyPI = calcMonthlyPI(loanAmount, rate, term);
   const monthlyTax = (homePrice * taxRate / 100) / 12;
-  const monthlyInsurance = insurance / 12;
+  const monthlyInsurance = (homePrice * insurancePct / 100) / 12;
   const totalMonthly = monthlyPI + monthlyTax + monthlyInsurance + monthlyMI + hoa;
 
   const totalPayments = monthlyPI * term * 12;
@@ -3875,29 +4228,18 @@ function calculate() {
   }).join('');
 
   // Loan summary
+  document.getElementById('purchasePrice').textContent = fmt(homePrice);
   document.getElementById('loanAmount').textContent = fmt(loanAmount);
-  document.getElementById('totalInterest').textContent = fmt(totalInterest);
-  document.getElementById('totalCost').textContent = fmt(loanAmount + totalInterest);
-  document.getElementById('ltvValue').textContent = fmtPct(ltv * 100);
 
-  // Loan category (based on county limits)
+
+  // Determine loan category for use in plain-language explanation
+  // (no longer displayed as a row, but used in the educational note below)
   let categoryInfo = { category: 'conforming', label: 'Conforming' };
   if (currentCounty) {
     const limits = getCountyLimits(currentCounty.key);
     categoryInfo = categorizeLoan(loanAmount, limits);
   } else {
-    // No ZIP yet, use national baseline
     categoryInfo = categorizeLoan(loanAmount, NATIONAL_BASELINE);
-  }
-  document.getElementById('loanCategory').textContent = categoryInfo.label;
-  // Color code the category
-  const categoryEl = document.getElementById('loanCategory');
-  if (categoryInfo.category === 'jumbo') {
-    categoryEl.style.color = '#fbbf24';
-  } else if (categoryInfo.category === 'high-balance') {
-    categoryEl.style.color = '#5bcbf5';
-  } else {
-    categoryEl.style.color = '#ffffff';
   }
 
   // Plain-language explanation
@@ -4276,14 +4618,18 @@ function init() {
       document.getElementById('fhaUpfrontRow').style.display = currentProgram === 'fha' ? 'block' : 'none';
       document.getElementById('bankStatementRow').style.display = currentProgram === 'bankstatement' ? 'block' : 'none';
 
-      // Adjust default down payment for VA
-      if (currentProgram === 'va') {
-        document.getElementById('downPaymentPct').value = '0';
-        document.getElementById('downPaymentDollars').value = '0';
-      } else if (currentProgram === 'fha' && parseNum(document.getElementById('downPaymentPct').value) < 3.5) {
-        document.getElementById('downPaymentPct').value = '3.5';
+      // Enforce program minimum down payment (handles all programs uniformly)
+      const minPct = getMinDownPct();
+      const currentDownPct = parseNum(document.getElementById('downPaymentPct').value);
+      if (currentDownPct < minPct) {
+        document.getElementById('downPaymentPct').value = minPct;
         const homePrice = parseNum(document.getElementById('homePrice').value);
-        document.getElementById('downPaymentDollars').value = Math.round(homePrice * 0.035).toLocaleString('en-US');
+        if (homePrice > 0) {
+          document.getElementById('downPaymentDollars').value = Math.round(homePrice * minPct / 100).toLocaleString('en-US');
+        }
+        showMinDownWarning(minPct);
+      } else {
+        hideMinDownWarning();
       }
 
       userInteracted = true;
@@ -4320,14 +4666,27 @@ function init() {
   }
 
   downPctInput.addEventListener('input', () => { syncFromPct(); userInteracted = true; calculate(); });
+  downPctInput.addEventListener('blur', () => {
+    if (enforceMinDown()) {
+      syncFromPct();
+      calculate();
+    }
+  });
   downDollarsInput.addEventListener('blur', () => { formatCurrencyInput(downDollarsInput); });
   downDollarsInput.addEventListener('input', () => { userInteracted = true; syncFromDollars(); calculate(); });
+  downDollarsInput.addEventListener('blur', () => {
+    syncFromDollars();
+    if (enforceMinDown()) {
+      syncFromPct();
+      calculate();
+    }
+  });
 
   homePriceInput.addEventListener('blur', () => { formatCurrencyInput(homePriceInput); });
   homePriceInput.addEventListener('input', () => { userInteracted = true; syncFromPct(); calculate(); });
 
   // All other inputs
-  ['interestRate', 'loanTerm', 'propertyTax', 'insurance', 'creditScore', 'vaFundingType', 'fhaUpfront', 'bankStatementMonths'].forEach(id => {
+  ['interestRate', 'loanTerm', 'propertyTax', 'insurance', 'vaFundingType', 'fhaUpfront', 'bankStatementMonths'].forEach(id => {
     const el = document.getElementById(id);
     if (el) {
       el.addEventListener('input', () => { userInteracted = true; calculate(); });
@@ -4360,7 +4719,7 @@ function init() {
   }
 
   // Format insurance and HOA on blur
-  ['insurance', 'hoa'].forEach(id => {
+  ['hoa'].forEach(id => {
     document.getElementById(id).addEventListener('blur', function() { formatCurrencyInput(this); });
   });
 
@@ -4392,6 +4751,76 @@ if (document.readyState === 'loading') {
 } else {
   init();
 }
+
+
+// Populate print date + all input values, then trigger browser print
+window.preparePrint = function() {
+  // 1. Date stamp
+  const dateEl = document.getElementById('printDate');
+  if (dateEl) {
+    const now = new Date();
+    const opts = { year: 'numeric', month: 'long', day: 'numeric' };
+    dateEl.textContent = now.toLocaleDateString('en-US', opts);
+  }
+
+  // 2. Mirror all input values into the print-inputs panel
+  const setText = function(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+  };
+
+  // Loan program (use the active button's text)
+  const activeBtn = document.querySelector('.program-btn.active');
+  let programLabel = 'Conventional';
+  if (activeBtn) {
+    // Strip the help icon
+    programLabel = activeBtn.childNodes[0] ? activeBtn.childNodes[0].textContent.trim() : activeBtn.textContent.trim();
+    if (!programLabel) programLabel = activeBtn.textContent.trim().replace('?', '').trim();
+  }
+  setText('printProgram', programLabel);
+
+  // ZIP
+  const zip = document.getElementById('zipCode').value || '—';
+  let zipDisplay = zip;
+  if (currentCounty && currentCounty.county) {
+    zipDisplay = zip + ' (' + currentCounty.county.split(' ').map(function(w){return w.charAt(0).toUpperCase()+w.slice(1);}).join(' ') + ' County, ' + currentCounty.state + ')';
+  } else if (currentCounty && currentCounty.state) {
+    zipDisplay = zip + ' (' + currentCounty.state + ')';
+  }
+  setText('printZip', zipDisplay);
+
+  // Property type
+  const ptSel = document.getElementById('propertyType');
+  setText('printPropertyType', ptSel.options[ptSel.selectedIndex].text);
+
+  // Home price
+  setText('printHomePrice', '$' + parseNum(document.getElementById('homePrice').value).toLocaleString('en-US'));
+
+  // Down payment
+  const dpPct = parseNum(document.getElementById('downPaymentPct').value);
+  const dpDollars = parseNum(document.getElementById('downPaymentDollars').value);
+  setText('printDown', '$' + dpDollars.toLocaleString('en-US') + ' (' + dpPct + '%)');
+
+  // Loan term
+  const termSel = document.getElementById('loanTerm');
+  setText('printTerm', termSel.options[termSel.selectedIndex].text);
+
+  // Interest rate
+  setText('printRate', parseNum(document.getElementById('interestRate').value) + '%');
+
+  // Property tax
+  setText('printTax', parseNum(document.getElementById('propertyTax').value) + '%/yr');
+
+  // Insurance
+  setText('printInsurance', parseNum(document.getElementById('insurance').value) + '%/yr');
+
+  // HOA
+  const hoaVal = parseNum(document.getElementById('hoa').value);
+  setText('printHOA', hoaVal > 0 ? '$' + hoaVal.toLocaleString('en-US') + '/mo' : 'None');
+
+  // Trigger print
+  window.print();
+};
 
 })();
 </script>
