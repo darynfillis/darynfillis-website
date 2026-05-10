@@ -2018,62 +2018,8 @@ html{-webkit-text-size-adjust:100%;}
   border: 1.5px solid var(--blue);
 }
 
-/* Move-Up Method calc section */
-.moveup-section {
-  background: var(--white);
-  padding: clamp(56px,8vw,88px) clamp(20px,4vw,48px);
-}
-.moveup-inner { max-width: 1180px; margin: 0 auto; }
-.moveup-header { text-align: center; margin-bottom: 36px; }
-.moveup-strategy-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 8px; margin-bottom: 24px;
-}
-.moveup-comparison {
-  background: var(--bg);
-  border-radius: 14px;
-  padding: clamp(24px,3vw,36px);
-  margin-top: 24px;
-}
-.moveup-comparison-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-@media (max-width: 720px) { .moveup-comparison-grid { grid-template-columns: 1fr; } }
-.moveup-card {
-  background: var(--white);
-  border: 1px solid var(--rule);
-  border-radius: 10px;
-  padding: 20px;
-}
-.moveup-card.recommended { border-top: 4px solid var(--blue); }
-.moveup-card-label {
-  font-size: 0.66rem; font-weight: 800;
-  letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 8px;
-}
-.moveup-card.recommended .moveup-card-label { color: var(--blue); }
-.moveup-card-title {
-  font-weight: 800; font-size: 1.05rem;
-  color: var(--navy); margin-bottom: 14px;
-  letter-spacing: -0.01em;
-}
-.moveup-card-amount {
-  font-weight: 800; font-size: 1.8rem;
-  color: var(--navy); letter-spacing: -0.02em;
-  font-variant-numeric: tabular-nums;
-  line-height: 1; margin-bottom: 6px;
-}
-.moveup-card-amount-label {
-  font-size: 0.78rem; color: var(--muted);
-  margin-bottom: 14px;
-}
-.moveup-card-detail {
-  font-size: 0.84rem; color: var(--body);
-  font-weight: 200; line-height: 1.65;
-  padding-top: 12px; border-top: 1px solid var(--rule);
-}
+
+@media (max-width: 720px) { }
 
 /* Print styles */
 @media print {
@@ -2099,8 +2045,7 @@ html{-webkit-text-size-adjust:100%;}
   }
   main > .print-header,
   main > .print-disclaimer,
-  main > .print-five-laws,
-  main > .cashtoclose-section {
+  main > .print-five-laws {
     display: block !important;
   }
   main > .calc-section {
@@ -2509,6 +2454,20 @@ html{-webkit-text-size-adjust:100%;}
   /* Hide the print buttons inside the panel */
   .print-row { display: none !important; }
 
+  /* Hide non-essential elements in print to fit on one page */
+  .results-panel .bar-chart {
+    display: none !important;
+  }
+  .results-panel .breakdown-list {
+    display: none !important;
+  }
+  .results-panel .what-this-means {
+    display: none !important;
+  }
+  /* The rate alerts and jumbo comparison can wrap to second page if present, OK */
+  #rateAlerts, #jumboComparison { page-break-inside: avoid !important; }
+
+
 
   /* Five Laws / Personal Note */
   main > .print-five-laws {
@@ -2553,202 +2512,81 @@ html{-webkit-text-size-adjust:100%;}
   }
 
 
-  /* Cash to Close in print (second page) */
-  main > .cashtoclose-section {
-    background: white !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    page-break-before: always !important;
+  
+
+
+  /* Cash to Close block in print (inside results panel) */
+  .ctc-block {
+    margin-top: 6pt !important;
+    padding-top: 6pt !important;
+    border-top: 0.5pt solid #cbd5e0 !important;
+    page-break-inside: avoid !important;
   }
-  .cashtoclose-inner {
-    max-width: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-  .cashtoclose-header {
+  .ctc-block-header {
     text-align: center !important;
-    margin-bottom: 6pt !important;
-    padding: 4pt 14pt 6pt !important;
-    border-bottom: 0.75pt solid #0A2540 !important;
-  }
-  .cashtoclose-header .eyebrow {
-    font-size: 6.5pt !important;
-    color: #5bcbf5 !important;
-    letter-spacing: 0.12em !important;
-    text-transform: uppercase !important;
-    font-weight: 800 !important;
-    display: block !important;
-    margin-bottom: 2pt !important;
-  }
-  .cashtoclose-header h2 {
-    font-size: 13pt !important;
-    color: #0A2540 !important;
-    font-weight: 800 !important;
-    letter-spacing: -0.02em !important;
-    line-height: 1.15 !important;
-    margin: 0 0 3pt 0 !important;
-  }
-  .cashtoclose-header p {
-    font-size: 8pt !important;
-    color: #4a5568 !important;
-    line-height: 1.4 !important;
-    margin: 0 auto !important;
-    max-width: 600pt !important;
-    font-weight: 400 !important;
-  }
-  .cashtoclose-grid {
-    display: grid !important;
-    grid-template-columns: 0.85fr 1.15fr !important;
-    gap: 10pt !important;
-    padding: 0 14pt !important;
-    margin: 0 !important;
-  }
-  .cashtoclose-input-panel {
-    background: #f7f9fc !important;
-    border: 0.5pt solid #cbd5e0 !important;
-    border-radius: 4pt !important;
-    padding: 8pt 10pt !important;
-    box-shadow: none !important;
-  }
-  .cashtoclose-input-panel .calc-panel-heading {
-    font-size: 6.5pt !important;
-    letter-spacing: 0.1em !important;
-    text-transform: uppercase !important;
-    color: #5bcbf5 !important;
-    font-weight: 800 !important;
-    margin-bottom: 1pt !important;
-  }
-  .cashtoclose-input-panel .calc-panel-title {
-    font-size: 9pt !important;
-    color: #0A2540 !important;
-    font-weight: 800 !important;
-    margin-bottom: 6pt !important;
-    letter-spacing: -0.01em !important;
-  }
-  .cashtoclose-input-panel .input-row,
-  .cashtoclose-input-panel .input-row.split {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 6pt !important;
     margin-bottom: 5pt !important;
   }
-  .cashtoclose-input-panel .input-label {
-    font-size: 6.5pt !important;
+  .ctc-block-eyebrow {
+    font-size: 6pt !important;
     color: #4a5568 !important;
-    margin-bottom: 1pt !important;
-    letter-spacing: 0.06em !important;
+    letter-spacing: 0.14em !important;
     text-transform: uppercase !important;
-    font-weight: 700 !important;
-  }
-  .cashtoclose-input-panel .help-icon { display: none !important; }
-  .cashtoclose-input-panel input[type="text"],
-  .cashtoclose-input-panel input[type="number"],
-  .cashtoclose-input-panel input[type="date"],
-  .cashtoclose-input-panel select {
-    font-size: 8pt !important;
-    padding: 3pt 5pt !important;
-    border: 0.5pt solid #cbd5e0 !important;
-    border-radius: 2pt !important;
-    background: white !important;
-    color: #0A2540 !important;
-    font-weight: 700 !important;
-  }
-  .cashtoclose-input-panel .input-with-prefix .input-prefix,
-  .cashtoclose-input-panel .input-with-suffix .input-suffix {
-    font-size: 7.5pt !important;
-    color: #6b7280 !important;
-  }
-  .cashtoclose-results {
-    background: white !important;
-    color: #0A2540 !important;
-    border: 1pt solid #0A2540 !important;
-    border-radius: 4pt !important;
-    padding: 8pt 10pt !important;
-    box-shadow: none !important;
-  }
-  .cashtoclose-total {
-    text-align: center !important;
-    padding-bottom: 5pt !important;
-    border-bottom: 0.5pt solid #cbd5e0 !important;
-  }
-  .cashtoclose-total-label {
-    font-size: 7pt !important;
-    color: #4a5568 !important;
-    letter-spacing: 0.12em !important;
-    text-transform: uppercase !important;
-    margin-bottom: 1pt !important;
-  }
-  .cashtoclose-total-value {
-    font-size: 22pt !important;
-    color: #0A2540 !important;
     font-weight: 800 !important;
-    letter-spacing: -0.02em !important;
-    line-height: 1 !important;
     margin-bottom: 2pt !important;
   }
-  .cashtoclose-total-sub {
-    font-size: 7pt !important;
+  .ctc-block-total {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: baseline !important;
+    gap: 6pt !important;
+    margin-bottom: 1pt !important;
+  }
+  .ctc-block-label {
+    font-size: 6.5pt !important;
     color: #6b7280 !important;
     font-weight: 400 !important;
   }
-  .cashtoclose-breakdown {
-    margin-top: 5pt !important;
-    gap: 0 !important;
+  .ctc-block-value {
+    font-size: 14pt !important;
+    color: #0A2540 !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.015em !important;
   }
-  .cashtoclose-row {
+  .ctc-block-firstpay {
+    font-size: 6.5pt !important;
+    color: #6b7280 !important;
+    font-weight: 400 !important;
+  }
+  .ctc-block-rows {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .ctc-block-row {
     display: flex !important;
     justify-content: space-between !important;
     align-items: baseline !important;
-    padding: 2pt 0 !important;
+    padding: 1.5pt 0 !important;
     border-bottom: 0.25pt solid #e5e7eb !important;
-  }
-  .cashtoclose-row-name {
     font-size: 7.5pt !important;
-    color: #4a5568 !important;
-    font-weight: 600 !important;
   }
-  .cashtoclose-row-detail {
-    font-size: 6pt !important;
-    color: #9ca3af !important;
-    font-weight: 400 !important;
-  }
-  .cashtoclose-row-value {
-    font-size: 8pt !important;
-    color: #0A2540 !important;
-    font-weight: 700 !important;
-  }
-  .cashtoclose-row-credit { color: #5bcbf5 !important; }
-  .cashtoclose-row-total {
-    border-top: 1pt solid #0A2540 !important;
+  .ctc-block-row:last-child {
     border-bottom: none !important;
-    padding-top: 4pt !important;
-    margin-top: 3pt !important;
   }
-  .cashtoclose-row-total .cashtoclose-row-name {
-    font-size: 8.5pt !important;
-    color: #0A2540 !important;
-    font-weight: 800 !important;
-  }
-  .cashtoclose-row-total .cashtoclose-row-value {
-    font-size: 11pt !important;
-    color: #0A2540 !important;
-    font-weight: 800 !important;
-  }
-  .cashtoclose-context-note {
-    margin-top: 5pt !important;
-    padding: 4pt 7pt !important;
-    background: #f0f9ff !important;
-    border-left: 1.5pt solid #5bcbf5 !important;
-    border-radius: 0 2pt 2pt 0 !important;
-    font-size: 7pt !important;
-    color: #2b2f2e !important;
-    line-height: 1.4 !important;
+  .ctc-block-row-name {
+    color: #4a5568 !important;
     font-weight: 400 !important;
   }
-  .cashtoclose-context-note strong {
+  .ctc-block-row-detail {
+    color: #9ca3af !important;
+    font-size: 6.5pt !important;
+    margin-left: 4pt !important;
+  }
+  .ctc-block-row-value {
     color: #0A2540 !important;
     font-weight: 700 !important;
   }
+  .ctc-block-credit { color: #0369a1 !important; }
+
 
   /* Disclaimer at very bottom */
   .print-disclaimer {
@@ -2782,389 +2620,129 @@ html{-webkit-text-size-adjust:100%;}
 
 
 
-/* ── CASH TO CLOSE CALCULATOR ── */
-.cashtoclose-section {
-  background: var(--white);
-  padding: clamp(56px,8vw,88px) clamp(20px,4vw,48px);
-  border-top: 1px solid var(--rule);
-}
-.cashtoclose-inner { max-width: 1180px; margin: 0 auto; }
-.cashtoclose-header { text-align: center; margin-bottom: 36px; }
 
-.cashtoclose-grid {
-  display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
-  gap: 28px;
-  align-items: start;
-}
-@media (max-width: 920px) { .cashtoclose-grid { grid-template-columns: 1fr; gap: 24px; } }
-
-.cashtoclose-input-panel {
-  background: var(--bg);
-  border-radius: 14px;
-  padding: clamp(24px,3vw,32px);
-  box-shadow: 0 4px 24px rgba(10,37,64,0.04);
-}
-.cashtoclose-input-panel input[type="date"] {
-  width: 100%;
-  padding: 11px 14px;
-  border: 1.5px solid var(--rule);
-  border-radius: 8px;
-  font-size: 0.95rem;
-  color: var(--navy);
-  font-family: inherit;
-  background: var(--white);
+@media (max-width: 920px) { }
+@media (max-width: 720px) {
 }
 
-/* Results panel: navy like main results */
-.cashtoclose-results {
-  background: var(--navy);
-  border-radius: 14px;
-  padding: clamp(24px,3vw,32px);
-  color: var(--white);
-  box-shadow: 0 8px 30px rgba(10,37,64,0.15);
+/* Comparison panel */
+
+
+
+/* Cash to Close block inside results panel */
+.ctc-block {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(91,203,245,0.2);
 }
-.cashtoclose-total {
+.ctc-block-header {
   text-align: center;
-  padding-bottom: 20px;
-  border-bottom: 1px solid rgba(91,203,245,0.15);
+  margin-bottom: 14px;
 }
-.cashtoclose-total-label {
-  font-size: 0.7rem;
+.ctc-block-eyebrow {
+  font-size: 0.66rem;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: rgba(91,203,245,0.85);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
-.cashtoclose-total-value {
-  font-size: clamp(2.4rem, 5vw, 3.4rem);
+.ctc-block-total {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.ctc-block-label {
+  font-size: 0.74rem;
+  color: rgba(255,255,255,0.55);
+  font-weight: 200;
+}
+.ctc-block-value {
+  font-size: 1.5rem;
   font-weight: 800;
-  letter-spacing: -0.025em;
   color: var(--white);
   font-variant-numeric: tabular-nums;
-  line-height: 1;
-  margin-bottom: 8px;
+  letter-spacing: -0.015em;
 }
-.cashtoclose-total-sub {
-  font-size: 0.82rem;
-  color: rgba(255,255,255,0.65);
-  font-weight: 200;
-  letter-spacing: 0.02em;
-}
-
-.cashtoclose-breakdown {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.cashtoclose-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 11px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-.cashtoclose-row:last-child { border-bottom: none; }
-.cashtoclose-row-label {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.cashtoclose-row-name {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: rgba(255,255,255,0.95);
-}
-.cashtoclose-row-detail {
-  font-size: 0.74rem;
+.ctc-block-firstpay {
+  font-size: 0.72rem;
   color: rgba(255,255,255,0.5);
   font-weight: 200;
 }
-.cashtoclose-row-value {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--white);
-  font-variant-numeric: tabular-nums;
-  text-align: right;
-}
-.cashtoclose-row-credit { color: #5bcbf5; }
-.cashtoclose-row-total {
-  margin-top: 8px;
-  padding-top: 14px;
-  border-top: 1.5px solid rgba(91,203,245,0.3) !important;
-  border-bottom: none !important;
-}
-.cashtoclose-row-total .cashtoclose-row-name {
-  font-size: 1rem;
-  font-weight: 800;
-  color: var(--white);
-}
-.cashtoclose-row-total .cashtoclose-row-value {
-  font-size: 1.3rem;
-  font-weight: 800;
-  color: #5bcbf5;
-}
-
-.cashtoclose-context-note {
-  margin-top: 18px;
-  padding: 14px 18px;
-  background: rgba(91,203,245,0.06);
-  border-left: 3px solid var(--blue);
-  border-radius: 0 8px 8px 0;
-  font-size: 0.84rem;
-  color: rgba(255,255,255,0.85);
-  font-weight: 200;
-  line-height: 1.7;
-}
-.cashtoclose-context-note strong {
-  color: var(--blue);
-  font-weight: 700;
-}
-
-/* ── DEBT STRATEGY CALCULATOR ── */
-.debt-section {
-  background: var(--bg);
-  padding: clamp(56px,8vw,88px) clamp(20px,4vw,48px);
-  border-top: 1px solid var(--rule);
-}
-.debt-inner { max-width: 1180px; margin: 0 auto; }
-.debt-header { text-align: center; margin-bottom: 36px; }
-
-.debt-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 28px;
-  align-items: start;
-}
-@media (max-width: 920px) { .debt-grid { grid-template-columns: 1fr; gap: 24px; } }
-
-.debt-input-panel {
-  background: var(--white);
-  border-radius: 14px;
-  padding: clamp(24px,3vw,32px);
-  box-shadow: 0 4px 24px rgba(10,37,64,0.06);
-}
-
-.debt-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 14px 0;
-}
-.debt-row {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr 32px;
-  gap: 8px;
-  align-items: end;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--rule);
-}
-.debt-row:first-child { padding-top: 0; }
-.debt-row:last-child { border-bottom: none; }
-@media (max-width: 720px) {
-  .debt-row {
-    grid-template-columns: 1fr 1fr 32px;
-    gap: 8px 8px;
-  }
-  .debt-row .debt-field-name { grid-column: 1 / -1; }
-  .debt-row .debt-field-min { grid-column: 1 / 3; }
-  .debt-row .debt-remove { grid-row: 2; grid-column: 3; align-self: end; }
-}
-.debt-field { display: flex; flex-direction: column; }
-.debt-field-label {
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 4px;
-}
-.debt-field input {
-  padding: 8px 10px;
-  border: 1.5px solid var(--rule);
-  border-radius: 6px;
-  font-size: 0.9rem;
-  color: var(--navy);
-  font-family: inherit;
-  background: var(--white);
-  width: 100%;
-  transition: border-color 0.15s;
-}
-.debt-field input:focus { outline: none; border-color: var(--blue); }
-.debt-field-name input { font-weight: 600; }
-.debt-remove {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border: none;
-  background: transparent;
-  color: var(--muted);
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1.4rem;
-  line-height: 1;
-  transition: background 0.15s, color 0.15s;
-  font-family: inherit;
-}
-.debt-remove:hover { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
-
-.debt-add-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  background: rgba(91,203,245,0.1);
-  border: 1.5px dashed rgba(91,203,245,0.5);
-  color: var(--blue-dark);
-  font-weight: 700;
-  font-size: 0.85rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.15s;
-  font-family: inherit;
-}
-.debt-add-btn:hover { background: rgba(91,203,245,0.18); }
-
-.debt-summary {
-  margin-top: 18px;
-  padding: 16px;
-  background: var(--bg);
-  border-radius: 10px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  text-align: center;
-}
-.debt-summary-item {}
-.debt-summary-label {
-  font-size: 0.66rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 4px;
-}
-.debt-summary-value {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--navy);
-  letter-spacing: -0.01em;
-  font-variant-numeric: tabular-nums;
-}
-.debt-summary-blended { color: var(--blue-dark); }
-
-/* Comparison panel */
-.debt-comparison {
-  background: var(--white);
-  border-radius: 14px;
-  padding: clamp(24px,3vw,32px);
-  box-shadow: 0 4px 24px rgba(10,37,64,0.06);
-}
-
-.debt-scenario {
-  padding: 18px;
-  border-radius: 10px;
-  border: 1.5px solid var(--rule);
-  margin-bottom: 14px;
-}
-.debt-scenario.recommended {
-  border-color: var(--blue);
-  background: linear-gradient(135deg, rgba(91,203,245,0.05) 0%, rgba(91,203,245,0.01) 100%);
-}
-.debt-scenario-label {
-  font-size: 0.66rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 6px;
-}
-.debt-scenario.recommended .debt-scenario-label { color: var(--blue-dark); }
-.debt-scenario-title {
-  font-weight: 800;
-  font-size: 1.05rem;
-  color: var(--navy);
-  letter-spacing: -0.01em;
-  margin-bottom: 14px;
-  line-height: 1.25;
-}
-.debt-scenario-rows {
+.ctc-block-rows {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 1px;
 }
-.debt-scenario-row {
+.ctc-block-row {
   display: flex;
   justify-content: space-between;
-  font-size: 0.86rem;
-  padding: 4px 0;
+  align-items: baseline;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.84rem;
 }
-.debt-scenario-row.total {
-  border-top: 1px solid var(--rule);
-  padding-top: 10px;
-  margin-top: 4px;
-  font-weight: 800;
-  color: var(--navy);
-  font-size: 0.95rem;
-}
-.debt-scenario-row-label {
-  font-weight: 200;
-  color: var(--body);
-}
-.debt-scenario-row-value {
-  font-weight: 700;
-  color: var(--navy);
-  font-variant-numeric: tabular-nums;
-}
-
-.debt-savings-banner {
-  margin-top: 18px;
-  padding: 18px 20px;
-  background: var(--navy);
-  color: var(--white);
-  border-radius: 10px;
-  text-align: center;
-}
-.debt-savings-label {
-  font-size: 0.66rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--blue);
-  margin-bottom: 8px;
-}
-.debt-savings-value {
-  font-size: 2rem;
-  font-weight: 800;
-  letter-spacing: -0.025em;
-  color: var(--white);
-  font-variant-numeric: tabular-nums;
-  line-height: 1.1;
-  margin-bottom: 6px;
-}
-.debt-savings-direction {
-  font-size: 0.85rem;
-  font-weight: 200;
+.ctc-block-row:last-child { border-bottom: none; }
+.ctc-block-row-name {
   color: rgba(255,255,255,0.7);
-  line-height: 1.5;
+  font-weight: 200;
 }
+.ctc-block-row-detail {
+  color: rgba(255,255,255,0.4);
+  font-size: 0.72rem;
+  margin-left: 6px;
+}
+.ctc-block-row-value {
+  color: var(--white);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.ctc-block-credit { color: #5bcbf5; }
 
-.debt-context-note {
-  margin-top: 18px;
-  padding: 14px 18px;
-  background: rgba(91,203,245,0.06);
-  border-left: 3px solid var(--blue);
-  border-radius: 0 8px 8px 0;
-  font-size: 0.86rem;
+/* Five Laws note — visible on screen */
+.daryn-note {
+  background: var(--white);
+  padding: clamp(48px,6vw,72px) clamp(20px,4vw,48px);
+  border-top: 1px solid var(--rule);
+}
+.daryn-note-inner {
+  max-width: 740px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, rgba(245,158,11,0.06) 0%, rgba(245,158,11,0.02) 100%);
+  border: 1px solid rgba(245,158,11,0.25);
+  border-radius: 14px;
+  padding: clamp(28px,4vw,40px);
+}
+.daryn-note-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #d97706;
+  margin-bottom: 14px;
+}
+.daryn-note p {
+  font-size: 1rem;
+  line-height: 1.85;
   color: var(--body);
   font-weight: 200;
-  line-height: 1.7;
+  margin: 0 0 14px 0;
 }
-
+.daryn-note p strong {
+  color: var(--navy);
+  font-weight: 700;
+}
+.daryn-note p:last-child { margin-bottom: 0; }
+.daryn-note a {
+  color: #d97706;
+  font-weight: 700;
+  text-decoration: none;
+}
+.daryn-note a:hover {
+  text-decoration: underline;
+}
 
 /* Disclaimer */
 .disclaimer-section {
@@ -3516,6 +3094,78 @@ html{-webkit-text-size-adjust:100%;}
             <option value="12">12 months</option>
           </select>
         </div>
+
+      <div class="calc-panel-heading" style="margin-top:24px">Step 4</div>
+      <div class="calc-panel-title">Closing details.</div>
+
+      <div class="input-row split">
+        <div>
+          <label class="input-label" for="closingDate">
+            Closing date
+            <span class="help-icon" tabindex="0" data-tooltip="Pick the date you expect to close. Most purchase contracts close 30 to 45 days from accepted offer. The closing date affects how much prepaid interest you owe.">?</span>
+          </label>
+          <input type="date" id="closingDate">
+        </div>
+        <div>
+          <label class="input-label" for="closingCostsPct">
+            Closing costs
+            <span class="help-icon" tabindex="0" data-tooltip="Closing costs typically run 2 to 3 percent of loan amount in California. Includes lender fees, title, escrow, recording, appraisal, and so on. Default 2.5 percent is a reasonable estimate.">?</span>
+          </label>
+          <div class="input-with-suffix">
+            <input type="text" id="closingCostsPct" inputmode="decimal" value="2.5">
+            <span class="input-suffix">% of loan</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-row split">
+        <div>
+          <label class="input-label" for="taxEscrowMonths">
+            Tax escrow reserve
+            <span class="help-icon" tabindex="0" data-tooltip="Lenders typically collect 2 to 3 months of property taxes upfront to seed your escrow account. The exact amount depends on the closing month and when taxes are due in your area.">?</span>
+          </label>
+          <select id="taxEscrowMonths">
+            <option value="2">2 months</option>
+            <option value="3" selected>3 months</option>
+            <option value="4">4 months</option>
+            <option value="6">6 months</option>
+          </select>
+        </div>
+        <div>
+          <label class="input-label" for="insuranceEscrowMonths">
+            Insurance escrow
+            <span class="help-icon" tabindex="0" data-tooltip="Lenders typically collect 2 to 3 months of homeowners insurance upfront, in addition to the first year prepaid at closing. Default is 2 months reserve plus 12 months prepaid.">?</span>
+          </label>
+          <select id="insuranceEscrowMonths">
+            <option value="2" selected>2 months</option>
+            <option value="3">3 months</option>
+            <option value="4">4 months</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="input-row split">
+        <div>
+          <label class="input-label" for="lenderCredits">
+            Lender credits
+            <span class="help-icon" tabindex="0" data-tooltip="Money the lender contributes toward closing costs in exchange for a slightly higher rate. Common values are 0.5 to 1.5 percent of loan amount. Set to 0 if no lender credit.">?</span>
+          </label>
+          <div class="input-with-prefix">
+            <span class="input-prefix">$</span>
+            <input type="text" id="lenderCredits" inputmode="numeric" value="0">
+          </div>
+        </div>
+        <div>
+          <label class="input-label" for="sellerCredits">
+            Seller credits
+            <span class="help-icon" tabindex="0" data-tooltip="Money the seller contributes toward your closing costs as part of the purchase agreement. Maximums vary by program (FHA up to 6 percent, Conventional 3 to 9 percent depending on down payment).">?</span>
+          </label>
+          <div class="input-with-prefix">
+            <span class="input-prefix">$</span>
+            <input type="text" id="sellerCredits" inputmode="numeric" value="0">
+          </div>
+        </div>
+      </div>
       </div>
     </div>
 
@@ -3532,6 +3182,8 @@ html{-webkit-text-size-adjust:100%;}
       <div class="print-input-row"><span class="print-input-label">Property tax</span><span class="print-input-value" id="printTax">—</span></div>
       <div class="print-input-row"><span class="print-input-label">Home insurance</span><span class="print-input-value" id="printInsurance">—</span></div>
       <div class="print-input-row"><span class="print-input-label">HOA dues</span><span class="print-input-value" id="printHOA">—</span></div>
+      <div class="print-input-row"><span class="print-input-label">Closing date</span><span class="print-input-value" id="printClosingDate">—</span></div>
+      <div class="print-input-row"><span class="print-input-label">Closing costs</span><span class="print-input-value" id="printClosingCosts">—</span></div>
     </div>
 
     <!-- RESULTS PANEL -->
@@ -3582,7 +3234,44 @@ html{-webkit-text-size-adjust:100%;}
           <span class="loan-summary-label">Loan amount</span>
           <span class="loan-summary-value" id="loanAmount">$0</span>
         </div>
-        
+      </div>
+
+      <!-- Cash to Close section in results panel -->
+      <div class="ctc-block">
+        <div class="ctc-block-header">
+          <div class="ctc-block-eyebrow">Cash to Close</div>
+          <div class="ctc-block-total">
+            <span class="ctc-block-label">Estimated total</span>
+            <span class="ctc-block-value" id="ctcTotal">$0</span>
+          </div>
+          <div class="ctc-block-firstpay" id="ctcFirstPay">First payment due: —</div>
+        </div>
+        <div class="ctc-block-rows">
+          <div class="ctc-block-row">
+            <span class="ctc-block-row-name">Down payment</span>
+            <span class="ctc-block-row-value" id="ctcDown">$0</span>
+          </div>
+          <div class="ctc-block-row">
+            <span class="ctc-block-row-name">Closing costs <span class="ctc-block-row-detail" id="ctcClosingDetail">2.5%</span></span>
+            <span class="ctc-block-row-value" id="ctcClosing">$0</span>
+          </div>
+          <div class="ctc-block-row">
+            <span class="ctc-block-row-name">Prepaid interest <span class="ctc-block-row-detail" id="ctcPrepaidDetail">0 days</span></span>
+            <span class="ctc-block-row-value" id="ctcPrepaid">$0</span>
+          </div>
+          <div class="ctc-block-row">
+            <span class="ctc-block-row-name">Tax escrow <span class="ctc-block-row-detail" id="ctcTaxDetail">3 mo</span></span>
+            <span class="ctc-block-row-value" id="ctcTax">$0</span>
+          </div>
+          <div class="ctc-block-row">
+            <span class="ctc-block-row-name">Insurance escrow <span class="ctc-block-row-detail" id="ctcInsDetail">12 mo prepaid + 2 mo</span></span>
+            <span class="ctc-block-row-value" id="ctcIns">$0</span>
+          </div>
+          <div class="ctc-block-row" id="ctcCreditsRow" style="display:none">
+            <span class="ctc-block-row-name">Less credits</span>
+            <span class="ctc-block-row-value ctc-block-credit" id="ctcCredits">$0</span>
+          </div>
+        </div>
       </div>
 
       <!-- Plain language explanation -->
@@ -3663,270 +3352,6 @@ html{-webkit-text-size-adjust:100%;}
   </div>
 </section>
 
-<!-- MOVE-UP METHOD CALCULATOR -->
-<section class="moveup-section" id="moveup">
-  <div class="moveup-inner">
-    <div class="moveup-header">
-      <span class="eyebrow" style="color:var(--blue);display:inline-block;margin-bottom:14px">For Move-Up Buyers</span>
-      <h2 style="font-weight:800;font-size:clamp(1.8rem,3vw,2.4rem);color:var(--navy);letter-spacing:-0.025em;line-height:1.15;margin-bottom:14px">The Move-Up Method calculator.</h2>
-      <p style="font-weight:200;font-size:1.02rem;color:var(--body);line-height:1.85;max-width:640px;margin:0 auto">Already own a home? Compare the four ways to buy your next home before selling the current one. See which strategy preserves your equity and keeps your monthly payment manageable.</p>
-    </div>
-
-    <div class="calc-grid">
-      <!-- MOVE-UP INPUTS -->
-      <div class="calc-panel">
-        <div class="calc-panel-heading">Your situation</div>
-        <div class="calc-panel-title">Two homes, two financings.</div>
-
-        <div class="input-row">
-          <label class="input-label" for="muCurrentValue">
-            Current home value
-            <span class="help-icon" tabindex="0" data-tooltip="What your current home would sell for today. Use a realistic estimate, not Zillow's most optimistic guess.">?</span>
-          </label>
-          <div class="input-with-prefix">
-            <span class="input-prefix">$</span>
-            <input type="text" id="muCurrentValue" inputmode="numeric" value="900,000">
-          </div>
-        </div>
-
-        <div class="input-row split">
-          <div>
-            <label class="input-label" for="muCurrentBalance">
-              Current mortgage balance
-              <span class="help-icon" tabindex="0" data-tooltip="What you still owe on your current home's mortgage. Check your latest statement.">?</span>
-            </label>
-            <div class="input-with-prefix">
-              <span class="input-prefix">$</span>
-              <input type="text" id="muCurrentBalance" inputmode="numeric" value="350,000">
-            </div>
-          </div>
-          <div>
-            <label class="input-label" for="muCurrentRate">
-              Current rate
-              <span class="help-icon" tabindex="0" data-tooltip="The interest rate on your current mortgage. The lock-in effect of a low rate is a big factor in this analysis.">?</span>
-            </label>
-            <div class="input-with-suffix">
-              <input type="text" id="muCurrentRate" inputmode="decimal" value="3.25">
-              <span class="input-suffix">%</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="input-row split">
-          <div>
-            <label class="input-label" for="muNewPrice">
-              New home price
-              <span class="help-icon" tabindex="0" data-tooltip="The purchase price of the home you want to move up to.">?</span>
-            </label>
-            <div class="input-with-prefix">
-              <span class="input-prefix">$</span>
-              <input type="text" id="muNewPrice" inputmode="numeric" value="1,500,000">
-            </div>
-          </div>
-          <div>
-            <label class="input-label" for="muNewRate">
-              New loan rate
-              <span class="help-icon" tabindex="0" data-tooltip="Today's market rate for your new mortgage. Subject to your credit, loan-to-value, and program at lock.">?</span>
-            </label>
-            <div class="input-with-suffix">
-              <input type="text" id="muNewRate" inputmode="decimal" value="6.625">
-              <span class="input-suffix">%</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="input-row">
-          <label class="input-label" for="muRentalIncome">
-            Estimated rental income (if keeping current home)
-            <span class="help-icon" tabindex="0" data-tooltip="What you could rent your current home for monthly. Lenders typically use 75% of market rent for qualifying.">?</span>
-          </label>
-          <div class="input-with-prefix">
-            <span class="input-prefix">$</span>
-            <input type="text" id="muRentalIncome" inputmode="numeric" value="4,500">
-            <span class="input-suffix" style="right:8px;font-size:0.75rem">/mo</span>
-          </div>
-        </div>
-
-        <div style="font-size:0.78rem;color:var(--muted);font-weight:200;line-height:1.6;padding:10px 14px;background:var(--bg);border-radius:6px;margin-top:10px">
-          The calculator below assumes you would put 20% down on the new home if you sold first. Your actual scenario may differ.
-        </div>
-      </div>
-
-      <!-- MOVE-UP COMPARISON -->
-      <div class="moveup-comparison" style="margin-top:0">
-        <div style="text-align:center;margin-bottom:20px">
-          <div style="font-size:0.66rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue);margin-bottom:8px">Strategy comparison</div>
-          <h3 style="font-weight:800;font-size:1.3rem;color:var(--navy);letter-spacing:-0.015em;line-height:1.2">Net monthly cost during transition.</h3>
-        </div>
-
-        <div class="moveup-comparison-grid" id="moveupResults">
-          <!-- Populated by JS -->
-        </div>
-
-        <div style="margin-top:22px;padding:14px 18px;background:rgba(91,203,245,0.06);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;font-size:0.86rem;color:var(--body);font-weight:200;line-height:1.7">
-          <strong style="color:var(--navy);font-weight:700">Note:</strong> These are estimates based on simplified scenarios. The right strategy depends on your full financial picture, equity goals, and timing. <a href="/move-up-method" style="color:var(--blue);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(91,203,245,0.4);padding-bottom:1px">Learn about the Move-Up Method &rarr;</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
-
-
-<!-- CASH TO CLOSE CALCULATOR -->
-<section class="cashtoclose-section" id="cash-to-close">
-  <div class="cashtoclose-inner">
-    <div class="cashtoclose-header">
-      <span class="eyebrow" style="color:var(--blue);display:inline-block;margin-bottom:14px">The Question Most Buyers Ask Last</span>
-      <h2 style="font-weight:800;font-size:clamp(1.8rem,3vw,2.4rem);color:var(--navy);letter-spacing:-0.025em;line-height:1.15;margin-bottom:14px">Cash to close. The real number.</h2>
-      <p style="font-weight:200;font-size:1.02rem;color:var(--body);line-height:1.85;max-width:680px;margin:0 auto">Down payment is just one piece. The actual cash you need on closing day includes closing costs, prepaid interest, and money set aside for property taxes and insurance. This is the number people are surprised by when they have not been advised properly.</p>
-    </div>
-
-    <div class="cashtoclose-grid">
-      <!-- Inputs -->
-      <div class="cashtoclose-input-panel">
-        <div class="calc-panel-heading">Closing details</div>
-        <div class="calc-panel-title">When and how.</div>
-
-        <div class="input-row split">
-          <div>
-            <label class="input-label" for="closingDate">
-              Estimated closing date
-              <span class="help-icon" tabindex="0" data-tooltip="Pick the date you expect to close. Most purchase contracts close 30-45 days from accepted offer. The closing date affects how much prepaid interest you owe.">?</span>
-            </label>
-            <input type="date" id="closingDate">
-          </div>
-          <div>
-            <label class="input-label" for="closingCostsPct">
-              Closing costs %
-              <span class="help-icon" tabindex="0" data-tooltip="Closing costs typically run 2-3% of loan amount in California. Includes lender fees, title, escrow, recording, appraisal, and so on. We default to 2.5% as a reasonable estimate.">?</span>
-            </label>
-            <div class="input-with-suffix">
-              <input type="text" id="closingCostsPct" inputmode="decimal" value="2.5">
-              <span class="input-suffix">% of loan</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="input-row split">
-          <div>
-            <label class="input-label" for="taxEscrowMonths">
-              Tax escrow reserve
-              <span class="help-icon" tabindex="0" data-tooltip="Lenders typically collect 2-3 months of property taxes upfront to seed your escrow account. The exact amount depends on the closing month and when taxes are due in your area.">?</span>
-            </label>
-            <select id="taxEscrowMonths">
-              <option value="2">2 months</option>
-              <option value="3" selected>3 months</option>
-              <option value="4">4 months</option>
-              <option value="6">6 months</option>
-            </select>
-          </div>
-          <div>
-            <label class="input-label" for="insuranceEscrowMonths">
-              Insurance escrow reserve
-              <span class="help-icon" tabindex="0" data-tooltip="Lenders typically collect 2-3 months of homeowners insurance upfront, in addition to the first year prepaid at closing. We default to 2 months reserve plus 12 months prepaid.">?</span>
-            </label>
-            <select id="insuranceEscrowMonths">
-              <option value="2" selected>2 months</option>
-              <option value="3">3 months</option>
-              <option value="4">4 months</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="input-row split">
-          <div>
-            <label class="input-label" for="lenderCredits">
-              Lender credits
-              <span class="help-icon" tabindex="0" data-tooltip="Money the lender contributes toward closing costs in exchange for a slightly higher rate. Common values are 0.5% to 1.5% of loan amount. Set to 0 if no lender credit.">?</span>
-            </label>
-            <div class="input-with-prefix">
-              <span class="input-prefix">$</span>
-              <input type="text" id="lenderCredits" inputmode="numeric" value="0">
-            </div>
-          </div>
-          <div>
-            <label class="input-label" for="sellerCredits">
-              Seller credits
-              <span class="help-icon" tabindex="0" data-tooltip="Money the seller contributes toward your closing costs as part of the purchase agreement. Maximums vary by program (FHA up to 6%, Conventional 3-9% depending on down payment).">?</span>
-            </label>
-            <div class="input-with-prefix">
-              <span class="input-prefix">$</span>
-              <input type="text" id="sellerCredits" inputmode="numeric" value="0">
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Results -->
-      <div class="cashtoclose-results">
-        <div class="cashtoclose-total">
-          <div class="cashtoclose-total-label">Estimated Cash to Close</div>
-          <div class="cashtoclose-total-value" id="cashToCloseTotal">$0</div>
-          <div class="cashtoclose-total-sub" id="cashToCloseDate">First payment due: —</div>
-        </div>
-
-        <div class="cashtoclose-breakdown">
-          <div class="cashtoclose-row">
-            <div class="cashtoclose-row-label">
-              <span class="cashtoclose-row-name">Down payment</span>
-              <span class="cashtoclose-row-detail" id="ctcDownDetail">20% of purchase price</span>
-            </div>
-            <div class="cashtoclose-row-value" id="ctcDownValue">$0</div>
-          </div>
-          <div class="cashtoclose-row">
-            <div class="cashtoclose-row-label">
-              <span class="cashtoclose-row-name">Closing costs</span>
-              <span class="cashtoclose-row-detail" id="ctcClosingDetail">Lender, title, escrow, etc.</span>
-            </div>
-            <div class="cashtoclose-row-value" id="ctcClosingValue">$0</div>
-          </div>
-          <div class="cashtoclose-row">
-            <div class="cashtoclose-row-label">
-              <span class="cashtoclose-row-name">Prepaid interest</span>
-              <span class="cashtoclose-row-detail" id="ctcPrepaidDetail">Days from closing to month-end</span>
-            </div>
-            <div class="cashtoclose-row-value" id="ctcPrepaidValue">$0</div>
-          </div>
-          <div class="cashtoclose-row">
-            <div class="cashtoclose-row-label">
-              <span class="cashtoclose-row-name">Tax escrow setup</span>
-              <span class="cashtoclose-row-detail" id="ctcTaxDetail">3 months reserve</span>
-            </div>
-            <div class="cashtoclose-row-value" id="ctcTaxValue">$0</div>
-          </div>
-          <div class="cashtoclose-row">
-            <div class="cashtoclose-row-label">
-              <span class="cashtoclose-row-name">Insurance escrow setup</span>
-              <span class="cashtoclose-row-detail" id="ctcInsDetail">12 months prepaid + 2 months reserve</span>
-            </div>
-            <div class="cashtoclose-row-value" id="ctcInsValue">$0</div>
-          </div>
-          <div class="cashtoclose-row" id="ctcCreditsRow" style="display:none">
-            <div class="cashtoclose-row-label">
-              <span class="cashtoclose-row-name">Less: Lender + Seller credits</span>
-              <span class="cashtoclose-row-detail">Reduces cash needed</span>
-            </div>
-            <div class="cashtoclose-row-value cashtoclose-row-credit" id="ctcCreditsValue">-$0</div>
-          </div>
-          <div class="cashtoclose-row cashtoclose-row-total">
-            <div class="cashtoclose-row-label">
-              <span class="cashtoclose-row-name">Total cash needed at closing</span>
-            </div>
-            <div class="cashtoclose-row-value" id="ctcTotalValue">$0</div>
-          </div>
-        </div>
-
-        <div class="cashtoclose-context-note">
-          <strong style="color:var(--navy);font-weight:700">First mortgage payment:</strong> Your first payment is typically due on the <strong>1st of the second month</strong> after closing. So if you close on March 15, your first payment is due May 1. This gap is why prepaid interest is collected at closing &mdash; it covers the interest from your closing date to month-end.
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- PRINT-ONLY: Five Laws / Personal Note -->
 <div class="print-five-laws">
   <div class="print-five-laws-eyebrow">A Note From Daryn</div>
@@ -3941,178 +3366,20 @@ html{-webkit-text-size-adjust:100%;}
 <!-- PRINT-ONLY DISCLAIMER (at bottom of printed page) -->
 <div class="print-disclaimer">
   <div style="font-size:0.82rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy);margin-bottom:8px">Important Disclaimer</div>
+  <p style="font-size:0.78rem;color:var(--body);font-weight:400;line-height:1.7;margin:0">This is an educational estimate, not a loan offer or commitment to lend. Your actual monthly payment depends on your finalized interest rate (subject to lock), mortgage insurance factor (varies by lender, credit score, and program), property tax assessment by your county, your specific homeowners insurance quote, and any HOA dues. Final loan terms are determined at lock and disclosed in your Loan Estimate. To get an accurate quote for your situation, contact me directly. NEO Home Loans powered by Better Mortgage Corporation. Equal Housing Opportunity. Branch NMLS #2733710 · 222 Pacific Coast Hwy, 10th Floor, Suite 135, El Segundo, CA 90245.</p>
+</div>
 
 
-
-<!-- DEBT STRATEGY CALCULATOR -->
-<section class="debt-section" id="debt-strategy">
-  <div class="debt-inner">
-    <div class="debt-header">
-      <span class="eyebrow" style="color:var(--blue);display:inline-block;margin-bottom:14px">Strategy Most Lenders Skip</span>
-      <h2 style="font-weight:800;font-size:clamp(1.8rem,3vw,2.4rem);color:var(--navy);letter-spacing:-0.025em;line-height:1.15;margin-bottom:14px">Debt strategy. The household conversation.</h2>
-      <p style="font-weight:200;font-size:1.02rem;color:var(--body);line-height:1.85;max-width:680px;margin:0 auto">Most loan officers ignore your other debt. They focus on the down payment and ignore the credit cards, auto loans, and student loans dragging on your monthly cash flow. The smarter play is often to use part of your equity to wipe out high-rate debt instead of maximizing the down payment. Here is the math.</p>
-    </div>
-
-    <div class="debt-grid">
-      <!-- INPUT PANEL -->
-      <div class="debt-input-panel">
-        <div class="calc-panel-heading">Your debts today</div>
-        <div class="calc-panel-title">List what you owe.</div>
-
-        <ul class="debt-list" id="debtList">
-          <!-- Pre-filled with realistic example debts -->
-          <li class="debt-row" data-debt-id="1">
-            <div class="debt-field debt-field-name">
-              <label class="debt-field-label">Description</label>
-              <input type="text" class="debt-name" value="Credit cards">
-            </div>
-            <div class="debt-field">
-              <label class="debt-field-label">Balance</label>
-              <input type="text" class="debt-balance" inputmode="numeric" value="40,000">
-            </div>
-            <div class="debt-field">
-              <label class="debt-field-label">Rate %</label>
-              <input type="text" class="debt-rate" inputmode="decimal" value="22">
-            </div>
-            <div class="debt-field debt-field-min">
-              <label class="debt-field-label">Min Pay</label>
-              <input type="text" class="debt-min" inputmode="numeric" value="800">
-            </div>
-            <button type="button" class="debt-remove" aria-label="Remove debt">&times;</button>
-          </li>
-
-          <li class="debt-row" data-debt-id="2">
-            <div class="debt-field debt-field-name">
-              <label class="debt-field-label">Description</label>
-              <input type="text" class="debt-name" value="Auto loan">
-            </div>
-            <div class="debt-field">
-              <label class="debt-field-label">Balance</label>
-              <input type="text" class="debt-balance" inputmode="numeric" value="25,000">
-            </div>
-            <div class="debt-field">
-              <label class="debt-field-label">Rate %</label>
-              <input type="text" class="debt-rate" inputmode="decimal" value="7">
-            </div>
-            <div class="debt-field debt-field-min">
-              <label class="debt-field-label">Min Pay</label>
-              <input type="text" class="debt-min" inputmode="numeric" value="525">
-            </div>
-            <button type="button" class="debt-remove" aria-label="Remove debt">&times;</button>
-          </li>
-
-          <li class="debt-row" data-debt-id="3">
-            <div class="debt-field debt-field-name">
-              <label class="debt-field-label">Description</label>
-              <input type="text" class="debt-name" value="Student loan">
-            </div>
-            <div class="debt-field">
-              <label class="debt-field-label">Balance</label>
-              <input type="text" class="debt-balance" inputmode="numeric" value="20,000">
-            </div>
-            <div class="debt-field">
-              <label class="debt-field-label">Rate %</label>
-              <input type="text" class="debt-rate" inputmode="decimal" value="6">
-            </div>
-            <div class="debt-field debt-field-min">
-              <label class="debt-field-label">Min Pay</label>
-              <input type="text" class="debt-min" inputmode="numeric" value="240">
-            </div>
-            <button type="button" class="debt-remove" aria-label="Remove debt">&times;</button>
-          </li>
-        </ul>
-
-        <button type="button" class="debt-add-btn" id="debtAddBtn">
-          <span style="font-size:1.1rem;line-height:1">+</span>
-          <span>Add another debt</span>
-        </button>
-
-        <div class="debt-summary" id="debtSummary">
-          <div class="debt-summary-item">
-            <div class="debt-summary-label">Total Balance</div>
-            <div class="debt-summary-value" id="debtTotalBalance">$0</div>
-          </div>
-          <div class="debt-summary-item">
-            <div class="debt-summary-label">Blended Rate</div>
-            <div class="debt-summary-value debt-summary-blended" id="debtBlendedRate">0.00%</div>
-          </div>
-          <div class="debt-summary-item">
-            <div class="debt-summary-label">Total Monthly</div>
-            <div class="debt-summary-value" id="debtTotalMonthly">$0</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- COMPARISON PANEL -->
-      <div class="debt-comparison">
-        <div style="text-align:center;margin-bottom:18px">
-          <div style="font-size:0.66rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue);margin-bottom:8px">Two paths</div>
-          <h3 style="font-weight:800;font-size:1.3rem;color:var(--navy);letter-spacing:-0.015em;line-height:1.2">Maximize down vs. pay off debt.</h3>
-        </div>
-
-        <!-- Scenario A: Max down, keep debt -->
-        <div class="debt-scenario" id="debtScenarioA">
-          <div class="debt-scenario-label">Scenario A</div>
-          <div class="debt-scenario-title">Maximize down payment, keep household debt.</div>
-          <div class="debt-scenario-rows">
-            <div class="debt-scenario-row">
-              <span class="debt-scenario-row-label">Down payment</span>
-              <span class="debt-scenario-row-value" id="debtAdown">$0</span>
-            </div>
-            <div class="debt-scenario-row">
-              <span class="debt-scenario-row-label">New mortgage payment</span>
-              <span class="debt-scenario-row-value" id="debtAmortgage">$0</span>
-            </div>
-            <div class="debt-scenario-row">
-              <span class="debt-scenario-row-label">Existing debt payments</span>
-              <span class="debt-scenario-row-value" id="debtAdebt">$0</span>
-            </div>
-            <div class="debt-scenario-row total">
-              <span class="debt-scenario-row-label">Total monthly outflow</span>
-              <span class="debt-scenario-row-value" id="debtAtotal">$0</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Scenario B: Lower down, pay off debt -->
-        <div class="debt-scenario recommended" id="debtScenarioB">
-          <div class="debt-scenario-label">Scenario B · Often Smarter</div>
-          <div class="debt-scenario-title">Pay off all debt, lower down payment.</div>
-          <div class="debt-scenario-rows">
-            <div class="debt-scenario-row">
-              <span class="debt-scenario-row-label">Down payment</span>
-              <span class="debt-scenario-row-value" id="debtBdown">$0</span>
-            </div>
-            <div class="debt-scenario-row">
-              <span class="debt-scenario-row-label">New mortgage payment</span>
-              <span class="debt-scenario-row-value" id="debtBmortgage">$0</span>
-            </div>
-            <div class="debt-scenario-row">
-              <span class="debt-scenario-row-label">Existing debt payments</span>
-              <span class="debt-scenario-row-value" id="debtBdebt">$0</span>
-            </div>
-            <div class="debt-scenario-row total">
-              <span class="debt-scenario-row-label">Total monthly outflow</span>
-              <span class="debt-scenario-row-value" id="debtBtotal">$0</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Savings banner -->
-        <div class="debt-savings-banner" id="debtSavingsBanner">
-          <div class="debt-savings-label">Monthly Cash Flow Impact</div>
-          <div class="debt-savings-value" id="debtSavingsValue">$0/mo</div>
-          <div class="debt-savings-direction" id="debtSavingsDirection">Pick a scenario, see the math.</div>
-        </div>
-
-        <div class="debt-context-note">
-          <strong style="color:var(--navy);font-weight:700">Why this works:</strong> Credit cards at 20%+ are wealth destroyers. Auto loans at 7% drain cash flow. By using equity to wipe out high-rate debt, you trade expensive debt for a slightly larger mortgage at a much lower rate. The new mortgage interest is also tax-deductible (consult your CPA) while credit card interest is not. <strong style="color:var(--navy);font-weight:700">When this does not work:</strong> If your low-rate debt (student loans under 4%, 0% promotional CC offers) is already cheaper than mortgage rates. Talk it through with me.
-        </div>
-      </div>
-    </div>
+<!-- A NOTE FROM DARYN (visible on screen) -->
+<section class="daryn-note">
+  <div class="daryn-note-inner">
+    <div class="daryn-note-eyebrow">A Note From Daryn</div>
+    <p><strong>Here is what I want you to know.</strong></p>
+    <p>This number is one version of your future. There are others. The version where you buy this exact home. The version where you wait six months and buy something better. The version where you use equity to wipe out debt first. The version where a 5% down payment with the right strategy beats a 20% down payment by itself. Calculators do not pick between those. Advisors do.</p>
+    <p>You do not have to know what you want before we talk. You just have to want to talk. Fifteen minutes, no commitment, no hard sell.</p>
+    <p><a href="/schedule">darynfillis.com/schedule</a></p>
   </div>
 </section>
-
 
 <!-- DISCLAIMER -->
 <section class="disclaimer-section">
@@ -5126,6 +4393,9 @@ function calculate() {
   // Update jumbo comparison panel (only shown when loan > county limit)
   updateJumboComparison(homePrice, loanAmount, rate, term, categoryInfo);
 
+  // Update cash to close (integrated into results panel)
+  calcCashToClose(homePrice, loanAmount, downPayment, downPct, rate, taxRate, insurancePct);
+
   // Plain-language explanation
   let explanation = '';
   if (currentProgram === 'conventional') {
@@ -5162,483 +4432,14 @@ function calculate() {
 }
 
 // ════════════════════════════════════════════════════════════
-// MOVE-UP METHOD CALCULATOR
-// ════════════════════════════════════════════════════════════
-
-function calcMoveUp() {
-  const currentValue = parseNum(document.getElementById('muCurrentValue').value);
-  const currentBalance = parseNum(document.getElementById('muCurrentBalance').value);
-  const currentRate = parseNum(document.getElementById('muCurrentRate').value);
-  const newPrice = parseNum(document.getElementById('muNewPrice').value);
-  const newRate = parseNum(document.getElementById('muNewRate').value);
-  const rentalIncome = parseNum(document.getElementById('muRentalIncome').value);
-
-  const equity = currentValue - currentBalance;
-  const sellingCosts = currentValue * 0.07; // ~7% (commission + closing costs)
-  const netSaleProceeds = currentValue - currentBalance - sellingCosts;
-
-  // Estimate current monthly payment (P&I only, simplified)
-  // Assume 25 years remaining on average
-  const currentPI = calcMonthlyPI(currentBalance, currentRate, 25);
-
-  // Strategy A: Sell first, buy after (traditional)
-  // 20% down on new home from sale proceeds
-  const downA = newPrice * 0.20;
-  const newLoanA = newPrice - downA;
-  const newPI_A = calcMonthlyPI(newLoanA, newRate, 30);
-  // Net cost = new PI (no carrying costs for old home)
-  const monthlyA = newPI_A;
-
-  // Strategy B: HELOC on current home for down payment, then sell
-  // Use HELOC rate (typically ~1.5-2.5% over prime; assume 8.5% for now)
-  const helocRate = 8.5;
-  const helocAmount = newPrice * 0.20; // Use HELOC for 20% down
-  const helocPayment = (helocAmount * helocRate / 100) / 12; // Interest-only HELOC payment
-  const newLoanB = newPrice - helocAmount;
-  const newPI_B = calcMonthlyPI(newLoanB, newRate, 30);
-  // During transition: paying current PI + HELOC interest + new PI
-  const monthlyB_transition = currentPI + helocPayment + newPI_B;
-
-  // Strategy C: Bridge loan for down payment
-  // Bridge typically 8-12%; assume 9.5%
-  const bridgeRate = 9.5;
-  const bridgeAmount = newPrice * 0.20;
-  const bridgePayment = (bridgeAmount * bridgeRate / 100) / 12;
-  const newLoanC = newPrice - bridgeAmount;
-  const newPI_C = calcMonthlyPI(newLoanC, newRate, 30);
-  const monthlyC_transition = currentPI + bridgePayment + newPI_C;
-
-  // Strategy D: Cross-collateralization (one loan, both homes)
-  // Effectively reduces down payment needed; equity in old home counts
-  // Simplified: assume 10% effective down on new home using old home's equity
-  const downD = newPrice * 0.10;
-  const newLoanD = newPrice - downD;
-  const newPI_D = calcMonthlyPI(newLoanD, newRate, 30);
-  // Carrying both: current PI + new PI
-  const monthlyD = currentPI + newPI_D;
-
-  // Strategy E: Keep current as rental, qualify with rental income
-  // Use 75% of rental income as offset against current mortgage
-  const rentalOffset = rentalIncome * 0.75;
-  // Effective monthly cost = new PI + (current PI - rental offset, if positive)
-  const currentNetCost = Math.max(0, currentPI - rentalOffset);
-  const newLoanE = newPrice - (newPrice * 0.20); // 20% down
-  const newPI_E = calcMonthlyPI(newLoanE, newRate, 30);
-  const monthlyE = newPI_E + currentNetCost;
-
-  // Determine recommended strategy (lowest monthly + highest equity preserved)
-  const strategies = [
-    {
-      key: 'sell-first',
-      title: 'Sell first, buy after',
-      label: 'Traditional path',
-      monthly: monthlyA,
-      detail: `Sell current home, take ${fmt(netSaleProceeds)} in proceeds, put 20% down on new home. Requires temporary housing or contingent offer.`
-    },
-    {
-      key: 'heloc',
-      title: 'HELOC on current home',
-      label: 'Strategy 1, HELOC',
-      monthly: monthlyB_transition,
-      detail: `Open ${fmt(helocAmount)} HELOC at ~${helocRate}%, use for new home down payment, sell current home after closing. HELOC paid off with sale proceeds. Transition period: 3-6 months.`
-    },
-    {
-      key: 'bridge',
-      title: 'Bridge loan',
-      label: 'Strategy 2, Bridge',
-      monthly: monthlyC_transition,
-      detail: `Take ${fmt(bridgeAmount)} bridge loan at ~${bridgeRate}%, fund new purchase, sell current home, pay off bridge. Cleaner than HELOC for tight timing.`
-    },
-    {
-      key: 'cross',
-      title: 'Cross-collateralization',
-      label: 'Strategy 3, Cross-collat',
-      monthly: monthlyD,
-      detail: `Single mortgage uses both homes as collateral. Lower down payment (10%), keep both homes. Sell current home anytime; loan adjusts.`
-    },
-    {
-      key: 'rental',
-      title: 'Keep as rental',
-      label: 'Strategy 4, Rental',
-      monthly: monthlyE,
-      detail: `Rent your current home for ~${fmt(rentalIncome)}/mo. Lender uses ${fmt(rentalOffset)}/mo for qualifying. Net carrying cost: ${fmt(currentNetCost)}/mo. Long-term wealth strategy.`
-    }
-  ];
-
-  // Find the strategy with lowest monthly during transition
-  let recommended = strategies[0];
-  let lowestMonthly = strategies[0].monthly;
-  strategies.forEach(s => {
-    if (s.key !== 'sell-first' && s.monthly < lowestMonthly) {
-      lowestMonthly = s.monthly;
-      recommended = s;
-    }
-  });
-
-  // Render
-  const container = document.getElementById('moveupResults');
-  container.innerHTML = strategies.map(s => {
-    const isRecommended = s.key === recommended.key && s.key !== 'sell-first';
-    return `
-      <div class="moveup-card${isRecommended ? ' recommended' : ''}">
-        <div class="moveup-card-label">${s.label}${isRecommended ? ' · Recommended' : ''}</div>
-        <div class="moveup-card-title">${s.title}</div>
-        <div class="moveup-card-amount">${fmt(s.monthly)}</div>
-        <div class="moveup-card-amount-label">monthly during transition</div>
-        <div class="moveup-card-detail">${s.detail}</div>
-      </div>
-    `;
-  }).join('');
-}
-
-// ════════════════════════════════════════════════════════════
 // EVENT WIRING
 // ════════════════════════════════════════════════════════════
 
 
 
 // ════════════════════════════════════════════════════════════
-// CASH TO CLOSE CALCULATOR
-// Comprehensive breakdown of money needed at closing:
-// - Down payment
-// - Closing costs (% of loan)
-// - Prepaid interest (days from closing to month-end × daily interest)
-// - Tax escrow setup (months × monthly tax)
-// - Insurance escrow (12 months prepaid + N months reserve)
-// - Lender + seller credits (subtractions)
-// - First mortgage payment date
 // ════════════════════════════════════════════════════════════
 
-function calcCashToClose() {
-  // Pull values from main calculator
-  const homePrice = parseNum(document.getElementById('homePrice').value);
-  const dpDollars = parseNum(document.getElementById('downPaymentDollars').value);
-  const dpPct     = parseNum(document.getElementById('downPaymentPct').value);
-  const rate      = parseNum(document.getElementById('interestRate').value);
-  const taxPct    = parseNum(document.getElementById('propertyTax').value);
-  const insPct    = parseNum(document.getElementById('insurance').value);
-  const loanAmount = homePrice - dpDollars;
-
-  // Pull cash-to-close inputs
-  const closingDateInput = document.getElementById('closingDate');
-  const closingDateStr = closingDateInput ? closingDateInput.value : '';
-  const closingCostsPct = parseNum(document.getElementById('closingCostsPct').value) || 2.5;
-  const taxEscrowMonths = parseInt(document.getElementById('taxEscrowMonths').value) || 3;
-  const insEscrowMonths = parseInt(document.getElementById('insuranceEscrowMonths').value) || 2;
-  const lenderCredits = parseNum(document.getElementById('lenderCredits').value);
-  const sellerCredits = parseNum(document.getElementById('sellerCredits').value);
-
-  // Calculate components
-  const closingCosts = loanAmount * (closingCostsPct / 100);
-
-  // Prepaid interest: days from closing to month-end × daily interest rate × loan amount
-  let prepaidInterest = 0;
-  let firstPaymentDate = '—';
-  let daysOfInterest = 15; // default if no closing date
-
-  if (closingDateStr) {
-    const closing = new Date(closingDateStr + 'T00:00:00');
-    const closingDay = closing.getDate();
-    const closingMonth = closing.getMonth();
-    const closingYear = closing.getFullYear();
-
-    // Days remaining in closing month (including closing day)
-    const daysInMonth = new Date(closingYear, closingMonth + 1, 0).getDate();
-    daysOfInterest = (daysInMonth - closingDay) + 1;
-
-    // Daily interest = annual rate / 360 (industry standard) × loan amount
-    const dailyInterest = (loanAmount * (rate / 100)) / 360;
-    prepaidInterest = dailyInterest * daysOfInterest;
-
-    // First payment due: 1st of the second month after closing
-    const firstPayMonth = (closingMonth + 2) % 12;
-    const firstPayYear = closingYear + Math.floor((closingMonth + 2) / 12);
-    const firstPay = new Date(firstPayYear, firstPayMonth, 1);
-    const opts = { year: 'numeric', month: 'long', day: 'numeric' };
-    firstPaymentDate = firstPay.toLocaleDateString('en-US', opts);
-  } else {
-    // Without a closing date, estimate ~15 days of prepaid interest
-    const dailyInterest = (loanAmount * (rate / 100)) / 360;
-    prepaidInterest = dailyInterest * daysOfInterest;
-  }
-
-  // Tax escrow: months × (annual tax / 12)
-  const annualTax = homePrice * (taxPct / 100);
-  const monthlyTax = annualTax / 12;
-  const taxEscrowSetup = monthlyTax * taxEscrowMonths;
-
-  // Insurance: 12 months prepaid (first year) + N months reserve
-  const annualInsurance = homePrice * (insPct / 100);
-  const monthlyInsurance = annualInsurance / 12;
-  const insSetup = annualInsurance + (monthlyInsurance * insEscrowMonths);
-
-  // Total credits
-  const totalCredits = lenderCredits + sellerCredits;
-
-  // Total cash to close
-  const total = dpDollars + closingCosts + prepaidInterest + taxEscrowSetup + insSetup - totalCredits;
-
-  // ── Render ──
-  document.getElementById('cashToCloseTotal').textContent = fmt(total);
-  document.getElementById('cashToCloseDate').textContent = 'First payment due: ' + firstPaymentDate;
-
-  document.getElementById('ctcDownValue').textContent = fmt(dpDollars);
-  document.getElementById('ctcDownDetail').textContent = dpPct + '% of purchase price';
-
-  document.getElementById('ctcClosingValue').textContent = fmt(closingCosts);
-  document.getElementById('ctcClosingDetail').textContent = closingCostsPct + '% of loan amount';
-
-  document.getElementById('ctcPrepaidValue').textContent = fmt(prepaidInterest);
-  document.getElementById('ctcPrepaidDetail').textContent = daysOfInterest + ' days of interest at ' + rate + '%';
-
-  document.getElementById('ctcTaxValue').textContent = fmt(taxEscrowSetup);
-  document.getElementById('ctcTaxDetail').textContent = taxEscrowMonths + ' months × ' + fmt(monthlyTax) + '/mo';
-
-  document.getElementById('ctcInsValue').textContent = fmt(insSetup);
-  document.getElementById('ctcInsDetail').textContent = '12 months prepaid (' + fmt(annualInsurance) + ') + ' + insEscrowMonths + ' months reserve';
-
-  // Credits (only show row if there are credits)
-  const creditsRow = document.getElementById('ctcCreditsRow');
-  if (totalCredits > 0) {
-    creditsRow.style.display = 'flex';
-    document.getElementById('ctcCreditsValue').textContent = '-' + fmt(totalCredits);
-  } else {
-    creditsRow.style.display = 'none';
-  }
-
-  document.getElementById('ctcTotalValue').textContent = fmt(total);
-}
-
-function initCashToCloseCalculator() {
-  // Set default closing date to ~30 days from today
-  const dateInput = document.getElementById('closingDate');
-  if (dateInput) {
-    const future = new Date();
-    future.setDate(future.getDate() + 30);
-    dateInput.value = future.toISOString().split('T')[0];
-  }
-
-  // Wire up listeners on the cash-to-close fields
-  ['closingDate', 'closingCostsPct', 'taxEscrowMonths', 'insuranceEscrowMonths', 'lenderCredits', 'sellerCredits'].forEach(function(id) {
-    const el = document.getElementById(id);
-    if (el) {
-      el.addEventListener('input', calcCashToClose);
-      el.addEventListener('change', calcCashToClose);
-    }
-  });
-
-  // Format dollar inputs on blur
-  ['lenderCredits', 'sellerCredits'].forEach(function(id) {
-    const el = document.getElementById(id);
-    if (el) {
-      el.addEventListener('blur', function() { formatCurrencyInput(this); });
-    }
-  });
-
-  // When main calc inputs change, also recalculate cash-to-close
-  ['homePrice', 'downPaymentPct', 'downPaymentDollars', 'interestRate', 'propertyTax', 'insurance'].forEach(function(id) {
-    const el = document.getElementById(id);
-    if (el) {
-      el.addEventListener('input', calcCashToClose);
-      el.addEventListener('change', calcCashToClose);
-    }
-  });
-
-  // Initial calculation
-  calcCashToClose();
-}
-
-// ════════════════════════════════════════════════════════════
-// DEBT STRATEGY CALCULATOR
-// Lets users enter household debts and see two scenarios:
-// A: Max down payment, keep all debt
-// B: Use equity to pay off debt, smaller down payment
-// ════════════════════════════════════════════════════════════
-
-let nextDebtId = 4; // pre-filled with IDs 1-3
-
-function getDebts() {
-  const rows = document.querySelectorAll('.debt-row');
-  const debts = [];
-  rows.forEach(row => {
-    const balance = parseNum(row.querySelector('.debt-balance').value);
-    const rate = parseNum(row.querySelector('.debt-rate').value);
-    const min = parseNum(row.querySelector('.debt-min').value);
-    if (balance > 0) {
-      debts.push({ balance, rate, min });
-    }
-  });
-  return debts;
-}
-
-function calcDebtSummary() {
-  const debts = getDebts();
-  const totalBalance = debts.reduce((s, d) => s + d.balance, 0);
-  const totalMonthly = debts.reduce((s, d) => s + d.min, 0);
-
-  // Blended rate = sum of (balance * rate) / total balance
-  let blendedRate = 0;
-  if (totalBalance > 0) {
-    const weightedSum = debts.reduce((s, d) => s + (d.balance * d.rate), 0);
-    blendedRate = weightedSum / totalBalance;
-  }
-
-  return { totalBalance, totalMonthly, blendedRate, debts };
-}
-
-function calcDebtScenarios() {
-  const debt = calcDebtSummary();
-
-  // Update summary display
-  document.getElementById('debtTotalBalance').textContent = fmt(debt.totalBalance);
-  document.getElementById('debtBlendedRate').textContent = debt.blendedRate.toFixed(2) + '%';
-  document.getElementById('debtTotalMonthly').textContent = fmt(debt.totalMonthly) + '/mo';
-
-  // Pull from the main calculator: home price, current rate, term
-  const homePrice = parseNum(document.getElementById('homePrice').value);
-  const rate = parseNum(document.getElementById('interestRate').value);
-  const term = parseInt(document.getElementById('loanTerm').value);
-  const userDownPct = parseNum(document.getElementById('downPaymentPct').value);
-
-  if (homePrice <= 0 || rate <= 0) {
-    return;
-  }
-
-  // ────────────────────────────────────────────────────────────
-  // SCENARIO A: User puts down their selected % (or 20% if higher)
-  // and keeps all debt
-  // ────────────────────────────────────────────────────────────
-  // Use the user's chosen down payment %, or floor at 20% for fair comparison
-  const aDownPct = Math.max(userDownPct, 20);
-  const aDownAmount = homePrice * (aDownPct / 100);
-  const aLoanAmount = homePrice - aDownAmount;
-  const aMortgagePI = calcMonthlyPI(aLoanAmount, rate, term);
-  const aDebtMonthly = debt.totalMonthly;
-  const aTotal = aMortgagePI + aDebtMonthly;
-
-  // ────────────────────────────────────────────────────────────
-  // SCENARIO B: Use what would have been the extra down payment
-  // to pay off debt instead. Down payment goes down by debt.totalBalance
-  // (but never below a reasonable minimum like 10%)
-  // ────────────────────────────────────────────────────────────
-  const bDownAmount = Math.max(aDownAmount - debt.totalBalance, homePrice * 0.10);
-  const bDownPct = (bDownAmount / homePrice) * 100;
-  const bLoanAmount = homePrice - bDownAmount;
-  const bMortgagePI = calcMonthlyPI(bLoanAmount, rate, term);
-  const bDebtMonthly = 0; // all debt paid off
-  const bTotal = bMortgagePI + bDebtMonthly;
-
-  // Render Scenario A
-  document.getElementById('debtAdown').textContent = fmt(aDownAmount) + ' (' + aDownPct.toFixed(1) + '%)';
-  document.getElementById('debtAmortgage').textContent = fmt(aMortgagePI) + '/mo';
-  document.getElementById('debtAdebt').textContent = fmt(aDebtMonthly) + '/mo';
-  document.getElementById('debtAtotal').textContent = fmt(aTotal) + '/mo';
-
-  // Render Scenario B
-  document.getElementById('debtBdown').textContent = fmt(bDownAmount) + ' (' + bDownPct.toFixed(1) + '%)';
-  document.getElementById('debtBmortgage').textContent = fmt(bMortgagePI) + '/mo';
-  document.getElementById('debtBdebt').textContent = '$0/mo';
-  document.getElementById('debtBtotal').textContent = fmt(bTotal) + '/mo';
-
-  // Calculate the savings
-  const monthlyDiff = aTotal - bTotal;
-  const banner = document.getElementById('debtSavingsBanner');
-  const valueEl = document.getElementById('debtSavingsValue');
-  const directionEl = document.getElementById('debtSavingsDirection');
-
-  if (debt.totalBalance === 0) {
-    valueEl.textContent = 'No debt to compare';
-    directionEl.textContent = 'Add household debt above to see the comparison.';
-    banner.style.background = 'var(--bg)';
-    valueEl.style.color = 'var(--muted)';
-    directionEl.style.color = 'var(--muted)';
-  } else if (monthlyDiff > 0) {
-    valueEl.textContent = '+' + fmt(monthlyDiff) + '/mo';
-    directionEl.textContent = 'Scenario B saves you ' + fmt(monthlyDiff) + ' per month by paying off debt with equity. Over 12 months that is ' + fmt(monthlyDiff * 12) + '. Plus your DTI improves dramatically, which often means better rates and easier qualifying.';
-    banner.style.background = 'var(--navy)';
-    valueEl.style.color = 'var(--white)';
-    directionEl.style.color = 'rgba(255,255,255,0.7)';
-  } else if (monthlyDiff < 0) {
-    valueEl.textContent = fmt(Math.abs(monthlyDiff)) + '/mo more';
-    directionEl.textContent = 'Scenario A saves you ' + fmt(Math.abs(monthlyDiff)) + ' per month in this case. This usually means your debt is at low rates that beat the mortgage rate. Talk to me about whether the qualifying advantage of paying off debt still makes Scenario B worth it.';
-    banner.style.background = 'var(--bg)';
-    valueEl.style.color = 'var(--navy)';
-    directionEl.style.color = 'var(--body)';
-  } else {
-    valueEl.textContent = 'Roughly equal';
-    directionEl.textContent = 'Both scenarios produce similar monthly cash flow. Scenario B still has the qualifying advantage (lower DTI) and simplifies your finances.';
-    banner.style.background = 'var(--bg)';
-    valueEl.style.color = 'var(--navy)';
-    directionEl.style.color = 'var(--body)';
-  }
-}
-
-function addDebtRow() {
-  const list = document.getElementById('debtList');
-  const id = nextDebtId++;
-  const row = document.createElement('li');
-  row.className = 'debt-row';
-  row.dataset.debtId = id;
-  row.innerHTML = '' +
-    '<div class="debt-field debt-field-name">' +
-      '<label class="debt-field-label">Description</label>' +
-      '<input type="text" class="debt-name" value="">' +
-    '</div>' +
-    '<div class="debt-field">' +
-      '<label class="debt-field-label">Balance</label>' +
-      '<input type="text" class="debt-balance" inputmode="numeric" value="0">' +
-    '</div>' +
-    '<div class="debt-field">' +
-      '<label class="debt-field-label">Rate %</label>' +
-      '<input type="text" class="debt-rate" inputmode="decimal" value="0">' +
-    '</div>' +
-    '<div class="debt-field debt-field-min">' +
-      '<label class="debt-field-label">Min Pay</label>' +
-      '<input type="text" class="debt-min" inputmode="numeric" value="0">' +
-    '</div>' +
-    '<button type="button" class="debt-remove" aria-label="Remove debt">&times;</button>';
-  list.appendChild(row);
-  wireDebtRow(row);
-}
-
-function wireDebtRow(row) {
-  row.querySelectorAll('input').forEach(input => {
-    input.addEventListener('input', calcDebtScenarios);
-    if (input.classList.contains('debt-balance') || input.classList.contains('debt-min')) {
-      input.addEventListener('blur', function() { formatCurrencyInput(this); });
-    }
-  });
-  const removeBtn = row.querySelector('.debt-remove');
-  if (removeBtn) {
-    removeBtn.addEventListener('click', () => {
-      row.remove();
-      calcDebtScenarios();
-    });
-  }
-}
-
-function initDebtCalculator() {
-  // Wire up existing pre-filled rows
-  document.querySelectorAll('.debt-row').forEach(wireDebtRow);
-
-  // Add button
-  const addBtn = document.getElementById('debtAddBtn');
-  if (addBtn) {
-    addBtn.addEventListener('click', addDebtRow);
-  }
-
-  // When the main calculator's home price or rate changes, debt scenarios should recalculate too
-  ['homePrice', 'interestRate', 'loanTerm', 'downPaymentPct'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.addEventListener('input', calcDebtScenarios);
-      el.addEventListener('change', calcDebtScenarios);
-    }
-  });
-
-  // Initial calculation
-  calcDebtScenarios();
-}
 
 // ════════════════════════════════════════════════════════════
 // RATE ADJUSTMENT ALERTS
@@ -5773,7 +4574,135 @@ function updateJumboComparison(homePrice, loanAmount, rate, term, categoryInfo) 
 }
 
 
+// ════════════════════════════════════════════════════════════
+// CASH TO CLOSE CALCULATOR (integrated into main calculator)
+// Calculates total cash needed at closing including:
+// - Down payment
+// - Closing costs (% of loan amount)
+// - Prepaid interest (days from closing date to month-end)
+// - Tax escrow setup (months × monthly tax)
+// - Insurance escrow (12 months prepaid + N months reserve)
+// - Lender + seller credits (subtractions)
+// Also calculates first mortgage payment date.
+// ════════════════════════════════════════════════════════════
+
+function calcCashToClose(homePrice, loanAmount, dpDollars, dpPct, rate, taxPct, insurancePct) {
+  // Pull cash-to-close inputs
+  const closingDateInput = document.getElementById('closingDate');
+  const closingDateStr = closingDateInput ? closingDateInput.value : '';
+  const closingCostsPct = parseNum(document.getElementById('closingCostsPct').value) || 2.5;
+  const taxEscrowMonths = parseInt(document.getElementById('taxEscrowMonths').value) || 3;
+  const insEscrowMonths = parseInt(document.getElementById('insuranceEscrowMonths').value) || 2;
+  const lenderCredits = parseNum(document.getElementById('lenderCredits').value);
+  const sellerCredits = parseNum(document.getElementById('sellerCredits').value);
+
+  // Closing costs
+  const closingCosts = loanAmount * (closingCostsPct / 100);
+
+  // Prepaid interest + first payment date
+  let prepaidInterest = 0;
+  let firstPaymentDate = '—';
+  let daysOfInterest = 15;
+
+  if (closingDateStr) {
+    const closing = new Date(closingDateStr + 'T00:00:00');
+    const closingDay = closing.getDate();
+    const closingMonth = closing.getMonth();
+    const closingYear = closing.getFullYear();
+
+    const daysInMonth = new Date(closingYear, closingMonth + 1, 0).getDate();
+    daysOfInterest = (daysInMonth - closingDay) + 1;
+
+    // Daily interest = annual rate / 360 (industry standard) × loan amount
+    const dailyInterest = (loanAmount * (rate / 100)) / 360;
+    prepaidInterest = dailyInterest * daysOfInterest;
+
+    // First payment due: 1st of the second month after closing
+    const firstPayMonth = (closingMonth + 2) % 12;
+    const firstPayYear = closingYear + Math.floor((closingMonth + 2) / 12);
+    const firstPay = new Date(firstPayYear, firstPayMonth, 1);
+    const opts = { year: 'numeric', month: 'long', day: 'numeric' };
+    firstPaymentDate = firstPay.toLocaleDateString('en-US', opts);
+  } else {
+    const dailyInterest = (loanAmount * (rate / 100)) / 360;
+    prepaidInterest = dailyInterest * daysOfInterest;
+  }
+
+  // Tax escrow
+  const annualTax = homePrice * (taxPct / 100);
+  const monthlyTax = annualTax / 12;
+  const taxEscrowSetup = monthlyTax * taxEscrowMonths;
+
+  // Insurance escrow
+  const annualInsurance = homePrice * (insurancePct / 100);
+  const monthlyInsurance = annualInsurance / 12;
+  const insSetup = annualInsurance + (monthlyInsurance * insEscrowMonths);
+
+  // Total credits
+  const totalCredits = lenderCredits + sellerCredits;
+
+  // Total cash to close
+  const total = dpDollars + closingCosts + prepaidInterest + taxEscrowSetup + insSetup - totalCredits;
+
+  // Render
+  const setText = function(id, val) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  };
+
+  setText('ctcTotal', fmt(total));
+  setText('ctcFirstPay', 'First payment due: ' + firstPaymentDate);
+  setText('ctcDown', fmt(dpDollars));
+  setText('ctcClosing', fmt(closingCosts));
+  setText('ctcClosingDetail', closingCostsPct + '%');
+  setText('ctcPrepaid', fmt(prepaidInterest));
+  setText('ctcPrepaidDetail', daysOfInterest + ' days');
+  setText('ctcTax', fmt(taxEscrowSetup));
+  setText('ctcTaxDetail', taxEscrowMonths + ' mo');
+  setText('ctcIns', fmt(insSetup));
+  setText('ctcInsDetail', '12 mo prepaid + ' + insEscrowMonths + ' mo');
+
+  // Credits (only show row if there are credits)
+  const creditsRow = document.getElementById('ctcCreditsRow');
+  if (creditsRow) {
+    if (totalCredits > 0) {
+      creditsRow.style.display = 'flex';
+      setText('ctcCredits', '-' + fmt(totalCredits));
+    } else {
+      creditsRow.style.display = 'none';
+    }
+  }
+
+  return { total: total, firstPaymentDate: firstPaymentDate };
+}
+
+
 function init() {
+  // Set default closing date (~30 days from today)
+  const dateInput = document.getElementById('closingDate');
+  if (dateInput) {
+    const future = new Date();
+    future.setDate(future.getDate() + 30);
+    dateInput.value = future.toISOString().split('T')[0];
+  }
+
+  // Wire up cash-to-close inputs to trigger recalculation
+  ['closingDate', 'closingCostsPct', 'taxEscrowMonths', 'insuranceEscrowMonths', 'lenderCredits', 'sellerCredits'].forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', function() { userInteracted = true; calculate(); });
+      el.addEventListener('change', function() { userInteracted = true; calculate(); });
+    }
+  });
+
+  // Format dollar inputs on blur
+  ['lenderCredits', 'sellerCredits'].forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('blur', function() { formatCurrencyInput(this); calculate(); });
+    }
+  });
+
   // Program selector
   document.querySelectorAll('.program-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -5901,19 +4830,10 @@ function init() {
   });
 
   // Move-Up Method calculator
-  ['muCurrentValue', 'muCurrentBalance', 'muCurrentRate', 'muNewPrice', 'muNewRate', 'muRentalIncome'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('input', calcMoveUp);
-    if (el && (id === 'muCurrentValue' || id === 'muCurrentBalance' || id === 'muNewPrice' || id === 'muRentalIncome')) {
-      el.addEventListener('blur', function() { formatCurrencyInput(this); calcMoveUp(); });
-    }
-  });
+  
 
   // Initial calculation
   calculate();
-  calcMoveUp();
-  initCashToCloseCalculator();
-  initDebtCalculator();
 }
 
 if (document.readyState === 'loading') {
@@ -5987,6 +4907,16 @@ window.preparePrint = function() {
   // HOA
   const hoaVal = parseNum(document.getElementById('hoa').value);
   setText('printHOA', hoaVal > 0 ? '$' + hoaVal.toLocaleString('en-US') + '/mo' : 'None');
+
+  // Closing details
+  const closingDate = document.getElementById('closingDate').value;
+  if (closingDate) {
+    const d = new Date(closingDate + 'T00:00:00');
+    setText('printClosingDate', d.toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }));
+  } else {
+    setText('printClosingDate', '—');
+  }
+  setText('printClosingCosts', parseNum(document.getElementById('closingCostsPct').value) + '% of loan');
 
   // Trigger print
   window.print();
