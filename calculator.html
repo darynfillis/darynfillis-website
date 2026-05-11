@@ -2701,6 +2701,226 @@ html{-webkit-text-size-adjust:100%;}
 }
 .ctc-block-credit { color: #5bcbf5; }
 
+/* Cash to Close top-level summary (high-level rows above the LE detail) */
+.ctc-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-top: 4px;
+}
+.ctc-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  font-size: 0.9rem;
+}
+.ctc-summary-row:last-child { border-bottom: none; }
+.ctc-summary-row-name {
+  color: rgba(255,255,255,0.85);
+  font-weight: 400;
+}
+.ctc-summary-row-value {
+  color: var(--white);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Loan Estimate style expandable detail */
+.ctc-le-detail {
+  margin-top: 14px;
+  border-top: 1px solid rgba(91,203,245,0.2);
+  padding-top: 14px;
+}
+.ctc-le-summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 0.82rem;
+  color: rgba(91,203,245,0.9);
+  font-weight: 700;
+  letter-spacing: -0.005em;
+}
+.ctc-le-summary::-webkit-details-marker { display: none; }
+.ctc-le-summary::marker { display: none; }
+.ctc-le-arrow {
+  font-size: 1.1rem;
+  color: var(--blue);
+  font-weight: 400;
+  width: 16px;
+  text-align: center;
+  transition: transform 0.15s;
+}
+.ctc-le-detail[open] .ctc-le-arrow {
+  transform: rotate(45deg);
+}
+.ctc-le-body {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(91,203,245,0.15);
+}
+
+.ctc-le-section {
+  margin-bottom: 12px;
+}
+.ctc-le-section-header {
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
+  gap: 8px;
+  align-items: baseline;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 4px;
+}
+.ctc-le-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: rgba(91,203,245,0.18);
+  color: var(--blue);
+  border-radius: 3px;
+  font-size: 0.66rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.ctc-le-section-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.ctc-le-section-total {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+}
+.ctc-le-section-items {
+  padding-left: 30px;
+}
+.ctc-le-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 3px 0;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.65);
+  font-weight: 200;
+}
+.ctc-le-item span:last-child {
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.ctc-le-item-detail {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.4);
+  margin-left: 4px;
+}
+
+.ctc-le-subtotal {
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 0;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  border-top: 1px solid rgba(91,203,245,0.2);
+  border-bottom: 1px solid rgba(91,203,245,0.2);
+}
+.ctc-le-subtotal-name {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--blue);
+  letter-spacing: 0.06em;
+}
+.ctc-le-subtotal-value {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+}
+
+.ctc-le-grandtotal {
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
+  gap: 8px;
+  align-items: center;
+  padding: 12px 0 4px 0;
+  margin-top: 6px;
+  border-top: 2px solid var(--blue);
+}
+.ctc-le-grandtotal-name {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: 0.06em;
+}
+.ctc-le-grandtotal-value {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--blue);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Credits offset (inside LE detail) */
+.ctc-le-credits {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(91,203,245,0.2);
+}
+.ctc-le-credits-row {
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
+  gap: 8px;
+  align-items: baseline;
+  padding: 3px 0;
+}
+.ctc-le-credits-row .ctc-le-credits-name {
+  grid-column: 2;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.65);
+  font-weight: 400;
+}
+.ctc-le-credits-value {
+  font-size: 0.86rem;
+  color: #5bcbf5;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.ctc-le-credits-total {
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 0 4px 0;
+  margin-top: 6px;
+  border-top: 1.5px solid rgba(91,203,245,0.3);
+}
+.ctc-le-credits-total-name {
+  grid-column: 2;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--blue);
+  letter-spacing: 0.06em;
+}
+.ctc-le-credits-total-value {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+}
+
+
+
 /* Five Laws note — visible on screen */
 .daryn-note {
   background: var(--white);
@@ -3021,7 +3241,7 @@ html{-webkit-text-size-adjust:100%;}
             <span class="help-icon" tabindex="0" data-tooltip="The cash you put toward the purchase. Conventional minimum is 3%, FHA is 3.5%, VA can be 0% with eligibility, jumbo typically 10-20%.">?</span>
           </label>
           <div class="input-with-suffix">
-            <input type="text" id="downPaymentPct" inputmode="decimal" value="20">
+            <input type="text" id="downPaymentPct" inputmode="decimal" value="10">
             <span class="input-suffix">%</span>
           </div>
         </div>
@@ -3029,7 +3249,7 @@ html{-webkit-text-size-adjust:100%;}
           <label class="input-label" for="downPaymentDollars" style="visibility:hidden">$</label>
           <div class="input-with-prefix">
             <span class="input-prefix">$</span>
-            <input type="text" id="downPaymentDollars" inputmode="numeric" value="189,800">
+            <input type="text" id="downPaymentDollars" inputmode="numeric" value="94,900">
           </div>
         </div>
       </div>
@@ -3379,7 +3599,7 @@ html{-webkit-text-size-adjust:100%;}
         </div>
       </div>
 
-      <!-- Cash to Close section in results panel -->
+      <!-- Cash to Close section (Loan Estimate style) in results panel -->
       <div class="ctc-block">
         <div class="ctc-block-header">
           <div class="ctc-block-eyebrow">Cash to Close</div>
@@ -3389,32 +3609,169 @@ html{-webkit-text-size-adjust:100%;}
           </div>
           <div class="ctc-block-firstpay" id="ctcFirstPay">First payment due: —</div>
         </div>
-        <div class="ctc-block-rows">
-          <div class="ctc-block-row">
-            <span class="ctc-block-row-name">Down payment</span>
-            <span class="ctc-block-row-value" id="ctcDown">$0</span>
+
+        <!-- Top-level summary -->
+        <div class="ctc-summary">
+          <div class="ctc-summary-row">
+            <span class="ctc-summary-row-name">Down payment</span>
+            <span class="ctc-summary-row-value" id="ctcDown">$0</span>
           </div>
-          <div class="ctc-block-row">
-            <span class="ctc-block-row-name">Closing costs <span class="ctc-block-row-detail" id="ctcClosingDetail">2.5%</span></span>
-            <span class="ctc-block-row-value" id="ctcClosing">$0</span>
+          <div class="ctc-summary-row">
+            <span class="ctc-summary-row-name">Total closing costs</span>
+            <span class="ctc-summary-row-value" id="ctcClosingTotal">$0</span>
           </div>
-          <div class="ctc-block-row">
-            <span class="ctc-block-row-name">Prepaid interest <span class="ctc-block-row-detail" id="ctcPrepaidDetail">0 days</span></span>
-            <span class="ctc-block-row-value" id="ctcPrepaid">$0</span>
+          <div class="ctc-summary-row" id="ctcCreditsRow" style="display:none">
+            <span class="ctc-summary-row-name">Less: lender + seller credits</span>
+            <span class="ctc-summary-row-value ctc-block-credit" id="ctcCredits">$0</span>
           </div>
-          <div class="ctc-block-row">
-            <span class="ctc-block-row-name">Tax escrow <span class="ctc-block-row-detail" id="ctcTaxDetail">3 mo</span></span>
-            <span class="ctc-block-row-value" id="ctcTax">$0</span>
-          </div>
-          <div class="ctc-block-row">
-            <span class="ctc-block-row-name">Insurance escrow <span class="ctc-block-row-detail" id="ctcInsDetail">12 mo prepaid + 2 mo</span></span>
-            <span class="ctc-block-row-value" id="ctcIns">$0</span>
-          </div>
-          <div class="ctc-block-row" id="ctcCreditsRow" style="display:none">
-            <span class="ctc-block-row-name">Less credits</span>
-            <span class="ctc-block-row-value ctc-block-credit" id="ctcCredits">$0</span>
+          <div class="ctc-summary-row" id="ctcNetClosingRow" style="display:none">
+            <span class="ctc-summary-row-name">Net closing costs</span>
+            <span class="ctc-summary-row-value" id="ctcNetClosing">$0</span>
           </div>
         </div>
+
+        <!-- Loan Estimate style detail (Sections A-J) -->
+        <details class="ctc-le-detail" id="ctcLEDetail">
+          <summary class="ctc-le-summary">
+            <span>See closing costs breakdown (Loan Estimate style)</span>
+            <span class="ctc-le-arrow">+</span>
+          </summary>
+          <div class="ctc-le-body">
+
+            <!-- Section A: Origination Charges -->
+            <div class="ctc-le-section">
+              <div class="ctc-le-section-header">
+                <span class="ctc-le-letter">A</span>
+                <span class="ctc-le-section-name">Origination Charges</span>
+                <span class="ctc-le-section-total" id="ctcSectionA">$0</span>
+              </div>
+              <div class="ctc-le-section-items">
+                <div class="ctc-le-item"><span>Origination fee</span><span id="ctcA1">$0</span></div>
+                <div class="ctc-le-item"><span>Underwriting fee</span><span id="ctcA2">$0</span></div>
+                <div class="ctc-le-item"><span>Processing fee</span><span id="ctcA3">$0</span></div>
+                <div class="ctc-le-item ctc-le-item-conditional" id="ctcA4Row" style="display:none"><span>Other lender fees</span><span id="ctcA4">$0</span></div>
+              </div>
+            </div>
+
+            <!-- Section B: Services You Cannot Shop For -->
+            <div class="ctc-le-section">
+              <div class="ctc-le-section-header">
+                <span class="ctc-le-letter">B</span>
+                <span class="ctc-le-section-name">Services You Cannot Shop For</span>
+                <span class="ctc-le-section-total" id="ctcSectionB">$0</span>
+              </div>
+              <div class="ctc-le-section-items">
+                <div class="ctc-le-item"><span>Appraisal</span><span id="ctcB1">$0</span></div>
+                <div class="ctc-le-item"><span>Credit report</span><span id="ctcB2">$0</span></div>
+              </div>
+            </div>
+
+            <!-- Section C: Services You Can Shop For -->
+            <div class="ctc-le-section">
+              <div class="ctc-le-section-header">
+                <span class="ctc-le-letter">C</span>
+                <span class="ctc-le-section-name">Services You Can Shop For</span>
+                <span class="ctc-le-section-total" id="ctcSectionC">$0</span>
+              </div>
+              <div class="ctc-le-section-items">
+                <div class="ctc-le-item"><span>Lender's title insurance</span><span id="ctcC1">$0</span></div>
+                <div class="ctc-le-item"><span>Escrow fee</span><span id="ctcC2">$0</span></div>
+                <div class="ctc-le-item"><span>Settlement fee</span><span id="ctcC3">$0</span></div>
+                <div class="ctc-le-item ctc-le-item-conditional" id="ctcC4Row" style="display:none"><span>Other title &amp; escrow</span><span id="ctcC4">$0</span></div>
+              </div>
+            </div>
+
+            <!-- Section D: Total Loan Costs -->
+            <div class="ctc-le-subtotal">
+              <span class="ctc-le-letter">D</span>
+              <span class="ctc-le-subtotal-name">TOTAL LOAN COSTS (A+B+C)</span>
+              <span class="ctc-le-subtotal-value" id="ctcSectionD">$0</span>
+            </div>
+
+            <!-- Section E: Taxes and Other Government Fees -->
+            <div class="ctc-le-section">
+              <div class="ctc-le-section-header">
+                <span class="ctc-le-letter">E</span>
+                <span class="ctc-le-section-name">Taxes &amp; Government Fees</span>
+                <span class="ctc-le-section-total" id="ctcSectionE">$0</span>
+              </div>
+              <div class="ctc-le-section-items">
+                <div class="ctc-le-item"><span>Recording fees</span><span id="ctcE1">$0</span></div>
+                <div class="ctc-le-item ctc-le-item-conditional" id="ctcE2Row" style="display:none"><span>Other government</span><span id="ctcE2">$0</span></div>
+              </div>
+            </div>
+
+            <!-- Section F: Prepaids -->
+            <div class="ctc-le-section">
+              <div class="ctc-le-section-header">
+                <span class="ctc-le-letter">F</span>
+                <span class="ctc-le-section-name">Prepaids</span>
+                <span class="ctc-le-section-total" id="ctcSectionF">$0</span>
+              </div>
+              <div class="ctc-le-section-items">
+                <div class="ctc-le-item"><span>Homeowners insurance (12 mo)</span><span id="ctcF1">$0</span></div>
+                <div class="ctc-le-item"><span>Prepaid interest <span class="ctc-le-item-detail" id="ctcF2Detail">(0 days)</span></span><span id="ctcF2">$0</span></div>
+              </div>
+            </div>
+
+            <!-- Section G: Initial Escrow Payment -->
+            <div class="ctc-le-section">
+              <div class="ctc-le-section-header">
+                <span class="ctc-le-letter">G</span>
+                <span class="ctc-le-section-name">Initial Escrow Payment</span>
+                <span class="ctc-le-section-total" id="ctcSectionG">$0</span>
+              </div>
+              <div class="ctc-le-section-items">
+                <div class="ctc-le-item"><span>Homeowners insurance <span class="ctc-le-item-detail" id="ctcG1Detail">(2 mo reserve)</span></span><span id="ctcG1">$0</span></div>
+                <div class="ctc-le-item"><span>Property taxes <span class="ctc-le-item-detail" id="ctcG2Detail">(3 mo reserve)</span></span><span id="ctcG2">$0</span></div>
+              </div>
+            </div>
+
+            <!-- Section H: Other -->
+            <div class="ctc-le-section">
+              <div class="ctc-le-section-header">
+                <span class="ctc-le-letter">H</span>
+                <span class="ctc-le-section-name">Other</span>
+                <span class="ctc-le-section-total" id="ctcSectionH">$0</span>
+              </div>
+              <div class="ctc-le-section-items">
+                <div class="ctc-le-item"><span>Owner's title insurance</span><span id="ctcH1">$0</span></div>
+                <div class="ctc-le-item ctc-le-item-conditional" id="ctcH2Row" style="display:none"><span>HOA Questionnaire</span><span id="ctcH2">$0</span></div>
+                <div class="ctc-le-item ctc-le-item-conditional" id="ctcH3Row" style="display:none"><span>Other</span><span id="ctcH3">$0</span></div>
+              </div>
+            </div>
+
+            <!-- Section I: Total Other Costs -->
+            <div class="ctc-le-subtotal">
+              <span class="ctc-le-letter">I</span>
+              <span class="ctc-le-subtotal-name">TOTAL OTHER COSTS (E+F+G+H)</span>
+              <span class="ctc-le-subtotal-value" id="ctcSectionI">$0</span>
+            </div>
+
+            <!-- Section J: Total Closing Costs -->
+            <div class="ctc-le-grandtotal">
+              <span class="ctc-le-letter">J</span>
+              <span class="ctc-le-grandtotal-name">TOTAL CLOSING COSTS (D+I)</span>
+              <span class="ctc-le-grandtotal-value" id="ctcSectionJ">$0</span>
+            </div>
+
+            <!-- Credits offset (only shows when credits > 0) -->
+            <div class="ctc-le-credits" id="ctcLECreditsRow" style="display:none">
+              <div class="ctc-le-credits-row">
+                <span class="ctc-le-credits-name">Less: Lender credits</span>
+                <span class="ctc-le-credits-value" id="ctcLELenderCredits">$0</span>
+              </div>
+              <div class="ctc-le-credits-row">
+                <span class="ctc-le-credits-name">Less: Seller credits</span>
+                <span class="ctc-le-credits-value" id="ctcLESellerCredits">$0</span>
+              </div>
+              <div class="ctc-le-credits-total">
+                <span class="ctc-le-credits-total-name">NET CLOSING COSTS (J − credits)</span>
+                <span class="ctc-le-credits-total-value" id="ctcLENetClosing">$0</span>
+              </div>
+            </div>
+          </div>
+        </details>
       </div>
 
       <!-- Plain language explanation -->
@@ -4828,33 +5185,141 @@ function calcCashToClose(homePrice, loanAmount, dpDollars, dpPct, rate, taxPct, 
   // Total cash to close
   const total = dpDollars + closingCosts + prepaidInterest + taxEscrowSetup + insSetup - totalCredits;
 
+  // Helper to read itemized closing cost field by data-key
+  const getItem = function(key) {
+    const el = document.querySelector('.closing-item[data-key="' + key + '"]');
+    return el ? parseNum(el.value) : 0;
+  };
+
+  // Collect itemized values
+  const items = {
+    origination: getItem('origination'),
+    underwriting: getItem('underwriting'),
+    processing: getItem('processing'),
+    appraisal: getItem('appraisal'),
+    credit: getItem('credit'),
+    otherLender: getItem('otherLender'),
+    lenderTitle: getItem('lenderTitle'),
+    ownerTitle: getItem('ownerTitle'),
+    escrowFee: getItem('escrowFee'),
+    settlement: getItem('settlement'),
+    otherTitle: getItem('otherTitle'),
+    recording: getItem('recording'),
+    otherGov: getItem('otherGov'),
+    hoaQuestionnaire: getItem('hoaQuestionnaire'),
+    otherMisc: getItem('otherMisc')
+  };
+
+  // Compute Loan Estimate sections
+  const sectionA = items.origination + items.underwriting + items.processing + items.otherLender;
+  const sectionB = items.appraisal + items.credit;
+  const sectionC = items.lenderTitle + items.escrowFee + items.settlement + items.otherTitle;
+  const sectionD = sectionA + sectionB + sectionC;
+  const sectionE = items.recording + items.otherGov;
+  const sectionF = annualInsurance + prepaidInterest;  // Prepaid homeowners + prepaid interest
+  const sectionG = (monthlyInsurance * insEscrowMonths) + (monthlyTax * taxEscrowMonths);
+  const sectionH = items.ownerTitle + items.hoaQuestionnaire + items.otherMisc;
+  const sectionI = sectionE + sectionF + sectionG + sectionH;
+  const sectionJ = sectionD + sectionI;
+
   // Render
   const setText = function(id, val) {
     const el = document.getElementById(id);
     if (el) el.textContent = val;
   };
+  const showRow = function(rowId, show) {
+    const el = document.getElementById(rowId);
+    if (el) el.style.display = show ? 'flex' : 'none';
+  };
 
+  // Top-level summary
   setText('ctcTotal', fmt(total));
   setText('ctcFirstPay', 'First payment due: ' + firstPaymentDate);
   setText('ctcDown', fmt(dpDollars));
-  setText('ctcClosing', fmt(closingCosts));
-  setText('ctcClosingDetail', loanAmount > 0 ? (closingCosts / loanAmount * 100).toFixed(2) + '% of loan' : 'itemized');
-  setText('ctcPrepaid', fmt(prepaidInterest));
-  setText('ctcPrepaidDetail', daysOfInterest + ' days');
-  setText('ctcTax', fmt(taxEscrowSetup));
-  setText('ctcTaxDetail', taxEscrowMonths + ' mo');
-  setText('ctcIns', fmt(insSetup));
-  setText('ctcInsDetail', '12 mo prepaid + ' + insEscrowMonths + ' mo');
+  setText('ctcClosingTotal', fmt(sectionJ));
 
-  // Credits (only show row if there are credits)
-  const creditsRow = document.getElementById('ctcCreditsRow');
-  if (creditsRow) {
-    if (totalCredits > 0) {
-      creditsRow.style.display = 'flex';
-      setText('ctcCredits', '-' + fmt(totalCredits));
-    } else {
-      creditsRow.style.display = 'none';
-    }
+  // Net closing costs (after credits applied)
+  const netClosing = sectionJ - totalCredits;
+  if (totalCredits > 0) {
+    showRow('ctcNetClosingRow', true);
+    setText('ctcNetClosing', fmt(netClosing));
+  } else {
+    showRow('ctcNetClosingRow', false);
+  }
+
+  // Section A: Origination
+  setText('ctcA1', fmt(items.origination));
+  setText('ctcA2', fmt(items.underwriting));
+  setText('ctcA3', fmt(items.processing));
+  setText('ctcA4', fmt(items.otherLender));
+  showRow('ctcA4Row', items.otherLender > 0);
+  setText('ctcSectionA', fmt(sectionA));
+
+  // Section B: Services You Cannot Shop
+  setText('ctcB1', fmt(items.appraisal));
+  setText('ctcB2', fmt(items.credit));
+  setText('ctcSectionB', fmt(sectionB));
+
+  // Section C: Services You Can Shop
+  setText('ctcC1', fmt(items.lenderTitle));
+  setText('ctcC2', fmt(items.escrowFee));
+  setText('ctcC3', fmt(items.settlement));
+  setText('ctcC4', fmt(items.otherTitle));
+  showRow('ctcC4Row', items.otherTitle > 0);
+  setText('ctcSectionC', fmt(sectionC));
+
+  // Section D: Total Loan Costs
+  setText('ctcSectionD', fmt(sectionD));
+
+  // Section E: Taxes & Government
+  setText('ctcE1', fmt(items.recording));
+  setText('ctcE2', fmt(items.otherGov));
+  showRow('ctcE2Row', items.otherGov > 0);
+  setText('ctcSectionE', fmt(sectionE));
+
+  // Section F: Prepaids
+  setText('ctcF1', fmt(annualInsurance));
+  setText('ctcF2', fmt(prepaidInterest));
+  setText('ctcF2Detail', '(' + daysOfInterest + ' days at ' + rate + '%)');
+  setText('ctcSectionF', fmt(sectionF));
+
+  // Section G: Initial Escrow
+  setText('ctcG1', fmt(monthlyInsurance * insEscrowMonths));
+  setText('ctcG1Detail', '(' + insEscrowMonths + ' mo reserve)');
+  setText('ctcG2', fmt(monthlyTax * taxEscrowMonths));
+  setText('ctcG2Detail', '(' + taxEscrowMonths + ' mo reserve)');
+  setText('ctcSectionG', fmt(sectionG));
+
+  // Section H: Other
+  setText('ctcH1', fmt(items.ownerTitle));
+  setText('ctcH2', fmt(items.hoaQuestionnaire));
+  showRow('ctcH2Row', items.hoaQuestionnaire > 0);
+  setText('ctcH3', fmt(items.otherMisc));
+  showRow('ctcH3Row', items.otherMisc > 0);
+  setText('ctcSectionH', fmt(sectionH));
+
+  // Section I: Total Other Costs
+  setText('ctcSectionI', fmt(sectionI));
+
+  // Section J: Grand Total
+  setText('ctcSectionJ', fmt(sectionJ));
+
+  // Credits rows (both summary and LE detail)
+  if (totalCredits > 0) {
+    // Summary view: show single line with combined credits
+    showRow('ctcCreditsRow', true);
+    setText('ctcCredits', '-' + fmt(totalCredits));
+
+    // LE detail view: show separate lender + seller lines with net total
+    const leCreditsRowEl = document.getElementById('ctcLECreditsRow');
+    if (leCreditsRowEl) leCreditsRowEl.style.display = 'block';
+    setText('ctcLELenderCredits', '-' + fmt(lenderCredits));
+    setText('ctcLESellerCredits', '-' + fmt(sellerCredits));
+    setText('ctcLENetClosing', fmt(sectionJ - totalCredits));
+  } else {
+    showRow('ctcCreditsRow', false);
+    const leCreditsRowEl = document.getElementById('ctcLECreditsRow');
+    if (leCreditsRowEl) leCreditsRowEl.style.display = 'none';
   }
 
   return { total: total, firstPaymentDate: firstPaymentDate };
