@@ -18,8 +18,8 @@
 <link rel="apple-touch-icon" href="/favicon.png">
 <link rel="shortcut icon" href="/favicon.png">
 
-<title>Daryn Fillis | Certified Mortgage Advisor | NEO Home Loans — Los Angeles</title>
-<meta name="description" content="Daryn Fillis helps LA buyers win competitive offers, avoid the mortgage regrets 81% of young homeowners report, and build real wealth through their home. Certified Mortgage Advisor · NEO Home Loans · NMLS #1988371.">
+<title>Daryn Fillis | LA Mortgage Advisor | NEO Home Loans</title>
+<meta name="description" content="Daryn Fillis helps LA buyers win competitive offers and build a long-term mortgage strategy. Certified Mortgage Advisor at NEO Home Loans.">
 
 <!-- Canonical -->
 <link rel="canonical" href="https://darynfillis.com/">
@@ -27,16 +27,16 @@
 <!-- Open Graph — controls every social share preview -->
 <meta property="og:type"        content="website">
 <meta property="og:url"         content="https://darynfillis.com/">
-<meta property="og:title"       content="Daryn Fillis | Certified Mortgage Advisor in Los Angeles">
-<meta property="og:description" content="Helping LA buyers win competitive offers and build long-term wealth through strategic mortgage planning. Not just a loan — a strategy. NMLS #1988371.">
+<meta property="og:title" content="Daryn Fillis | LA Mortgage Advisor | NEO Home Loans">
+<meta property="og:description" content="Daryn Fillis helps LA buyers win competitive offers and build a long-term mortgage strategy. Certified Mortgage Advisor at NEO Home Loans.">
 <meta property="og:image"       content="https://darynfillis.com/og-home.jpg">
 <meta property="og:locale"      content="en_US">
 <meta property="og:site_name"   content="Daryn Fillis | NEO Home Loans">
 
 <!-- Twitter / X card -->
 <meta name="twitter:card"        content="summary_large_image">
-<meta name="twitter:title"       content="Daryn Fillis | Certified Mortgage Advisor in Los Angeles">
-<meta name="twitter:description" content="Helping LA buyers win competitive offers and build long-term wealth. The offer, the rate, and the long game. NMLS #1988371.">
+<meta name="twitter:title" content="Daryn Fillis | LA Mortgage Advisor | NEO Home Loans">
+<meta name="twitter:description" content="Daryn Fillis helps LA buyers win competitive offers and build a long-term mortgage strategy. Certified Mortgage Advisor at NEO Home Loans.">
 <meta name="twitter:image"       content="https://darynfillis.com/og-home.jpg">
 
 <!-- Additional SEO signals -->
@@ -2134,6 +2134,192 @@ html{-webkit-text-size-adjust:100%;}
   </div>
 </section>
 
+<!-- ── WEALTH DIGEST EMAIL CAPTURE ── -->
+<section class="wealth-digest-section" aria-label="Subscribe to the Wealth Digest">
+  <div class="wd-card">
+    <div class="wd-content">
+      <div class="wd-eyebrow">
+        <span class="wd-dot"></span>
+        <span>The Wealth Digest</span>
+      </div>
+      <h2 class="wd-h2">The mortgage strategy email I wish every LA homeowner got.</h2>
+      <p class="wd-body">Once a month, I send a short email with what's actually moving in the LA mortgage market. Rate context, deal patterns I'm seeing, and the one or two strategies most relevant to where the market is right now. No fluff. No selling. Unsubscribe anytime.</p>
+      <form name="wealth-digest" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/thanks-wealth-digest" class="wd-form">
+        <input type="hidden" name="form-name" value="wealth-digest">
+        <p style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
+        <div class="wd-form-row">
+          <input type="email" name="email" required placeholder="your@email.com" aria-label="Email address" class="wd-input">
+          <button type="submit" class="wd-button">Subscribe</button>
+        </div>
+        <p class="wd-disclaimer">One email a month. Real content. Unsubscribe with one click.</p>
+      </form>
+    </div>
+    <div class="wd-visual">
+      <div class="wd-stat">
+        <div class="wd-stat-num">1×</div>
+        <div class="wd-stat-lbl">Per month, max</div>
+      </div>
+      <div class="wd-stat">
+        <div class="wd-stat-num">5 min</div>
+        <div class="wd-stat-lbl">Read time</div>
+      </div>
+      <div class="wd-stat">
+        <div class="wd-stat-num">0</div>
+        <div class="wd-stat-lbl">Sales pitches</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.wealth-digest-section {
+  background: var(--white);
+  padding: clamp(48px, 7vw, 80px) clamp(20px, 4vw, 48px);
+  border-top: 1px solid var(--rule);
+}
+.wd-card {
+  max-width: 1080px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, rgba(10,37,64,0.97) 0%, rgba(13,46,79,0.97) 100%);
+  border-radius: 16px;
+  padding: clamp(36px, 5vw, 56px) clamp(28px, 4vw, 56px);
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.wd-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 80% at 100% 30%, rgba(91,203,245,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+@media (max-width: 760px) { .wd-card { grid-template-columns: 1fr; } }
+.wd-content { position: relative; z-index: 1; }
+.wd-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 14px;
+  background: rgba(91,203,245,0.12);
+  border: 1px solid rgba(91,203,245,0.3);
+  border-radius: 20px;
+  margin-bottom: 18px;
+}
+.wd-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 0 8px var(--blue);
+}
+.wd-eyebrow span:not(.wd-dot) {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+.wd-h2 {
+  font-weight: 800;
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  color: var(--white);
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+.wd-h2 em { font-style: normal; color: var(--blue); }
+.wd-body {
+  font-weight: 200;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.85;
+  margin-bottom: 24px;
+  max-width: 540px;
+}
+.wd-form { max-width: 540px; }
+.wd-form-row {
+  display: flex;
+  gap: 10px;
+}
+@media (max-width: 540px) { .wd-form-row { flex-direction: column; } }
+.wd-input {
+  flex: 1;
+  padding: 14px 18px;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: var(--white);
+  background: rgba(255,255,255,0.05);
+  font-family: inherit;
+  transition: border-color 0.15s, background 0.15s;
+}
+.wd-input::placeholder { color: rgba(255,255,255,0.4); }
+.wd-input:focus {
+  outline: none;
+  border-color: var(--blue);
+  background: rgba(255,255,255,0.08);
+}
+.wd-button {
+  padding: 14px 28px;
+  background: var(--blue);
+  color: var(--navy);
+  border: none;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 0.92rem;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.wd-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(91,203,245,0.25);
+}
+.wd-disclaimer {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.4);
+  margin-top: 12px;
+  font-weight: 200;
+}
+.wd-visual {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (max-width: 760px) {
+  .wd-visual { grid-template-columns: repeat(3, 1fr); }
+}
+.wd-stat {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 18px 16px;
+  text-align: center;
+}
+.wd-stat-num {
+  font-weight: 800;
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  color: var(--blue);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.wd-stat-lbl {
+  font-weight: 200;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.55);
+  margin-top: 6px;
+  letter-spacing: 0.04em;
+}
+</style>
+
+
 <!-- ══ CTA BANNER ══ -->
 <div class="cta-banner">
   <h2 class="reveal">In 15 minutes or less, you'll know your number.</h2>
@@ -2217,7 +2403,7 @@ html{-webkit-text-size-adjust:100%;}
     <div class="footer-col">
       <h4>Community</h4>
       <a href="https://www.instagram.com/mymortgageadvisor" target="_blank">Instagram</a>
-      <a href="https://neoexperience.neohomeloans.com/pfm/registration/invite?key=b1c3a471-8b20-446c-8599-4138963a02a0" target="_blank">NEO Experience</a>
+      <a href="https://neoexperience.neohomeloans.com/pfm/registration/invite?key=b1c3a471-8b20-446c-8599-4138963a02a0&utm_medium=loan_officer&utm_source=link_only" target="_blank">NEO Experience</a>
       <a href="https://www.google.com/maps/place/NEO+Home+Loans+-+Daryn+Fillis/@33.9190712,-118.3952696,17z/data=!3m1!5s0x80c2b40606fb3a47:0x569aca78b4bed4de!4m18!1m9!3m8!1s0x80c2b18ee7e818ed:0x38e4dd1f84ca1b94!2sNEO+Home+Loans+-+Daryn+Fillis!8m2!3d33.9190712!4d-118.3952696!9m1!1b1!16s%2Fg%2F11m_lr9bj3!3m7!1s0x80c2b18ee7e818ed:0x38e4dd1f84ca1b94!8m2!3d33.9190712!4d-118.3952696!9m1!1b1!16s%2Fg%2F11m_lr9bj3?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D" target="_blank">Leave a review</a>
     </div>
     <div class="footer-col">

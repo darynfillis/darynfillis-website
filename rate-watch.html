@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HNXGMCM9L5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HNXGMCM9L5');
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="shortcut icon" type="image/png" href="/favicon.png">
+
+<!-- SEO -->
+<title>Today's Mortgage Rates in LA | Daryn Fillis</title>
+<meta name="description" content="Daily mortgage rate market index from Mortgage News Daily plus context from an LA mortgage advisor. Where rates are this week.">
+<link rel="canonical" href="https://darynfillis.com/rate-watch">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Today's Mortgage Rates in LA | Daryn Fillis">
+<meta property="og:description" content="Daily mortgage rate market index from Mortgage News Daily plus context from an LA mortgage advisor. Where rates are this week.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://darynfillis.com/rate-watch">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Today's Mortgage Rates — Rate Watch",
+  "description": "Daily mortgage rate market index from Mortgage News Daily, with context from Los Angeles mortgage advisor Daryn Fillis.",
+  "url": "https://darynfillis.com/rate-watch",
+  "author": {
+    "@type": "Person",
+    "name": "Daryn Fillis",
+    "jobTitle": "Certified Mortgage Advisor",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "NEO Home Loans"
+    }
+  }
+}
+</script>
+
+<!-- Google Fonts: Montserrat -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --blue: #5bcbf5;
+    --navy: #0A2540;
+    --gray: #2b2f2e;
+    --body: #2b2f2e;
+    --muted: #6b7280;
+    --white: #ffffff;
+    --bg: #f7f9fc;
+    --rule: #e5e7eb;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--body);
+    background: var(--white);
+    font-weight: 200;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ── NAVIGATION ── */
+  nav#nav {
+    position: sticky;
+    top: 0;
+    background: var(--white);
+    border-bottom: 1px solid var(--rule);
+    padding: 14px clamp(20px,4vw,48px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+  }
+  .nav-logo {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--navy);
+    letter-spacing: -0.02em;
+  }
+  .nav-logo span {
+    color: var(--blue);
+  }
+  .nav-links {
+    display: flex;
+    gap: clamp(16px,2.5vw,32px);
+    align-items: center;
+  }
+  .nav-links a {
+    color: var(--body);
+    font-weight: 400;
+    font-size: 0.92rem;
+  }
+  .nav-cta {
+    background: var(--navy);
+    color: var(--white) !important;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: 700 !important;
+    font-size: 0.88rem !important;
+  }
+  .nav-cta:hover {
+    background: #1a3a5c;
+    text-decoration: none !important;
+  }
+  @media (max-width: 720px) {
+    .nav-links a:not(.nav-cta) { display: none; }
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #0d2e4f 100%);
+    color: var(--white);
+    padding: clamp(60px,8vw,100px) clamp(20px,4vw,48px);
+    text-align: center;
+  }
+  .hero-inner {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 20px;
+    padding: 6px 14px;
+    background: rgba(91,203,245,0.1);
+    border: 1px solid rgba(91,203,245,0.3);
+    border-radius: 20px;
+  }
+  .hero h1 {
+    font-weight: 800;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin: 0 0 24px 0;
+  }
+  .hero h1 em {
+    color: var(--blue);
+    font-style: normal;
+  }
+  .hero p {
+    font-size: clamp(1rem, 1.6vw, 1.18rem);
+    font-weight: 200;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.85);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .hero-updated {
+    margin-top: 24px;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.55);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── DARYN'S TAKE (editable weekly) ── */
+  .daryn-take {
+    background: var(--white);
+    padding: clamp(50px,6vw,80px) clamp(20px,4vw,48px) 0 clamp(20px,4vw,48px);
+  }
+  .daryn-take-inner {
+    max-width: 820px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, rgba(245,158,11,0.06) 0%, rgba(245,158,11,0.02) 100%);
+    border: 1px solid rgba(245,158,11,0.25);
+    border-radius: 14px;
+    padding: clamp(28px,4vw,40px);
+  }
+  .daryn-take-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #d97706;
+    margin-bottom: 8px;
+  }
+  .daryn-take-date {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 18px;
+    font-weight: 400;
+  }
+  .daryn-take h2 {
+    font-weight: 800;
+    font-size: clamp(1.4rem,2.4vw,1.85rem);
+    color: var(--navy);
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    margin: 0 0 18px 0;
+  }
+  .daryn-take p {
+    font-size: 1.02rem;
+    line-height: 1.85;
+    color: var(--body);
+    margin: 0 0 16px 0;
+  }
+  .daryn-take p:last-child { margin-bottom: 0; }
+  .daryn-take strong { color: var(--navy); font-weight: 700; }
+
+  /* ── MND WIDGET SECTION ── */
+  .mnd-section {
+    background: var(--white);
+    padding: clamp(50px,6vw,80px) clamp(20px,4vw,48px);
+  }
+  .mnd-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .section-eyebrow {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 16px;
+  }
+  .section-header h2 {
+    font-weight: 800;
+    font-size: clamp(1.8rem,3vw,2.4rem);
+    color: var(--navy);
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    margin: 0 0 14px 0;
+  }
+  .section-header p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--body);
+    font-weight: 200;
+    max-width: 680px;
+    margin: 0;
+  }
+  .mnd-widget-container {
+    margin-top: 36px;
+    padding: 32px;
+    background: var(--bg);
+    border-radius: 14px;
+    border: 1px solid var(--rule);
+    min-height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mnd-widget-placeholder {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+    max-width: 480px;
+  }
+  .mnd-widget-placeholder strong {
+    display: block;
+    color: var(--navy);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .mnd-attribution {
+    margin-top: 16px;
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-align: center;
+    font-weight: 400;
+  }
+  .mnd-attribution a {
+    color: var(--navy);
+    text-decoration: underline;
+    font-weight: 600;
+  }
+
+  /* ── RSS FEED SECTION ── */
+  .rss-section {
+    background: var(--bg);
+    padding: clamp(50px,6vw,80px) clamp(20px,4vw,48px);
+    border-top: 1px solid var(--rule);
+  }
+  .rss-inner {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .rss-list {
+    margin-top: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .rss-item {
+    background: var(--white);
+    padding: 24px 28px;
+    border-radius: 10px;
+    border: 1px solid var(--rule);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .rss-item:hover {
+    border-color: var(--blue);
+    box-shadow: 0 4px 20px rgba(10,37,64,0.05);
+  }
+  .rss-item-date {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .rss-item h3 {
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--navy);
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+    margin: 0 0 12px 0;
+  }
+  .rss-item h3 a {
+    color: var(--navy);
+    text-decoration: none;
+  }
+  .rss-item h3 a:hover {
+    color: var(--blue);
+    text-decoration: underline;
+  }
+  .rss-item-excerpt {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--body);
+    font-weight: 200;
+    margin: 0 0 12px 0;
+  }
+  .rss-item-link {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--blue);
+  }
+  .rss-item-link::after {
+    content: ' →';
+  }
+  .rss-loading,
+  .rss-error {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .rss-error {
+    color: #92400e;
+    background: rgba(245,158,11,0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(245,158,11,0.2);
+  }
+
+  /* ── WHAT THIS MEANS SECTION ── */
+  .means-section {
+    background: var(--white);
+    padding: clamp(50px,6vw,80px) clamp(20px,4vw,48px);
+    border-top: 1px solid var(--rule);
+  }
+  .means-inner {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .means-section p {
+    font-size: 1.02rem;
+    line-height: 1.85;
+    color: var(--body);
+    margin: 0 0 20px 0;
+  }
+  .means-section p:last-child { margin-bottom: 0; }
+  .means-section strong { color: var(--navy); font-weight: 700; }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    background: linear-gradient(135deg, var(--navy) 0%, #0d2e4f 100%);
+    color: var(--white);
+    padding: clamp(60px,8vw,90px) clamp(20px,4vw,48px);
+    text-align: center;
+  }
+  .cta-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .cta-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 18px;
+    padding: 6px 14px;
+    background: rgba(91,203,245,0.1);
+    border: 1px solid rgba(91,203,245,0.3);
+    border-radius: 20px;
+  }
+  .cta-section h2 {
+    font-weight: 800;
+    font-size: clamp(1.8rem,3.2vw,2.6rem);
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    margin: 0 0 18px 0;
+  }
+  .cta-section h2 em {
+    color: var(--blue);
+    font-style: normal;
+  }
+  .cta-section p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.85);
+    margin: 0 0 30px 0;
+    font-weight: 200;
+  }
+  .cta-button {
+    display: inline-block;
+    background: var(--blue);
+    color: var(--navy) !important;
+    padding: 16px 36px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+    text-decoration: none !important;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(91,203,245,0.25);
+  }
+
+  /* ── DISCLAIMER SECTION ── */
+  .disclaimer-section {
+    background: var(--white);
+    padding: clamp(32px,4vw,48px) clamp(20px,4vw,48px);
+  }
+  .disclaimer-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 28px;
+    background: var(--bg);
+    border-radius: 10px;
+    border: 1px solid var(--rule);
+  }
+  .disclaimer-inner h3 {
+    font-weight: 800;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 0 0 10px 0;
+  }
+  .disclaimer-text {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.65;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.7);
+    padding: 40px clamp(20px,4vw,48px);
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 200;
+  }
+  footer a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    margin: 0 12px;
+  }
+  footer a:hover { color: var(--blue); }
+  .footer-nmls {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.5);
+    margin-top: 16px;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 2rem; }
+    .section-header h2,
+    .cta-section h2 { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav id="nav">
+  <a href="/" class="nav-logo">Daryn Fillis<span>.</span></a>
+  <div class="nav-links">
+    <a href="/calculator">Calculator</a>
+    <a href="/rate-watch">Rate Watch</a>
+    <a href="/about">About</a>
+    <a href="/schedule" class="nav-cta">Book a call</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-eyebrow">Rate Watch</span>
+    <h1>Today's mortgage market<em>.</em></h1>
+    <p>Rates change daily. Here's where the market sits right now, what's moving it, and what it means for buyers and homeowners in Los Angeles.</p>
+    <div class="hero-updated">Updated automatically from Mortgage News Daily</div>
+  </div>
+</section>
+
+<!-- ── DARYN'S TAKE (editable weekly) ── -->
+<section class="daryn-take">
+  <div class="daryn-take-inner">
+    <div class="daryn-take-eyebrow">Daryn's take this week</div>
+    <div class="daryn-take-date" id="darynTakeDate">Updated weekly</div>
+    <h2>National averages tell one story. Your file tells another.</h2>
+    <p>The rates below are <strong>national averages</strong> reported by Mortgage News Daily. They come from real lender rate sheets and update every weekday around 4PM Eastern. What they cannot tell you is what rate <strong>you</strong> will actually be offered.</p>
+    <p>Your real rate depends on credit score, down payment, loan amount, property type, occupancy, and how aggressively a lender is pricing on any given day. A buyer with strong credit and 25 percent down on a single family home might land below the national average. A buyer with 5 percent down on a condo might land above it. Same market, different numbers.</p>
+    <p>Use this page to <strong>watch the trend</strong>, not to plan your payment. For that, we should talk.</p>
+  </div>
+</section>
+
+<!-- ── MND WIDGET SECTION ── -->
+<section class="mnd-section">
+  <div class="mnd-inner">
+    <div class="section-header">
+      <span class="section-eyebrow">Live National Average</span>
+      <h2>Today's rates by loan type.</h2>
+      <p>Average rates across the lenders Mortgage News Daily surveys, updated daily around 4PM Eastern. This is the industry-standard daily index, used by mortgage professionals to track market movement.</p>
+    </div>
+
+    <!-- MND WIDGET PLACEHOLDER -->
+    <!--
+      ═══════════════════════════════════════════════════════════
+      INSTRUCTIONS TO REPLACE THIS PLACEHOLDER WITH MND WIDGET:
+
+      1. Go to https://www.mortgagenewsdaily.com/widgets/rates
+      2. Pick "Rates Expanded Vertical" or "Rates Expanded Horizontal"
+         (Horizontal works better for this layout)
+      3. Configure: Width = Large, show chart = ON, border = none or thin
+      4. Copy the entire <script>...</script> block they provide
+      5. Replace the .mnd-widget-placeholder div below with that script
+      ═══════════════════════════════════════════════════════════
+    -->
+    <div class="mnd-widget-container">
+      <div class="mnd-widget-placeholder">
+        <strong>MND Rate Widget Goes Here</strong>
+        Get the embed code from <a href="https://www.mortgagenewsdaily.com/widgets/rates" target="_blank" rel="noopener">mortgagenewsdaily.com/widgets/rates</a> and replace this placeholder div. Choose "Rates Expanded Horizontal" with chart enabled.
+      </div>
+    </div>
+
+    <p class="mnd-attribution">
+      National rate averages provided by <a href="https://www.mortgagenewsdaily.com/mortgage-rates" target="_blank" rel="noopener">Mortgage News Daily</a>. Updated each weekday around 4PM Eastern.
+    </p>
+  </div>
+</section>
+
+<!-- ── MND COMMENTARY RSS FEED ── -->
+<section class="rss-section">
+  <div class="rss-inner">
+    <div class="section-header">
+      <span class="section-eyebrow">Today's Market Commentary</span>
+      <h2>What's moving rates right now.</h2>
+      <p>Daily commentary from Mortgage News Daily's Rate Watch — written by professional analysts who explain the why behind each day's rate movement.</p>
+    </div>
+
+    <div class="rss-list" id="rssList">
+      <div class="rss-loading">Loading today's market commentary…</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHAT THIS MEANS SECTION ── -->
+<section class="means-section">
+  <div class="means-inner">
+    <div class="section-header">
+      <span class="section-eyebrow">For You Specifically</span>
+      <h2>What this market means if you are buying or refinancing.</h2>
+    </div>
+
+    <p style="margin-top:32px"><strong>If you are buying right now:</strong> Lock conversations matter more than ever. Rates can move by 0.25 percent in a single week of volatility. Your pre-approval gives you a window. We should discuss whether to lock at application or float into the contract.</p>
+
+    <p><strong>If you are pre-approved and shopping:</strong> Your rate is not locked until we lock it. The number on your pre-approval is a snapshot. If you have been shopping for 30 plus days, your rate assumption is probably stale. Quick refresh keeps your DTI numbers accurate.</p>
+
+    <p><strong>If you have a rate above 7 percent from 2023 or 2024:</strong> You should know your refinance breakeven number. There is a rate threshold at which it makes sense to act. Below that, holding is correct. We track it for you so you know when to move.</p>
+
+    <p><strong>If you are deciding between buying now or waiting:</strong> The math here is rarely about the rate alone. It is about home appreciation versus rent paid versus tax benefit versus the cost of waiting. The "wait for rates to drop" thinking misses how the rest of the math compounds. Worth a conversation.</p>
+  </div>
+</section>
+
+<!-- ── CTA SECTION ── -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <span class="cta-eyebrow">Ready to talk numbers</span>
+    <h2>Get your <em>actual</em> rate.</h2>
+    <p>National averages are starting points. Your real rate depends on your specific situation. Fifteen minutes on the phone tells you exactly where you stand. No commitment, no hard sell.</p>
+    <a href="/schedule" class="cta-button">Book a 15-minute call</a>
+  </div>
+</section>
+
+<!-- ── DISCLAIMER ── -->
+<section class="disclaimer-section">
+  <div class="disclaimer-inner">
+    <h3>Important disclaimer</h3>
+    <p class="disclaimer-text">Rates displayed are national averages reported by Mortgage News Daily based on their daily survey of lender rate sheets. They reflect average rates offered by the lenders surveyed, not a specific loan offer or commitment to lend. Your actual rate will depend on your credit profile, down payment, loan amount, property type, occupancy, and other factors. The market commentary linked above is provided by Mortgage News Daily and reflects their analysis, not the views of Daryn Fillis or NEO Home Loans. For a rate specific to your situation, contact Daryn directly. NEO Home Loans powered by Better Mortgage Corporation. Equal Housing Opportunity. Daryn Fillis NMLS #1988371. Branch NMLS #2733710 · 222 Pacific Coast Hwy, 10th Floor, Suite 135, El Segundo, CA 90245.</p>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div>
+    <a href="/">Home</a>
+    <a href="/calculator">Calculator</a>
+    <a href="/rate-watch">Rate Watch</a>
+    <a href="/about">About</a>
+    <a href="/schedule">Book a call</a>
+  </div>
+  <div class="footer-nmls">
+    © 2026 Daryn Fillis · NEO Home Loans powered by Better Mortgage Corporation<br>
+    NMLS #1988371 · Branch NMLS #2733710 · Equal Housing Opportunity
+  </div>
+</footer>
+
+<script>
+// ════════════════════════════════════════════════════════════
+// MND RSS FEED LOADER
+// Pulls Mortgage News Daily Rate Watch feed via rss2json
+// (a free service that proxies RSS feeds with proper CORS headers)
+// ════════════════════════════════════════════════════════════
+
+(function() {
+  const RSS_FEED_URL = 'https://www.mortgagenewsdaily.com/rss/rates';
+  const RSS2JSON_API = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(RSS_FEED_URL);
+  const MAX_ITEMS = 4;
+  const listEl = document.getElementById('rssList');
+
+  function formatDate(dateStr) {
+    try {
+      const d = new Date(dateStr);
+      const now = new Date();
+      const diffMs = now - d;
+      const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+      const diffDays = Math.floor(diffHours / 24);
+
+      if (diffHours < 1) return 'Just posted';
+      if (diffHours < 24) return diffHours + ' hours ago';
+      if (diffDays === 1) return 'Yesterday';
+      if (diffDays < 7) return diffDays + ' days ago';
+
+      return d.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: d.getFullYear() !== now.getFullYear() ? 'numeric' : undefined
+      });
+    } catch (e) {
+      return '';
+    }
+  }
+
+  function stripHtml(html) {
+    if (!html) return '';
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    return (tmp.textContent || tmp.innerText || '').trim();
+  }
+
+  function truncate(text, maxLen) {
+    if (!text || text.length <= maxLen) return text;
+    return text.substring(0, maxLen).replace(/\s+\S*$/, '') + '…';
+  }
+
+  function renderItems(items) {
+    if (!items || items.length === 0) {
+      listEl.innerHTML = '<div class="rss-error">No commentary available at the moment. Visit <a href="https://www.mortgagenewsdaily.com/topic/mortgage-rates" target="_blank" rel="noopener">Mortgage News Daily Rate Watch</a> directly for the latest.</div>';
+      return;
+    }
+
+    const html = items.slice(0, MAX_ITEMS).map(function(item) {
+      const date = formatDate(item.pubDate);
+      const excerpt = truncate(stripHtml(item.description || item.content), 220);
+      const title = stripHtml(item.title);
+      const link = item.link;
+
+      return '<article class="rss-item">' +
+        '<div class="rss-item-date">' + date + '</div>' +
+        '<h3><a href="' + link + '" target="_blank" rel="noopener">' + title + '</a></h3>' +
+        (excerpt ? '<p class="rss-item-excerpt">' + excerpt + '</p>' : '') +
+        '<a href="' + link + '" target="_blank" rel="noopener" class="rss-item-link">Read full analysis on Mortgage News Daily</a>' +
+        '</article>';
+    }).join('');
+
+    listEl.innerHTML = html;
+  }
+
+  function showError(message) {
+    listEl.innerHTML = '<div class="rss-error">' + message + ' Visit <a href="https://www.mortgagenewsdaily.com/topic/mortgage-rates" target="_blank" rel="noopener">Mortgage News Daily Rate Watch</a> for the latest commentary.</div>';
+  }
+
+  // Fetch the feed
+  fetch(RSS2JSON_API)
+    .then(function(response) {
+      if (!response.ok) throw new Error('Feed unavailable');
+      return response.json();
+    })
+    .then(function(data) {
+      if (data.status === 'ok' && data.items) {
+        renderItems(data.items);
+      } else {
+        showError('Unable to load market commentary right now.');
+      }
+    })
+    .catch(function(err) {
+      console.error('RSS feed error:', err);
+      showError('Unable to load market commentary right now.');
+    });
+
+  // Set "Updated this week" date
+  const dateEl = document.getElementById('darynTakeDate');
+  if (dateEl) {
+    const d = new Date();
+    dateEl.textContent = 'Updated ' + d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -217,4 +217,32 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://darynfillis.com/field-notes/new-condo-rules-2026</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://darynfillis.com/rate-watch</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://darynfillis.com/3months</loc>
+    <lastmod>2026-04-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+
+  <url>
+    <loc>https://darynfillis.com/self-employed-playbook</loc>
+    <lastmod>2026-04-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+
 </urlset>
