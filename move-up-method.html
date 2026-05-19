@@ -1542,6 +1542,40 @@ html{-webkit-text-size-adjust:100%;}
   ]
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Buy Your Next Home Before Selling the Current One",
+  "description": "A 4-step framework for equity-rich homeowners to move up without a contingent offer or temporary housing.",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "Evaluate your current equity position",
+      "text": "Determine current home value minus existing mortgage balance to know your accessible equity. Most strategies require significant equity to work."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "Choose the right buy-before-sell mechanism",
+      "text": "Four common approaches: HELOC against current equity for the new down payment, a bridge loan that spans both properties, a recast on the new loan after selling the old one, or a structured buy-before-you-sell program."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "Stress-test the carry cost scenario",
+      "text": "Calculate the worst-case monthly cost of carrying both properties if the current home takes longer than expected to sell. Make sure you have the reserves and income to cover this."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 4,
+      "name": "Time the sale of the current home strategically",
+      "text": "Once the new home is locked, the old home can be sold without time pressure. This typically yields a higher sale price than a stressed, timeline-driven sale."
+    }
+  ]
+}
+</script>
 </head>
 
 
@@ -1630,6 +1664,17 @@ html{-webkit-text-size-adjust:100%;}
     <a href="/schedule" class="btn btn-blue btn-wobble">See if the move-up method fits your situation</a>
   </div>
 </section>
+<!-- TL;DR / BOTTOM LINE — AEO answer box -->
+<div style="background:linear-gradient(135deg,rgba(245,158,11,0.06) 0%,rgba(245,158,11,0.02) 100%);border-top:1px solid rgba(245,158,11,0.2);border-bottom:1px solid rgba(245,158,11,0.2);padding:28px clamp(20px,4vw,48px)">
+  <div class="max-w" style="max-width:760px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div style="width:6px;height:6px;border-radius:50%;background:#d97706"></div>
+      <div style="font-size:0.65rem;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#92400e">Bottom Line</div>
+    </div>
+    <p style="font-weight:400;font-size:1rem;color:var(--navy);line-height:1.8;margin:0"><strong>You do not have to sell your current home before buying the next one in Los Angeles.</strong> There are four real strategies that let equity-rich homeowners move up: HELOC against existing equity, bridge loans, recasting after sale, and buy-before-you-sell programs. Each has tradeoffs in cost, timing, and risk. Which one fits depends on your equity position, monthly cash flow, and how long you can carry two homes if the sale takes longer than expected.</p>
+  </div>
+</div>
+
 
 <!-- THE CONTINGENT OFFER TRAP -->
 <section style="background:var(--white);padding:clamp(56px,8vw,96px) clamp(20px,4vw,48px)">
@@ -2163,6 +2208,111 @@ function submitFN() {
   document.getElementById('fnSubForm').style.display = 'none';
   document.getElementById('fnSubConfirm').style.display = 'block';
 }
+</script>
+
+
+<!-- ── EXIT-INTENT MODAL ── -->
+<div id="exitIntentModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(10,37,64,0.65);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;animation:fadeIn 0.25s ease-out">
+  <div style="background:#ffffff;max-width:480px;width:100%;border-radius:16px;padding:clamp(28px,4vw,40px);position:relative;box-shadow:0 24px 80px rgba(0,0,0,0.3);animation:slideUp 0.3s ease-out">
+    <button id="exitIntentClose" aria-label="Close" style="position:absolute;top:14px;right:14px;background:transparent;border:none;cursor:pointer;color:#6b7280;font-size:24px;line-height:1;padding:6px;border-radius:50%;transition:background 0.15s" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='transparent'">×</button>
+
+    <div style="font-size:0.62rem;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#1e9bcc;margin-bottom:12px">Before you go</div>
+
+    <h2 style="font-weight:800;font-size:clamp(1.4rem,2.4vw,1.7rem);color:#0A2540;letter-spacing:-0.02em;line-height:1.2;margin:0 0 14px 0">Want to know your actual rate?</h2>
+
+    <p style="font-weight:400;font-size:0.95rem;color:#2b2f2e;line-height:1.7;margin:0 0 24px 0">Online rate guesses are just that. A 15-minute conversation tells you what you'd actually be offered based on your specific credit, income, and the property you're looking at. Free. No commitment. No hard sell.</p>
+
+    <a href="/schedule" id="exitIntentCTA" style="display:block;background:#5bcbf5;color:#0A2540;text-align:center;padding:14px 24px;border-radius:8px;font-weight:800;font-size:0.95rem;letter-spacing:-0.01em;text-decoration:none;transition:transform 0.12s,box-shadow 0.12s" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 8px 24px rgba(91,203,245,0.3)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none'">Book a 15-minute call</a>
+
+    <button id="exitIntentDismiss" style="display:block;width:100%;background:transparent;border:none;cursor:pointer;color:#6b7280;font-size:0.82rem;font-weight:400;margin-top:14px;padding:8px;font-family:inherit">Not right now</button>
+  </div>
+</div>
+
+<style>
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) {
+    #exitIntentModal, #exitIntentModal > div { animation: none !important; }
+  }
+</style>
+
+<script>
+(function() {
+  // Skip modal on certain pages
+  var path = window.location.pathname;
+  var skipPaths = ['/schedule', '/404', '/decode3-confirmed', '/journey-calibrate', '/ig'];
+  for (var i = 0; i < skipPaths.length; i++) {
+    if (path === skipPaths[i] || path === skipPaths[i] + '/' || path === skipPaths[i] + '.html') return;
+  }
+  if (path.indexOf('/thanks-') === 0 || path.indexOf('/thanks-') > -1) return;
+
+  // Skip if already shown this session
+  if (sessionStorage.getItem('exitIntentShown') === '1') return;
+
+  var modal = document.getElementById('exitIntentModal');
+  if (!modal) return;
+
+  function showModal() {
+    if (sessionStorage.getItem('exitIntentShown') === '1') return;
+    sessionStorage.setItem('exitIntentShown', '1');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    // GA event
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'exit_intent_shown', { 'page_path': path });
+    }
+  }
+
+  function hideModal() {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  // Wait at least 8 seconds before allowing exit-intent (avoid flash on quick bounces)
+  var initialized = false;
+  setTimeout(function() { initialized = true; }, 8000);
+
+  // Desktop: mouse moves above viewport
+  document.addEventListener('mouseout', function(e) {
+    if (!initialized) return;
+    if (!e.relatedTarget && !e.toElement && e.clientY < 5) {
+      showModal();
+    }
+  });
+
+  // Mobile: rapid scroll up after scrolling down (proxy for "leaving intent")
+  var lastScrollY = 0;
+  var lastScrollTime = Date.now();
+  var hasScrolledDown = false;
+  window.addEventListener('scroll', function() {
+    if (!initialized) return;
+    var now = Date.now();
+    var currentY = window.scrollY;
+    if (currentY > 600) hasScrolledDown = true;
+    if (hasScrolledDown && currentY < 100 && (lastScrollY - currentY) > 200 && (now - lastScrollTime) < 800) {
+      showModal();
+    }
+    lastScrollY = currentY;
+    lastScrollTime = now;
+  }, { passive: true });
+
+  // Dismissals
+  document.getElementById('exitIntentClose').addEventListener('click', hideModal);
+  document.getElementById('exitIntentDismiss').addEventListener('click', hideModal);
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) hideModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.style.display === 'flex') hideModal();
+  });
+
+  // Track CTA clicks
+  document.getElementById('exitIntentCTA').addEventListener('click', function() {
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'exit_intent_cta_click', { 'page_path': path });
+    }
+  });
+})();
 </script>
 
 </body>

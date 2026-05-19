@@ -84,13 +84,6 @@
   </url>
 
   <!-- IG / social linktree -->
-  <url>
-    <loc>https://darynfillis.com/ig</loc>
-    <lastmod>2026-04-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
   <!-- Self-Employed Mortgage -->
   <url>
     <loc>https://darynfillis.com/self-employed</loc>
@@ -243,6 +236,34 @@
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
+  </url>
+
+  <url>
+    <loc>https://darynfillis.com/buying-vs-renting</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://darynfillis.com/neighborhoods/santa-monica</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://darynfillis.com/neighborhoods/manhattan-beach</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://darynfillis.com/neighborhoods/marina-del-rey</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
   </url>
 
 </urlset>

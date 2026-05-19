@@ -2048,5 +2048,110 @@ function submitFN() {
 </script>
 
 
+
+<!-- ── EXIT-INTENT MODAL ── -->
+<div id="exitIntentModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(10,37,64,0.65);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;animation:fadeIn 0.25s ease-out">
+  <div style="background:#ffffff;max-width:480px;width:100%;border-radius:16px;padding:clamp(28px,4vw,40px);position:relative;box-shadow:0 24px 80px rgba(0,0,0,0.3);animation:slideUp 0.3s ease-out">
+    <button id="exitIntentClose" aria-label="Close" style="position:absolute;top:14px;right:14px;background:transparent;border:none;cursor:pointer;color:#6b7280;font-size:24px;line-height:1;padding:6px;border-radius:50%;transition:background 0.15s" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='transparent'">×</button>
+
+    <div style="font-size:0.62rem;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#1e9bcc;margin-bottom:12px">Before you go</div>
+
+    <h2 style="font-weight:800;font-size:clamp(1.4rem,2.4vw,1.7rem);color:#0A2540;letter-spacing:-0.02em;line-height:1.2;margin:0 0 14px 0">Want to know your actual rate?</h2>
+
+    <p style="font-weight:400;font-size:0.95rem;color:#2b2f2e;line-height:1.7;margin:0 0 24px 0">Online rate guesses are just that. A 15-minute conversation tells you what you'd actually be offered based on your specific credit, income, and the property you're looking at. Free. No commitment. No hard sell.</p>
+
+    <a href="/schedule" id="exitIntentCTA" style="display:block;background:#5bcbf5;color:#0A2540;text-align:center;padding:14px 24px;border-radius:8px;font-weight:800;font-size:0.95rem;letter-spacing:-0.01em;text-decoration:none;transition:transform 0.12s,box-shadow 0.12s" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 8px 24px rgba(91,203,245,0.3)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none'">Book a 15-minute call</a>
+
+    <button id="exitIntentDismiss" style="display:block;width:100%;background:transparent;border:none;cursor:pointer;color:#6b7280;font-size:0.82rem;font-weight:400;margin-top:14px;padding:8px;font-family:inherit">Not right now</button>
+  </div>
+</div>
+
+<style>
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) {
+    #exitIntentModal, #exitIntentModal > div { animation: none !important; }
+  }
+</style>
+
+<script>
+(function() {
+  // Skip modal on certain pages
+  var path = window.location.pathname;
+  var skipPaths = ['/schedule', '/404', '/decode3-confirmed', '/journey-calibrate', '/ig'];
+  for (var i = 0; i < skipPaths.length; i++) {
+    if (path === skipPaths[i] || path === skipPaths[i] + '/' || path === skipPaths[i] + '.html') return;
+  }
+  if (path.indexOf('/thanks-') === 0 || path.indexOf('/thanks-') > -1) return;
+
+  // Skip if already shown this session
+  if (sessionStorage.getItem('exitIntentShown') === '1') return;
+
+  var modal = document.getElementById('exitIntentModal');
+  if (!modal) return;
+
+  function showModal() {
+    if (sessionStorage.getItem('exitIntentShown') === '1') return;
+    sessionStorage.setItem('exitIntentShown', '1');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    // GA event
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'exit_intent_shown', { 'page_path': path });
+    }
+  }
+
+  function hideModal() {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  // Wait at least 8 seconds before allowing exit-intent (avoid flash on quick bounces)
+  var initialized = false;
+  setTimeout(function() { initialized = true; }, 8000);
+
+  // Desktop: mouse moves above viewport
+  document.addEventListener('mouseout', function(e) {
+    if (!initialized) return;
+    if (!e.relatedTarget && !e.toElement && e.clientY < 5) {
+      showModal();
+    }
+  });
+
+  // Mobile: rapid scroll up after scrolling down (proxy for "leaving intent")
+  var lastScrollY = 0;
+  var lastScrollTime = Date.now();
+  var hasScrolledDown = false;
+  window.addEventListener('scroll', function() {
+    if (!initialized) return;
+    var now = Date.now();
+    var currentY = window.scrollY;
+    if (currentY > 600) hasScrolledDown = true;
+    if (hasScrolledDown && currentY < 100 && (lastScrollY - currentY) > 200 && (now - lastScrollTime) < 800) {
+      showModal();
+    }
+    lastScrollY = currentY;
+    lastScrollTime = now;
+  }, { passive: true });
+
+  // Dismissals
+  document.getElementById('exitIntentClose').addEventListener('click', hideModal);
+  document.getElementById('exitIntentDismiss').addEventListener('click', hideModal);
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) hideModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.style.display === 'flex') hideModal();
+  });
+
+  // Track CTA clicks
+  document.getElementById('exitIntentCTA').addEventListener('click', function() {
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'exit_intent_cta_click', { 'page_path': path });
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
