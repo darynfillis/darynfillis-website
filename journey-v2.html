@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNXGMCM9L5"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -12,7 +11,6 @@
 </script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="shortcut icon" type="image/png" href="/favicon.png">
 
@@ -1350,8 +1348,8 @@ html{-webkit-text-size-adjust:100%;}
 
 /* ─── JOURNEY V2 STYLES ─── */
 /* ════════════════════════════════════════════════════════════════════
-   JOURNEY V2 — INTERACTIVE STYLES
-   Uses main-site design tokens (--blue, --navy, --ink, etc.)
+   JOURNEY V2 — INTERACTIVE STYLES (Revised)
+   Real trail map + zoom navigation + click-to-pin (Option B)
    ════════════════════════════════════════════════════════════════════ */
 
 /* ── PERSONA SELECTOR ──────────────────────────────────── */
@@ -1413,15 +1411,11 @@ html{-webkit-text-size-adjust:100%;}
   color: var(--white);
   box-shadow: 0 4px 14px rgba(10, 37, 64, 0.18);
 }
-.persona-btn.is-active:hover {
-  background: var(--navy);
-  color: var(--white);
-}
 
 /* ── INTRO COPY ──────────────────────────────────────── */
 .journey-intro-v2 {
   background: var(--white);
-  padding: clamp(48px, 7vw, 80px) clamp(20px, 4vw, 48px);
+  padding: clamp(48px, 7vw, 80px) clamp(20px, 4vw, 48px) clamp(32px, 5vw, 48px);
 }
 .journey-intro-v2-inner {
   max-width: 820px;
@@ -1454,24 +1448,280 @@ html{-webkit-text-size-adjust:100%;}
   max-width: 660px;
 }
 
-/* ── PIN CONTROL ─────────────────────────────────────── */
-.pin-control-section {
+/* ── TRAIL MAP (Real photographic background + hit zones) ── */
+.trail-section {
   background: var(--white);
-  padding: 0 clamp(20px, 4vw, 48px) clamp(32px, 5vw, 48px);
+  padding: 0 clamp(20px, 4vw, 48px) clamp(48px, 7vw, 80px);
+  position: relative;
 }
-.pin-control {
-  max-width: 720px;
+
+.trail-map {
+  max-width: 1400px;
   margin: 0 auto;
+  position: relative;
+  background: var(--navy);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.trail-map-inner {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  aspect-ratio: 1920 / 1080;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trail-map-inner { transition: none; }
+}
+
+.trail-map-inner img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.trail-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ── STAGE HIT ZONES (Buttons positioned over map) ── */
+.stage-hit {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  pointer-events: all;
+  padding: 0;
+  z-index: 10;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+}
+
+.stage-hit-marker {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 2px solid var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.stage-hit-num {
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+}
+
+.stage-hit:hover .stage-hit-marker {
+  background: var(--blue);
+  border-color: var(--blue);
+  transform: scale(1.15);
+  box-shadow: 0 4px 16px rgba(91, 203, 245, 0.6);
+}
+
+.stage-hit:focus-visible .stage-hit-marker {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+/* Tooltip — shows on hover OR when pinned */
+.stage-hit-tooltip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10, 37, 64, 0.98);
+  color: var(--white);
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  border: 1px solid rgba(91, 203, 245, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 20;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.stage-hit-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(10, 37, 64, 0.98);
+}
+.stage-hit-tooltip-num {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+.stage-hit-tooltip-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.stage-hit:hover .stage-hit-tooltip {
+  opacity: 1;
+}
+
+/* PINNED state — persistent tooltip + glow on marker */
+.stage-hit.is-pinned .stage-hit-marker {
+  background: var(--blue);
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(91, 203, 245, 0.35), 0 6px 20px rgba(91, 203, 245, 0.6);
+  animation: pinPulse 2s infinite;
+}
+@keyframes pinPulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(91, 203, 245, 0.35), 0 6px 20px rgba(91, 203, 245, 0.6); }
+  50% { box-shadow: 0 0 0 10px rgba(91, 203, 245, 0.15), 0 6px 20px rgba(91, 203, 245, 0.7); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stage-hit.is-pinned .stage-hit-marker { animation: none; }
+}
+
+.stage-hit.is-pinned .stage-hit-tooltip {
+  opacity: 1;
+  pointer-events: all;
+  /* When zoomed, counter-scale tooltip to keep it readable */
+  transform: translateX(-50%) scale(calc(1 / 2.5));
+  transform-origin: bottom center;
+}
+/* When NOT in zoomed state, render tooltip at normal scale */
+.trail-map-inner:not([style*="scale"]) .stage-hit.is-pinned .stage-hit-tooltip {
+  transform: translateX(-50%);
+}
+
+.stage-hit-readmore {
+  background: var(--blue);
+  color: var(--navy);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  margin-top: 4px;
+  white-space: nowrap;
+}
+.stage-hit-readmore:hover {
+  background: var(--white);
+}
+
+/* When trail is zoomed, shrink hit-zone size to maintain visual ratio */
+.trail-map-inner[style*="scale"] .stage-hit {
+  /* Hit zones get scaled with the map, but we keep marker size readable */
+}
+.trail-map-inner[style*="scale"] .stage-hit-marker {
+  /* Counter-scale to keep markers proportional to their original visual size */
+  transform: scale(calc(1 / 2.5));
+}
+.trail-map-inner[style*="scale"] .stage-hit:hover .stage-hit-marker {
+  transform: scale(calc(1.15 / 2.5));
+}
+.trail-map-inner[style*="scale"] .stage-hit.is-pinned .stage-hit-marker {
+  transform: scale(calc(1 / 2.5));
+}
+
+/* ── ZOOM OUT BUTTON ─────────────────────────────────── */
+.zoom-out-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 50;
+  background: rgba(10, 37, 64, 0.92);
+  color: var(--white);
+  border: 1px solid rgba(91, 203, 245, 0.4);
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(4px);
+}
+.zoom-out-btn.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.zoom-out-btn:hover {
+  background: var(--navy);
+  border-color: var(--blue);
+}
+
+/* ── PROGRESS SLIDER (Accessibility — hidden on desktop) ── */
+.progress-section {
+  background: var(--white);
+  padding: 0 clamp(20px, 4vw, 48px);
+}
+.progress-control {
+  max-width: 720px;
+  margin: 0 auto 32px;
   background: var(--surface);
   border: 1px solid var(--rule);
   border-radius: 12px;
-  padding: 18px 22px;
+  padding: 16px 22px;
   display: flex;
   align-items: center;
   gap: 14px;
   flex-wrap: wrap;
+  /* Hide visually on desktop, but available via keyboard tabbing */
+  position: relative;
 }
-.pin-control-label {
+
+/* Visually hide on desktop unless focused (accessibility-only) */
+@media (min-width: 768px) {
+  .progress-control {
+    display: none;
+  }
+  /* Show when keyboard user tabs into it */
+  .progress-control:focus-within {
+    display: flex;
+  }
+}
+
+.progress-label-eyebrow {
   font-size: 0.65rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -1479,7 +1729,7 @@ html{-webkit-text-size-adjust:100%;}
   color: var(--blue-dark);
   flex-shrink: 0;
 }
-.pin-slider {
+#progressSlider {
   flex: 1;
   min-width: 180px;
   -webkit-appearance: none;
@@ -1488,19 +1738,18 @@ html{-webkit-text-size-adjust:100%;}
   height: 24px;
   cursor: pointer;
 }
-.pin-slider::-webkit-slider-runnable-track {
+#progressSlider::-webkit-slider-runnable-track {
   height: 4px;
   background: var(--rule);
   border-radius: 2px;
 }
-.pin-slider::-moz-range-track {
+#progressSlider::-moz-range-track {
   height: 4px;
   background: var(--rule);
   border-radius: 2px;
 }
-.pin-slider::-webkit-slider-thumb {
+#progressSlider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  appearance: none;
   width: 22px;
   height: 22px;
   border-radius: 50%;
@@ -1510,10 +1759,7 @@ html{-webkit-text-size-adjust:100%;}
   margin-top: -9px;
   cursor: grab;
 }
-.pin-slider::-webkit-slider-thumb:active {
-  cursor: grabbing;
-}
-.pin-slider::-moz-range-thumb {
+#progressSlider::-moz-range-thumb {
   width: 22px;
   height: 22px;
   border-radius: 50%;
@@ -1522,7 +1768,7 @@ html{-webkit-text-size-adjust:100%;}
   box-shadow: 0 2px 8px rgba(91, 203, 245, 0.5);
   cursor: grab;
 }
-.pin-current-label {
+#progressLabel {
   font-size: 0.9rem;
   font-weight: 700;
   color: var(--navy);
@@ -1531,121 +1777,8 @@ html{-webkit-text-size-adjust:100%;}
   text-align: center;
   padding-top: 4px;
 }
-.pin-reset {
-  background: transparent;
-  border: 1px solid var(--rule);
-  border-radius: 6px;
-  padding: 6px 12px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--ink);
-  cursor: pointer;
-  font-family: inherit;
-}
-.pin-reset:hover {
-  border-color: var(--navy);
-  color: var(--navy);
-}
 
-/* ── TRAIL (Desktop) ─────────────────────────────────── */
-.trail-section {
-  background: var(--white);
-  padding: 0 clamp(20px, 4vw, 48px) clamp(48px, 7vw, 80px);
-}
-.trail-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  position: relative;
-  /* Maintain the aspect ratio of the original trail layout */
-  aspect-ratio: 1200 / 600;
-  background: var(--surface);
-  border: 1px solid var(--rule);
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-#journeyTrail {
-  position: absolute;
-  inset: 0;
-  /* Subtle background pattern for "map" feel */
-  background-image:
-    radial-gradient(circle at 30% 40%, rgba(91, 203, 245, 0.04) 0%, transparent 50%),
-    radial-gradient(circle at 70% 60%, rgba(245, 158, 11, 0.04) 0%, transparent 50%);
-}
-
-.trail-stage {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  background: var(--white);
-  border: 2px solid var(--rule);
-  border-radius: 999px;
-  padding: 8px 16px 8px 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  font-family: inherit;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  z-index: 2;
-}
-.trail-stage:hover {
-  border-color: var(--blue);
-  transform: translate(-50%, -50%) scale(1.05);
-  box-shadow: 0 6px 18px rgba(91, 203, 245, 0.25);
-  z-index: 10;
-}
-.trail-stage.is-pinned {
-  border-color: var(--blue);
-  background: var(--blue);
-  color: var(--navy);
-  box-shadow: 0 0 0 4px rgba(91, 203, 245, 0.3), 0 4px 14px rgba(91, 203, 245, 0.4);
-  animation: pinPulse 2s infinite;
-}
-@keyframes pinPulse {
-  0%, 100% { box-shadow: 0 0 0 4px rgba(91, 203, 245, 0.3), 0 4px 14px rgba(91, 203, 245, 0.4); }
-  50% { box-shadow: 0 0 0 8px rgba(91, 203, 245, 0.15), 0 4px 14px rgba(91, 203, 245, 0.5); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .trail-stage, .trail-stage.is-pinned { animation: none; transition: none; }
-}
-
-.trail-stage-num {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: var(--navy);
-  color: var(--white);
-  font-weight: 800;
-  font-size: 0.75rem;
-  flex-shrink: 0;
-}
-.trail-stage.is-pinned .trail-stage-num {
-  background: var(--navy);
-}
-.trail-stage-label {
-  font-weight: 700;
-  font-size: 0.78rem;
-  color: var(--navy);
-  white-space: nowrap;
-  letter-spacing: -0.005em;
-}
-
-/* Hide trail labels on smaller desktop sizes to prevent overlap */
-@media (max-width: 1100px) {
-  .trail-stage-label { display: none; }
-  .trail-stage { padding: 6px; }
-}
-
-/* Mobile: hide the trail entirely, show only cards */
-@media (max-width: 720px) {
-  .trail-wrapper { display: none; }
-}
-
-/* ── STAGE CARDS (mobile + always-visible secondary) ── */
+/* ── STAGE CARDS (Mobile + secondary desktop view) ──── */
 #stagesCards {
   background: var(--surface);
   padding: clamp(48px, 7vw, 80px) clamp(20px, 4vw, 48px);
@@ -1752,7 +1885,12 @@ html{-webkit-text-size-adjust:100%;}
   transform: translateX(3px);
 }
 
-/* ── ZOOM VIEW (Full-screen overlay) ─────────────────── */
+/* On mobile, hide the trail map entirely (it's not usable at small sizes) */
+@media (max-width: 760px) {
+  .trail-section { display: none; }
+}
+
+/* ── ZOOM VIEW (Full-screen overlay for stage details) ── */
 .zoom-overlay {
   position: fixed;
   inset: 0;
@@ -1792,9 +1930,7 @@ html{-webkit-text-size-adjust:100%;}
   .zoom-panel { animation: none; }
   .zoom-overlay { transition: opacity 0.1s; }
 }
-body.zoom-open {
-  overflow: hidden;
-}
+body.zoom-open { overflow: hidden; }
 
 .zoom-close {
   position: absolute;
@@ -1895,7 +2031,6 @@ body.zoom-open {
   margin-top: 12px !important;
 }
 
-/* The Honest Truth section — italicized voice piece */
 .zoom-section-truth p {
   font-style: italic;
   font-size: 1.05rem;
@@ -1903,7 +2038,6 @@ body.zoom-open {
   line-height: 1.75;
 }
 
-/* The "What Most LOs Get Wrong" section — bold differentiator */
 .zoom-section-warning {
   background: linear-gradient(135deg, rgba(239, 68, 68, 0.04) 0%, rgba(239, 68, 68, 0.02) 100%);
   border: 1px solid rgba(239, 68, 68, 0.2);
@@ -1915,7 +2049,6 @@ body.zoom-open {
   color: #b91c1c !important;
 }
 
-/* Real example section */
 .zoom-section-example {
   background: var(--surface);
   border: 1px solid var(--rule);
@@ -1925,10 +2058,6 @@ body.zoom-open {
 }
 .zoom-section-eyebrow-example {
   color: var(--blue-dark) !important;
-}
-.zoom-section-placeholder p {
-  color: var(--muted) !important;
-  font-size: 0.92rem !important;
 }
 
 .zoom-cta {
@@ -1945,9 +2074,7 @@ body.zoom-open {
   margin: 0 0 18px 0;
   line-height: 1.5;
 }
-.zoom-cta .btn {
-  display: inline-block;
-}
+.zoom-cta .btn { display: inline-block; }
 
 .zoom-link {
   display: block;
@@ -1967,7 +2094,6 @@ body.zoom-open {
   background: var(--surface);
 }
 
-/* ── MOBILE ZOOM ADJUSTMENTS ─────────────────────────── */
 @media (max-width: 600px) {
   .zoom-overlay { padding: 12px; }
   .zoom-panel { padding: 24px 22px; border-radius: 14px; }
@@ -2050,43 +2176,43 @@ body.zoom-open {
   <div class="journey-intro-v2-inner">
     <div id="introEyebrow" class="section-eyebrow">For first-time buyers</div>
     <h2 id="introH2">Your first home, mapped out from end to end.</h2>
-    <p id="introSub">Every stage you'll go through, what to expect, how long it takes, and what most lenders get wrong at each step.</p>
+    <p id="introSub">Every stage you'll go through, what to expect, how long it takes, and what most mortgage professionals get wrong at each step.</p>
   </div>
 </section>
 
-<!-- ── PIN CONTROL ── -->
-<section class="pin-control-section">
-  <div class="pin-control">
-    <span class="pin-control-label">Where Are You?</span>
+<!-- ── PROGRESS SLIDER (Hidden on desktop, accessibility fallback) ── -->
+<section class="progress-section">
+  <div class="progress-control">
+    <span class="progress-label-eyebrow">Where Are You</span>
     <input
       type="range"
-      id="pinSlider"
-      class="pin-slider"
+      id="progressSlider"
       min="0"
-      max="18"
+      max="19"
       step="1"
       value="0"
-      aria-label="Mark where you are in the journey">
-    <button type="button" id="pinReset" class="pin-reset">Reset</button>
-    <p id="pinLabel" class="pin-current-label">Drag to mark where you are</p>
+      aria-label="Navigate stages with keyboard">
+    <p id="progressLabel">Click any stage to explore</p>
   </div>
 </section>
 
-<!-- ── TRAIL (Desktop visual map) ── -->
+<!-- ── TRAIL MAP ── -->
 <section class="trail-section">
-  <div class="trail-wrapper">
-    <div id="journeyTrail"></div>
+  <div class="trail-map">
+    <div class="trail-map-inner" id="trailMapInner">
+      <img src="/journey-map.jpg" srcset="/journey-map.jpg 1x, /journey-map@2x.jpg 2x" alt="The homebuying journey illustrated as a mountain trail with stages mapped along it" draggable="false">
+      <div id="trailOverlay" class="trail-overlay"></div>
+    </div>
+    <button type="button" id="zoomOutBtn" class="zoom-out-btn" aria-label="Zoom out to see full map">
+      <span>← Zoom out</span>
+    </button>
   </div>
 </section>
 
-<!-- ── STAGE CARDS (Mobile + always-visible secondary) ── -->
-<section id="stagesCards" class="stages-cards">
-  <div class="stages-cards-grid">
-    <!-- Cards rendered by JS -->
-  </div>
-</section>
+<!-- ── STAGE CARDS ── -->
+<section id="stagesCards"></section>
 
-<!-- ── ZOOM OVERLAY (Hidden until stage clicked) ── -->
+<!-- ── ZOOM OVERLAY (Hidden until 'Read full details' clicked) ── -->
 <div id="zoomOverlay" class="zoom-overlay" role="presentation"></div>
 
 <!-- ── BOTTOM CTA ── -->
@@ -2581,7 +2707,6 @@ function submitFN() {
 }
 </script>
 
-<!-- ─── JOURNEY V2 DATA + LOGIC ─── -->
 <script>
 const stages = [
   {
@@ -2590,11 +2715,12 @@ const stages = [
     x: 32.03,
     y: 73.06,
     summary: "We map your full financial picture into a clear plan.",
-    what: "We review your application and credit, look at your full financial picture, and map out a plan that fits your goals. If you don't have an agent, we connect you with a strong one.",
+    what: "We review your application and credit, look at your full financial picture, and map out a plan that fits your goals. If you don't have an agent, I connect you with a strong one.",
     time: "2 to 4 days",
     expect: "A simple game plan, clear next steps, and confidence in how to move forward.",
-    honestTruth: "Registration is where most lenders go on autopilot. They pull credit, ask for pay stubs, and hand you a generic pre-approval letter. I treat it as the most important conversation of the entire deal because every decision downstream is shaped by what we figure out here.",
-    doneWrong: "Most LOs do a soft pull and call it 'pre-qualification.' That's worth nothing in a competitive offer. Worse, they don't actually look at your situation — they just plug numbers into a calculator and tell you what you can borrow. They never ask what you're actually trying to do with the home, how long you plan to stay, or what makes your situation unique. You leave the conversation feeling like a number.",
+    honestTruth: "Registration is where most mortgage professionals go on autopilot. They pull credit, ask for pay stubs, and hand you a generic pre-approval letter. I treat it as the most important conversation of the entire deal because every decision downstream is shaped by what we figure out here.",
+    doneWrong: "Most mortgage professionals do a soft pull and call it 'pre-qualification.' That's worth nothing in a competitive offer. Worse, they don't actually look at your situation — they just plug numbers into a calculator and tell you what you can borrow. They never ask what you're actually trying to do with the home, how long you plan to stay, or what makes your situation unique. You leave the conversation feeling like a number.",
+    doneWrongLabel: "What Most Mortgage Professionals Get Wrong",
     cta: {
       text: "Want a real conversation about your situation?",
       href: "/schedule"
@@ -2602,16 +2728,16 @@ const stages = [
     personas: {
       "move-up": {
         summary: "We map your full picture including your current home's equity and timing.",
-        what: "We review your application, credit, current home's equity position, and timing. We build a strategy that handles both the sale and the purchase without putting you in a stressful contingent position."
+        what: "We review your application, credit, current home's equity position, and timing. I build a strategy that handles both the sale and the purchase without putting you in a stressful contingent position."
       },
       investor: {
         summary: "We map your investment strategy, not just your income.",
-        what: "We review your application, credit, current rental portfolio, and DSCR / cash flow targets. For self-employed or write-off-heavy investors, we identify which loan products fit (DSCR, bank statement, asset depletion) before pulling credit."
+        what: "We review your application, credit, current rental portfolio, and DSCR / cash flow targets. For self-employed or write-off-heavy investors, I identify which loan products fit (DSCR, bank statement, asset depletion) before pulling credit."
       },
       refi: {
         summary: "We figure out if refinancing actually saves you money.",
-        what: "We review your current loan, your goals (rate reduction, cash-out, term change), and run the breakeven math. If a refinance doesn't make sense, I'll tell you that. Most LOs won't.",
-        doneWrong: "Most refi LOs hide the closing costs in the new loan balance and tell you your payment is going down. The payment IS going down, but you're paying for it for 30 years. The right way to evaluate a refi is breakeven months, not monthly payment. Most LOs won't show you that math because it would talk you out of half the refis they push."
+        what: "I review your current loan, your goals (rate reduction, cash-out, term change), and run the breakeven math. If a refinance doesn't make sense, I'll tell you that. Most mortgage professionals won't.",
+        doneWrong: "Most refi mortgage professionals hide the closing costs in the new loan balance and tell you your payment is going down. The payment IS going down, but you're paying for it for 30 years. The right way to evaluate a refi is breakeven months, not monthly payment. Most won't show you that math because it would talk you out of half the refis they push."
       }
     },
     visibleFor: ["first-time", "move-up", "investor", "refi"],
@@ -2624,22 +2750,20 @@ const stages = [
     name: "Submission",
     x: 19.38,
     y: 83.61,
-    summary: "We gather what underwriting actually needs, not what they'd nice-to-have.",
-    what: "We collect your income, asset, and identity documents and structure them the way underwriting expects to see them. The cleaner your submission, the faster everything downstream.",
+    summary: "We gather what underwriting actually needs, not nice-to-have.",
+    what: "I collect your income, asset, and identity documents and structure them the way underwriting expects to see them. The cleaner the submission, the faster everything downstream.",
     time: "1 to 3 business days",
     expect: "A clear document checklist and a fast review.",
     honestTruth: "How well your file is packaged at submission predicts almost everything that follows. A messy submission means slower processing, more conditions, and a less confident pre-approval letter when it comes time to write offers.",
-    doneWrong: "Most LOs ask for every document under the sun, then upload them to the underwriter without organizing or annotating anything. The underwriter has to figure out what's what. This is why you get five rounds of 'conditions' — questions about things that were already in the file but weren't presented clearly. A well-organized submission cuts conditions in half.",
-    cta: {
-      text: "Want to see what a 'real' pre-approval looks like?",
-      href: "/schedule"
-    },
+    doneWrong: "Most mortgage professionals ask for every document under the sun, then upload them to the underwriter without organizing or annotating anything. The underwriter has to figure out what's what. This is why you get five rounds of 'conditions' — questions about things that were already in the file but weren't presented clearly. A well-organized submission cuts conditions in half.",
+    doneWrongLabel: "What Most Mortgage Professionals Get Wrong",
+    cta: null,
     personas: {
       investor: {
-        what: "We collect tax returns, rental income statements, and operating documentation for your investment portfolio. For DSCR loans, we focus on the property's cash flow rather than personal income."
+        what: "I collect tax returns, rental income statements, and operating documentation for your investment portfolio. For DSCR loans, we focus on the property's cash flow rather than personal income."
       },
       refi: {
-        what: "We collect your current mortgage statement, income docs, and updated asset documentation. Refis are typically lighter than purchase submissions but the same packaging principles apply."
+        what: "I collect your current mortgage statement, income docs, and updated asset documentation. Refis are typically lighter than purchase submissions but the same packaging principles apply."
       }
     },
     visibleFor: ["first-time", "move-up", "investor", "refi"],
@@ -2657,7 +2781,8 @@ const stages = [
     time: "24 to 48 hours",
     expect: "A pre-approval letter that actually means something in a multiple-offer situation.",
     honestTruth: "There is a massive difference between 'pre-qualified' and 'fully underwritten.' One is a marketing letter. The other is a near-guarantee that the loan will close. In LA's competitive market, the difference between these two letters can be the difference between winning and losing the house.",
-    doneWrong: "Most LOs hand out 'pre-approval' letters that are really just pre-qualifications dressed up. They haven't actually verified your income. They haven't reviewed your tax returns. They're guessing. When you write an offer with that letter and the seller's agent calls to verify, the LO can't say anything beyond 'yes they applied with us.' That's why you lose to cash offers — not because of the financing itself, but because your letter is paper-thin.",
+    doneWrong: "Most mortgage professionals hand out 'pre-approval' letters that are really just pre-qualifications dressed up. They haven't actually verified your income. They haven't reviewed your tax returns. They're guessing. When you write an offer with that letter and the seller's agent calls to verify, your mortgage professional can't say anything beyond 'yes they applied with us.' That's why you lose to cash offers — not because of the financing itself, but because your letter is paper-thin.",
+    doneWrongLabel: "What Most Mortgage Professionals Get Wrong",
     cta: {
       text: "Get a real pre-approval before you write your next offer",
       href: "/schedule"
@@ -2676,13 +2801,11 @@ const stages = [
     summary: "You're shopping. I'm on call when you have questions on specific properties.",
     what: "While you're working with your agent to find the right home, I'm available to run quick numbers on properties you're considering, flag any financing red flags (HOA issues, condo warrantability), and update your pre-approval if your scenario changes.",
     time: "Days to weeks",
-    expect: "A lender who's actually responsive when you find a house at 9pm on a Saturday.",
-    honestTruth: "The shopping phase is where most lenders go silent. They consider their job done until you have a contract. I stay engaged because the right property choice has just as much to do with financing as it does with location.",
-    doneWrong: "Most LOs disappear once you have a pre-approval. You'll text them at 8pm about a property that just came on the market, and you'll get a response Tuesday morning if you're lucky. In LA's market, you can't afford that delay. The right LO is reachable, runs property-specific numbers within an hour, and flags issues before you write the offer instead of after.",
-    cta: {
-      text: "Need fast answers on specific properties?",
-      href: "/schedule"
-    },
+    expect: "A responsive mortgage advisor who's actually available when you find a house at 9pm on a Saturday.",
+    honestTruth: "The shopping phase is where most mortgage professionals go silent. They consider their job done until you have a contract. I stay engaged because the right property choice has just as much to do with financing as it does with location.",
+    doneWrong: "Most buyers fall in love with a property before checking whether they can actually finance it. They write offers on condos that are non-warrantable, on properties with HOA issues, or on listings priced above what they can qualify for. The fix is simple: a quick text to your mortgage advisor before you write the offer, not after.",
+    doneWrongLabel: "What Most Buyers Get Wrong Here",
+    cta: null,
     personas: {
       investor: {
         summary: "You're identifying investment properties. I run DSCR math fast.",
@@ -2702,13 +2825,11 @@ const stages = [
     summary: "You're in contract. We move fast.",
     what: "You and the seller have signed the purchase agreement. I immediately update your file, lock the rate (or strategize about timing), and start the formal loan process. The clock is now running.",
     time: "Same day to 1 business day",
-    expect: "Immediate movement from your lender. No waiting around.",
-    honestTruth: "The first 48 hours after going under contract determine whether you close on time. Lenders who treat this like a normal Monday morning task cause delays that cascade through the entire deal.",
-    doneWrong: "Most LOs treat 'in contract' as a checkpoint, not a starting gun. They wait for the standard intake process to run its course. By day 5 of a 30-day escrow, they're behind. Then everything is rushed at the end. The right LO has your file in motion within hours of contract, not days.",
-    cta: {
-      text: "Want a lender who moves fast?",
-      href: "/schedule"
-    },
+    expect: "Immediate movement from your mortgage advisor. No waiting around.",
+    honestTruth: "The first 48 hours after going under contract determine whether you close on time. Mortgage professionals who treat this like a normal Monday morning task cause delays that cascade through the entire deal.",
+    doneWrong: "Most mortgage professionals treat 'in contract' as a checkpoint, not a starting gun. They wait for the standard intake process to run its course. By day 5 of a 30-day escrow, they're behind. Then everything is rushed at the end. The right approach has your file in motion within hours of contract, not days.",
+    doneWrongLabel: "What Most Mortgage Professionals Get Wrong",
+    cta: null,
     personas: {},
     visibleFor: ["first-time", "move-up", "investor"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha"],
@@ -2725,11 +2846,9 @@ const stages = [
     time: "1 to 2 business days",
     expect: "Wire instructions for earnest money, a confirmation from escrow, and a sense that the machinery is now turning.",
     honestTruth: "Wire fraud at escrow opening is one of the biggest financial crimes targeting homebuyers right now. The wire instructions you receive should always be verified by calling escrow directly using a number you found independently — not the one in the email.",
-    doneWrong: "Most LOs don't proactively warn you about wire fraud. They send you escrow's wire instructions and move on. Then when something goes wrong, they say 'you should have called to verify.' The right LO walks you through the verification process before you wire a dollar, because $50,000+ stolen via wire fraud is recoverable about 30% of the time.",
-    cta: {
-      text: "Want a lender who actually protects you?",
-      href: "/schedule"
-    },
+    doneWrong: "Most mortgage professionals don't proactively warn you about wire fraud. They send you escrow's wire instructions and move on. Then when something goes wrong, they say 'you should have called to verify.' The right approach walks you through the verification process before you wire a dollar, because $50,000+ stolen via wire fraud is recoverable about 30% of the time.",
+    doneWrongLabel: "What Most Mortgage Professionals Get Wrong",
+    cta: null,
     personas: {},
     visibleFor: ["first-time", "move-up", "investor"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha"],
@@ -2745,12 +2864,10 @@ const stages = [
     what: "Federal regulations require lenders to issue you a Loan Estimate within 3 business days of submission. This document shows your interest rate, monthly payment, closing costs, and the cash you'll need at closing.",
     time: "Within 3 business days",
     expect: "A 5-page document that looks confusing if no one explains it. We will sit down and go through every line so you understand what you're paying for.",
-    honestTruth: "The Loan Estimate is the most important document in the first half of the deal. It's where you find out what you're actually paying — including the fees lenders hide if they think you won't notice.",
-    doneWrong: "Most LOs email you the Loan Estimate with 'let me know if you have questions' and that's it. Most clients don't have questions because they don't know what to ask. Then they discover at closing that their cash-to-close is $4,000 higher than they thought. The right LO walks through the document line by line, explains what every fee is, and tells you which ones are negotiable.",
-    cta: {
-      text: "Get a Loan Estimate walkthrough",
-      href: "/schedule"
-    },
+    honestTruth: "The Loan Estimate is the most important document in the first half of the deal. It's where you find out what you're actually paying — including the fees mortgage professionals hide if they think you won't notice.",
+    doneWrong: "Most mortgage professionals email you the Loan Estimate with 'let me know if you have questions' and that's it. Most clients don't have questions because they don't know what to ask. Then they discover at closing that their cash-to-close is $4,000 higher than they thought. The right approach walks through the document line by line, explains what every fee is, and tells you which ones are negotiable.",
+    doneWrongLabel: "What Most Mortgage Professionals Get Wrong",
+    cta: null,
     personas: {
       refi: {
         what: "Federal regulations require lenders to issue a Loan Estimate within 3 business days of application. For refis, this is where you can clearly see the closing costs you're being asked to absorb — and whether the rate truly justifies them."
@@ -2769,9 +2886,10 @@ const stages = [
     summary: "Your inspector finds issues. We figure out which ones matter.",
     what: "Your home inspector (and any specialists — roof, sewer, foundation) examines the property. They will find issues. The question isn't 'are there problems' — it's 'which ones are deal-breakers, which ones are negotiable, and which ones are normal for a home this age.'",
     time: "7 to 17 days after contract (depending on contingency period)",
-    expect: "An inspection report that looks scary but is mostly normal wear. We will help you separate the real concerns from the nitpicks.",
+    expect: "An inspection report that looks scary but is mostly normal wear. I'll help you separate the real concerns from the nitpicks.",
     honestTruth: "Every home inspection looks alarming if you've never read one. Roof needs maintenance. GFCI outlets not installed. Window seal failure. Most of these are normal. The real concerns are foundation, sewer lateral, electrical panel age, and any signs of water intrusion that wasn't disclosed.",
-    doneWrong: "Most LOs stay out of the inspection process entirely. They say 'that's between you and your agent.' But the inspection drives the renegotiation, which drives the appraisal value, which drives whether the loan still works. The right LO is engaged: 'If you ask for $20K in credits, here's how it affects your loan. If the seller refuses, here's what your real options are.'",
+    doneWrong: "Most buyers either panic at every item on the inspection report (and try to renegotiate everything) or wave off real concerns to avoid jeopardizing the deal. Both are mistakes. The right move is to pick the 3-5 items that really matter and negotiate those specifically, ignoring the cosmetic stuff. A good mortgage advisor stays engaged here because the renegotiation drives the appraisal value, which drives whether the loan still works.",
+    doneWrongLabel: "What Most Buyers Get Wrong Here",
     cta: {
       text: "Got an inspection coming up? Let's talk strategy",
       href: "/schedule"
@@ -2794,9 +2912,10 @@ const stages = [
     summary: "An independent appraiser determines what the home is worth.",
     what: "The lender orders an appraisal from a licensed third-party appraiser. They visit the home, compare it to recent sales, and assign a value. If the appraisal is at or above contract price, the loan moves forward. If it's lower, we negotiate.",
     time: "3 to 14 days from order",
-    expect: "An appraisal that mostly matches the contract price. If it comes in low, we have a playbook to fix it.",
-    honestTruth: "Low appraisals are common in fast-moving markets and they're not the end of the deal. There are four ways to handle them, and the right one depends on your contingencies, your cash position, and the seller's flexibility. Most LOs panic; the right LO knows the play.",
-    doneWrong: "Most LOs handle a low appraisal as a deal-killer. They call to deliver the bad news, suggest you bring more cash to closing, and walk away from creative options. The right LO has a four-step playbook: request reconsideration with new comps, renegotiate price with seller, restructure loan with higher LTV, or split the gap. They walk you through each option before defaulting to 'bring more cash.'",
+    expect: "An appraisal that mostly matches the contract price. If it comes in low, I have a playbook to fix it.",
+    honestTruth: "Low appraisals are common in fast-moving markets and they're not the end of the deal. There are four ways to handle them, and the right one depends on your contingencies, your cash position, and the seller's flexibility. Most mortgage professionals panic; the right advisor knows the play.",
+    doneWrong: "Most mortgage professionals handle a low appraisal as a deal-killer. They call to deliver the bad news, suggest you bring more cash to closing, and walk away from creative options. The right approach has a four-step playbook: request reconsideration with new comps, renegotiate price with seller, restructure loan with higher LTV, or split the gap. Walk through each option before defaulting to 'bring more cash.'",
+    doneWrongLabel: "What Most Mortgage Professionals Get Wrong",
     cta: {
       text: "Worried about appraisal risk on a specific property?",
       href: "/schedule"
@@ -2821,11 +2940,9 @@ const stages = [
     time: "2 to 7 business days after contract",
     expect: "An email that says you're approved, followed by a short list of items to wrap up. Manageable, not stressful.",
     honestTruth: "Conditional approval is where deals can stall if they're not handled cleanly. A good processor clears all conditions quickly. A bad one lets them sit and surprise you in the last week.",
-    doneWrong: "Most LOs let conditions accumulate. By the last week of escrow, there are 12 outstanding items and everyone is scrambling. The right LO clears conditions in batches as they come in, communicates with you proactively about what's needed, and tracks status so you're never the bottleneck.",
-    cta: {
-      text: "Want a lender who actually clears conditions on time?",
-      href: "/schedule"
-    },
+    doneWrong: "Most mortgage professionals let conditions accumulate. By the last week of escrow, there are 12 outstanding items and everyone is scrambling. The right approach clears conditions in batches as they come in, communicates with you proactively about what's needed, and tracks status so you're never the bottleneck.",
+    doneWrongLabel: "What Most Mortgage Professionals Get Wrong",
+    cta: null,
     personas: {},
     visibleFor: ["first-time", "move-up", "investor", "refi"],
     paths: ["purchase-financed", "va", "fha", "refi"],
@@ -2841,12 +2958,10 @@ const stages = [
     what: "Federal law requires you to receive the Closing Disclosure at least 3 business days before closing. It shows your final loan terms, payment, and exact cash to close. The 3-day waiting period is mandatory and cannot be waived.",
     time: "At least 3 business days before closing",
     expect: "A 5-page document that should mostly match your Loan Estimate. If there are differences, we will explain them.",
-    honestTruth: "The Closing Disclosure is your last chance to catch errors before closing. Compare every line to the Loan Estimate. If anything is significantly different (especially Section A: 'Origination Charges' and Section B: 'Services You Cannot Shop For'), call your LO immediately.",
-    doneWrong: "Most LOs send the Closing Disclosure and tell you to 'review and sign acknowledgment.' Most clients sign without comparing because they don't know what to look for. Then they discover at closing that an unexplained $500 fee was added. The right LO walks you through the document and proactively flags any line that changed from the Loan Estimate.",
-    cta: {
-      text: "Get a CD walkthrough before signing",
-      href: "/schedule"
-    },
+    honestTruth: "The Closing Disclosure is your last chance to catch errors before closing. Compare every line to the Loan Estimate. If anything is significantly different (especially Section A: 'Origination Charges' and Section B: 'Services You Cannot Shop For'), call your mortgage advisor immediately.",
+    doneWrong: "Most mortgage professionals send the Closing Disclosure and tell you to 'review and sign acknowledgment.' Most clients sign without comparing because they don't know what to look for. Then they discover at closing that an unexplained $500 fee was added. The right approach walks you through the document and proactively flags any line that changed from the Loan Estimate.",
+    doneWrongLabel: "What Most Mortgage Professionals Get Wrong",
+    cta: null,
     personas: {},
     visibleFor: ["first-time", "move-up", "investor", "refi"],
     paths: ["purchase-financed", "va", "fha", "refi"],
@@ -2862,12 +2977,10 @@ const stages = [
     what: "The underwriter issues 'Clear to Close' (CTC) — the green light for escrow to schedule signing. At this point, the loan is fully approved and ready to fund as soon as you sign.",
     time: "1 to 3 days before closing",
     expect: "A short email confirming you're cleared, followed by escrow contacting you to schedule the signing appointment.",
-    honestTruth: "Clear to Close is the relief moment. From here, the only thing left is signing and funding. If your file got here on time without panic, your LO did their job.",
-    doneWrong: "Some lenders issue 'CTC' before actually clearing all conditions, just to manage expectations. Then a last-minute issue causes a delay and your closing is pushed. A real CTC means EVERY condition is genuinely cleared. The right LO is honest about what's actually outstanding.",
-    cta: {
-      text: "Want a lender who hits CTC on schedule?",
-      href: "/schedule"
-    },
+    honestTruth: "Clear to Close is the relief moment. From here, the only thing left is signing and funding. If your file got here on time without panic, your mortgage advisor did their job.",
+    doneWrong: "Some lenders issue 'CTC' before actually clearing all conditions, just to manage expectations. Then a last-minute issue causes a delay and your closing is pushed. A real CTC means EVERY condition is genuinely cleared. The right approach is honest about what's actually outstanding.",
+    doneWrongLabel: "What Most Mortgage Professionals Get Wrong",
+    cta: null,
     personas: {},
     visibleFor: ["first-time", "move-up", "investor", "refi"],
     paths: ["purchase-financed", "va", "fha", "refi"],
@@ -2884,11 +2997,9 @@ const stages = [
     time: "1 to 2 hours",
     expect: "A lot of signatures and initials. The most important documents are the Note (your promise to pay) and the Deed of Trust (the lender's lien on the home).",
     honestTruth: "By the time you sit down to sign, the deal is essentially done. The signing is procedural. The hard work happened in the previous 28 days.",
-    doneWrong: "Some LOs aren't available on signing day. You'll have a question about something you're being asked to sign, and you can't reach them. The right LO is available by phone during your signing window so you can call if anything looks off.",
-    cta: {
-      text: "Want a lender who's available on signing day?",
-      href: "/schedule"
-    },
+    doneWrong: "Some mortgage professionals aren't available on signing day. You'll have a question about something you're being asked to sign, and you can't reach them. The right approach is being available by phone during your signing window so you can call if anything looks off.",
+    doneWrongLabel: "What Most Mortgage Professionals Get Wrong",
+    cta: null,
     personas: {},
     visibleFor: ["first-time", "move-up", "investor", "refi"],
     paths: ["purchase-financed", "va", "fha", "refi"],
@@ -2905,11 +3016,9 @@ const stages = [
     time: "Same day or next business day after signing",
     expect: "A confirmation from escrow that funds have been received. The deal is now in the final hours of closing.",
     honestTruth: "Funding is mechanical. Once you sign clean and the lender's funding department releases, the wire happens automatically. Delays here are rare but can happen on Friday afternoons or before holidays.",
-    doneWrong: "Most LOs leave funding entirely to their company's funding department. They don't follow up. When your signing was Friday at 3pm and the wire didn't go out before close of business, your closing pushes to Monday. The right LO times your signing to avoid this risk and personally confirms funding before the day ends.",
-    cta: {
-      text: "Don't want a 'funded Tuesday' surprise?",
-      href: "/schedule"
-    },
+    doneWrong: "Most mortgage professionals leave funding entirely to their company's funding department. They don't follow up. When your signing was Friday at 3pm and the wire didn't go out before close of business, your closing pushes to Monday. The right approach times your signing to avoid this risk and personally confirms funding before the day ends.",
+    doneWrongLabel: "What Most Mortgage Professionals Get Wrong",
+    cta: null,
     personas: {},
     visibleFor: ["first-time", "move-up", "investor", "refi"],
     paths: ["purchase-financed", "va", "fha", "refi"],
@@ -2926,11 +3035,9 @@ const stages = [
     time: "Day of or day before closing",
     expect: "A 30-minute walk through the home with a checklist. This is your last chance to flag anything before the deal closes.",
     honestTruth: "The walk-through is the buyer's last protection. If something material is wrong — promised repair not done, damage that wasn't there before, items not removed — this is when to raise it. After closing, your leverage is gone.",
-    doneWrong: "This isn't really a lender issue, but a related warning: most agents rush through the walk-through. They want to get to closing. The right approach is to take 20-30 minutes, run water, test outlets, check the HVAC. Issues found here are negotiable; issues found after closing are mostly your problem.",
-    cta: {
-      text: "Need a lender who actually thinks about the whole deal?",
-      href: "/schedule"
-    },
+    doneWrong: "Most buyers rush through the walk-through. They want to get to closing. The right approach is to take 20-30 minutes, run water, test outlets, check the HVAC, verify any negotiated repairs were actually completed. Issues found here are negotiable; issues found after closing are mostly your problem.",
+    doneWrongLabel: "What Most Buyers Get Wrong Here",
+    cta: null,
     personas: {},
     visibleFor: ["first-time", "move-up", "investor"],
     paths: ["purchase-financed", "va", "fha"],
@@ -2947,11 +3054,9 @@ const stages = [
     time: "Same day as funding in most cases",
     expect: "An email or call confirming recording. This is the moment to celebrate.",
     honestTruth: "Recording is when you legally become the homeowner. In LA County, recording is typically same-day if all wire transfers and signed documents are received by mid-morning. Anything later goes to the next business day.",
-    doneWrong: "Some LOs are bad at timing. They schedule signings late in the day, miss the recording window, and your 'closing day' becomes the next morning. The right LO works backward from the closing date to time your signing and wire instructions to hit the recording deadline cleanly.",
-    cta: {
-      text: "Want predictable closings?",
-      href: "/schedule"
-    },
+    doneWrong: "Some mortgage professionals are bad at timing. They schedule signings late in the day, miss the recording window, and your 'closing day' becomes the next morning. The right approach works backward from the closing date to time your signing and wire instructions to hit the recording deadline cleanly.",
+    doneWrongLabel: "What Most Mortgage Professionals Get Wrong",
+    cta: null,
     personas: {
       refi: {
         what: "For refis, recording typically happens 3 business days after signing (the federal right-of-rescission period for primary residences). After recording, the new loan replaces the old one."
@@ -2972,11 +3077,9 @@ const stages = [
     time: "Same day or as agreed in contract",
     expect: "A set of keys, possibly more than you expected. The home is now yours.",
     honestTruth: "Key transfer is the symbolic moment. Make sure you've changed locks on day one — you don't know how many copies of those keys are floating around.",
-    doneWrong: "Not really a lender failure point, but a tip: change locks immediately. Most buyers don't, and it's the cheapest security upgrade you'll ever make.",
-    cta: {
-      text: "Ready for your own closing day?",
-      href: "/schedule"
-    },
+    doneWrong: "Most new homeowners don't change locks immediately. You have no idea how many copies are circulating — old roommates, contractors, previous tenants, a former cleaner. Changing locks is the cheapest security upgrade you'll ever make, and day one is when to do it.",
+    doneWrongLabel: "What Most Buyers Get Wrong Here",
+    cta: null,
     personas: {},
     visibleFor: ["first-time", "move-up", "investor"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha"],
@@ -2993,11 +3096,9 @@ const stages = [
     time: "Whenever you are ready",
     expect: "A few weeks of unpacking, settling in, and discovering quirks of the new home.",
     honestTruth: "The first few weeks in a new home reveal things no inspection ever finds. Most are normal. Keep a list and address them at your own pace.",
-    doneWrong: "Most LOs vanish at this point. You won't hear from them again until rates drop and they want a refi commission. The right LO stays in touch as a resource — not for sales, but because mortgage decisions affect you for years after closing.",
-    cta: {
-      text: "Want a lender who stays in the picture?",
-      href: "/mortgage-under-management"
-    },
+    doneWrong: "Most new homeowners obsess over fixing every minor quirk immediately. Slow down. Live in the home for 60-90 days before making any non-urgent changes. You'll discover things about how you actually use the space that should drive your decisions — not what the previous owner did, not what you saw on Pinterest.",
+    doneWrongLabel: "What Most Buyers Get Wrong Here",
+    cta: null,
     personas: {},
     visibleFor: ["first-time", "move-up", "investor"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha"],
@@ -3013,8 +3114,9 @@ const stages = [
     what: "Through Mortgage Under Management, I monitor your loan after closing. When rates drop enough to justify refinancing, when recasting makes sense, when an investment opportunity comes along — I reach out. No cost to you.",
     time: "Ongoing",
     expect: "Occasional emails when the math actually shifts in your favor. No spam. No 'just checking in' messages.",
-    honestTruth: "Most homeowners overpay their mortgage for years after closing because no one is watching. Refinance windows open and close without them noticing. Their LO has moved on. Mortgage Under Management exists because someone has to keep watching, and that someone should be your advisor.",
-    doneWrong: "Most LOs disappear after closing and only return when rates drop enough that they can pitch you a refinance — for their benefit, not yours. The right LO watches for opportunities that actually help YOU (recast after a big payment, refi when the math justifies it, HELOC strategy when equity grows) and reaches out proactively. If your LO isn't doing this, they're not really your advisor — they're just the person who closed your loan.",
+    honestTruth: "Most homeowners overpay their mortgage for years after closing because no one is watching. Refinance windows open and close without them noticing. Their mortgage professional has moved on. Mortgage Under Management exists because someone has to keep watching, and that someone should be your advisor.",
+    doneWrong: "Most mortgage professionals disappear after closing and only return when rates drop enough that they can pitch you a refinance — for their benefit, not yours. The right approach watches for opportunities that actually help YOU (recast after a big payment, refi when the math justifies it, HELOC strategy when equity grows) and reaches out proactively. If your mortgage professional isn't doing this, they're not really your advisor — they're just the person who closed your loan.",
+    doneWrongLabel: "What Most Mortgage Professionals Get Wrong",
     cta: {
       text: "Learn how Mortgage Under Management works",
       href: "/mortgage-under-management"
@@ -3031,8 +3133,14 @@ const stages = [
 
 <script>
 // ═══════════════════════════════════════════════════════════════════════════
-// JOURNEY V2 — INTERACTIVE LOGIC
-// Persona switching, trail rendering, full-screen zoom views, drag-to-place pin
+// JOURNEY V2 — INTERACTIVE LOGIC (Revised)
+// 
+// Major changes from v1:
+//   - Real trail map background (/journey-map.jpg) with stage hit zones positioned over it
+//   - Zoom navigation: clicking a stage zooms map to ~2.5x and centers on that stage
+//   - Click behavior: single click = pin only (Option B). 'Read full details' button opens overlay
+//   - Dynamic display numbering: refi sees 1-11 sequentially, not 1-2-7-9-10...
+//   - Slider hidden on desktop; only used as accessibility fallback
 // ═══════════════════════════════════════════════════════════════════════════
 
 (function() {
@@ -3040,10 +3148,10 @@ const stages = [
 
   // ── STATE ──────────────────────────────────────────────
   const state = {
-    persona: 'first-time',   // 'first-time' | 'move-up' | 'investor' | 'refi'
-    activePath: null,        // for future Compare My Path
-    pinPosition: 0,          // 0-based index of "you are here" pin (-1 = not placed)
-    pinVisible: false,
+    persona: 'first-time',
+    pinnedStageNum: null,    // canonical num of pinned stage (null = nothing pinned)
+    isZoomed: false,         // is the trail map zoomed in?
+    zoomScale: 2.5,          // how much to zoom in
   };
 
   // ── HELPERS ────────────────────────────────────────────
@@ -3051,7 +3159,6 @@ const stages = [
   function $$(sel, root) { return Array.from((root || document).querySelectorAll(sel)); }
 
   function getStageContent(stage, persona) {
-    // Returns the stage content with persona overrides applied
     const variant = stage.personas && stage.personas[persona];
     return {
       num: stage.num,
@@ -3064,6 +3171,7 @@ const stages = [
       expect: (variant && variant.expect) || stage.expect,
       honestTruth: (variant && variant.honestTruth) || stage.honestTruth,
       doneWrong: (variant && variant.doneWrong) || stage.doneWrong,
+      doneWrongLabel: (variant && variant.doneWrongLabel) || stage.doneWrongLabel,
       cta: (variant && variant.cta) || stage.cta,
       realExample: stage.realExample,
       link: stage.link,
@@ -3071,8 +3179,14 @@ const stages = [
   }
 
   function visibleStages(persona) {
-    // Returns stages visible for current persona, in order
     return stages.filter(s => s.visibleFor.includes(persona));
+  }
+
+  function getDisplayNum(stage, persona) {
+    // Dynamic numbering: position in the visible list for this persona, 1-indexed
+    const list = visibleStages(persona);
+    const idx = list.findIndex(s => s.num === stage.num);
+    return idx === -1 ? stage.num : idx + 1;
   }
 
   function getPersonaLabel(persona) {
@@ -3110,18 +3224,22 @@ const stages = [
   function switchPersona(newPersona) {
     if (newPersona === state.persona) return;
     state.persona = newPersona;
-    // Update button states
+    // Clear pinned state on persona change
+    state.pinnedStageNum = null;
+    state.isZoomed = false;
+    
     $$('.persona-btn').forEach(b => {
       const active = b.dataset.persona === newPersona;
       b.classList.toggle('is-active', active);
       b.setAttribute('aria-pressed', active);
     });
-    // Re-render trail and cards
+    
     renderTrail();
     renderStageCards();
-    // Update intro copy
+    updateZoomState();
     updateIntroForPersona();
-    // GA event
+    updateProgressSlider();
+    
     if (typeof gtag !== 'undefined') {
       gtag('event', 'journey_persona_switch', { persona: newPersona });
     }
@@ -3132,7 +3250,7 @@ const stages = [
       'first-time': {
         eyebrow: 'For first-time buyers',
         h2: "Your first home, mapped out from end to end.",
-        sub: "Every stage you'll go through, what to expect, how long it takes, and what most lenders get wrong at each step.",
+        sub: "Every stage you'll go through, what to expect, how long it takes, and what most mortgage professionals get wrong at each step.",
       },
       'move-up': {
         eyebrow: 'For move-up buyers',
@@ -3142,108 +3260,213 @@ const stages = [
       'investor': {
         eyebrow: 'For real estate investors',
         h2: "Your investment property purchase, end to end.",
-        sub: "Every stage of an investment property purchase, with DSCR loan considerations, rental cap rules, and what most LOs miss on investor deals.",
+        sub: "Every stage of an investment property purchase, with DSCR loan considerations, rental cap rules, and what most mortgage professionals miss on investor deals.",
       },
       'refi': {
         eyebrow: 'For refinancing',
         h2: "Your refinance, mapped out honestly.",
-        sub: "Every stage of a refinance. If a refi doesn't make sense for your situation, I'll tell you. Most LOs won't.",
+        sub: "Every stage of a refinance. If a refi doesn't make sense for your situation, I'll tell you. Most mortgage professionals won't.",
       },
     };
     const intro = introMap[state.persona];
     if (!intro) return;
-    const eyebrowEl = $('#introEyebrow');
-    const h2El = $('#introH2');
-    const subEl = $('#introSub');
-    if (eyebrowEl) eyebrowEl.textContent = intro.eyebrow;
-    if (h2El) h2El.textContent = intro.h2;
-    if (subEl) subEl.textContent = intro.sub;
+    const e = $('#introEyebrow'); if (e) e.textContent = intro.eyebrow;
+    const h = $('#introH2'); if (h) h.textContent = intro.h2;
+    const s = $('#introSub'); if (s) s.textContent = intro.sub;
   }
 
-  // ── TRAIL RENDERING ───────────────────────────────────
+  // ── TRAIL RENDERING (Real map with hit zones over it) ─
   function renderTrail() {
-    const trail = $('#journeyTrail');
-    if (!trail) return;
+    const overlay = $('#trailOverlay');
+    if (!overlay) return;
 
     const visible = visibleStages(state.persona);
 
-    trail.innerHTML = visible.map((stage, idx) => {
+    overlay.innerHTML = visible.map(stage => {
       const c = getStageContent(stage, state.persona);
-      // Use original x/y for desktop positioning, but if a stage is hidden,
-      // the remaining stages keep their original coords so the trail still flows visually
-      const isPinned = state.pinVisible && idx === state.pinPosition;
+      const displayNum = getDisplayNum(stage, state.persona);
+      const isPinned = state.pinnedStageNum === stage.num;
       return `
         <button
           type="button"
-          class="trail-stage ${isPinned ? 'is-pinned' : ''}"
+          class="stage-hit ${isPinned ? 'is-pinned' : ''}"
           style="left:${c.x}%;top:${c.y}%"
           data-num="${c.num}"
-          data-idx="${idx}"
-          aria-label="Stage ${c.num}: ${c.name}">
-          <span class="trail-stage-num">${c.num}</span>
-          <span class="trail-stage-label">${c.name}</span>
+          data-display-num="${displayNum}"
+          aria-label="Stage ${displayNum}: ${c.name}">
+          <span class="stage-hit-marker">
+            <span class="stage-hit-num">${displayNum}</span>
+          </span>
+          <span class="stage-hit-tooltip" role="tooltip">
+            <span class="stage-hit-tooltip-num">Stage ${displayNum}</span>
+            <span class="stage-hit-tooltip-name">${c.name}</span>
+            ${isPinned ? `
+              <button type="button" class="stage-hit-readmore" data-action="readmore" data-num="${c.num}">
+                Read full details →
+              </button>
+            ` : ''}
+          </span>
         </button>
       `;
     }).join('');
+  }
 
-    // Wire click events
-    trail.addEventListener('click', e => {
-      const btn = e.target.closest('.trail-stage');
+  // Trail click handling
+  function setupTrailEvents() {
+    const overlay = $('#trailOverlay');
+    if (!overlay) return;
+
+    overlay.addEventListener('click', e => {
+      // Check if click was on "Read full details" button
+      const readmore = e.target.closest('[data-action="readmore"]');
+      if (readmore) {
+        e.stopPropagation();
+        openZoomView(parseInt(readmore.dataset.num, 10));
+        return;
+      }
+
+      // Otherwise, find the stage button and pin it
+      const btn = e.target.closest('.stage-hit');
       if (!btn) return;
-      openZoomView(parseInt(btn.dataset.num, 10));
+      pinStage(parseInt(btn.dataset.num, 10));
     });
   }
 
-  // ── STAGE CARDS (mobile + alternate view) ─────────────
+  // ── PIN & ZOOM ────────────────────────────────────────
+  function pinStage(stageNum) {
+    // If clicking already-pinned stage, unpin and zoom out
+    if (state.pinnedStageNum === stageNum) {
+      state.pinnedStageNum = null;
+      state.isZoomed = false;
+    } else {
+      state.pinnedStageNum = stageNum;
+      state.isZoomed = true;
+    }
+    renderTrail();
+    setupTrailEvents();
+    updateZoomState();
+    updateProgressSlider();
+    updateStageCardsActive();
+
+    if (typeof gtag !== 'undefined' && state.pinnedStageNum) {
+      const stage = stages.find(s => s.num === stageNum);
+      gtag('event', 'journey_stage_pin', { 
+        stage_num: stageNum, 
+        stage_name: stage ? stage.name : 'unknown',
+        persona: state.persona 
+      });
+    }
+  }
+
+  function updateZoomState() {
+    const inner = $('#trailMapInner');
+    const zoomOutBtn = $('#zoomOutBtn');
+    if (!inner) return;
+
+    if (state.isZoomed && state.pinnedStageNum) {
+      const stage = stages.find(s => s.num === state.pinnedStageNum);
+      if (!stage) return;
+      // Translate origin so the pinned stage is centered, then scale
+      const tx = 50 - stage.x;  // shift so stage is at 50%
+      const ty = 50 - stage.y;
+      inner.style.transformOrigin = `${stage.x}% ${stage.y}%`;
+      inner.style.transform = `scale(${state.zoomScale})`;
+      // After scaling, translate back to center the pinned stage in viewport
+      // Actually: with transformOrigin set, scaling alone will keep that point fixed.
+      // We need additional translation to center it in the visible area.
+      // Compute: center of viewport is 50%, 50%. We want the pinned point there.
+      // After scaling around (x%, y%), point (x%, y%) stays at (x%, y%).
+      // We need to translate the inner so (x%, y%) maps to (50%, 50%).
+      const translateX = (50 - stage.x);
+      const translateY = (50 - stage.y);
+      inner.style.transform = `translate(${translateX}%, ${translateY}%) scale(${state.zoomScale})`;
+      inner.style.transformOrigin = 'center center';
+      // Wait — this combination is tricky. Simpler approach:
+      // Set transformOrigin to the stage point, scale only. The stage point will stay fixed
+      // in its original screen position, which IS what we want — it's already at (x%, y%) in the map.
+      // To center it in viewport, we need the map container to be the same size as viewport
+      // OR we need to translate. Let's use the simpler scale-only with transformOrigin:
+      inner.style.transform = `scale(${state.zoomScale})`;
+      inner.style.transformOrigin = `${stage.x}% ${stage.y}%`;
+      
+      if (zoomOutBtn) zoomOutBtn.classList.add('is-visible');
+    } else {
+      inner.style.transform = '';
+      inner.style.transformOrigin = '';
+      if (zoomOutBtn) zoomOutBtn.classList.remove('is-visible');
+    }
+  }
+
+  function zoomOut() {
+    state.pinnedStageNum = null;
+    state.isZoomed = false;
+    renderTrail();
+    setupTrailEvents();
+    updateZoomState();
+    updateProgressSlider();
+    updateStageCardsActive();
+  }
+
+  // ── STAGE CARDS ───────────────────────────────────────
   function renderStageCards() {
     const container = $('#stagesCards');
     if (!container) return;
 
     const visible = visibleStages(state.persona);
 
-    container.innerHTML = visible.map((stage, idx) => {
+    container.innerHTML = `<div class="stages-cards-grid">${visible.map(stage => {
       const c = getStageContent(stage, state.persona);
-      const isPinned = state.pinVisible && idx === state.pinPosition;
+      const displayNum = getDisplayNum(stage, state.persona);
+      const isPinned = state.pinnedStageNum === stage.num;
       return `
         <article class="stage-card ${isPinned ? 'is-pinned' : ''}" data-num="${c.num}">
           <div class="stage-card-header">
-            <div class="stage-card-num">${c.num}</div>
+            <div class="stage-card-num">${displayNum}</div>
             <div class="stage-card-info">
               <h3 class="stage-card-name">${c.name}</h3>
               <p class="stage-card-summary">${c.summary}</p>
               <p class="stage-card-time">⏱ ${c.time}</p>
             </div>
           </div>
-          <button type="button" class="stage-card-expand" data-num="${c.num}" aria-label="Expand stage ${c.num}">
-            <span>See the full picture</span>
+          <button type="button" class="stage-card-expand" data-action="readmore" data-num="${c.num}" aria-label="Read full details for stage ${displayNum}">
+            <span>Read full details</span>
             <span aria-hidden="true">→</span>
           </button>
         </article>
       `;
-    }).join('');
+    }).join('')}</div>`;
+  }
 
-    // Wire expand events
+  function updateStageCardsActive() {
+    $$('.stage-card').forEach(card => {
+      const num = parseInt(card.dataset.num, 10);
+      card.classList.toggle('is-pinned', num === state.pinnedStageNum);
+    });
+  }
+
+  function setupStageCardEvents() {
+    const container = $('#stagesCards');
+    if (!container) return;
     container.addEventListener('click', e => {
-      const btn = e.target.closest('.stage-card-expand');
+      const btn = e.target.closest('[data-action="readmore"]');
       if (!btn) return;
       openZoomView(parseInt(btn.dataset.num, 10));
     });
   }
 
-  // ── ZOOM VIEW (Full-screen overlay per stage) ─────────
+  // ── ZOOM VIEW (Full-screen overlay) ──────────────────
   function openZoomView(stageNum) {
     const stage = stages.find(s => s.num === stageNum);
     if (!stage) return;
     const c = getStageContent(stage, state.persona);
+    const displayNum = getDisplayNum(stage, state.persona);
+    const totalDisplay = visibleStages(state.persona).length;
 
     const overlay = $('#zoomOverlay');
     if (!overlay) return;
 
-    // Build the zoom content
     const linkSection = c.link ? `
-      <a href="${c.link}" class="zoom-link">
-        Learn more about this →
-      </a>
+      <a href="${c.link}" class="zoom-link">Learn more about this →</a>
     ` : '';
 
     const realExampleSection = c.realExample ? `
@@ -3251,24 +3474,25 @@ const stages = [
         <div class="zoom-section-eyebrow zoom-section-eyebrow-example">A real client example</div>
         <p>${c.realExample}</p>
       </div>
-    ` : `
-      <div class="zoom-section zoom-section-example zoom-section-placeholder">
-        <div class="zoom-section-eyebrow zoom-section-eyebrow-example">A real client example</div>
-        <p><em>Daryn shares a real (anonymized) example from his client work here. Coming soon.</em></p>
+    ` : '';
+
+    const ctaSection = c.cta ? `
+      <div class="zoom-cta">
+        <p class="zoom-cta-text">${c.cta.text}</p>
+        <a href="${c.cta.href}" class="btn btn-blue btn-wobble">Book a 15-minute call</a>
       </div>
-    `;
+    ` : '';
 
     overlay.innerHTML = `
       <div class="zoom-panel" role="dialog" aria-labelledby="zoomTitle" aria-modal="true">
         <button type="button" class="zoom-close" aria-label="Close" id="zoomClose">×</button>
 
         <div class="zoom-meta">
-          <span class="zoom-stage-num">Stage ${c.num} of ${stages.length}</span>
+          <span class="zoom-stage-num">Stage ${displayNum} of ${totalDisplay}</span>
           <span class="zoom-stage-time">⏱ ${c.time}</span>
         </div>
 
         <h2 id="zoomTitle" class="zoom-title">${c.name}</h2>
-
         <p class="zoom-summary">${c.summary}</p>
 
         <div class="zoom-section zoom-section-truth">
@@ -3283,38 +3507,35 @@ const stages = [
         </div>
 
         <div class="zoom-section zoom-section-warning">
-          <div class="zoom-section-eyebrow zoom-section-eyebrow-warning">⚠ What Most LOs Get Wrong</div>
+          <div class="zoom-section-eyebrow zoom-section-eyebrow-warning">⚠ ${c.doneWrongLabel}</div>
           <p>${c.doneWrong}</p>
         </div>
 
         ${realExampleSection}
-
-        <div class="zoom-cta">
-          <p class="zoom-cta-text">${c.cta.text}</p>
-          <a href="${c.cta.href}" class="btn btn-blue btn-wobble">Book a 15-minute call</a>
-        </div>
-
+        ${ctaSection}
         ${linkSection}
       </div>
     `;
 
     overlay.classList.add('is-open');
     document.body.classList.add('zoom-open');
-    // Focus the close button for keyboard accessibility
     setTimeout(() => {
       const closeBtn = $('#zoomClose');
       if (closeBtn) closeBtn.focus();
     }, 50);
 
-    // Wire close events
     $('#zoomClose').addEventListener('click', closeZoomView);
     overlay.addEventListener('click', e => {
       if (e.target === overlay) closeZoomView();
     });
 
-    // GA event
     if (typeof gtag !== 'undefined') {
-      gtag('event', 'journey_zoom_open', { stage_num: c.num, stage_name: c.name, persona: state.persona });
+      gtag('event', 'journey_zoom_open', { 
+        stage_num: c.num, 
+        stage_name: c.name, 
+        persona: state.persona,
+        display_num: displayNum
+      });
     }
   }
 
@@ -3325,59 +3546,71 @@ const stages = [
     document.body.classList.remove('zoom-open');
   }
 
-  // Escape key closes zoom
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       const overlay = $('#zoomOverlay');
       if (overlay && overlay.classList.contains('is-open')) closeZoomView();
+      else if (state.isZoomed) zoomOut();
     }
   });
 
-  // ── DRAG-TO-PLACE "YOU ARE HERE" PIN ──────────────────
-  function initPinControls() {
-    const pinSlider = $('#pinSlider');
-    const pinReset = $('#pinReset');
-    if (!pinSlider) return;
-
-    // Slider value is stage index
+  // ── ACCESSIBILITY SLIDER (Hidden by default, keyboard-only) ──
+  function updateProgressSlider() {
+    const slider = $('#progressSlider');
+    if (!slider) return;
     const visible = visibleStages(state.persona);
-    pinSlider.max = visible.length - 1;
-    pinSlider.value = 0;
-
-    pinSlider.addEventListener('input', e => {
-      const idx = parseInt(e.target.value, 10);
-      state.pinPosition = idx;
-      state.pinVisible = true;
-      // Update label
-      const current = visibleStages(state.persona)[idx];
-      const label = $('#pinLabel');
-      if (label && current) {
-        label.textContent = `You're at: Stage ${current.num} — ${current.name}`;
+    slider.max = visible.length;
+    if (state.pinnedStageNum) {
+      const idx = visible.findIndex(s => s.num === state.pinnedStageNum);
+      slider.value = idx + 1;
+    } else {
+      slider.value = 0;
+    }
+    const label = $('#progressLabel');
+    if (label) {
+      if (state.pinnedStageNum) {
+        const stage = visible.find(s => s.num === state.pinnedStageNum);
+        const displayNum = getDisplayNum(stage, state.persona);
+        label.textContent = `Stage ${displayNum} of ${visible.length}: ${stage.name}`;
+      } else {
+        label.textContent = "Click any stage to explore";
       }
-      renderTrail();
-      renderStageCards();
-    });
-
-    if (pinReset) {
-      pinReset.addEventListener('click', () => {
-        state.pinVisible = false;
-        state.pinPosition = 0;
-        pinSlider.value = 0;
-        const label = $('#pinLabel');
-        if (label) label.textContent = "Drag to mark where you are";
-        renderTrail();
-        renderStageCards();
-      });
     }
   }
 
-  // ── INITIALIZE ────────────────────────────────────────
+  function setupProgressSlider() {
+    const slider = $('#progressSlider');
+    if (!slider) return;
+    slider.addEventListener('input', e => {
+      const val = parseInt(e.target.value, 10);
+      if (val === 0) {
+        zoomOut();
+        return;
+      }
+      const visible = visibleStages(state.persona);
+      const stage = visible[val - 1];
+      if (stage) pinStage(stage.num);
+    });
+  }
+
+  // ── ZOOM OUT BUTTON ──────────────────────────────────
+  function setupZoomOutButton() {
+    const btn = $('#zoomOutBtn');
+    if (!btn) return;
+    btn.addEventListener('click', zoomOut);
+  }
+
+  // ── INITIALIZE ───────────────────────────────────────
   function init() {
     renderPersonaSelector();
     renderTrail();
+    setupTrailEvents();
     renderStageCards();
+    setupStageCardEvents();
     updateIntroForPersona();
-    initPinControls();
+    setupProgressSlider();
+    setupZoomOutButton();
+    updateProgressSlider();
   }
 
   if (document.readyState === 'loading') {
@@ -3385,7 +3618,6 @@ const stages = [
   } else {
     init();
   }
-
 })();
 
 </script>
