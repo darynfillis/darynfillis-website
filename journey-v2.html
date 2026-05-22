@@ -36,11 +36,7 @@
   "name": "Your Homebuying Journey, Mapped Stage by Stage | Daryn Fillis",
   "description": "Interactive map of every stage of buying or refinancing a home in Los Angeles. Customized for first-time buyers, move-up buyers, investors, and refinancing. By a Certified Mortgage Advisor.",
   "url": "https://darynfillis.com/journey-v2",
-  "author": {
-    "@type": "Person",
-    "name": "Daryn Fillis",
-    "jobTitle": "Certified Mortgage Advisor"
-  }
+  "author": {"@type": "Person", "name": "Daryn Fillis", "jobTitle": "Certified Mortgage Advisor"}
 }
 </script>
 
@@ -1348,8 +1344,9 @@ html{-webkit-text-size-adjust:100%;}
 
 /* ─── JOURNEY V2 STYLES ─── */
 /* ════════════════════════════════════════════════════════════════════
-   JOURNEY V2 — INTERACTIVE STYLES (Revised)
-   Real trail map + zoom navigation + click-to-pin (Option B)
+   JOURNEY V2 — REVISED STYLES
+   Fixes: smaller party-colored pins, semi-transparent legend with emoji,
+   body-level popover, click-anywhere-to-zoom-out, visible dotted trail
    ════════════════════════════════════════════════════════════════════ */
 
 /* ── PERSONA SELECTOR ──────────────────────────────────── */
@@ -1358,10 +1355,7 @@ html{-webkit-text-size-adjust:100%;}
   border-bottom: 1px solid var(--rule);
   padding: clamp(28px, 5vw, 40px) clamp(20px, 4vw, 48px);
 }
-.persona-selector-inner {
-  max-width: 1080px;
-  margin: 0 auto;
-}
+.persona-selector-inner { max-width: 1080px; margin: 0 auto; }
 .persona-selector-label {
   font-size: 0.66rem;
   font-weight: 800;
@@ -1395,7 +1389,6 @@ html{-webkit-text-size-adjust:100%;}
   font-family: inherit;
   font-weight: 700;
   font-size: 0.92rem;
-  letter-spacing: -0.005em;
   cursor: pointer;
   transition: all 0.18s ease;
   white-space: nowrap;
@@ -1448,38 +1441,31 @@ html{-webkit-text-size-adjust:100%;}
   max-width: 660px;
 }
 
-/* ── TRAIL MAP (Real photographic background + hit zones) ── */
-.trail-section {
+/* ── MAP CONTAINER ──────────────────────────────────── */
+.map-section {
   background: var(--white);
   padding: 0 clamp(20px, 4vw, 48px) clamp(48px, 7vw, 80px);
-  position: relative;
 }
-
-.trail-map {
+.map-frame {
   max-width: 1400px;
   margin: 0 auto;
   position: relative;
   background: var(--navy);
   border-radius: 16px;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  box-shadow: 0 12px 40px rgba(10, 37, 64, 0.18);
 }
-
-.trail-map-inner {
+.map-inner {
   position: relative;
-  display: inline-block;
   width: 100%;
   aspect-ratio: 1920 / 1080;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
 }
-
 @media (prefers-reduced-motion: reduce) {
-  .trail-map-inner { transition: none; }
+  .map-inner { transition: none; }
 }
-
-.trail-map-inner img {
+.map-bg {
   width: 100%;
   height: 100%;
   display: block;
@@ -1487,198 +1473,138 @@ html{-webkit-text-size-adjust:100%;}
   -webkit-user-drag: none;
 }
 
-.trail-overlay {
+/* ── TRAIL SVG OVERLAY ──────────────────────────────── */
+#trailSvg {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
 }
-
-/* ── STAGE HIT ZONES (Buttons positioned over map) ── */
-.stage-hit {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  width: 56px;
-  height: 56px;
-  background: transparent;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
+#trailSvg .trail-waypoint {
   pointer-events: all;
-  padding: 0;
-  z-index: 10;
-  -webkit-tap-highlight-color: transparent;
-  outline: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: inherit;
+  cursor: pointer;
+}
+/* Scale the INNER group, never the positioning group — this fixes the jump */
+#trailSvg .wp-scale {
+  transform: scale(1);
+  transform-origin: center;
+  transform-box: fill-box;
+  transition: transform 0.18s ease;
+}
+#trailSvg .trail-waypoint:hover .wp-scale {
+  transform: scale(1.25);
 }
 
-.stage-hit-marker {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--white);
-  border: 2px solid var(--navy);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-.stage-hit-num {
-  font-weight: 800;
-  font-size: 0.85rem;
-  color: var(--navy);
-  letter-spacing: -0.01em;
-}
-
-.stage-hit:hover .stage-hit-marker {
-  background: var(--blue);
-  border-color: var(--blue);
-  transform: scale(1.15);
-  box-shadow: 0 4px 16px rgba(91, 203, 245, 0.6);
-}
-
-.stage-hit:focus-visible .stage-hit-marker {
-  outline: 3px solid var(--blue);
-  outline-offset: 3px;
-}
-
-/* Tooltip — shows on hover OR when pinned */
-.stage-hit-tooltip {
-  position: absolute;
-  bottom: calc(100% + 12px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(10, 37, 64, 0.98);
-  color: var(--white);
-  padding: 12px 16px;
-  border-radius: 10px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: -0.005em;
-  white-space: nowrap;
-  border: 1px solid rgba(91, 203, 245, 0.4);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.18s ease, transform 0.18s ease;
-  z-index: 20;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-.stage-hit-tooltip::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-top-color: rgba(10, 37, 64, 0.98);
-}
-.stage-hit-tooltip-num {
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--blue);
-}
-.stage-hit-tooltip-name {
-  font-size: 0.88rem;
-  font-weight: 700;
-}
-
-.stage-hit:hover .stage-hit-tooltip {
-  opacity: 1;
-}
-
-/* PINNED state — persistent tooltip + glow on marker */
-.stage-hit.is-pinned .stage-hit-marker {
-  background: var(--blue);
-  border-color: var(--blue);
-  box-shadow: 0 0 0 4px rgba(91, 203, 245, 0.35), 0 6px 20px rgba(91, 203, 245, 0.6);
-  animation: pinPulse 2s infinite;
+/* Pinned waypoint animation — also on inner group */
+.trail-waypoint.is-pinned .wp-scale {
+  animation: pinPulse 1.8s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
 }
 @keyframes pinPulse {
-  0%, 100% { box-shadow: 0 0 0 4px rgba(91, 203, 245, 0.35), 0 6px 20px rgba(91, 203, 245, 0.6); }
-  50% { box-shadow: 0 0 0 10px rgba(91, 203, 245, 0.15), 0 6px 20px rgba(91, 203, 245, 0.7); }
+  0%, 100% { transform: scale(1.3); }
+  50% { transform: scale(1.45); }
+}
+.trail-waypoint.is-pinned .wp-ring {
+  stroke-width: 0.45;
 }
 @media (prefers-reduced-motion: reduce) {
-  .stage-hit.is-pinned .stage-hit-marker { animation: none; }
+  .trail-waypoint.is-pinned .wp-scale { animation: none; transform: scale(1.3); }
 }
 
-.stage-hit.is-pinned .stage-hit-tooltip {
-  opacity: 1;
-  pointer-events: all;
-  /* When zoomed, counter-scale tooltip to keep it readable */
-  transform: translateX(-50%) scale(calc(1 / 2.5));
-  transform-origin: bottom center;
+/* ── MAP TITLE OVERLAY ──────────────────────────────── */
+.map-title-overlay {
+  position: absolute;
+  top: clamp(20px, 3vw, 36px);
+  left: clamp(20px, 3vw, 36px);
+  z-index: 20;
+  pointer-events: none;
+  max-width: 60%;
 }
-/* When NOT in zoomed state, render tooltip at normal scale */
-.trail-map-inner:not([style*="scale"]) .stage-hit.is-pinned .stage-hit-tooltip {
-  transform: translateX(-50%);
-}
-
-.stage-hit-readmore {
-  background: var(--blue);
-  color: var(--navy);
-  border: none;
-  border-radius: 6px;
-  padding: 6px 12px;
-  font-family: inherit;
+.map-title {
   font-weight: 800;
-  font-size: 0.72rem;
-  letter-spacing: 0.01em;
-  cursor: pointer;
-  margin-top: 4px;
-  white-space: nowrap;
+  font-size: clamp(1.4rem, 3vw, 2.4rem);
+  color: var(--white);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin: 0 0 8px 0;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.5);
 }
-.stage-hit-readmore:hover {
-  background: var(--white);
+.map-tagline {
+  font-weight: 400;
+  font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.4;
+  margin: 0;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+  max-width: 440px;
 }
 
-/* When trail is zoomed, shrink hit-zone size to maintain visual ratio */
-.trail-map-inner[style*="scale"] .stage-hit {
-  /* Hit zones get scaled with the map, but we keep marker size readable */
+/* NEO logo */
+.map-logo {
+  position: absolute;
+  top: clamp(16px, 2.5vw, 28px);
+  right: clamp(16px, 2.5vw, 28px);
+  z-index: 20;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 8px 14px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
-.trail-map-inner[style*="scale"] .stage-hit-marker {
-  /* Counter-scale to keep markers proportional to their original visual size */
-  transform: scale(calc(1 / 2.5));
+.map-logo svg {
+  height: clamp(18px, 2vw, 26px);
+  width: auto;
 }
-.trail-map-inner[style*="scale"] .stage-hit:hover .stage-hit-marker {
-  transform: scale(calc(1.15 / 2.5));
-}
-.trail-map-inner[style*="scale"] .stage-hit.is-pinned .stage-hit-marker {
-  transform: scale(calc(1 / 2.5));
+
+/* Basecamp floating label */
+.map-basecamp-label {
+  position: absolute;
+  left: 48%;
+  top: 92%;
+  transform: translateX(-50%);
+  z-index: 15;
+  pointer-events: none;
+  background: rgba(10, 37, 64, 0.92);
+  color: var(--white);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: clamp(0.7rem, 1vw, 0.82rem);
+  font-weight: 700;
+  border: 1px solid rgba(91, 203, 245, 0.4);
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
 }
 
 /* ── ZOOM OUT BUTTON ─────────────────────────────────── */
 .zoom-out-btn {
   position: absolute;
-  top: 18px;
-  right: 18px;
-  z-index: 50;
-  background: rgba(10, 37, 64, 0.92);
+  bottom: clamp(20px, 3vw, 32px);
+  left: clamp(20px, 3vw, 32px);
+  z-index: 30;
+  background: rgba(10, 37, 64, 0.95);
   color: var(--white);
-  border: 1px solid rgba(91, 203, 245, 0.4);
+  border: 1px solid rgba(91, 203, 245, 0.5);
   border-radius: 999px;
-  padding: 8px 18px;
+  padding: 10px 20px;
   font-family: inherit;
   font-weight: 700;
-  font-size: 0.82rem;
-  letter-spacing: -0.005em;
+  font-size: 0.85rem;
   cursor: pointer;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-8px);
-  transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
   display: flex;
   align-items: center;
   gap: 6px;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
 }
 .zoom-out-btn.is-visible {
   opacity: 1;
@@ -1690,100 +1616,328 @@ html{-webkit-text-size-adjust:100%;}
   border-color: var(--blue);
 }
 
-/* ── PROGRESS SLIDER (Accessibility — hidden on desktop) ── */
-.progress-section {
+/* ── STAGE POPOVER (Rendered at body level — not clipped by frame) ── */
+.stage-popover {
+  position: fixed;
+  z-index: 9999;
+  width: 340px;
+  max-width: 90vw;
   background: var(--white);
-  padding: 0 clamp(20px, 4vw, 48px);
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+  border: 1px solid rgba(91, 203, 245, 0.3);
 }
-.progress-control {
-  max-width: 720px;
-  margin: 0 auto 32px;
+.stage-popover.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+.stage-popover-inner {
+  position: relative;
+  padding: 24px 26px;
+}
+.stage-popover-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
   background: var(--surface);
   border: 1px solid var(--rule);
-  border-radius: 12px;
-  padding: 16px 22px;
+  color: var(--ink);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-  /* Hide visually on desktop, but available via keyboard tabbing */
-  position: relative;
+  justify-content: center;
+  font-family: inherit;
+  transition: all 0.15s ease;
 }
-
-/* Visually hide on desktop unless focused (accessibility-only) */
-@media (min-width: 768px) {
-  .progress-control {
-    display: none;
-  }
-  /* Show when keyboard user tabs into it */
-  .progress-control:focus-within {
-    display: flex;
-  }
+.stage-popover-close:hover {
+  background: var(--navy);
+  color: var(--white);
 }
-
-.progress-label-eyebrow {
+.stage-popover-num {
   font-size: 0.65rem;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--blue-dark);
-  flex-shrink: 0;
+  margin: 0 0 8px 0;
 }
-#progressSlider {
-  flex: 1;
-  min-width: 180px;
-  -webkit-appearance: none;
-  appearance: none;
-  background: transparent;
-  height: 24px;
-  cursor: pointer;
-}
-#progressSlider::-webkit-slider-runnable-track {
-  height: 4px;
-  background: var(--rule);
-  border-radius: 2px;
-}
-#progressSlider::-moz-range-track {
-  height: 4px;
-  background: var(--rule);
-  border-radius: 2px;
-}
-#progressSlider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--blue);
-  border: 3px solid var(--white);
-  box-shadow: 0 2px 8px rgba(91, 203, 245, 0.5);
-  margin-top: -9px;
-  cursor: grab;
-}
-#progressSlider::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--blue);
-  border: 3px solid var(--white);
-  box-shadow: 0 2px 8px rgba(91, 203, 245, 0.5);
-  cursor: grab;
-}
-#progressLabel {
-  font-size: 0.9rem;
-  font-weight: 700;
+.stage-popover-name {
+  font-weight: 800;
+  font-size: 1.15rem;
   color: var(--navy);
-  flex-basis: 100%;
-  margin: 0;
-  text-align: center;
-  padding-top: 4px;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0 0 10px 0;
+}
+.stage-popover-party {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+.stage-popover-party.party-neo {
+  background: rgba(91, 203, 245, 0.15);
+  color: var(--blue-dark);
+}
+.stage-popover-party.party-agent {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--navy);
+  border: 1px solid var(--rule);
+}
+.stage-popover-party.party-escrow {
+  background: rgba(43, 47, 46, 0.15);
+  color: #2b2f2e;
+}
+.stage-popover-summary {
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: var(--ink);
+  line-height: 1.55;
+  margin: 0 0 10px 0;
+}
+.stage-popover-time {
+  font-weight: 600;
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin: 0 0 16px 0;
+}
+.stage-popover-icons {
+  display: flex;
+  gap: 8px;
+  padding: 12px 0;
+  margin-bottom: 14px;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.stage-popover-icon {
+  font-size: 1.1rem;
+  cursor: pointer;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 7px;
+  padding: 0;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+.stage-popover-icon:hover {
+  background: rgba(91, 203, 245, 0.12);
+  border-color: var(--blue);
+}
+.stage-popover-readmore {
+  width: 100%;
+  background: var(--blue);
+  color: var(--navy);
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.stage-popover-readmore:hover {
+  background: var(--blue-dark);
 }
 
-/* ── STAGE CARDS (Mobile + secondary desktop view) ──── */
+/* ── SEMI-TRANSPARENT LEGEND (Matching original brand style) ──── */
+.legend {
+  position: absolute;
+  bottom: clamp(20px, 3vw, 32px);
+  right: clamp(20px, 3vw, 32px);
+  z-index: 25;
+  /* Semi-transparent dark teal background like the original */
+  background: rgba(15, 42, 60, 0.82);
+  border: 1.5px solid rgba(91, 203, 245, 0.45);
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  width: 340px;
+  max-width: calc(100% - 32px);
+  overflow: visible;
+}
+.legend-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(91, 203, 245, 0.25);
+}
+.legend-header-title {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin: 0;
+}
+.legend-items {
+  padding: 10px 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+.legend-item {
+  background: transparent;
+  border: 1px solid transparent;
+  color: rgba(255, 255, 255, 0.92);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+.legend-item:hover {
+  background: rgba(91, 203, 245, 0.15);
+  color: var(--white);
+}
+.legend-item-emoji {
+  font-size: 1.15rem;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.legend-item-label {
+  flex: 1;
+  white-space: normal;
+  line-height: 1.2;
+}
+
+/* Legend tooltip (definition card) — pops out above/below legend */
+.legend-tooltip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  right: 0;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  background: var(--white);
+  color: var(--navy);
+  border-radius: 12px;
+  padding: 18px 22px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+  transform: translateY(4px);
+  pointer-events: none;
+  border: 1px solid var(--rule);
+}
+.legend-tooltip.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: all;
+}
+.legend-tooltip-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+.legend-tooltip-close:hover {
+  background: var(--navy);
+  color: var(--white);
+}
+.legend-tooltip-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  margin-right: 24px;
+}
+.legend-tooltip-emoji {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+.legend-tooltip-label {
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--navy);
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+.legend-tooltip-def {
+  font-weight: 400;
+  font-size: 0.85rem;
+  color: var(--ink);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Mobile legend treatment */
+@media (max-width: 760px) {
+  .legend {
+    position: static;
+    width: auto;
+    max-width: none;
+    margin: 16px 0 0 0;
+    background: rgba(15, 42, 60, 0.95);
+  }
+  .legend-tooltip {
+    position: fixed;
+    bottom: auto;
+    right: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    z-index: 100;
+  }
+  .legend-tooltip.is-visible {
+    transform: translate(-50%, -50%);
+  }
+  /* Hide map on mobile */
+  .map-frame { display: none; }
+}
+
+/* ── STAGE CARDS BELOW MAP ──────────────────────────── */
 #stagesCards {
   background: var(--surface);
   padding: clamp(48px, 7vw, 80px) clamp(20px, 4vw, 48px);
   border-top: 1px solid var(--rule);
-  display: block;
 }
 .stages-cards-grid {
   max-width: 1080px;
@@ -1799,14 +1953,20 @@ html{-webkit-text-size-adjust:100%;}
   padding: 22px 24px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
   transition: all 0.2s ease;
+  position: relative;
 }
 .stage-card:hover {
-  border-color: var(--blue);
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(10, 37, 64, 0.08);
 }
+.stage-card.party-neo { border-left: 4px solid var(--blue); }
+.stage-card.party-neo:hover { border-color: var(--blue); border-left-color: var(--blue); }
+.stage-card.party-agent { border-left: 4px solid #d1d5db; }
+.stage-card.party-agent:hover { border-color: var(--blue); border-left-color: #d1d5db; }
+.stage-card.party-escrow { border-left: 4px solid #2b2f2e; }
+.stage-card.party-escrow:hover { border-color: var(--blue); border-left-color: #2b2f2e; }
 .stage-card.is-pinned {
   border-color: var(--blue);
   background: linear-gradient(135deg, rgba(91, 203, 245, 0.04) 0%, transparent 100%);
@@ -1822,22 +1982,19 @@ html{-webkit-text-size-adjust:100%;}
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--navy);
-  color: var(--white);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
   font-size: 0.95rem;
+  background: var(--navy);
+  color: var(--white);
 }
-.stage-card.is-pinned .stage-card-num {
-  background: var(--blue);
-  color: var(--navy);
-}
-.stage-card-info {
-  flex: 1;
-  min-width: 0;
-}
+.stage-card-num.party-neo-bg { background: var(--blue); color: var(--navy); }
+.stage-card-num.party-agent-bg { background: var(--white); color: var(--navy); border: 1.5px solid var(--navy); }
+.stage-card-num.party-escrow-bg { background: #2b2f2e; color: var(--white); }
+.stage-card-num.party-neutral-bg { background: #9ca3af; color: var(--white); }
+.stage-card-info { flex: 1; min-width: 0; }
 .stage-card-name {
   font-weight: 800;
   font-size: 1.05rem;
@@ -1858,7 +2015,33 @@ html{-webkit-text-size-adjust:100%;}
   font-size: 0.78rem;
   color: var(--muted);
   margin: 0;
-  letter-spacing: -0.005em;
+}
+.stage-card-icons {
+  display: flex;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+}
+.stage-card-icon {
+  font-size: 1.15rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 7px;
+  padding: 0;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+.stage-card-icon:hover {
+  background: rgba(91, 203, 245, 0.12);
+  border-color: var(--blue);
+  transform: translateY(-1px);
 }
 .stage-card-expand {
   background: transparent;
@@ -1878,19 +2061,10 @@ html{-webkit-text-size-adjust:100%;}
   border-top: 1px solid var(--rule);
 }
 .stage-card-expand:hover { color: var(--blue-dark); }
-.stage-card-expand span:last-child {
-  transition: transform 0.2s ease;
-}
-.stage-card-expand:hover span:last-child {
-  transform: translateX(3px);
-}
+.stage-card-expand span:last-child { transition: transform 0.2s ease; }
+.stage-card-expand:hover span:last-child { transform: translateX(3px); }
 
-/* On mobile, hide the trail map entirely (it's not usable at small sizes) */
-@media (max-width: 760px) {
-  .trail-section { display: none; }
-}
-
-/* ── ZOOM VIEW (Full-screen overlay for stage details) ── */
+/* ── ZOOM VIEW (Full-screen detail) ─────────────────── */
 .zoom-overlay {
   position: fixed;
   inset: 0;
@@ -1907,10 +2081,7 @@ html{-webkit-text-size-adjust:100%;}
   padding: clamp(20px, 4vw, 48px);
   overflow-y: auto;
 }
-.zoom-overlay.is-open {
-  opacity: 1;
-  visibility: visible;
-}
+.zoom-overlay.is-open { opacity: 1; visibility: visible; }
 .zoom-panel {
   background: var(--white);
   border-radius: 16px;
@@ -1931,7 +2102,6 @@ html{-webkit-text-size-adjust:100%;}
   .zoom-overlay { transition: opacity 0.1s; }
 }
 body.zoom-open { overflow: hidden; }
-
 .zoom-close {
   position: absolute;
   top: 14px;
@@ -1957,7 +2127,6 @@ body.zoom-open { overflow: hidden; }
   border-color: var(--navy);
   transform: rotate(90deg);
 }
-
 .zoom-meta {
   display: flex;
   gap: 14px;
@@ -1979,9 +2148,7 @@ body.zoom-open { overflow: hidden; }
   font-size: 0.82rem;
   font-weight: 600;
   color: var(--muted);
-  letter-spacing: -0.005em;
 }
-
 .zoom-title {
   font-weight: 800;
   font-size: clamp(1.6rem, 3vw, 2.2rem);
@@ -1998,7 +2165,6 @@ body.zoom-open { overflow: hidden; }
   line-height: 1.6;
   margin: 0 0 32px 0;
 }
-
 .zoom-section {
   margin-bottom: 28px;
   padding-bottom: 28px;
@@ -2030,14 +2196,12 @@ body.zoom-open { overflow: hidden; }
   color: var(--muted) !important;
   margin-top: 12px !important;
 }
-
 .zoom-section-truth p {
   font-style: italic;
   font-size: 1.05rem;
   color: var(--navy);
   line-height: 1.75;
 }
-
 .zoom-section-warning {
   background: linear-gradient(135deg, rgba(239, 68, 68, 0.04) 0%, rgba(239, 68, 68, 0.02) 100%);
   border: 1px solid rgba(239, 68, 68, 0.2);
@@ -2045,10 +2209,7 @@ body.zoom-open { overflow: hidden; }
   padding: 20px 24px;
   margin: 0 -8px 28px -8px;
 }
-.zoom-section-eyebrow-warning {
-  color: #b91c1c !important;
-}
-
+.zoom-section-eyebrow-warning { color: #b91c1c !important; }
 .zoom-section-example {
   background: var(--surface);
   border: 1px solid var(--rule);
@@ -2056,10 +2217,7 @@ body.zoom-open { overflow: hidden; }
   padding: 20px 24px;
   margin: 0 -8px 28px -8px;
 }
-.zoom-section-eyebrow-example {
-  color: var(--blue-dark) !important;
-}
-
+.zoom-section-eyebrow-example { color: var(--blue-dark) !important; }
 .zoom-cta {
   background: var(--navy);
   border-radius: 12px;
@@ -2075,7 +2233,6 @@ body.zoom-open { overflow: hidden; }
   line-height: 1.5;
 }
 .zoom-cta .btn { display: inline-block; }
-
 .zoom-link {
   display: block;
   margin-top: 18px;
@@ -2089,16 +2246,99 @@ body.zoom-open { overflow: hidden; }
   border-radius: 8px;
   transition: all 0.15s ease;
 }
-.zoom-link:hover {
-  border-color: var(--blue);
-  background: var(--surface);
-}
+.zoom-link:hover { border-color: var(--blue); background: var(--surface); }
 
 @media (max-width: 600px) {
   .zoom-overlay { padding: 12px; }
   .zoom-panel { padding: 24px 22px; border-radius: 14px; }
-  .zoom-section-warning,
-  .zoom-section-example { margin-left: 0; margin-right: 0; }
+  .zoom-section-warning, .zoom-section-example { margin-left: 0; margin-right: 0; }
+}
+
+/* ── ICON DEFINITION MODAL (Centered — works from cards or popover) ── */
+.icon-def-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 37, 64, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+.icon-def-modal.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+.icon-def-card {
+  background: var(--white);
+  border-radius: 14px;
+  padding: 28px 30px;
+  max-width: 420px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+  animation: iconDefIn 0.25s ease;
+}
+@keyframes iconDefIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .icon-def-card { animation: none; }
+}
+.icon-def-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+.icon-def-close:hover {
+  background: var(--navy);
+  color: var(--white);
+  transform: rotate(90deg);
+}
+.icon-def-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+  margin-right: 28px;
+}
+.icon-def-emoji {
+  font-size: 2rem;
+  line-height: 1;
+}
+.icon-def-label {
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.icon-def-text {
+  font-weight: 400;
+  font-size: 0.95rem;
+  color: var(--ink);
+  line-height: 1.7;
+  margin: 0;
 }
 
 </style>
@@ -2180,39 +2420,65 @@ body.zoom-open { overflow: hidden; }
   </div>
 </section>
 
-<!-- ── PROGRESS SLIDER (Hidden on desktop, accessibility fallback) ── -->
-<section class="progress-section">
-  <div class="progress-control">
-    <span class="progress-label-eyebrow">Where Are You</span>
-    <input
-      type="range"
-      id="progressSlider"
-      min="0"
-      max="19"
-      step="1"
-      value="0"
-      aria-label="Navigate stages with keyboard">
-    <p id="progressLabel">Click any stage to explore</p>
-  </div>
-</section>
-
-<!-- ── TRAIL MAP ── -->
-<section class="trail-section">
-  <div class="trail-map">
-    <div class="trail-map-inner" id="trailMapInner">
-      <img src="/journey-map.jpg" srcset="/journey-map.jpg 1x, /journey-map@2x.jpg 2x" alt="The homebuying journey illustrated as a mountain trail with stages mapped along it" draggable="false">
-      <div id="trailOverlay" class="trail-overlay"></div>
+<!-- ── INTERACTIVE MAP ── -->
+<section class="map-section">
+  <div id="mapFrame" class="map-frame">
+    <div class="map-inner" id="mapInner">
+      <img class="map-bg" src="/journey-map.jpg" srcset="/journey-map-1x.jpg 1x, /journey-map.jpg 2x" alt="Aerial illustration of a mountain landscape representing the homebuying journey" draggable="false">
+      <div class="map-title-overlay">
+        <h2 id="mapTitle" class="map-title">The first-time buyer's journey.</h2>
+        <p id="mapTagline" class="map-tagline">Every stage of buying your first home in Los Angeles.</p>
+      </div>
+      <div class="map-logo"><svg class="nav-neo-color" width="96" height="45" viewBox="0 0 381 179" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- powered by better (bottom text) -->
+      <path d="M197.245 173.672V171.146C198.148 171.723 199.086 171.795 199.627 171.795C201.179 171.795 202.117 170.929 202.983 168.728L203.922 166.31L196.379 148.374H199.483L205.257 162.99L210.995 148.374H213.99L205.293 169.702C204.138 172.517 202.803 174.177 199.844 174.177C199.014 174.177 198.075 174.069 197.245 173.672Z" fill="#292B29"/>
+      <path d="M180.93 163.351V166.527H178.26V141.121H181.038V151.442C182.121 149.385 184.791 147.905 187.462 147.905C192.298 147.905 196.087 151.947 196.087 157.433C196.087 162.918 192.298 166.96 187.462 166.96C184.755 166.96 182.013 165.444 180.93 163.351ZM186.993 164.398C190.421 164.398 193.272 161.475 193.272 157.433C193.272 153.391 190.457 150.468 187.029 150.468C183.889 150.468 180.858 152.994 180.858 157.433C180.858 161.908 183.925 164.398 186.993 164.398Z" fill="#292B29"/>
+      <path d="M163.637 163.351C162.554 165.444 159.812 166.96 157.105 166.96C152.269 166.96 148.444 162.918 148.444 157.433C148.444 151.983 152.269 147.905 157.105 147.905C159.776 147.905 162.446 149.385 163.529 151.478V141.121H166.308V166.527H163.637V163.351ZM157.538 164.398C160.642 164.398 163.709 161.908 163.709 157.433C163.709 152.994 160.678 150.468 157.538 150.468C154.11 150.468 151.259 153.391 151.259 157.433C151.259 161.475 154.11 164.398 157.538 164.398Z" fill="#292B29"/>
+      <path d="M138.329 147.905C143.418 147.905 146.63 151.73 146.63 156.494C146.63 157.108 146.557 157.757 146.485 158.226H132.122C132.447 162.016 135.262 164.397 138.834 164.397C141.108 164.397 143.021 163.423 144.356 161.871L146.088 163.784C144.103 165.949 141.722 166.96 138.762 166.96C132.988 166.96 129.199 162.81 129.199 157.432C129.199 152.091 132.988 147.905 138.329 147.905ZM138.329 150.431C135.081 150.431 132.591 152.669 132.158 155.953H143.923V155.881C143.815 152.524 141.397 150.431 138.329 150.431Z" fill="#292B29"/>
+      <path d="M122.278 148.338V151.839C123.217 149.277 125.274 147.905 127.728 147.905C128.125 147.905 128.522 147.941 128.774 148.013V150.756C128.594 150.72 128.233 150.684 128.016 150.684C124.624 150.684 122.351 153.21 122.351 157.288V166.527H119.572V148.338H122.278Z" fill="#292B29"/>
+      <path d="M108.088 147.905C113.176 147.905 116.388 151.73 116.388 156.494C116.388 157.108 116.316 157.757 116.244 158.226H101.881C102.206 162.016 105.021 164.397 108.593 164.397C110.867 164.397 112.779 163.423 114.115 161.871L115.847 163.784C113.862 165.949 111.48 166.96 108.521 166.96C102.747 166.96 98.9577 162.81 98.9577 157.432C98.9577 152.091 102.747 147.905 108.088 147.905ZM108.088 150.431C104.84 150.431 102.35 152.669 101.917 155.953H113.682V155.881C113.573 152.524 111.155 150.431 108.088 150.431Z" fill="#292B29"/>
+      <path d="M76.7611 166.527L70.6983 148.338H73.5853L78.2768 162.81L83.1487 148.375H85.8553L90.6911 162.81L95.3826 148.338H98.3057L92.2068 166.527H89.428L84.4839 152.236L79.5399 166.527H76.7611Z" fill="#292B29"/>
+      <path d="M60.7239 147.905C66.0649 147.905 70.0346 152.091 70.0346 157.432C70.0346 162.773 66.0649 166.96 60.7239 166.96C55.3468 166.96 51.3771 162.773 51.3771 157.432C51.3771 152.091 55.3468 147.905 60.7239 147.905ZM60.7239 150.54C56.8986 150.54 54.228 153.679 54.228 157.432C54.228 161.186 56.8986 164.325 60.7239 164.325C64.5132 164.325 67.1837 161.186 67.1837 157.432C67.1837 153.679 64.5132 150.54 60.7239 150.54Z" fill="#292B29"/>
+      <path d="M31.7089 173.744V148.338H34.3794V151.55C35.5342 149.385 38.2408 147.905 40.9113 147.905C45.7471 147.905 49.5364 151.947 49.5364 157.432C49.5364 162.918 45.7471 166.96 40.9113 166.96C38.2769 166.96 35.6425 165.516 34.4876 163.495V173.744H31.7089ZM34.3072 157.432C34.3072 161.907 37.3747 164.397 40.4422 164.397C43.8706 164.397 46.7215 161.474 46.7215 157.432C46.7215 153.391 43.9066 150.467 40.4783 150.467C37.3386 150.467 34.3072 152.994 34.3072 157.432Z" fill="#292B29"/>
+      <path d="M331.875 166.394H339.515V151.434C340.226 149.177 343.559 147.066 348.367 148.122V140.791C344.37 140.791 340.932 143.404 339.515 147.568V141.293H331.875V166.394ZM319.432 146.267C321.76 146.267 322.923 147.521 322.923 148.728C322.923 150.484 321.507 152.244 313.614 153.143C313.614 149.026 316.247 146.267 319.432 146.267ZM329.195 164.084V157.407C326.667 159.518 323.276 160.672 320.543 160.672C317.711 160.672 315.436 159.167 314.32 156.759C324.335 156.059 329.242 152.641 329.242 147.824C329.242 143.958 325.246 140.697 319.68 140.697C312.292 140.697 306.326 146.068 306.326 153.901C306.326 161.278 312.445 166.749 320.138 166.749C323.429 166.744 326.767 165.793 329.195 164.084ZM300.766 158.614V146.267H305.974V141.35L300.766 141.402V135.378L286.296 145.52V136.684L274.206 145.718V146.272H278.761V160.024C278.761 164.392 281.999 166.702 286.401 166.702C288.323 166.702 289.945 166.352 291.409 165.5V160.327C290.698 160.73 289.84 161.033 288.882 161.033C287.265 161.033 286.301 160.228 286.301 158.823V146.272H293.231V159.977C293.231 164.392 296.469 166.702 300.919 166.702C302.893 166.702 304.51 166.451 306.079 165.5V160.28C305.421 160.683 304.41 161.033 303.399 161.033C301.777 161.022 300.766 160.171 300.766 158.614ZM263.891 146.267C266.218 146.267 267.382 147.521 267.382 148.728C267.382 150.484 265.966 152.244 258.073 153.143C258.073 149.026 260.7 146.267 263.891 146.267ZM273.653 164.084V157.407C271.126 159.518 267.735 160.672 265.002 160.672C262.169 160.672 259.895 159.167 258.778 156.759C268.793 156.059 273.701 152.641 273.701 147.824C273.701 143.958 269.704 140.697 264.139 140.697C256.751 140.697 250.785 146.068 250.785 153.901C250.785 161.278 256.904 166.749 264.597 166.749C267.888 166.744 271.226 165.793 273.653 164.084ZM236.926 152.892C239.301 152.892 241.275 154.35 241.275 156.806C241.275 159.115 239.301 160.521 236.926 160.521H231.16V152.892H236.926ZM236.521 140.044C238.795 140.044 240.617 141.45 240.617 143.607C240.617 145.917 238.795 147.322 236.521 147.322H231.16V140.044H236.521ZM223.32 134.218V166.394H238.595C244.461 166.394 249.068 162.83 249.068 157.407C249.068 153.942 246.841 151.184 243.603 149.877C246.536 148.571 248.51 146.011 248.51 142.949C248.51 137.677 243.856 134.213 237.937 134.213H223.32V134.218Z" fill="#292B29"/>
+      <!-- Home Loans (middle text) -->
+      <path d="M186.953 84.4229H189.788V97.5591H186.953V92.152H182.021V97.5591H179.192V84.4229H182.021V89.4773H186.953V84.4229Z" fill="#444345"/>
+      <path d="M206.324 97.8028C205.374 97.8092 204.432 97.6361 203.553 97.2769C202.725 96.9562 201.969 96.4687 201.327 95.8529C200.699 95.2308 200.205 94.4931 199.865 93.6721C199.153 91.9403 199.153 89.9968 199.865 88.265C200.198 87.444 200.699 86.7064 201.327 86.0842C201.969 85.4684 202.725 84.9874 203.553 84.6602C204.432 84.3075 205.374 84.1279 206.324 84.1343C207.273 84.1279 208.209 84.3011 209.088 84.6538C210.749 85.2952 212.077 86.5973 212.744 88.2522C213.443 89.9904 213.443 91.9275 212.744 93.6593C212.077 95.3141 210.756 96.6162 209.088 97.2576C208.209 97.6232 207.273 97.8028 206.324 97.8028ZM203.392 93.9351C204.162 94.724 205.22 95.1538 206.324 95.1345C207.421 95.1666 208.479 94.7369 209.236 93.9415C210.794 92.2674 210.794 89.6761 209.236 88.002C207.613 86.4177 205.015 86.4177 203.392 88.002C201.802 89.6569 201.802 92.2674 203.392 93.9223V93.9351Z" fill="#444345"/>
+      <path d="M238.741 97.5078H235.848L234.565 89.009L230.653 97.5078H229.96L226.047 89.009L224.764 97.5078H221.872L223.911 84.3716H226.753L230.293 92.4021L233.847 84.3716H236.688L238.741 97.5078Z" fill="#444345"/>
+      <path d="M251.075 94.878H256.309V97.5078H248.253V84.3716H256.11V87.0014H251.082V89.5799H255.616V92.1456H251.082L251.075 94.878Z" fill="#444345"/>
+      <path d="M280.651 94.8844H285.673V97.5014H277.822V84.3652H280.651V94.8844Z" fill="#444345"/>
+      <path d="M300.637 97.8028C299.688 97.8092 298.745 97.6361 297.866 97.2769C297.039 96.9562 296.282 96.4687 295.641 95.8529C295.012 95.2308 294.518 94.4931 294.178 93.6721C293.466 91.9403 293.466 89.9968 294.178 88.265C294.512 87.444 295.012 86.7064 295.641 86.0842C296.282 85.4684 297.039 84.9874 297.866 84.6602C298.745 84.3075 299.688 84.1279 300.637 84.1343C301.587 84.1279 302.523 84.3011 303.402 84.6538C304.223 84.981 304.973 85.4684 305.615 86.0842C306.237 86.7064 306.724 87.444 307.058 88.2586C307.757 89.9968 307.757 91.9339 307.058 93.6657C306.724 94.4803 306.23 95.2179 305.615 95.8401C304.98 96.4559 304.229 96.9433 303.402 97.2704C302.523 97.6232 301.587 97.8028 300.637 97.8028ZM297.712 93.9351C298.482 94.724 299.54 95.1538 300.644 95.1345C301.74 95.1666 302.799 94.7304 303.556 93.9415C305.114 92.2674 305.114 89.6761 303.556 88.002C301.933 86.4177 299.335 86.4177 297.712 88.002C296.122 89.6569 296.122 92.2674 297.712 93.9223V93.9351Z" fill="#444345"/>
+      <path d="M325.274 97.5078L324.363 95.0191H319.148L318.25 97.5078H315.242L320.38 84.3716H323.048L328.34 97.5078H325.274ZM321.74 87.8737L320.008 92.5689H323.44L321.74 87.8737Z" fill="#444345"/>
+      <path d="M345.632 84.4229H348.403V97.5591H346.037L340.097 89.3362V97.5014H337.326V84.3652H339.879L345.626 92.3572L345.632 84.4229Z" fill="#444345"/>
+      <path d="M363.066 97.7772C361.732 97.8413 360.423 97.4116 359.391 96.5649C358.454 95.7375 357.941 94.5252 357.999 93.2744H360.84C360.815 93.8132 361.052 94.3328 361.482 94.6663C361.924 94.9998 362.47 95.173 363.028 95.1602C363.554 95.1666 364.067 95.0191 364.503 94.7369C364.901 94.506 365.144 94.0762 365.138 93.6144C365.138 93.4605 365.112 93.3065 365.054 93.1654C364.99 93.0243 364.888 92.9024 364.759 92.8126C364.631 92.7164 364.503 92.633 364.368 92.5496C364.195 92.4534 364.009 92.3765 363.817 92.3252L363.214 92.152L362.521 91.9916C361.706 91.8056 360.911 91.549 360.148 91.2219C359.083 90.7858 358.332 89.8108 358.191 88.6627C358.166 88.4767 358.153 88.2842 358.153 88.0982C358.095 86.995 358.563 85.9303 359.423 85.2247C360.423 84.4935 361.649 84.1279 362.893 84.1984C364.15 84.1151 365.394 84.5127 366.376 85.3081C367.222 86.1034 367.678 87.2387 367.62 88.3997H364.83C364.856 87.9186 364.638 87.4632 364.259 87.1682C363.842 86.8795 363.342 86.732 362.835 86.7513C362.38 86.7384 361.931 86.8475 361.54 87.0656C361.193 87.2387 360.982 87.5979 360.988 87.9828C360.988 88.156 361.039 88.3291 361.135 88.4703C361.219 88.6114 361.334 88.7332 361.469 88.823C361.649 88.9385 361.841 89.0347 362.04 89.0988C362.296 89.1886 362.521 89.2592 362.707 89.3169L363.515 89.5158L364.201 89.6889L364.881 89.8878C365.119 89.9583 365.343 90.0417 365.568 90.1443C365.741 90.2213 365.952 90.3239 366.203 90.4522C366.414 90.5613 366.619 90.696 366.806 90.8435C366.979 90.991 367.139 91.1578 367.287 91.331C367.453 91.5106 367.588 91.7158 367.691 91.9403C367.787 92.1905 367.864 92.4534 367.922 92.71C367.986 93.0051 368.018 93.3001 368.011 93.6016C368.024 94.2366 367.89 94.8716 367.62 95.4488C367.376 95.9684 367.004 96.4238 366.549 96.7702C366.087 97.1229 365.561 97.3859 365.003 97.5398C364.368 97.7194 363.714 97.79 363.066 97.7772Z" fill="#444345"/>
+      <!-- NEO large wordmark -->
+      <path d="M235.784 24.5277V70.825H222.481L188.967 40.3963V70.825H174.362V24.5277H190.372L221.14 52.8269V24.5277H235.784Z" fill="#52C8EF"/>
+      <path d="M304.171 60.5046V70.825H248.785V24.5277H303.35V34.8416H263.685V42.4424H296.378V52.3009H263.685V60.4982H304.171V60.5046Z" fill="#52C8EF"/>
+      <path d="M310.008 47.6763C310.008 32.0001 323.286 23.0011 343.811 23.0011C364.342 23.0011 377.69 31.9937 377.69 47.6763C377.69 63.3589 364.349 72.3515 343.811 72.3515C323.273 72.3515 310.008 63.3461 310.008 47.6763ZM362.277 47.6763C362.277 38.9467 355.241 33.9821 343.817 33.9821C332.394 33.9821 325.357 38.9403 325.357 47.6763C325.357 56.4124 332.374 61.3577 343.817 61.3577C355.26 61.3577 362.277 56.406 362.277 47.6763Z" fill="#52C8EF"/>
+      <!-- N icon (hexagon shield) -->
+      <path d="M3.20706 40.1076V87.7262C3.20706 94.538 7.51095 100.606 13.9379 102.864L73.4355 123.729C76.8671 124.935 80.6065 124.935 84.0381 123.729L143.536 102.864C149.969 100.612 154.273 94.5444 154.273 87.7262V40.1076C154.273 33.2958 149.963 27.2216 143.536 24.9703L84.0381 4.11146C80.6065 2.9056 76.8671 2.9056 73.4355 4.11146L13.9379 24.9767C7.51095 27.228 3.20706 33.2958 3.20706 40.1076Z" fill="#444345"/>
+      <path d="M63.1536 66.04C62.8137 65.7963 62.3583 65.7963 62.0183 66.04L46.3614 77.3417C45.9252 77.656 45.3159 77.5598 45.0016 77.1236C44.8862 76.9633 44.822 76.7644 44.8156 76.5656V46.3358C44.822 45.797 45.2646 45.3672 45.8034 45.38C46.0022 45.38 46.2011 45.4506 46.3614 45.5661L108.348 90.3175C108.527 90.4458 108.752 90.5164 108.976 90.5164H120.502C121.093 90.5164 121.567 90.0417 121.567 89.4516V33.6742C121.574 33.0841 121.099 32.6031 120.509 32.6031H120.502H108.675C108.45 32.6031 108.232 32.6736 108.046 32.8019L78.291 54.2893C77.9511 54.533 77.4957 54.533 77.1557 54.2893L47.4005 32.8019C47.2209 32.6672 46.9964 32.5967 46.7719 32.6031H34.9506C34.3605 32.6031 33.8795 33.0841 33.8795 33.6742V89.4388C33.8795 90.0289 34.3541 90.5035 34.9442 90.5035H34.9506H46.4769C46.7014 90.5035 46.9194 90.433 47.1054 90.3047L70.8378 73.1661C71.2675 72.8454 71.3509 72.2425 71.0302 71.8127C70.9725 71.7422 70.9083 71.6716 70.8378 71.6203L63.1536 66.04ZM88.1559 60.6329L109.066 45.5468C109.502 45.2325 110.112 45.3287 110.426 45.7649C110.541 45.9253 110.605 46.1241 110.612 46.3229V76.5592C110.605 77.098 110.163 77.5277 109.624 77.5149C109.425 77.5149 109.226 77.4443 109.066 77.3289L88.1559 62.2364C87.7198 61.9157 87.6236 61.2999 87.9443 60.8638C88.002 60.7804 88.0726 60.7098 88.1559 60.6521V60.6329Z" fill="#52C8EF"/>
+    </svg></div>
+      <div id="mapBasecamp" class="map-basecamp-label">Start here</div>
+      <svg id="trailSvg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
     </div>
     <button type="button" id="zoomOutBtn" class="zoom-out-btn" aria-label="Zoom out to see full map">
       <span>← Zoom out</span>
     </button>
+    <div id="legend" class="legend">
+      <div class="legend-header">
+        <h3 class="legend-header-title">Legend · Tap for definitions</h3>
+      </div>
+      <div id="legendItems" class="legend-items"></div>
+      <div id="legendTooltip" class="legend-tooltip"></div>
+    </div>
   </div>
 </section>
 
-<!-- ── STAGE CARDS ── -->
+<!-- ── STAGE CARDS BELOW MAP ── -->
 <section id="stagesCards"></section>
 
-<!-- ── ZOOM OVERLAY (Hidden until 'Read full details' clicked) ── -->
+<!-- ── ZOOM OVERLAY ── -->
 <div id="zoomOverlay" class="zoom-overlay" role="presentation"></div>
 
 <!-- ── BOTTOM CTA ── -->
@@ -2708,12 +2974,16 @@ function submitFN() {
 </script>
 
 <script>
+// ═══════════════════════════════════════════════════════════════════════════
+// JOURNEY V2 DATA — All 19 stages with party assignments + 16 emoji icons
+// ═══════════════════════════════════════════════════════════════════════════
+
 const stages = [
   {
     num: 1,
     name: "Registration",
-    x: 32.03,
-    y: 73.06,
+    x: 45.0,
+    y: 80.0,
     summary: "We map your full financial picture into a clear plan.",
     what: "We review your application and credit, look at your full financial picture, and map out a plan that fits your goals. If you don't have an agent, I connect you with a strong one.",
     time: "2 to 4 days",
@@ -2743,13 +3013,14 @@ const stages = [
     visibleFor: ["first-time", "move-up", "investor", "refi"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha", "refi"],
     realExample: null,
-    link: null
+    link: null,
+    party: "neo"
   },
   {
     num: 2,
     name: "Submission",
-    x: 19.38,
-    y: 83.61,
+    x: 51.0,
+    y: 87.0,
     summary: "We gather what underwriting actually needs, not nice-to-have.",
     what: "I collect your income, asset, and identity documents and structure them the way underwriting expects to see them. The cleaner the submission, the faster everything downstream.",
     time: "1 to 3 business days",
@@ -2769,13 +3040,14 @@ const stages = [
     visibleFor: ["first-time", "move-up", "investor", "refi"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha", "refi"],
     realExample: null,
-    link: null
+    link: null,
+    party: "neo"
   },
   {
     num: 3,
     name: "Pre-Approved",
-    x: 7.55,
-    y: 78.98,
+    x: 36.0,
+    y: 81.0,
     summary: "Fully underwritten pre-approval, not just pre-qualification.",
     what: "Your file goes to an actual underwriter who reviews your income, assets, and credit BEFORE you write any offers. The pre-approval letter you receive is something a listing agent can verify and trust.",
     time: "24 to 48 hours",
@@ -2791,13 +3063,14 @@ const stages = [
     visibleFor: ["first-time", "move-up", "investor"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha"],
     realExample: null,
-    link: null
+    link: null,
+    party: "neo"
   },
   {
     num: 4,
     name: "Searching",
-    x: 8.13,
-    y: 70.28,
+    x: 28.0,
+    y: 73.0,
     summary: "You're shopping. I'm on call when you have questions on specific properties.",
     what: "While you're working with your agent to find the right home, I'm available to run quick numbers on properties you're considering, flag any financing red flags (HOA issues, condo warrantability), and update your pre-approval if your scenario changes.",
     time: "Days to weeks",
@@ -2815,13 +3088,14 @@ const stages = [
     visibleFor: ["first-time", "move-up", "investor"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha"],
     realExample: null,
-    link: null
+    link: null,
+    party: "agent"
   },
   {
     num: 5,
     name: "Contract",
-    x: 4.84,
-    y: 57.31,
+    x: 20.0,
+    y: 67.0,
     summary: "You're in contract. We move fast.",
     what: "You and the seller have signed the purchase agreement. I immediately update your file, lock the rate (or strategize about timing), and start the formal loan process. The clock is now running.",
     time: "Same day to 1 business day",
@@ -2834,13 +3108,14 @@ const stages = [
     visibleFor: ["first-time", "move-up", "investor"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha"],
     realExample: null,
-    link: null
+    link: null,
+    party: "agent"
   },
   {
     num: 6,
     name: "Open Escrow",
-    x: 8.91,
-    y: 47.13,
+    x: 14.0,
+    y: 60.0,
     summary: "Escrow opens. Earnest money in. We're officially in motion.",
     what: "Escrow is opened with the title company. Your earnest money deposit (typically 1-3% of purchase price) is delivered. Title work begins. I coordinate with escrow on disclosure timing.",
     time: "1 to 2 business days",
@@ -2853,13 +3128,14 @@ const stages = [
     visibleFor: ["first-time", "move-up", "investor"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha"],
     realExample: null,
-    link: null
+    link: null,
+    party: "neo"
   },
   {
     num: 7,
     name: "Initial Loan Disclosures",
-    x: 15.21,
-    y: 47.41,
+    x: 10.0,
+    y: 52.0,
     summary: "Your initial Loan Estimate. I walk you through every line.",
     what: "Federal regulations require lenders to issue you a Loan Estimate within 3 business days of submission. This document shows your interest rate, monthly payment, closing costs, and the cash you'll need at closing.",
     time: "Within 3 business days",
@@ -2876,13 +3152,14 @@ const stages = [
     visibleFor: ["first-time", "move-up", "investor", "refi"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha", "refi"],
     realExample: null,
-    link: null
+    link: null,
+    party: "neo"
   },
   {
     num: 8,
     name: "Inspections",
-    x: 21.46,
-    y: 46.3,
+    x: 18.0,
+    y: 48.0,
     summary: "Your inspector finds issues. We figure out which ones matter.",
     what: "Your home inspector (and any specialists — roof, sewer, foundation) examines the property. They will find issues. The question isn't 'are there problems' — it's 'which ones are deal-breakers, which ones are negotiable, and which ones are normal for a home this age.'",
     time: "7 to 17 days after contract (depending on contingency period)",
@@ -2902,13 +3179,14 @@ const stages = [
     visibleFor: ["first-time", "move-up", "investor"],
     paths: ["purchase-financed", "va", "fha"],
     realExample: null,
-    link: null
+    link: null,
+    party: "agent"
   },
   {
     num: 9,
     name: "Appraisal",
-    x: 26.77,
-    y: 38.52,
+    x: 26.0,
+    y: 44.0,
     summary: "An independent appraiser determines what the home is worth.",
     what: "The lender orders an appraisal from a licensed third-party appraiser. They visit the home, compare it to recent sales, and assign a value. If the appraisal is at or above contract price, the loan moves forward. If it's lower, we negotiate.",
     time: "3 to 14 days from order",
@@ -2928,13 +3206,14 @@ const stages = [
     visibleFor: ["first-time", "move-up", "investor", "refi"],
     paths: ["purchase-financed", "va", "fha", "refi"],
     realExample: null,
-    link: null
+    link: null,
+    party: "neo"
   },
   {
     num: 10,
     name: "Loan Approved",
-    x: 30.57,
-    y: 31.57,
+    x: 33.0,
+    y: 38.0,
     summary: "Underwriting issues final approval. Conditions are clear.",
     what: "After review of your file, the appraisal, and the title work, the underwriter issues a formal loan approval. This usually comes with 'conditions' — small items that need to be addressed before the loan can close (a final paystub, a clarifying letter, an updated bank statement).",
     time: "2 to 7 business days after contract",
@@ -2947,13 +3226,14 @@ const stages = [
     visibleFor: ["first-time", "move-up", "investor", "refi"],
     paths: ["purchase-financed", "va", "fha", "refi"],
     realExample: null,
-    link: null
+    link: null,
+    party: "neo"
   },
   {
     num: 11,
     name: "Closing Disclosure",
-    x: 35.21,
-    y: 28.98,
+    x: 40.0,
+    y: 33.0,
     summary: "Your final Closing Disclosure. Compare it line-by-line to the Loan Estimate.",
     what: "Federal law requires you to receive the Closing Disclosure at least 3 business days before closing. It shows your final loan terms, payment, and exact cash to close. The 3-day waiting period is mandatory and cannot be waived.",
     time: "At least 3 business days before closing",
@@ -2966,13 +3246,14 @@ const stages = [
     visibleFor: ["first-time", "move-up", "investor", "refi"],
     paths: ["purchase-financed", "va", "fha", "refi"],
     realExample: null,
-    link: null
+    link: null,
+    party: "neo"
   },
   {
     num: 12,
     name: "Clear to Close",
-    x: 42.5,
-    y: 27.5,
+    x: 47.0,
+    y: 28.0,
     summary: "All conditions cleared. Lender authorizes closing.",
     what: "The underwriter issues 'Clear to Close' (CTC) — the green light for escrow to schedule signing. At this point, the loan is fully approved and ready to fund as soon as you sign.",
     time: "1 to 3 days before closing",
@@ -2985,13 +3266,14 @@ const stages = [
     visibleFor: ["first-time", "move-up", "investor", "refi"],
     paths: ["purchase-financed", "va", "fha", "refi"],
     realExample: null,
-    link: null
+    link: null,
+    party: "neo"
   },
   {
     num: 13,
     name: "Closed",
-    x: 48.91,
-    y: 21.67,
+    x: 54.0,
+    y: 22.0,
     summary: "You sign the loan documents.",
     what: "You meet with escrow (or a notary) to sign the closing documents — the promissory note, deed of trust, and a stack of disclosures. The signing typically takes 1-2 hours.",
     time: "1 to 2 hours",
@@ -3004,13 +3286,14 @@ const stages = [
     visibleFor: ["first-time", "move-up", "investor", "refi"],
     paths: ["purchase-financed", "va", "fha", "refi"],
     realExample: null,
-    link: null
+    link: null,
+    party: "escrow"
   },
   {
     num: 14,
     name: "Funded",
-    x: 52.29,
-    y: 17.13,
+    x: 60.0,
+    y: 18.0,
     summary: "Lender wires money to escrow. You're officially funded.",
     what: "After you sign, the loan documents are reviewed one final time, and the lender wires the loan proceeds to escrow. Once funds are received, the transaction can close.",
     time: "Same day or next business day after signing",
@@ -3023,13 +3306,14 @@ const stages = [
     visibleFor: ["first-time", "move-up", "investor", "refi"],
     paths: ["purchase-financed", "va", "fha", "refi"],
     realExample: null,
-    link: null
+    link: null,
+    party: "neo"
   },
   {
     num: 15,
     name: "Walk Through",
-    x: 56.25,
-    y: 11.67,
+    x: 65.0,
+    y: 13.0,
     summary: "Final inspection of the home before keys are handed over.",
     what: "You and your agent do a final walk-through to confirm the home is in the agreed condition, any negotiated repairs were completed, and the seller has removed all personal items.",
     time: "Day of or day before closing",
@@ -3042,13 +3326,14 @@ const stages = [
     visibleFor: ["first-time", "move-up", "investor"],
     paths: ["purchase-financed", "va", "fha"],
     realExample: null,
-    link: null
+    link: null,
+    party: "agent"
   },
   {
     num: 16,
     name: "Close Escrow",
-    x: 61.41,
-    y: 4.63,
+    x: 66.0,
+    y: 8.0,
     summary: "The deed is recorded with the county. You officially own the home.",
     what: "Escrow records the deed transferring ownership to you with the LA County Recorder's office. This is the moment ownership legally changes hands.",
     time: "Same day as funding in most cases",
@@ -3065,13 +3350,14 @@ const stages = [
     visibleFor: ["first-time", "move-up", "investor", "refi"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha", "refi"],
     realExample: null,
-    link: null
+    link: null,
+    party: "escrow"
   },
   {
     num: 17,
     name: "Keys",
-    x: 65.83,
-    y: 11.02,
+    x: 74.0,
+    y: 16.0,
     summary: "The seller hands over keys, garage remotes, and codes.",
     what: "Per your purchase agreement, the seller delivers all keys, garage remotes, gate fobs, and any digital codes (alarm, smart lock, garage). Your agent typically coordinates this.",
     time: "Same day or as agreed in contract",
@@ -3084,13 +3370,14 @@ const stages = [
     visibleFor: ["first-time", "move-up", "investor"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha"],
     realExample: null,
-    link: null
+    link: null,
+    party: "agent"
   },
   {
     num: 18,
     name: "Move In",
-    x: 72.6,
-    y: 14.72,
+    x: 82.0,
+    y: 25.0,
     summary: "You move into your new home.",
     what: "Whenever you're ready, you move in. Set up utilities, change your address with USPS, update your driver's license, and start enjoying the home.",
     time: "Whenever you are ready",
@@ -3103,13 +3390,14 @@ const stages = [
     visibleFor: ["first-time", "move-up", "investor"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha"],
     realExample: null,
-    link: null
+    link: null,
+    party: "neutral"
   },
   {
     num: 19,
     name: "The Journey Continues",
-    x: 79.22,
-    y: 21.85,
+    x: 91.0,
+    y: 38.0,
     summary: "I keep watching your loan. You don't have to.",
     what: "Through Mortgage Under Management, I monitor your loan after closing. When rates drop enough to justify refinancing, when recasting makes sense, when an investment opportunity comes along — I reach out. No cost to you.",
     time: "Ongoing",
@@ -3125,36 +3413,157 @@ const stages = [
     visibleFor: ["first-time", "move-up", "investor", "refi"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha", "refi"],
     realExample: null,
-    link: "/mortgage-under-management"
+    link: "/mortgage-under-management",
+    party: "neo"
   }
 ];
+
+const icons = [
+  {
+    slug: "credit-report",
+    emoji: "📊",
+    label: "Credit Report",
+    definition: "Your credit history pulled from the bureaus — payment history, debts, credit utilization, and credit score. The lender uses this to qualify your loan."
+  },
+  {
+    slug: "credit-upgrade",
+    emoji: "📈",
+    label: "Credit Upgrade",
+    definition: "A targeted strategy to improve your credit score before applying — paying down specific balances, removing errors, or timing inquiries. Can mean significantly better rates."
+  },
+  {
+    slug: "application",
+    emoji: "📋",
+    label: "Application",
+    definition: "The formal loan application (Form 1003) that captures your income, assets, debts, and the property details. Required by federal law before any lender can issue disclosures."
+  },
+  {
+    slug: "doc-submission",
+    emoji: "📤",
+    label: "Document Submission",
+    definition: "Uploading your income docs, asset statements, ID, and other supporting paperwork. The cleaner and more organized, the faster underwriting moves."
+  },
+  {
+    slug: "loan-docs",
+    emoji: "📄",
+    label: "Loan Documents Drafted",
+    definition: "The final loan documents prepared by the lender for you to sign at closing — including the Note, Deed of Trust, and federal disclosures."
+  },
+  {
+    slug: "sign-docs",
+    emoji: "✍️",
+    label: "Sign Loan and Title Documents",
+    definition: "The signing appointment at escrow (or with a mobile notary) where you sign the Promissory Note, Deed of Trust, and 30+ other documents. Typically 60-90 minutes."
+  },
+  {
+    slug: "meeting",
+    emoji: "📅",
+    label: "Meeting",
+    definition: "A scheduled conversation with your mortgage advisor — usually 15-30 minutes by phone or video. The most valuable ones happen early (strategy) and at disclosure review."
+  },
+  {
+    slug: "home-inspection",
+    emoji: "🏠",
+    label: "Home Inspection",
+    definition: "A licensed inspector's review of the home's condition — roof, foundation, electrical, plumbing, HVAC. Reveals what the listing photos hid."
+  },
+  {
+    slug: "termite",
+    emoji: "🐛",
+    label: "Termite Inspection",
+    definition: "California requires a termite inspection (or 'pest report') for most home sales. Can be a deal point if the report turns up damage or active infestation."
+  },
+  {
+    slug: "appraisal",
+    emoji: "🏘️",
+    label: "Appraisal",
+    definition: "An independent licensed appraiser determines the home's market value. If the appraisal comes in low, the loan amount drops and you may need to renegotiate."
+  },
+  {
+    slug: "walk-through",
+    emoji: "👣",
+    label: "Walk Through",
+    definition: "The final inspection just before closing — your last chance to verify the seller delivered the home in promised condition."
+  },
+  {
+    slug: "funds-escrow",
+    emoji: "💰",
+    label: "Funds to Escrow",
+    definition: "Wiring earnest money (and later, cash to close) to the escrow company's trust account. The single highest fraud-risk moment of the entire deal."
+  },
+  {
+    slug: "time-sensitive",
+    emoji: "⏱️",
+    label: "Time Sensitive",
+    definition: "A stage with a hard deadline — the federal 3-day CD waiting period, contract contingency removal dates, lock expiration dates. Missing these has real consequences."
+  },
+  {
+    slug: "ongoing",
+    emoji: "🔄",
+    label: "Ongoing Monitoring",
+    definition: "Continuing watch over your loan after closing — checking for refi windows, recasting opportunities, and rate movements that work in your favor."
+  },
+  {
+    slug: "hazard-zone",
+    emoji: "⚠️",
+    label: "Hazard Zone",
+    definition: "Stages where small mistakes have the biggest consequences — wire fraud at escrow opening, missing the 3-day CD review, signing a CD that doesn't match your Loan Estimate."
+  },
+  {
+    slug: "keys",
+    emoji: "🔑",
+    label: "Keys",
+    definition: "The physical (and digital) keys to the home — house keys, garage remotes, alarm codes, gate fobs. Change locks on day one regardless of how trustworthy the prior owner seemed."
+  }
+];
+
+const stageIcons = {
+  "1": ["application", "meeting", "credit-report"],
+  "2": ["doc-submission"],
+  "3": ["credit-report", "application"],
+  "4": [],
+  "5": ["time-sensitive"],
+  "6": ["funds-escrow", "hazard-zone"],
+  "7": ["loan-docs", "time-sensitive", "meeting"],
+  "8": ["home-inspection", "termite", "time-sensitive"],
+  "9": ["appraisal"],
+  "10": ["loan-docs"],
+  "11": ["loan-docs", "time-sensitive", "hazard-zone"],
+  "12": ["time-sensitive"],
+  "13": ["sign-docs", "meeting"],
+  "14": ["funds-escrow", "time-sensitive"],
+  "15": ["walk-through", "hazard-zone"],
+  "16": ["time-sensitive"],
+  "17": ["keys"],
+  "18": [],
+  "19": ["ongoing"]
+};
 
 </script>
 
 <script>
 // ═══════════════════════════════════════════════════════════════════════════
 // JOURNEY V2 — INTERACTIVE LOGIC (Revised)
-// 
-// Major changes from v1:
-//   - Real trail map background (/journey-map.jpg) with stage hit zones positioned over it
-//   - Zoom navigation: clicking a stage zooms map to ~2.5x and centers on that stage
-//   - Click behavior: single click = pin only (Option B). 'Read full details' button opens overlay
-//   - Dynamic display numbering: refi sees 1-11 sequentially, not 1-2-7-9-10...
-//   - Slider hidden on desktop; only used as accessibility fallback
+//
+// Fixes in this revision:
+//   1. Smaller pins with party color coding (blue/white/charcoal)
+//   2. Legend is INFORMATIONAL only — no map filtering. Click for definition.
+//   3. Popover renders at document body level (escapes the map frame clip)
+//   4. Click anywhere on map empty space = zoom out
+//   5. Trail dotted line made more visible
 // ═══════════════════════════════════════════════════════════════════════════
 
 (function() {
   'use strict';
 
-  // ── STATE ──────────────────────────────────────────────
   const state = {
     persona: 'first-time',
-    pinnedStageNum: null,    // canonical num of pinned stage (null = nothing pinned)
-    isZoomed: false,         // is the trail map zoomed in?
-    zoomScale: 2.5,          // how much to zoom in
+    pinnedStageNum: null,
+    isZoomed: false,
+    zoomScale: 2.2,
+    expandedLegendItem: null,  // For showing definition tooltip
   };
 
-  // ── HELPERS ────────────────────────────────────────────
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $$(sel, root) { return Array.from((root || document).querySelectorAll(sel)); }
 
@@ -3165,6 +3574,7 @@ const stages = [
       name: stage.name,
       x: stage.x,
       y: stage.y,
+      party: stage.party || 'neutral',
       summary: (variant && variant.summary) || stage.summary,
       what: (variant && variant.what) || stage.what,
       time: (variant && variant.time) || stage.time,
@@ -3183,37 +3593,80 @@ const stages = [
   }
 
   function getDisplayNum(stage, persona) {
-    // Dynamic numbering: position in the visible list for this persona, 1-indexed
     const list = visibleStages(persona);
     const idx = list.findIndex(s => s.num === stage.num);
     return idx === -1 ? stage.num : idx + 1;
   }
 
-  function getPersonaLabel(persona) {
-    return {
-      'first-time': 'First-time buyer',
-      'move-up': 'Move-up buyer',
-      'investor': 'Investor',
-      'refi': 'Refinancing',
-    }[persona];
+  function getStageIconSlugs(stageNum) {
+    return stageIcons[String(stageNum)] || [];
   }
+
+  function getIconBySlug(slug) {
+    return icons.find(i => i.slug === slug);
+  }
+
+  const PERSONA_LABELS = {
+    'first-time': 'First-time buyer',
+    'move-up': 'Move-up buyer',
+    'investor': 'Investor',
+    'refi': 'Refinancing',
+  };
+
+  const PERSONA_INTROS = {
+    'first-time': {
+      title: "The first-time buyer's journey.",
+      tagline: "Every stage of buying your first home in Los Angeles.",
+      basecamp: "Start here",
+      eyebrow: 'For first-time buyers',
+      h2: "Your first home, mapped out from end to end.",
+      sub: "Every stage you'll go through, what to expect, how long it takes, and what most mortgage professionals get wrong at each step.",
+    },
+    'move-up': {
+      title: "The move-up buyer's journey.",
+      tagline: "Selling and buying without the contingent-offer mess.",
+      basecamp: "Start here",
+      eyebrow: 'For move-up buyers',
+      h2: "Moving up without the contingent-offer mess.",
+      sub: "Every stage of your next purchase, with the move-up-specific strategies for handling the sale of your current home.",
+    },
+    'investor': {
+      title: "The investor's journey.",
+      tagline: "Buying investment property in LA.",
+      basecamp: "Start here",
+      eyebrow: 'For real estate investors',
+      h2: "Your investment property purchase, end to end.",
+      sub: "Every stage of an investment property purchase, with DSCR loan considerations, rental cap rules, and what most mortgage professionals miss on investor deals.",
+    },
+    'refi': {
+      title: "The refinance journey.",
+      tagline: "Refinancing in LA, honestly.",
+      basecamp: "Start here",
+      eyebrow: 'For refinancing',
+      h2: "Your refinance, mapped out honestly.",
+      sub: "Every stage of a refinance. If a refi doesn't make sense for your situation, I'll tell you. Most mortgage professionals won't.",
+    },
+  };
+
+  // Party color hex codes (used in inline SVG styles)
+  const PARTY_COLORS = {
+    'neo': { pin: '#5bcbf5', bg: '#ffffff', num: '#0A2540' },        // Brand blue
+    'agent': { pin: '#ffffff', bg: '#ffffff', num: '#0A2540' },      // White
+    'escrow': { pin: '#2b2f2e', bg: '#ffffff', num: '#0A2540' },     // Charcoal
+    'neutral': { pin: '#9ca3af', bg: '#ffffff', num: '#0A2540' },    // Gray
+  };
 
   // ── PERSONA SELECTOR ──────────────────────────────────
   function renderPersonaSelector() {
     const personas = ['first-time', 'move-up', 'investor', 'refi'];
     const container = $('#personaSelector');
     if (!container) return;
-
     container.innerHTML = personas.map(p => `
-      <button
-        type="button"
+      <button type="button"
         class="persona-btn ${state.persona === p ? 'is-active' : ''}"
         data-persona="${p}"
-        aria-pressed="${state.persona === p}">
-        ${getPersonaLabel(p)}
-      </button>
+        aria-pressed="${state.persona === p}">${PERSONA_LABELS[p]}</button>
     `).join('');
-
     container.addEventListener('click', e => {
       const btn = e.target.closest('.persona-btn');
       if (!btn) return;
@@ -3224,117 +3677,200 @@ const stages = [
   function switchPersona(newPersona) {
     if (newPersona === state.persona) return;
     state.persona = newPersona;
-    // Clear pinned state on persona change
     state.pinnedStageNum = null;
     state.isZoomed = false;
-    
     $$('.persona-btn').forEach(b => {
       const active = b.dataset.persona === newPersona;
       b.classList.toggle('is-active', active);
       b.setAttribute('aria-pressed', active);
     });
-    
-    renderTrail();
+    updateMapTitle();
+    renderTrailSvg();
     renderStageCards();
-    updateZoomState();
     updateIntroForPersona();
-    updateProgressSlider();
-    
+    updateZoomState();
+    hideStagePopover();
     if (typeof gtag !== 'undefined') {
       gtag('event', 'journey_persona_switch', { persona: newPersona });
     }
   }
 
   function updateIntroForPersona() {
-    const introMap = {
-      'first-time': {
-        eyebrow: 'For first-time buyers',
-        h2: "Your first home, mapped out from end to end.",
-        sub: "Every stage you'll go through, what to expect, how long it takes, and what most mortgage professionals get wrong at each step.",
-      },
-      'move-up': {
-        eyebrow: 'For move-up buyers',
-        h2: "Moving up without the contingent-offer mess.",
-        sub: "Every stage of your next purchase, with the move-up-specific strategies for handling the sale of your current home.",
-      },
-      'investor': {
-        eyebrow: 'For real estate investors',
-        h2: "Your investment property purchase, end to end.",
-        sub: "Every stage of an investment property purchase, with DSCR loan considerations, rental cap rules, and what most mortgage professionals miss on investor deals.",
-      },
-      'refi': {
-        eyebrow: 'For refinancing',
-        h2: "Your refinance, mapped out honestly.",
-        sub: "Every stage of a refinance. If a refi doesn't make sense for your situation, I'll tell you. Most mortgage professionals won't.",
-      },
-    };
-    const intro = introMap[state.persona];
+    const intro = PERSONA_INTROS[state.persona];
     if (!intro) return;
     const e = $('#introEyebrow'); if (e) e.textContent = intro.eyebrow;
     const h = $('#introH2'); if (h) h.textContent = intro.h2;
     const s = $('#introSub'); if (s) s.textContent = intro.sub;
   }
 
-  // ── TRAIL RENDERING (Real map with hit zones over it) ─
-  function renderTrail() {
-    const overlay = $('#trailOverlay');
-    if (!overlay) return;
+  function updateMapTitle() {
+    const intro = PERSONA_INTROS[state.persona];
+    if (!intro) return;
+    const t = $('#mapTitle'); if (t) t.textContent = intro.title;
+    const tg = $('#mapTagline'); if (tg) tg.textContent = intro.tagline;
+    const bc = $('#mapBasecamp'); if (bc) bc.textContent = intro.basecamp;
+  }
 
+  // ── TRAIL SVG (path + waypoints) ──────────────────────
+  function renderTrailSvg() {
+    const svg = $('#trailSvg');
+    if (!svg) return;
     const visible = visibleStages(state.persona);
+    if (visible.length === 0) return;
+    const sorted = [...visible].sort((a, b) => a.num - b.num);
 
-    overlay.innerHTML = visible.map(stage => {
+    // Build smooth Bezier path
+    let pathD = '';
+    if (sorted.length > 0) {
+      const first = sorted[0];
+      pathD = `M ${first.x} ${first.y}`;
+      for (let i = 1; i < sorted.length; i++) {
+        const prev = sorted[i - 1];
+        const curr = sorted[i];
+        const midX = (prev.x + curr.x) / 2;
+        const midY = (prev.y + curr.y) / 2;
+        const dx = curr.x - prev.x;
+        const dy = curr.y - prev.y;
+        const len = Math.sqrt(dx * dx + dy * dy);
+        const perpX = -dy / len * 1.5;
+        const perpY = dx / len * 1.5;
+        const ctrlX = midX + perpX;
+        const ctrlY = midY + perpY;
+        pathD += ` Q ${ctrlX} ${ctrlY} ${curr.x} ${curr.y}`;
+      }
+    }
+
+    // Build waypoints — clean dimensional DOTS (not pins)
+    // Structure: outer <g> positions via translate (never touched by hover).
+    //            inner <g class="wp-scale"> handles hover/pin scaling (no jump).
+    const waypoints = sorted.map(stage => {
       const c = getStageContent(stage, state.persona);
       const displayNum = getDisplayNum(stage, state.persona);
       const isPinned = state.pinnedStageNum === stage.num;
+      const colors = PARTY_COLORS[c.party] || PARTY_COLORS.neutral;
+
+      const ringStroke = c.party === 'agent' ? '#0A2540' : '#ffffff';
+      const wpClass = `trail-waypoint party-${c.party}${isPinned ? ' is-pinned' : ''}`;
+
+      // A waypoint dot: ~1.5 unit radius (small). Subtle outer ring + soft drop shadow
+      // = depth without the "balloon" look. Number sits inside.
       return `
-        <button
-          type="button"
-          class="stage-hit ${isPinned ? 'is-pinned' : ''}"
-          style="left:${c.x}%;top:${c.y}%"
-          data-num="${c.num}"
-          data-display-num="${displayNum}"
-          aria-label="Stage ${displayNum}: ${c.name}">
-          <span class="stage-hit-marker">
-            <span class="stage-hit-num">${displayNum}</span>
-          </span>
-          <span class="stage-hit-tooltip" role="tooltip">
-            <span class="stage-hit-tooltip-num">Stage ${displayNum}</span>
-            <span class="stage-hit-tooltip-name">${c.name}</span>
-            ${isPinned ? `
-              <button type="button" class="stage-hit-readmore" data-action="readmore" data-num="${c.num}">
-                Read full details →
-              </button>
-            ` : ''}
-          </span>
-        </button>
+        <g class="${wpClass}" data-num="${stage.num}" transform="translate(${stage.x} ${stage.y})">
+          <g class="wp-scale">
+            <!-- Soft drop shadow for depth -->
+            <circle cx="0" cy="0.25" r="1.6" fill="rgba(0,0,0,0.35)" class="wp-shadow" />
+            <!-- Outer ring (party color) -->
+            <circle cx="0" cy="0" r="1.55" fill="${colors.pin}" stroke="${ringStroke}" stroke-width="0.3" class="wp-ring" />
+            <!-- Inner fill -->
+            <circle cx="0" cy="0" r="1.05" fill="${colors.bg}" class="wp-inner" />
+            <!-- Number -->
+            <text x="0" y="0.07" text-anchor="middle" dominant-baseline="middle"
+              fill="${colors.num}"
+              font-family="Montserrat, sans-serif"
+              font-weight="800"
+              font-size="1.2px"
+              class="wp-num"
+              style="pointer-events:none; user-select:none;">${displayNum}</text>
+            <!-- Invisible hit zone -->
+            <circle cx="0" cy="0" r="3" fill="transparent" style="cursor:pointer; pointer-events:all;" />
+          </g>
+        </g>
       `;
     }).join('');
+
+    svg.innerHTML = `
+      <defs>
+        <filter id="trailShadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="0.3" />
+        </filter>
+      </defs>
+      <!-- Trail path: dark shadow underneath for contrast against photo -->
+      <path id="trailPathShadow" d="${pathD}" 
+        fill="none" 
+        stroke="rgba(0, 0, 0, 0.4)" 
+        stroke-width="1.1"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        filter="url(#trailShadow)" />
+      <!-- Trail path: visible dotted blue line -->
+      <path id="trailPath" d="${pathD}" 
+        fill="none" 
+        stroke="#5bcbf5"
+        stroke-width="0.85"
+        stroke-linecap="round"
+        stroke-linejoin="round" />
+      ${waypoints}
+    `;
+
+    // Trail draw animation
+    const pathEl = $('#trailPath');
+    const shadowEl = $('#trailPathShadow');
+    if (pathEl) {
+      const len = pathEl.getTotalLength();
+      // Initial state: hidden
+      pathEl.style.strokeDasharray = `${len} ${len}`;
+      pathEl.style.strokeDashoffset = String(len);
+      if (shadowEl) {
+        shadowEl.style.strokeDasharray = `${len} ${len}`;
+        shadowEl.style.strokeDashoffset = String(len);
+      }
+      // Animate in
+      requestAnimationFrame(() => {
+        pathEl.style.transition = 'stroke-dashoffset 1.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        pathEl.style.strokeDashoffset = '0';
+        if (shadowEl) {
+          shadowEl.style.transition = 'stroke-dashoffset 1.6s cubic-bezier(0.4, 0, 0.2, 1)';
+          shadowEl.style.strokeDashoffset = '0';
+        }
+        // After draw, switch to dotted style
+        setTimeout(() => {
+          pathEl.style.strokeDasharray = '1.4 2';
+          pathEl.style.strokeDashoffset = '0';
+          if (shadowEl) {
+            shadowEl.style.strokeDasharray = '1.4 2';
+            shadowEl.style.strokeDashoffset = '0';
+          }
+        }, 1600);
+      });
+    }
+
+    setupWaypointEvents();
   }
 
-  // Trail click handling
-  function setupTrailEvents() {
-    const overlay = $('#trailOverlay');
-    if (!overlay) return;
-
-    overlay.addEventListener('click', e => {
-      // Check if click was on "Read full details" button
-      const readmore = e.target.closest('[data-action="readmore"]');
-      if (readmore) {
-        e.stopPropagation();
-        openZoomView(parseInt(readmore.dataset.num, 10));
-        return;
-      }
-
-      // Otherwise, find the stage button and pin it
-      const btn = e.target.closest('.stage-hit');
-      if (!btn) return;
-      pinStage(parseInt(btn.dataset.num, 10));
+  function setupWaypointEvents() {
+    const svg = $('#trailSvg');
+    if (!svg) return;
+    // Clone-replace to remove any old listeners
+    const newSvg = svg.cloneNode(true);
+    svg.parentNode.replaceChild(newSvg, svg);
+    
+    newSvg.addEventListener('click', e => {
+      const waypoint = e.target.closest('.trail-waypoint');
+      if (!waypoint) return;
+      e.stopPropagation();  // Don't trigger map-empty-click zoom-out
+      const num = parseInt(waypoint.dataset.num, 10);
+      pinStage(num);
     });
   }
 
-  // ── PIN & ZOOM ────────────────────────────────────────
+  // ── CLICK ANYWHERE TO ZOOM OUT ────────────────────────
+  function setupMapEmptyClickToZoomOut() {
+    const frame = $('#mapFrame');
+    if (!frame) return;
+    frame.addEventListener('click', e => {
+      // Only zoom out if currently zoomed AND click isn't on a waypoint/popover/legend
+      if (!state.isZoomed) return;
+      const clickedWaypoint = e.target.closest('.trail-waypoint');
+      const clickedPopover = e.target.closest('.stage-popover');
+      const clickedLegend = e.target.closest('.legend');
+      const clickedTitle = e.target.closest('.map-title-overlay, .map-logo, .map-basecamp-label');
+      if (clickedWaypoint || clickedPopover || clickedLegend || clickedTitle) return;
+      zoomOut();
+    });
+  }
+
+  // ── PIN STAGE + ZOOM ──────────────────────────────────
   function pinStage(stageNum) {
-    // If clicking already-pinned stage, unpin and zoom out
     if (state.pinnedStageNum === stageNum) {
       state.pinnedStageNum = null;
       state.isZoomed = false;
@@ -3342,53 +3878,33 @@ const stages = [
       state.pinnedStageNum = stageNum;
       state.isZoomed = true;
     }
-    renderTrail();
-    setupTrailEvents();
+    renderTrailSvg();
     updateZoomState();
-    updateProgressSlider();
     updateStageCardsActive();
-
+    if (state.pinnedStageNum) {
+      showStagePopover();
+    } else {
+      hideStagePopover();
+    }
     if (typeof gtag !== 'undefined' && state.pinnedStageNum) {
       const stage = stages.find(s => s.num === stageNum);
-      gtag('event', 'journey_stage_pin', { 
-        stage_num: stageNum, 
+      gtag('event', 'journey_stage_pin', {
+        stage_num: stageNum,
         stage_name: stage ? stage.name : 'unknown',
-        persona: state.persona 
+        persona: state.persona,
       });
     }
   }
 
   function updateZoomState() {
-    const inner = $('#trailMapInner');
+    const inner = $('#mapInner');
     const zoomOutBtn = $('#zoomOutBtn');
     if (!inner) return;
-
     if (state.isZoomed && state.pinnedStageNum) {
       const stage = stages.find(s => s.num === state.pinnedStageNum);
       if (!stage) return;
-      // Translate origin so the pinned stage is centered, then scale
-      const tx = 50 - stage.x;  // shift so stage is at 50%
-      const ty = 50 - stage.y;
       inner.style.transformOrigin = `${stage.x}% ${stage.y}%`;
       inner.style.transform = `scale(${state.zoomScale})`;
-      // After scaling, translate back to center the pinned stage in viewport
-      // Actually: with transformOrigin set, scaling alone will keep that point fixed.
-      // We need additional translation to center it in the visible area.
-      // Compute: center of viewport is 50%, 50%. We want the pinned point there.
-      // After scaling around (x%, y%), point (x%, y%) stays at (x%, y%).
-      // We need to translate the inner so (x%, y%) maps to (50%, 50%).
-      const translateX = (50 - stage.x);
-      const translateY = (50 - stage.y);
-      inner.style.transform = `translate(${translateX}%, ${translateY}%) scale(${state.zoomScale})`;
-      inner.style.transformOrigin = 'center center';
-      // Wait — this combination is tricky. Simpler approach:
-      // Set transformOrigin to the stage point, scale only. The stage point will stay fixed
-      // in its original screen position, which IS what we want — it's already at (x%, y%) in the map.
-      // To center it in viewport, we need the map container to be the same size as viewport
-      // OR we need to translate. Let's use the simpler scale-only with transformOrigin:
-      inner.style.transform = `scale(${state.zoomScale})`;
-      inner.style.transformOrigin = `${stage.x}% ${stage.y}%`;
-      
       if (zoomOutBtn) zoomOutBtn.classList.add('is-visible');
     } else {
       inner.style.transform = '';
@@ -3400,35 +3916,143 @@ const stages = [
   function zoomOut() {
     state.pinnedStageNum = null;
     state.isZoomed = false;
-    renderTrail();
-    setupTrailEvents();
+    renderTrailSvg();
     updateZoomState();
-    updateProgressSlider();
     updateStageCardsActive();
+    hideStagePopover();
+  }
+
+  // ── STAGE POPOVER (Rendered at DOCUMENT BODY, not inside frame) ──
+  function showStagePopover() {
+    let popover = $('#stagePopover');
+    // If popover doesn't exist at body level yet, create it
+    if (!popover) {
+      popover = document.createElement('div');
+      popover.id = 'stagePopover';
+      popover.className = 'stage-popover';
+      document.body.appendChild(popover);
+    }
+    
+    if (!state.pinnedStageNum) {
+      hideStagePopover();
+      return;
+    }
+
+    const stage = stages.find(s => s.num === state.pinnedStageNum);
+    if (!stage) return;
+    const c = getStageContent(stage, state.persona);
+    const displayNum = getDisplayNum(stage, state.persona);
+    const iconSlugs = getStageIconSlugs(stage.num);
+
+    const iconChips = iconSlugs.map(slug => {
+      const icon = getIconBySlug(slug);
+      if (!icon) return '';
+      return `<button type="button" class="stage-popover-icon" data-action="icondef" data-slug="${slug}" aria-label="${icon.label}: tap for definition">${icon.emoji}</button>`;
+    }).join('');
+
+    const partyLabels = {
+      'neo': 'My/NEO milestone',
+      'agent': 'Real estate agent milestone',
+      'escrow': 'Escrow company milestone',
+      'neutral': '',
+    };
+    const partyTag = partyLabels[c.party]
+      ? `<div class="stage-popover-party party-${c.party}">${partyLabels[c.party]}</div>`
+      : '';
+
+    popover.innerHTML = `
+      <div class="stage-popover-inner">
+        <button type="button" class="stage-popover-close" aria-label="Close" id="popoverClose">×</button>
+        <div class="stage-popover-num">Stage ${displayNum}</div>
+        <h3 class="stage-popover-name">${c.name}</h3>
+        ${partyTag}
+        <p class="stage-popover-summary">${c.summary}</p>
+        <p class="stage-popover-time">⏱ ${c.time}</p>
+        ${iconChips ? `<div class="stage-popover-icons">${iconChips}</div>` : ''}
+        <button type="button" class="stage-popover-readmore" data-action="readmore" data-num="${stage.num}">Read full details →</button>
+      </div>
+    `;
+
+    // Position the popover next to the map area
+    // Get the map frame position
+    const frame = $('#mapFrame');
+    if (frame) {
+      const rect = frame.getBoundingClientRect();
+      // Center horizontally over the map frame, position vertically below center
+      popover.style.position = 'fixed';
+      popover.style.left = `${rect.left + rect.width / 2}px`;
+      popover.style.top = `${rect.top + rect.height / 2}px`;
+      popover.style.transform = 'translate(-50%, -50%)';
+    }
+
+    popover.classList.add('is-visible');
+
+    const closeBtn = $('#popoverClose');
+    if (closeBtn) closeBtn.addEventListener('click', e => { e.stopPropagation(); zoomOut(); });
+    const readmore = popover.querySelector('.stage-popover-readmore');
+    if (readmore) readmore.addEventListener('click', e => { e.stopPropagation(); openZoomView(stage.num); });
+    popover.querySelectorAll('[data-action="icondef"]').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        showIconDefinitionModal(btn.dataset.slug);
+      });
+    });
+  }
+
+  function hideStagePopover() {
+    const popover = $('#stagePopover');
+    if (popover) {
+      popover.classList.remove('is-visible');
+      popover.innerHTML = '';
+    }
+  }
+
+  // Reposition popover on resize/scroll
+  function setupPopoverPositioning() {
+    let rafId;
+    const reposition = () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const popover = $('#stagePopover');
+        if (!popover || !popover.classList.contains('is-visible')) return;
+        const frame = $('#mapFrame');
+        if (!frame) return;
+        const rect = frame.getBoundingClientRect();
+        popover.style.left = `${rect.left + rect.width / 2}px`;
+        popover.style.top = `${rect.top + rect.height / 2}px`;
+      });
+    };
+    window.addEventListener('scroll', reposition, { passive: true });
+    window.addEventListener('resize', reposition);
   }
 
   // ── STAGE CARDS ───────────────────────────────────────
   function renderStageCards() {
     const container = $('#stagesCards');
     if (!container) return;
-
     const visible = visibleStages(state.persona);
-
     container.innerHTML = `<div class="stages-cards-grid">${visible.map(stage => {
       const c = getStageContent(stage, state.persona);
       const displayNum = getDisplayNum(stage, state.persona);
       const isPinned = state.pinnedStageNum === stage.num;
+      const iconSlugs = getStageIconSlugs(stage.num);
+      const iconChips = iconSlugs.map(slug => {
+        const icon = getIconBySlug(slug);
+        if (!icon) return '';
+        return `<button type="button" class="stage-card-icon" data-action="icondef" data-slug="${slug}" aria-label="${icon.label}: tap for definition">${icon.emoji}</button>`;
+      }).join('');
       return `
-        <article class="stage-card ${isPinned ? 'is-pinned' : ''}" data-num="${c.num}">
+        <article class="stage-card party-${c.party} ${isPinned ? 'is-pinned' : ''}" data-num="${stage.num}">
           <div class="stage-card-header">
-            <div class="stage-card-num">${displayNum}</div>
+            <div class="stage-card-num party-${c.party}-bg">${displayNum}</div>
             <div class="stage-card-info">
               <h3 class="stage-card-name">${c.name}</h3>
               <p class="stage-card-summary">${c.summary}</p>
               <p class="stage-card-time">⏱ ${c.time}</p>
             </div>
           </div>
-          <button type="button" class="stage-card-expand" data-action="readmore" data-num="${c.num}" aria-label="Read full details for stage ${displayNum}">
+          ${iconChips ? `<div class="stage-card-icons">${iconChips}</div>` : ''}
+          <button type="button" class="stage-card-expand" data-action="readmore" data-num="${stage.num}" aria-label="Read full details for stage ${displayNum}">
             <span>Read full details</span>
             <span aria-hidden="true">→</span>
           </button>
@@ -3448,93 +4072,114 @@ const stages = [
     const container = $('#stagesCards');
     if (!container) return;
     container.addEventListener('click', e => {
+      // Icon definition click
+      const iconBtn = e.target.closest('[data-action="icondef"]');
+      if (iconBtn) {
+        e.stopPropagation();
+        showIconDefinitionModal(iconBtn.dataset.slug);
+        return;
+      }
+      // Read full details click
       const btn = e.target.closest('[data-action="readmore"]');
       if (!btn) return;
       openZoomView(parseInt(btn.dataset.num, 10));
     });
   }
 
-  // ── ZOOM VIEW (Full-screen overlay) ──────────────────
+  // Centered definition modal — works from anywhere (card icons, popover icons)
+  function showIconDefinitionModal(slug) {
+    const icon = getIconBySlug(slug);
+    if (!icon) return;
+    let modal = $('#iconDefModal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'iconDefModal';
+      modal.className = 'icon-def-modal';
+      document.body.appendChild(modal);
+    }
+    modal.innerHTML = `
+      <div class="icon-def-card" role="dialog" aria-modal="true" aria-label="${icon.label} definition">
+        <button type="button" class="icon-def-close" id="iconDefClose" aria-label="Close">×</button>
+        <div class="icon-def-header">
+          <span class="icon-def-emoji" aria-hidden="true">${icon.emoji}</span>
+          <h4 class="icon-def-label">${icon.label}</h4>
+        </div>
+        <p class="icon-def-text">${icon.definition}</p>
+      </div>
+    `;
+    modal.classList.add('is-visible');
+    const close = () => modal.classList.remove('is-visible');
+    $('#iconDefClose').addEventListener('click', close);
+    modal.addEventListener('click', e => { if (e.target === modal) close(); });
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'journey_icon_def_view', { legend_item: slug });
+    }
+  }
+
+  // ── ZOOM VIEW (Full-screen detail) ────────────────────
   function openZoomView(stageNum) {
     const stage = stages.find(s => s.num === stageNum);
     if (!stage) return;
     const c = getStageContent(stage, state.persona);
     const displayNum = getDisplayNum(stage, state.persona);
     const totalDisplay = visibleStages(state.persona).length;
-
     const overlay = $('#zoomOverlay');
     if (!overlay) return;
 
-    const linkSection = c.link ? `
-      <a href="${c.link}" class="zoom-link">Learn more about this →</a>
-    ` : '';
-
+    const linkSection = c.link ? `<a href="${c.link}" class="zoom-link">Learn more about this →</a>` : '';
     const realExampleSection = c.realExample ? `
       <div class="zoom-section zoom-section-example">
         <div class="zoom-section-eyebrow zoom-section-eyebrow-example">A real client example</div>
         <p>${c.realExample}</p>
-      </div>
-    ` : '';
-
+      </div>` : '';
     const ctaSection = c.cta ? `
       <div class="zoom-cta">
         <p class="zoom-cta-text">${c.cta.text}</p>
         <a href="${c.cta.href}" class="btn btn-blue btn-wobble">Book a 15-minute call</a>
-      </div>
-    ` : '';
+      </div>` : '';
 
     overlay.innerHTML = `
       <div class="zoom-panel" role="dialog" aria-labelledby="zoomTitle" aria-modal="true">
         <button type="button" class="zoom-close" aria-label="Close" id="zoomClose">×</button>
-
         <div class="zoom-meta">
           <span class="zoom-stage-num">Stage ${displayNum} of ${totalDisplay}</span>
           <span class="zoom-stage-time">⏱ ${c.time}</span>
         </div>
-
         <h2 id="zoomTitle" class="zoom-title">${c.name}</h2>
         <p class="zoom-summary">${c.summary}</p>
-
         <div class="zoom-section zoom-section-truth">
           <div class="zoom-section-eyebrow">The Honest Truth</div>
           <p>${c.honestTruth}</p>
         </div>
-
         <div class="zoom-section">
           <div class="zoom-section-eyebrow">What Happens</div>
           <p>${c.what}</p>
           <p class="zoom-expect"><strong>What to expect:</strong> ${c.expect}</p>
         </div>
-
         <div class="zoom-section zoom-section-warning">
           <div class="zoom-section-eyebrow zoom-section-eyebrow-warning">⚠ ${c.doneWrongLabel}</div>
           <p>${c.doneWrong}</p>
         </div>
-
         ${realExampleSection}
         ${ctaSection}
         ${linkSection}
       </div>
     `;
-
     overlay.classList.add('is-open');
     document.body.classList.add('zoom-open');
     setTimeout(() => {
       const closeBtn = $('#zoomClose');
       if (closeBtn) closeBtn.focus();
     }, 50);
-
     $('#zoomClose').addEventListener('click', closeZoomView);
     overlay.addEventListener('click', e => {
       if (e.target === overlay) closeZoomView();
     });
-
     if (typeof gtag !== 'undefined') {
-      gtag('event', 'journey_zoom_open', { 
-        stage_num: c.num, 
-        stage_name: c.name, 
+      gtag('event', 'journey_zoom_open', {
+        stage_num: c.num,
+        stage_name: c.name,
         persona: state.persona,
-        display_num: displayNum
       });
     }
   }
@@ -3546,71 +4191,99 @@ const stages = [
     document.body.classList.remove('zoom-open');
   }
 
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      const overlay = $('#zoomOverlay');
-      if (overlay && overlay.classList.contains('is-open')) closeZoomView();
-      else if (state.isZoomed) zoomOut();
-    }
-  });
+  // ── INFORMATIONAL LEGEND (No filtering — just definitions) ──
+  function renderLegend() {
+    const container = $('#legendItems');
+    if (!container) return;
+    container.innerHTML = icons.map(icon => `
+      <button type="button"
+        class="legend-item"
+        data-slug="${icon.slug}"
+        aria-label="${icon.label}: ${icon.definition.substring(0, 80)}">
+        <span class="legend-item-emoji" aria-hidden="true">${icon.emoji}</span>
+        <span class="legend-item-label">${icon.label}</span>
+      </button>
+    `).join('');
 
-  // ── ACCESSIBILITY SLIDER (Hidden by default, keyboard-only) ──
-  function updateProgressSlider() {
-    const slider = $('#progressSlider');
-    if (!slider) return;
-    const visible = visibleStages(state.persona);
-    slider.max = visible.length;
-    if (state.pinnedStageNum) {
-      const idx = visible.findIndex(s => s.num === state.pinnedStageNum);
-      slider.value = idx + 1;
-    } else {
-      slider.value = 0;
-    }
-    const label = $('#progressLabel');
-    if (label) {
-      if (state.pinnedStageNum) {
-        const stage = visible.find(s => s.num === state.pinnedStageNum);
-        const displayNum = getDisplayNum(stage, state.persona);
-        label.textContent = `Stage ${displayNum} of ${visible.length}: ${stage.name}`;
-      } else {
-        label.textContent = "Click any stage to explore";
-      }
-    }
-  }
-
-  function setupProgressSlider() {
-    const slider = $('#progressSlider');
-    if (!slider) return;
-    slider.addEventListener('input', e => {
-      const val = parseInt(e.target.value, 10);
-      if (val === 0) {
-        zoomOut();
-        return;
-      }
-      const visible = visibleStages(state.persona);
-      const stage = visible[val - 1];
-      if (stage) pinStage(stage.num);
+    container.addEventListener('click', e => {
+      const btn = e.target.closest('.legend-item');
+      if (!btn) return;
+      e.stopPropagation();
+      showLegendDefinition(btn.dataset.slug);
     });
   }
 
-  // ── ZOOM OUT BUTTON ──────────────────────────────────
+  function showLegendDefinition(slug) {
+    const tooltip = $('#legendTooltip');
+    if (!tooltip) return;
+    // Toggle: clicking the same item hides the tooltip
+    if (state.expandedLegendItem === slug) {
+      tooltip.classList.remove('is-visible');
+      state.expandedLegendItem = null;
+      return;
+    }
+    state.expandedLegendItem = slug;
+    const icon = getIconBySlug(slug);
+    if (!icon) return;
+    tooltip.innerHTML = `
+      <button type="button" class="legend-tooltip-close" id="legendTooltipClose" aria-label="Close">×</button>
+      <div class="legend-tooltip-header">
+        <span class="legend-tooltip-emoji" aria-hidden="true">${icon.emoji}</span>
+        <h4 class="legend-tooltip-label">${icon.label}</h4>
+      </div>
+      <p class="legend-tooltip-def">${icon.definition}</p>
+    `;
+    tooltip.classList.add('is-visible');
+    const closeBtn = $('#legendTooltipClose');
+    if (closeBtn) closeBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      tooltip.classList.remove('is-visible');
+      state.expandedLegendItem = null;
+    });
+
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'journey_legend_view', { legend_item: slug });
+    }
+  }
+
   function setupZoomOutButton() {
     const btn = $('#zoomOutBtn');
     if (!btn) return;
-    btn.addEventListener('click', zoomOut);
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      zoomOut();
+    });
   }
 
-  // ── INITIALIZE ───────────────────────────────────────
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      const defModal = $('#iconDefModal');
+      const overlay = $('#zoomOverlay');
+      if (defModal && defModal.classList.contains('is-visible')) {
+        defModal.classList.remove('is-visible');
+      } else if (overlay && overlay.classList.contains('is-open')) {
+        closeZoomView();
+      } else if (state.isZoomed) {
+        zoomOut();
+      } else if (state.expandedLegendItem) {
+        const tooltip = $('#legendTooltip');
+        if (tooltip) tooltip.classList.remove('is-visible');
+        state.expandedLegendItem = null;
+      }
+    }
+  });
+
   function init() {
     renderPersonaSelector();
-    renderTrail();
-    setupTrailEvents();
+    updateMapTitle();
+    updateIntroForPersona();
+    renderTrailSvg();
     renderStageCards();
     setupStageCardEvents();
-    updateIntroForPersona();
-    setupProgressSlider();
+    renderLegend();
     setupZoomOutButton();
-    updateProgressSlider();
+    setupMapEmptyClickToZoomOut();
+    setupPopoverPositioning();
   }
 
   if (document.readyState === 'loading') {
