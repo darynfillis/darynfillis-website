@@ -1376,16 +1376,20 @@ html{-webkit-text-size-adjust:100%;}
   transform: translate(-50%, -50%);
   background: var(--white);
   border: 2px solid var(--rule);
-  border-radius: 12px;
-  padding: 7px 12px 8px;
+  border-radius: 14px;
+  padding: 9px 14px 10px;
   cursor: pointer;
   font-family: inherit;
   z-index: 4;
   box-shadow: 0 3px 12px rgba(0,0,0,0.22);
   transition: transform 0.18s ease, box-shadow 0.18s ease;
-  white-space: nowrap;
-  text-align: left;
-  min-width: 0;
+  text-align: center;
+  width: max-content;
+  max-width: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
 }
 .map-card:hover {
   transform: translate(-50%, -50%) scale(1.06);
@@ -1397,16 +1401,18 @@ html{-webkit-text-size-adjust:100%;}
   z-index: 25;
 }
 
-.mapcard-top { display: flex; align-items: center; gap: 6px; }
-.mapcard-num {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 17px; height: 17px; border-radius: 50%;
-  background: var(--navy); color: var(--white);
-  font-weight: 800; font-size: 0.6rem; flex-shrink: 0;
+.mapcard-name {
+  font-weight: 800;
+  font-size: 0.82rem;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-align: center;
+  white-space: normal;
+  word-break: normal;
 }
-.mapcard-name { font-weight: 800; font-size: 0.82rem; color: var(--navy); letter-spacing: -0.01em; line-height: 1.1; }
-.mapcard-emojis { display: flex; gap: 3px; margin-top: 4px; padding-left: 23px; }
-.mapcard-emoji { font-size: 0.82rem; line-height: 1; }
+.mapcard-emojis { display: flex; gap: 5px; justify-content: center; align-items: center; }
+.mapcard-emoji { font-size: 1.05rem; line-height: 1; }
 
 /* Border variants matching the original artwork */
 .map-card.border-blue {
@@ -1424,7 +1430,7 @@ html{-webkit-text-size-adjust:100%;}
   border-color: var(--blue);
 }
 .map-card.border-navy .mapcard-name { color: var(--blue); }
-.map-card.border-navy .mapcard-num { background: var(--blue); color: var(--navy); }
+
 
 /* Searching pill */
 .map-card.border-pill {
@@ -3090,11 +3096,9 @@ const stageIcons = {
         // Searching — small pill with house emoji + name
         cardInner = `<span class="mapcard-pill-emoji">🏡</span><span class="mapcard-pill-name">${c.name}</span>`;
       } else {
+        // Centered name (wraps naturally) + centered emoji row beneath. No number badge.
         cardInner = `
-          <div class="mapcard-top">
-            <span class="mapcard-num">${dnum}</span>
-            <span class="mapcard-name">${c.name}</span>
-          </div>
+          <span class="mapcard-name">${c.name}</span>
           ${emojiHtml ? `<div class="mapcard-emojis">${emojiHtml}</div>` : ''}
         `;
       }
