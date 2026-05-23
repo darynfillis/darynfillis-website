@@ -1,0 +1,1464 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SYG Partnership Ledger | Daryn Fillis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;800&display=swap" rel="stylesheet">
+  <style>
+
+    :root {
+      --blue: #5bcbf5;
+      --blue-dark: #38b8e8;
+      --navy: #0A2540;
+      --navy-mid: #0d3050;
+      --ink: #1a2b3c;
+      --body: #4a5568;
+      --muted: #8a95a3;
+      --rule: #e8edf2;
+      --surface: #f7f9fb;
+      --white: #ffffff;
+      --font: 'Montserrat', sans-serif;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --shadow-sm: 0 1px 4px rgba(10,37,64,0.06), 0 4px 16px rgba(10,37,64,0.06);
+      --shadow-md: 0 4px 12px rgba(10,37,64,0.08), 0 16px 48px rgba(10,37,64,0.10);
+      --danger: #b42318;
+      --success: #16794c;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--white);
+      color: var(--ink);
+      font-weight: 400;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    .hidden { display: none !important; }
+
+    .wrap { max-width: none; margin: 0; padding: 0; }
+
+    .version-ribbon {
+      position: fixed;
+      bottom: 14px;
+      right: 14px;
+      z-index: 9999;
+      background: var(--blue);
+      color: var(--navy);
+      border-radius: 4px;
+      padding: 8px 10px;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      box-shadow: var(--shadow-md);
+    }
+
+    .site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 70px;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+      box-shadow: 0 1px 0 var(--rule);
+      transition: all 0.4s var(--ease);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: var(--navy);
+      font-size: 0.84rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .logo::after {
+      content: " · NEO Home Loans";
+      color: var(--blue-dark);
+      margin-left: 6px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-links span {
+      color: var(--body);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-links span:hover { color: var(--navy); }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 24px;
+      border-radius: 4px;
+      font-family: var(--font);
+      font-weight: 800;
+      font-size: 0.70rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .hero {
+      min-height: 82vh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding: 150px 48px 76px;
+      background: linear-gradient(145deg, #0a2540 0%, #0d3050 60%, #060f1c 100%);
+      color: var(--white);
+      border-bottom: none;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to right, rgba(6,15,28,0.78) 0%, rgba(6,15,28,0.52) 54%, rgba(6,15,28,0.82) 100%),
+        radial-gradient(ellipse 70% 90% at 85% 35%, rgba(91,203,245,0.14) 0%, transparent 58%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(91,203,245,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(91,203,245,0.035) 1px, transparent 1px);
+      background-size: 64px 64px;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 56px;
+      align-items: end;
+      position: relative;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      font-size: 0.67rem;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--blue-dark);
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    h1 {
+      font-weight: 800;
+      font-size: clamp(3.35rem, 7vw, 6.5rem);
+      line-height: 0.96;
+      letter-spacing: -0.055em;
+      color: var(--white);
+      max-width: 980px;
+      margin: 0 0 22px;
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--blue);
+    }
+
+    .sub {
+      font-weight: 200;
+      font-size: 1.08rem;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.85;
+      max-width: 590px;
+      margin: 0;
+    }
+
+    .hero-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 28px;
+      box-shadow: none;
+    }
+
+    .hero-card strong {
+      display: block;
+      color: var(--white);
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+
+    .hero-card p {
+      font-weight: 200;
+      font-size: 0.86rem;
+      color: rgba(255,255,255,0.62);
+      line-height: 1.85;
+      margin: 0;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 0;
+      margin-top: 28px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      border-left: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .mini {
+      background: transparent;
+      border-right: 1px solid rgba(255,255,255,0.10);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      padding: 20px 16px;
+    }
+
+    .mini b {
+      display: block;
+      font-weight: 800;
+      font-size: 1.45rem;
+      color: var(--blue);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .mini span {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.44);
+      margin-top: 5px;
+      line-height: 1.4;
+    }
+
+    .ledger-shell {
+      background: var(--white);
+      padding: 48px;
+    }
+
+    .max-w { max-width: 1120px; margin: 0 auto; }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    button, .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 4px;
+      font-family: var(--font);
+      font-weight: 800;
+      font-size: 0.74rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s var(--ease);
+      background: var(--blue);
+      color: var(--white);
+    }
+
+    button:hover, .button:hover {
+      background: var(--blue-dark);
+      color: var(--white);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(91,203,245,0.35);
+    }
+
+    button.secondary, .button.secondary {
+      background: transparent;
+      color: var(--navy);
+      border: 2px solid var(--navy);
+      box-shadow: none;
+    }
+
+    button.secondary:hover, .button.secondary:hover {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    button.danger {
+      background: transparent;
+      color: var(--danger);
+      border: 1.5px solid rgba(180,35,24,0.35);
+      padding: 10px 14px;
+      font-size: 0.65rem;
+      box-shadow: none;
+    }
+
+    button.danger:hover {
+      background: var(--danger);
+      color: var(--white);
+      box-shadow: none;
+    }
+
+    .statusline {
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      margin-left: auto;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid rgba(91,203,245,0.25);
+      padding: 7px 14px;
+      border-radius: 40px;
+      background: rgba(91,203,245,0.12);
+      font-size: 0.65rem;
+      color: var(--blue-dark);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .pill.green {
+      color: var(--success);
+      border-color: rgba(22,121,76,0.18);
+      background: rgba(22,121,76,0.08);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(6,minmax(135px,1fr));
+      gap: 0;
+      margin-bottom: 48px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--rule);
+      background: var(--white);
+    }
+
+    .card {
+      background: var(--white);
+      border-right: 1px solid var(--rule);
+      padding: 28px 20px;
+      text-align: center;
+      min-height: 126px;
+    }
+
+    .card:last-child { border-right: none; }
+
+    .metric .label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .metric .value {
+      font-weight: 800;
+      font-size: 1.48rem;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-top: 8px;
+    }
+
+    .metric .note {
+      font-size: 0.65rem;
+      font-weight: 200;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    .panel {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: center;
+      padding: 36px 40px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .panel-head h2 {
+      font-weight: 800;
+      font-size: clamp(2rem, 3.8vw, 3rem);
+      letter-spacing: -0.03em;
+      line-height: 1.06;
+      color: var(--navy);
+      margin: 0 0 12px;
+    }
+
+    .small {
+      font-weight: 200;
+      font-size: 0.92rem;
+      color: var(--body);
+      line-height: 1.75;
+      max-width: 640px;
+    }
+
+    .right-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: minmax(260px,2fr) repeat(4,minmax(180px,1fr));
+      gap: 18px;
+      padding: 28px 40px;
+      border-bottom: 1px solid var(--rule);
+      background: var(--surface);
+      align-items: start;
+    }
+
+    .filters > div {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      min-width: 0;
+    }
+
+    .filters label {
+      min-height: 34px;
+      display: flex;
+      align-items: flex-end;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .filters input,
+    .filters select {
+      height: 56px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.67rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1.5px solid var(--rule);
+      border-radius: 4px;
+      background: var(--white);
+      color: var(--navy);
+      padding: 12px 14px;
+      outline: none;
+      font-family: var(--font);
+      font-size: 0.82rem;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--blue-dark);
+      box-shadow: none;
+    }
+
+    .table-wrap { overflow: auto; max-height: 64vh; }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 1850px;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--rule);
+      padding: 13px 12px;
+      text-align: left;
+      vertical-align: middle;
+      font-size: 0.78rem;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      background: var(--navy);
+      z-index: 2;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.72);
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+      font-weight: 800;
+    }
+
+    tr:hover td { background: #f0fbff; }
+
+    td input, td select {
+      min-width: 120px;
+      padding: 9px 10px;
+      border-radius: 4px;
+      font-size: 0.74rem;
+    }
+
+    td textarea {
+      min-width: 220px;
+      height: 38px;
+      padding: 9px 10px;
+      border-radius: 4px;
+      font-size: 0.74rem;
+    }
+
+    .checkcell { text-align: center; }
+    .checkcell input { width: auto; accent-color: var(--blue-dark); }
+
+    .footer-note {
+      max-width: 1120px;
+      margin: 24px auto 0;
+      color: var(--muted);
+      font-size: 0.67rem;
+      font-weight: 200;
+      line-height: 1.7;
+    }
+
+    .login {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 48px;
+      background: linear-gradient(145deg, #0a2540 0%, #0d3050 60%, #060f1c 100%);
+    }
+
+    .login-card {
+      max-width: 520px;
+      width: 100%;
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      padding: 44px 40px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .login-card h1 {
+      color: var(--navy);
+      font-weight: 800;
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      letter-spacing: -0.03em;
+      line-height: 1.06;
+      margin-bottom: 18px;
+    }
+
+    .login-card .sub {
+      color: var(--body);
+      margin-bottom: 0;
+    }
+
+    .notice {
+      padding: 14px 16px;
+      border-radius: 4px;
+      background: var(--surface);
+      color: var(--body);
+      font-size: 0.78rem;
+      margin: 18px 0;
+      border: 1px solid var(--rule);
+    }
+
+    .error {
+      color: var(--danger);
+      font-weight: 800;
+      font-size: 0.78rem;
+      margin-top: 12px;
+    }
+
+    @media(max-width: 1100px) {
+      .site-nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hero { padding: 130px 24px 64px; min-height: auto; }
+      .hero-inner { grid-template-columns: 1fr; gap: 36px; }
+      .ledger-shell { padding: 36px 24px; }
+      .cards { grid-template-columns: repeat(2,1fr); }
+      .card { border-bottom: 1px solid var(--rule); }
+      .filters { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media(max-width: 720px) {
+      .logo::after { content: ""; }
+      .nav-cta { padding: 9px 14px; }
+      h1 { font-size: 3rem; }
+      .cards, .filters { grid-template-columns: 1fr; }
+      .filters label { min-height: auto; }
+      .panel-head { display: block; padding: 30px 24px; }
+      .right-actions { justify-content: flex-start; margin-top: 16px; }
+      .filters { padding: 24px; }
+      .toolbar button { flex: 1 1 auto; }
+    }
+
+  
+    .metric .split {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 7px;
+      margin-top: 10px;
+      text-align: left;
+    }
+
+    .metric .split-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      border-top: 1px solid var(--rule);
+      padding-top: 7px;
+      color: var(--body);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .metric .split-row strong {
+      color: var(--navy);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .cards {
+      grid-template-columns: repeat(6,minmax(150px,1fr));
+    }
+
+    @media(max-width: 1100px) {
+      .cards { grid-template-columns: repeat(2,1fr); }
+    }
+
+    @media(max-width: 720px) {
+      .cards { grid-template-columns: 1fr; }
+    }
+
+  
+    input[readonly] {
+      background: var(--surface);
+      color: var(--body);
+      cursor: not-allowed;
+    }
+
+    .calc-note {
+      color: var(--muted);
+      font-size: 0.67rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-left: 8px;
+    }
+
+  
+    .panel-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--rule);
+      background: var(--white);
+    }
+
+    .panel-toolbar .statusline {
+      margin-left: auto;
+    }
+
+    @media(max-width: 720px) {
+      .panel-toolbar {
+        padding: 18px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section id="login" class="login hidden">
+    <div class="login-card">
+      <div class="eyebrow">Internal Only</div>
+      <h1>SYG Partnership Ledger</h1>
+      <p class="sub">Private transaction tracker for measuring partnership flow, referral reciprocity, and closed production.</p>
+      <div class="notice">Production login is handled by the Netlify Function. Set <strong>SYG_PASSWORD</strong> in Netlify.</div>
+      <form id="loginForm">
+        <label for="passwordInput">Password</label>
+        <input id="passwordInput" type="password" autocomplete="current-password" required />
+        <div style="margin-top:14px"><button type="submit">Open ledger</button></div>
+        <div id="loginError" class="error"></div>
+      </form>
+    </div>
+  </section>
+
+  <main id="app" class="wrap">
+    <div class="version-ribbon">V33 · Lead Summary</div>
+    <nav class="site-nav" aria-label="Daryn Fillis site navigation">
+      <a class="logo" href="https://darynfillis.com">Daryn Fillis</a>
+      <div class="nav-links">
+        <span>Strategies</span>
+        <span>How I Work</span>
+        <span>About</span>
+        <span>Journey</span>
+        <span>Field Notes</span>
+        <span>For Agents</span>
+        <span>FAQ</span>
+      </div>
+      <div class="nav-cta">Internal Ledger</div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="eyebrow">Partnership Plus · Internal only</div>
+          <h1>Every referral <em>should be measurable.</em></h1>
+          <p class="sub">Track who sent the opportunity, what closed, what dollars moved, and whether the partnership is producing both ways. No fluff. Just the scorecard.</p>
+        </div>
+        
+      </div>
+    </header>
+
+    <section class="ledger-shell">
+      <div class="max-w">
+        <div class="toolbar">
+      <span id="modePill" class="pill">Preview mode</span>
+      <span id="status" class="statusline"></span>
+    </div>
+
+        <div class="filters" style="margin-bottom:28px;border:1px solid var(--rule);border-radius:10px;">
+          <div><label>Dashboard Search</label><input id="dashQ" placeholder="Client, address, agent, advisor..." /></div>
+          <div><label>SYG Agent</label><select id="dashSygAgent"><option value="">All SYG Agents</option></select></div>
+          <div><label>NEO Mortgage Advisor</label><select id="dashMortgageAdvisor"><option value="">All Advisors</option></select></div>
+          <div><label>Lead Source</label><select id="dashLeadSource"><option value="">All Sources</option></select></div>
+          <div><label>Status</label><select id="dashStatus"><option value="">All Statuses</option></select></div>
+        </div>
+
+    <section class="cards">
+      <div class="card metric">
+        <div class="label">Lead Partnership Performance</div>
+        <div id="mLeadReciprocityUnits" class="value">0 | 0</div>
+        <div class="note">SYG sourced leads | NEO sourced leads</div>
+        <div class="split">
+          <div class="split-row"><span>Total Leads</span><strong id="mTotalLeadCount">0</strong></div>
+          <div class="split-row"><span>SYG Leads</span><strong id="mSygLeadCount">0</strong></div>
+          <div class="split-row"><span>NEO Leads</span><strong id="mNeoLeadCount">0</strong></div>
+          <div class="split-row"><span>Active Leads</span><strong id="mActiveLeadCount">0</strong></div>
+          <div class="split-row"><span>Dead Leads</span><strong id="mDeadLeadCount">0</strong></div>
+          <div class="split-row"><span>Closed Leads</span><strong id="mClosedLeadCount">0</strong></div>
+        </div>
+      </div>
+      <div class="card metric">
+        <div class="label">Closed Partnership Performance</div>
+        <div id="mReciprocityUnits" class="value">0 | 0</div>
+        <div class="note">SYG sourced closings | NEO sourced closings</div>
+        <div class="split">
+          <div class="split-row"><span>SYG Closed</span><strong id="mClosedSygUnits">0</strong></div>
+          <div class="split-row"><span>NEO Closed</span><strong id="mClosedNeoUnits">0</strong></div>
+        </div>
+      </div>
+      <div class="card metric">
+        <div class="label">Pipeline Potential</div>
+        <div id="mPipelinePurchase" class="value">$0</div>
+        <div class="split">
+          <div class="split-row"><span>Purchase $</span><strong id="mPipelinePurchaseMini">$0</strong></div>
+          <div class="split-row"><span>Loan $</span><strong id="mPipelineLoan">$0</strong></div>
+        </div>
+      </div>
+      <div class="card metric">
+        <div class="label">Pipeline Commission</div>
+        <div id="mPipelineTotalCommission" class="value">$0</div>
+        <div class="split">
+          <div class="split-row"><span>SYG</span><strong id="mPipelineSyg">$0</strong></div>
+          <div class="split-row"><span>NEO Co.</span><strong id="mPipelineNeo">$0</strong></div>
+        </div>
+      </div>
+      <div class="card metric">
+        <div class="label">Closed Volume by Source</div>
+        <div id="mClosedSourceUnits" class="value">0 | 0</div><div class="note">Purchase volume, not loan or commission volume</div>
+        <div class="split">
+          <div class="split-row"><span>SYG Sourced Volume</span><strong id="mClosedSyg">$0</strong></div>
+          <div class="split-row"><span>NEO Sourced Volume</span><strong id="mClosedNeo">$0</strong></div>
+        </div>
+      </div>
+
+      <div class="card metric">
+        <div class="label">NEO Closed Company Commission</div>
+        <div id="mClosedCompanyCommission" class="value">$0</div>
+        <div class="note">Loan amount × NEO commission %, closed only</div>
+        <div class="split">
+          <div class="split-row"><span>From SYG Source</span><strong id="mClosedCompanySyg">$0</strong></div>
+          <div class="split-row"><span>From NEO Source</span><strong id="mClosedCompanyNeo">$0</strong></div>
+        </div>
+      </div>
+
+      <div class="card metric">
+        <div class="label">SYG Closed Commission</div>
+        <div id="mClosedSygCommissionTotal" class="value">$0</div>
+        <div class="note">Purchase price × SYG commission %, closed only</div>
+        <div class="split">
+          <div class="split-row"><span>From SYG Source</span><strong id="mClosedSygCommissionFromSyg">$0</strong></div>
+          <div class="split-row"><span>From NEO Source</span><strong id="mClosedSygCommissionFromNeo">$0</strong></div>
+        </div>
+      </div>
+      <div class="card metric">
+        <div class="label">Lease to Purchase Impact</div>
+        <div id="mLeasePurchaseConversion" class="value">0%</div>
+        <div class="split">
+          <div class="split-row"><span>Closed Leases</span><strong id="mClosedLeases">0</strong></div>
+          <div class="split-row"><span>Led to Purchases</span><strong id="mLeasePurchases">0</strong></div>
+          <div class="split-row"><span>Purchase Volume</span><strong id="mLeasePurchaseVolume">$0</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>Deal Sheet</h2>
+          <div class="small">Sortable columns. Editable rows. Calculated columns do the math automatically. Dashboard tracks lead reciprocity, closed volume, split pipeline commission, and lease-to-purchase impact.</div>
+        </div>
+        <div class="right-actions">
+          <span class="pill">Internal only</span>
+          <span class="pill">Only Daryn edits</span>
+        </div>
+      </div>
+
+      <div class="filters">
+        <div><label>Search</label><input id="q" placeholder="Client, address, agent, loan number..." /></div>
+        <div><label>Status</label><select id="fStatus"><option value="">All</option></select></div>
+        <div><label>Type</label><select id="fType"><option value="">All</option></select></div>
+        <div><label>Lead Source</label><select id="fLead"><option value="">All</option></select></div>
+        <div><label>Closed</label><select id="fClosed"><option value="">All</option><option value="true">Closed</option><option value="false">Open</option></select></div>
+      </div>
+
+      <div class="panel-toolbar">
+        <button id="addDeal">Add deal</button>
+        <button id="saveDeals" class="secondary">Save</button>
+        <button id="exportCsv" class="secondary">Export CSV</button>
+        <button id="clearFilters" class="secondary">Clear filters</button>
+      </div>
+
+      <div class="table-wrap">
+        <table id="dealTable">
+          <thead><tr id="headRow"></tr></thead>
+          <tbody id="dealBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+<script>
+const IS_PRODUCTION_HOST = location.hostname.endsWith('darynfillis.com') || location.hostname.endsWith('netlify.app');
+const API_URL = '/.netlify/functions/deals';
+let password = sessionStorage.getItem('sygPassword') || '';
+let deals = [];
+let sortKey = 'dateReferred';
+let sortDir = 'desc';
+
+const fields = [
+  {key:'dateReferred', label:'Date Referred', type:'date'},
+  {key:'status', label:'Current Status', type:'select', options:['New Referral','Pre-Approved','Active Search','In Contract','Processing','Closed','Paused','Dead / Not Closed','Lost']},
+  {key:'partnershipPlus', label:'Partnership Plus', type:'checkbox'},
+  {key:'leadSource', label:'Lead Source', type:'select', options:['SYG Referral','NEO Lease Referral','CCI Lead','Daryn Lead','Past Client','Agent Referral','Online Lead','Open House','Sphere','Other']},
+  {key:'referredDirection', label:'Direction', type:'select', options:['SYG to NEO','NEO to SYG','NEO Lease Referral','CCI to NEO','Internal / Other']},
+  {key:'loanNumber', label:'Loan # / Cash', type:'text'},
+  {key:'mortgageAdvisorName', label:'Mortgage Advisor', type:'text'},
+  {key:'sygAgentName', label:'SYG Agent', type:'text'},
+  {key:'lastName', label:'Last Name', type:'text'},
+  {key:'firstName', label:'First Name', type:'text'},
+  {key:'propertyAddress', label:'Property Address', type:'text'},
+  {key:'transactionType', label:'Transaction Type', type:'select', options:['Purchase','Listing','Lease']},
+  {key:'leaseReferral', label:'Lease Referral', type:'checkbox'},
+  {key:'leaseClosed', label:'Lease Closed', type:'checkbox'},
+  {key:'leaseLedToPurchase', label:'Lease Led to Purchase', type:'checkbox'},
+  {key:'relatedLeaseClient', label:'Related Lease Client / ID', type:'text'},
+  {key:'transactionAmount', label:'Purchase Price / Lease Value $', type:'money'},
+  {key:'ltv', label:'LTV %', type:'percent'},
+  {key:'loanAmount', label:'Loan Amount $', type:'money', computed:true},
+  {key:'neoCommissionPercent', label:'NEO Commission %', type:'percent'},
+  {key:'neoCommissionDollars', label:'NEO Commission $', type:'money', computed:true},
+  {key:'mortgageAdvisorCommissionDollars', label:'Mortgage Advisor Commission $', type:'money', computed:true},
+  {key:'sygProfitPercent', label:'SYG Commission %', type:'percent'},
+  {key:'sygProfitDollars', label:'SYG Commission $', type:'money', computed:true},
+  {key:'referralQuality', label:'Referral Quality', type:'select', options:['Unknown','Strong','Average','Weak']},
+  {key:'relationshipImpact', label:'Relationship Impact', type:'select', options:['Unknown','Strengthened','Neutral','Weakened']},
+  {key:'notes', label:'Notes', type:'textarea'}
+];
+
+const sampleDeals = [{
+  id: 'sample-1',
+  dateReferred:'2026-05-21',
+  status:'New Referral',
+  partnershipPlus:true,
+  leadSource:'NEO Lease Referral',
+  referredDirection:'NEO Lease Referral',
+  loanNumber:'Cash Transaction',
+  mortgageAdvisorName:'Daryn Fillis',
+  sygAgentName:'Sample SYG Agent',
+  lastName:'Sample',
+  firstName:'Client',
+  propertyAddress:'123 Main St, Los Angeles, CA',
+  transactionType:'Lease',
+  leaseReferral:true,
+  leaseClosed:true,
+  leaseLedToPurchase:false,
+  relatedLeaseClient:'',
+  transactionAmount:12500,
+  ltv:0,
+  loanAmount:0,
+  neoCommissionPercent:0,
+  neoCommissionDollars:0,
+  mortgageAdvisorCommissionDollars:0,
+  sygProfitPercent:3,
+  sygProfitDollars:375,
+  referralQuality:'Unknown',
+  relationshipImpact:'Strengthened',
+  notes:'Preview row. Lease referral tracking added in V27.'
+}];
+
+function byId(id){ return document.getElementById(id); }
+function money(n){ return Number(n || 0).toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0}); }
+function num(v){ return Number(String(v ?? '').replace(/[^0-9.-]/g,'')) || 0; }
+function setStatus(msg){ byId('status').textContent = msg || ''; }
+function uuid(){ return crypto.randomUUID ? crypto.randomUUID() : String(Date.now()+Math.random()); }
+
+function defaultDeal(){
+  return {
+    id:uuid(),
+    dateReferred:new Date().toISOString().slice(0,10),
+    status:'New Referral',
+    partnershipPlus:false,
+    leadSource:'SYG Referral',
+    referredDirection:'SYG to NEO',
+    loanNumber:'',
+    mortgageAdvisorName:'Daryn Fillis',
+    sygAgentName:'',
+    lastName:'',
+    firstName:'',
+    propertyAddress:'',
+    transactionType:'Purchase',
+    leaseReferral:false,
+    leaseClosed:false,
+    leaseLedToPurchase:false,
+    relatedLeaseClient:'',
+    transactionAmount:'',
+    ltv:'',
+    loanAmount:'',
+    neoCommissionPercent:3,
+    neoCommissionDollars:'',
+    mortgageAdvisorCommissionDollars:'',
+    sygProfitPercent:3,
+    sygProfitDollars:'',
+    referralQuality:'Unknown',
+    relationshipImpact:'Unknown',
+    notes:''
+  };
+}
+
+async function loadDeals(){
+  if (!IS_PRODUCTION_HOST) {
+    const saved = localStorage.getItem('sygPreviewDeals');
+    deals = saved ? JSON.parse(saved) : sampleDeals;
+    byId('modePill').textContent = 'Local preview, saves to this browser only';
+    render();
+    return;
+  }
+  const res = await fetch(API_URL, { headers:{'x-syg-password':password} });
+  if (!res.ok) throw new Error('Unable to load deals');
+  const data = await res.json();
+  deals = Array.isArray(data) ? data : [];
+  byId('modePill').textContent = 'Production';
+  render();
+}
+
+async function saveDeals(){
+  if (!IS_PRODUCTION_HOST) {
+    localStorage.setItem('sygPreviewDeals', JSON.stringify(deals));
+    setStatus('Preview saved locally in this browser. Netlify deployment will save centrally.');
+    return;
+  }
+  const res = await fetch(API_URL, {method:'POST',headers:{'Content-Type':'application/json','x-syg-password':password},body:JSON.stringify(deals)});
+  if (!res.ok) throw new Error('Save failed');
+  setStatus('Saved.');
+}
+
+function header(){
+  byId('headRow').innerHTML = fields.map(f => {
+    const arrow = sortKey === f.key ? (sortDir === 'asc' ? ' ▲' : ' ▼') : '';
+    return `<th data-key="${f.key}">${f.label}${arrow}</th>`;
+  }).join('') + '<th class="row-actions">Action</th>';
+  document.querySelectorAll('th[data-key]').forEach(th => {
+    th.onclick = () => {
+      const key = th.dataset.key;
+      if (sortKey === key) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+      else { sortKey = key; sortDir = 'asc'; }
+      render();
+    };
+  });
+}
+
+function filteredDeals(){
+  const q = byId('q').value.trim().toLowerCase();
+  const fs = byId('fStatus').value;
+  const ft = byId('fType').value;
+  const fl = byId('fLead').value;
+  const fc = byId('fClosed').value;
+  return deals.filter(d => {
+    const hay = fields.map(f => String(d[f.key] ?? '')).join(' ').toLowerCase();
+    return (!q || hay.includes(q)) && (!fs || d.status === fs) && (!ft || d.transactionType === ft) && (!fl || d.leadSource === fl) && (!fc || String(!!d.closed) === fc);
+  }).sort((a,b) => {
+    let av = a[sortKey], bv = b[sortKey];
+    const field = fields.find(f => f.key === sortKey);
+    if (['money','percent'].includes(field?.type)) { av = num(av); bv = num(bv); }
+    else if (field?.type === 'checkbox') { av = !!av; bv = !!bv; }
+    else { av = String(av ?? '').toLowerCase(); bv = String(bv ?? '').toLowerCase(); }
+    if (av < bv) return sortDir === 'asc' ? -1 : 1;
+    if (av > bv) return sortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+}
+
+function escapeHtml(s){ return String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])); }
+function escapeAttr(s){ return escapeHtml(s).replace(/"/g,'&quot;'); }
+
+function inputFor(deal, f){
+  const val = deal[f.key] ?? '';
+  const readonly = f.computed ? 'readonly title="Calculated automatically"' : '';
+
+  if (f.type === 'select') return `<select data-id="${deal.id}" data-key="${f.key}">${f.options.map(o => `<option value="${o}" ${val===o?'selected':''}>${o}</option>`).join('')}</select>`;
+  if (f.type === 'checkbox') return `<input type="checkbox" data-id="${deal.id}" data-key="${f.key}" ${val?'checked':''}>`;
+  if (f.type === 'textarea') return `<textarea data-id="${deal.id}" data-key="${f.key}">${escapeHtml(val)}</textarea>`;
+
+  const type = f.type === 'date' ? 'date' : f.type === 'money' || f.type === 'percent' ? 'number' : 'text';
+  const step = f.type === 'money' || f.type === 'percent' ? '0.01' : '';
+  return `<input type="${type}" step="${step}" ${readonly} data-id="${deal.id}" data-key="${f.key}" value="${escapeAttr(val)}">`;
+}
+
+function renderRows(){
+  const rows = filteredDeals();
+  byId('dealBody').innerHTML = rows.map(d => {
+    calculateDeal(d);
+    const tds = fields.map(f => `<td class="${f.type==='checkbox'?'checkcell':''}">${inputFor(d,f)}</td>`).join('');
+    return `<tr data-row-id="${d.id}">${tds}<td class="row-actions"><button type="button" class="danger delete-row" data-delete-id="${d.id}">Delete</button></td></tr>`;
+  }).join('');
+
+  document.querySelectorAll('[data-id][data-key]').forEach(el => {
+    const field = fields.find(f => f.key === el.dataset.key);
+    if (field?.computed) return;
+
+    const updateDeal = () => {
+      const deal = deals.find(d => d.id === el.dataset.id);
+      if (!deal) return;
+
+      const key = el.dataset.key;
+      const type = fields.find(f => f.key === key)?.type;
+
+      deal[key] = type === 'checkbox' ? el.checked : el.value;
+
+      calculateDeal(deal);
+      renderMetrics();
+
+      // Update computed fields in current row only instead of re-rendering entire table.
+      const row = el.closest('tr');
+      if (row) {
+        fields.filter(f => f.computed).forEach(f => {
+          const computedInput = row.querySelector(`[data-key="${f.key}"]`);
+          if (computedInput) {
+            computedInput.value = deal[f.key] ?? '';
+          }
+        });
+      }
+
+      setStatus('Unsaved changes.');
+    };
+
+    el.oninput = updateDeal;
+    el.onchange = updateDeal;
+  });
+
+  document.querySelectorAll('.delete-row').forEach(btn => {
+    btn.onclick = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const id = btn.getAttribute('data-delete-id');
+      if (!id) return;
+
+      if (!confirm('Delete this row?')) return;
+
+      deals = deals.filter(d => String(d.id) !== String(id));
+
+      // Save immediately in preview mode so deleted rows do not reappear after refresh.
+      if (!IS_PRODUCTION_HOST) {
+        localStorage.setItem('sygPreviewDeals', JSON.stringify(deals));
+      }
+
+      render();
+      setStatus('Row deleted. Save changes to update the shared ledger.');
+    };
+  });
+}
+
+
+document.addEventListener('click', function handleDeleteClick(event) {
+  const btn = event.target.closest('.delete-row');
+  if (!btn) return;
+
+  event.preventDefault();
+  event.stopPropagation();
+
+  const id = btn.getAttribute('data-delete-id');
+  if (!id) return;
+
+  if (!confirm('Delete this row?')) return;
+
+  deals = deals.filter(d => String(d.id) !== String(id));
+
+  if (!IS_PRODUCTION_HOST) {
+    localStorage.setItem('sygPreviewDeals', JSON.stringify(deals));
+  }
+
+  render();
+  setStatus('Row deleted. Save changes to update the shared ledger.');
+});
+
+function roundMoney(value){
+  return Math.round((Number(value) || 0) * 100) / 100;
+}
+
+function isCashTransaction(deal){
+  const loanText = String(deal.loanNumber || '').toLowerCase().trim();
+  return loanText.includes('cash');
+}
+
+function calculateDeal(deal){
+  const transaction = num(deal.transactionAmount);
+  const ltv = num(deal.ltv);
+  const neoPct = num(deal.neoCommissionPercent);
+  const sygPct = num(deal.sygProfitPercent);
+  const cash = isCashTransaction(deal);
+  const isLease = String(deal.transactionType || '').toLowerCase() === 'lease';
+
+  if (cash || isLease) {
+    deal.loanAmount = 0;
+    deal.neoCommissionPercent = 0;
+    deal.neoCommissionDollars = 0;
+    deal.mortgageAdvisorCommissionDollars = 0;
+  } else {
+    if (transaction && ltv) {
+      deal.loanAmount = roundMoney(transaction * (ltv / 100));
+    }
+
+    if (num(deal.loanAmount) && neoPct) {
+      deal.neoCommissionDollars = roundMoney(num(deal.loanAmount) * (neoPct / 100));
+    } else if (!neoPct || !num(deal.loanAmount)) {
+      deal.neoCommissionDollars = '';
+    }
+
+    if (num(deal.loanAmount)) {
+      deal.mortgageAdvisorCommissionDollars = Math.min(roundMoney(num(deal.loanAmount) * 0.01), 8500);
+    } else {
+      deal.mortgageAdvisorCommissionDollars = '';
+    }
+  }
+
+  if (transaction && sygPct) {
+    deal.sygProfitDollars = roundMoney(transaction * (sygPct / 100));
+  } else if (!sygPct || !transaction) {
+    deal.sygProfitDollars = '';
+  }
+
+  return deal;
+}
+
+function autoCalc(deal, changedKey){
+  calculateDeal(deal);
+}
+
+function isDeadDeal(deal){
+  const status = String(deal.status || '').toLowerCase();
+  return status.includes('dead') || status.includes('lost') || status.includes('not closed');
+}
+
+function isSygLead(deal){
+  return String(deal.leadSource || '').toLowerCase().includes('syg') ||
+    String(deal.referredDirection || '').toLowerCase().includes('syg to neo');
+}
+
+function isNeoLead(deal){
+  const source = String(deal.leadSource || '').toLowerCase();
+  const direction = String(deal.referredDirection || '').toLowerCase();
+  return source.includes('daryn') || source.includes('cci') || source.includes('neo') ||
+    direction.includes('neo to syg') || direction.includes('neo lease') || direction.includes('cci to neo');
+}
+
+function uniqueValues(key){
+  return [...new Set(deals.map(d => String(d[key] || '').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+}
+
+function populateDashboardFilters(){
+  const currentSyg = byId('dashSygAgent')?.value || '';
+  const currentMa = byId('dashMortgageAdvisor')?.value || '';
+  const currentLead = byId('dashLeadSource')?.value || '';
+  const currentStatus = byId('dashStatus')?.value || '';
+
+  if (byId('dashSygAgent')) {
+    byId('dashSygAgent').innerHTML = '<option value="">All SYG Agents</option>' + uniqueValues('sygAgentName').map(v=>`<option value="${escapeAttr(v)}">${escapeHtml(v)}</option>`).join('');
+    byId('dashSygAgent').value = currentSyg;
+  }
+
+  if (byId('dashMortgageAdvisor')) {
+    byId('dashMortgageAdvisor').innerHTML = '<option value="">All Advisors</option>' + uniqueValues('mortgageAdvisorName').map(v=>`<option value="${escapeAttr(v)}">${escapeHtml(v)}</option>`).join('');
+    byId('dashMortgageAdvisor').value = currentMa;
+  }
+
+  if (byId('dashLeadSource')) {
+    const leadOptions = fields.find(f=>f.key==='leadSource').options;
+    byId('dashLeadSource').innerHTML = '<option value="">All Sources</option>' + leadOptions.map(v=>`<option value="${escapeAttr(v)}">${escapeHtml(v)}</option>`).join('');
+    byId('dashLeadSource').value = currentLead;
+  }
+
+  if (byId('dashStatus')) {
+    const statusOptions = fields.find(f=>f.key==='status').options;
+    byId('dashStatus').innerHTML = '<option value="">All Statuses</option>' + statusOptions.map(v=>`<option value="${escapeAttr(v)}">${escapeHtml(v)}</option>`).join('');
+    byId('dashStatus').value = currentStatus;
+  }
+}
+
+function dashboardDeals(){
+  const q = (byId('dashQ')?.value || '').trim().toLowerCase();
+  const syg = byId('dashSygAgent')?.value || '';
+  const ma = byId('dashMortgageAdvisor')?.value || '';
+  const lead = byId('dashLeadSource')?.value || '';
+  const status = byId('dashStatus')?.value || '';
+
+  return deals.filter(d => {
+    const hay = fields.map(f => String(d[f.key] ?? '')).join(' ').toLowerCase();
+    return (!q || hay.includes(q)) &&
+      (!syg || d.sygAgentName === syg) &&
+      (!ma || d.mortgageAdvisorName === ma) &&
+      (!lead || d.leadSource === lead) &&
+      (!status || d.status === status);
+  });
+}
+
+function renderMetrics(){
+  deals.forEach(calculateDeal);
+  populateDashboardFilters();
+
+  const scopedDeals = dashboardDeals();
+
+  const closed = scopedDeals.filter(d =>
+    String(d.status || '').toLowerCase() === 'closed'
+  );
+
+  const dead = scopedDeals.filter(d =>
+    String(d.status || '').toLowerCase().includes('dead') ||
+    String(d.status || '').toLowerCase().includes('lost') ||
+    String(d.status || '').toLowerCase().includes('not closed')
+  );
+
+  const pipeline = scopedDeals.filter(d =>
+    String(d.status || '').toLowerCase() !== 'closed' &&
+    !String(d.status || '').toLowerCase().includes('dead') &&
+    !String(d.status || '').toLowerCase().includes('lost') &&
+    !String(d.status || '').toLowerCase().includes('not closed')
+  );
+
+  const sygLeads = scopedDeals.filter(isSygLead);
+  const neoLeads = scopedDeals.filter(isNeoLead);
+
+  const pipelinePurchase = pipeline.reduce((s,d)=>s+num(d.transactionAmount),0);
+  const pipelineLoan = pipeline.reduce((s,d)=>s+num(d.loanAmount),0);
+  const pipelineNeoCompany = pipeline.reduce((s,d)=>s+num(d.neoCommissionDollars),0);
+  const pipelineSyg = pipeline.reduce((s,d)=>s+num(d.sygProfitDollars),0);
+  const pipelineTotalCommission = pipelineNeoCompany + pipelineSyg;
+
+  const deadPurchase = dead.reduce((s,d)=>s+num(d.transactionAmount),0);
+  const deadNeoCompany = dead.reduce((s,d)=>s+num(d.neoCommissionDollars),0);
+  const deadSyg = dead.reduce((s,d)=>s+num(d.sygProfitDollars),0);
+  const deadCommission = deadNeoCompany + deadSyg;
+
+  const sygClosed = closed.filter(isSygLead);
+  const neoClosed = closed.filter(isNeoLead);
+
+  const closedLeases = scopedDeals.filter(d =>
+    String(d.transactionType || '').toLowerCase() === 'lease' &&
+    (String(d.status || '').toLowerCase() === 'closed' || d.leaseClosed)
+  );
+  const leasePurchases = scopedDeals.filter(d => !!d.leaseLedToPurchase);
+  const leasePurchaseVolume = leasePurchases.reduce((s,d)=>s+num(d.transactionAmount),0);
+  const leasePurchaseConversion = closedLeases.length ? Math.round((leasePurchases.length / closedLeases.length) * 100) : 0;
+
+  const sygClosedVolume = sygClosed.reduce((s,d)=>s+num(d.transactionAmount),0);
+  const neoClosedVolume = neoClosed.reduce((s,d)=>s+num(d.transactionAmount),0);
+
+  const closedCompanySyg = sygClosed.reduce((s,d)=>s+num(d.neoCommissionDollars),0);
+  const closedCompanyNeo = neoClosed.reduce((s,d)=>s+num(d.neoCommissionDollars),0);
+  const closedCompanyCommission = closedCompanySyg + closedCompanyNeo;
+
+  const closedSygCommissionFromSyg = sygClosed.reduce((s,d)=>s+num(d.sygProfitDollars),0);
+  const closedSygCommissionFromNeo = neoClosed.reduce((s,d)=>s+num(d.sygProfitDollars),0);
+  const closedSygCommissionTotal = closedSygCommissionFromSyg + closedSygCommissionFromNeo;
+
+  const sygCommissionDollars = sygClosed.reduce((s,d)=>s+num(d.sygProfitDollars),0);
+  const neoCommissionDollars = neoClosed.reduce((s,d)=>s+num(d.neoCommissionDollars),0);
+
+  byId('mLeadReciprocityUnits').textContent = `${sygLeads.length} | ${neoLeads.length}`;
+  byId('mTotalLeadCount').textContent = scopedDeals.length;
+  byId('mSygLeadCount').textContent = sygLeads.length;
+  byId('mNeoLeadCount').textContent = neoLeads.length;
+  byId('mActiveLeadCount').textContent = pipeline.length;
+  byId('mDeadLeadCount').textContent = dead.length;
+  byId('mClosedLeadCount').textContent = closed.length;
+
+  byId('mReciprocityUnits').textContent = `${sygClosed.length} | ${neoClosed.length}`;
+  byId('mClosedSygUnits').textContent = sygClosed.length;
+  byId('mClosedNeoUnits').textContent = neoClosed.length;
+
+  byId('mPipelinePurchase').textContent = money(pipelinePurchase);
+  byId('mPipelinePurchaseMini').textContent = money(pipelinePurchase);
+  byId('mPipelineLoan').textContent = money(pipelineLoan);
+  byId('mPipelineTotalCommission').textContent = money(pipelineTotalCommission);
+  byId('mPipelineSyg').textContent = money(pipelineSyg);
+  byId('mPipelineNeo').textContent = money(pipelineNeoCompany);
+
+  byId('mClosedSourceUnits').textContent = `${sygClosed.length} | ${neoClosed.length}`;
+  byId('mClosedSyg').textContent = money(sygClosedVolume);
+  byId('mClosedNeo').textContent = money(neoClosedVolume);
+
+  byId('mClosedCompanyCommission').textContent = money(closedCompanyCommission);
+  byId('mClosedCompanySyg').textContent = money(closedCompanySyg);
+  byId('mClosedCompanyNeo').textContent = money(closedCompanyNeo);
+
+  byId('mClosedSygCommissionTotal').textContent = money(closedSygCommissionTotal);
+  byId('mClosedSygCommissionFromSyg').textContent = money(closedSygCommissionFromSyg);
+  byId('mClosedSygCommissionFromNeo').textContent = money(closedSygCommissionFromNeo);
+
+  byId('mLeasePurchaseConversion').textContent = `${leasePurchaseConversion}%`;
+  byId('mClosedLeases').textContent = closedLeases.length;
+  byId('mLeasePurchases').textContent = leasePurchases.length;
+  byId('mLeasePurchaseVolume').textContent = money(leasePurchaseVolume);
+}
+
+function fillFilters(){
+  byId('fStatus').innerHTML = '<option value="">All</option>' + fields.find(f=>f.key==='status').options.map(x=>`<option>${x}</option>`).join('');
+  byId('fType').innerHTML = '<option value="">All</option>' + fields.find(f=>f.key==='transactionType').options.map(x=>`<option>${x}</option>`).join('');
+  byId('fLead').innerHTML = '<option value="">All</option>' + fields.find(f=>f.key==='leadSource').options.map(x=>`<option>${x}</option>`).join('');
+}
+
+function render(){ header(); renderRows(); renderMetrics(); }
+
+function toCsv(){
+  const rows = [fields.map(f=>f.label)];
+  filteredDeals().forEach(d => rows.push(fields.map(f => {
+    const v = f.type === 'checkbox' ? (d[f.key] ? 'Yes' : 'No') : (d[f.key] ?? '');
+    return `"${String(v).replace(/"/g,'""')}"`;
+  })));
+  return rows.map(r=>r.join(',')).join('\n');
+}
+
+function downloadCsv(){
+  const blob = new Blob([toCsv()], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `SYG-Partnership-Ledger-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+byId('addDeal').onclick = () => { deals.unshift(defaultDeal()); render(); setStatus('Unsaved changes.'); };
+byId('saveDeals').onclick = () => saveDeals().catch(e => setStatus(e.message));
+byId('exportCsv').onclick = downloadCsv;
+byId('clearFilters').onclick = () => { ['q','fStatus','fType','fLead','fClosed'].forEach(id=>byId(id).value=''); render(); };
+['q','fStatus','fType','fLead','fClosed'].forEach(id => byId(id).addEventListener('input', renderRows));
+['dashQ','dashSygAgent','dashMortgageAdvisor','dashLeadSource','dashStatus'].forEach(id => {
+  const el = byId(id);
+  if (el) el.addEventListener('input', renderMetrics);
+});
+
+
+byId('loginForm').onsubmit = async (e) => {
+  e.preventDefault();
+  byId('loginError').textContent = '';
+  password = byId('passwordInput').value;
+  try {
+    await loadDeals();
+    sessionStorage.setItem('sygPassword', password);
+    byId('login').classList.add('hidden');
+    byId('app').classList.remove('hidden');
+  } catch(err) {
+    byId('loginError').textContent = 'Incorrect password or Netlify Function is not deployed.';
+  }
+};
+
+fillFilters();
+
+if (IS_PRODUCTION_HOST && !password) {
+  byId('app').classList.add('hidden');
+  byId('login').classList.remove('hidden');
+} else {
+  loadDeals().catch(() => {
+    if (IS_PRODUCTION_HOST) {
+      byId('app').classList.add('hidden');
+      byId('login').classList.remove('hidden');
+      sessionStorage.removeItem('sygPassword');
+    }
+  });
+}
+</script>
+</body>
+</html>
