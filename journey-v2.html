@@ -1370,49 +1370,49 @@ html{-webkit-text-size-adjust:100%;}
 .map-pin.party-escrow { --pin-fill: #2b2f2e; --pin-stroke: #ffffff; --pin-ring: #ffffff; }
 .map-pin.party-neutral{ --pin-fill: #9ca3af; --pin-stroke: #ffffff; --pin-ring: #ffffff; }
 
-/* ── MAP CARDS (the labeled stage cards) ── */
+/* ── MAP CARDS (the labeled stage cards — sit OVER markers, tiny until zoom) ── */
 .map-card {
   position: absolute;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0.7);
   background: var(--white);
-  border: 2px solid var(--rule);
-  border-radius: 14px;
-  padding: 9px 14px 10px;
+  border: 1.5px solid var(--rule);
+  border-radius: 10px;
+  padding: 4px 8px 5px;
   cursor: pointer;
   font-family: inherit;
   z-index: 4;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.22);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.28);
   transition: transform 0.18s ease, box-shadow 0.18s ease;
   text-align: center;
   width: max-content;
-  max-width: 130px;
+  max-width: 88px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 3px;
 }
 .map-card:hover {
-  transform: translate(-50%, -50%) scale(1.06);
-  box-shadow: 0 8px 22px rgba(0,0,0,0.3);
+  transform: translate(-50%, -50%) scale(0.82);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.32);
   z-index: 20;
 }
 .map-card.is-pinned {
-  transform: translate(-50%, -50%) scale(1.08);
+  transform: translate(-50%, -50%) scale(0.85);
   z-index: 25;
 }
 
 .mapcard-name {
   font-weight: 800;
-  font-size: 0.82rem;
+  font-size: 0.6rem;
   color: var(--navy);
   letter-spacing: -0.01em;
-  line-height: 1.15;
+  line-height: 1.12;
   text-align: center;
   white-space: normal;
   word-break: normal;
 }
-.mapcard-emojis { display: flex; gap: 5px; justify-content: center; align-items: center; }
-.mapcard-emoji { font-size: 1.05rem; line-height: 1; }
+.mapcard-emojis { display: flex; gap: 3px; justify-content: center; align-items: center; }
+.mapcard-emoji { font-size: 0.72rem; line-height: 1; }
 
 /* Border variants matching the original artwork */
 .map-card.border-blue {
@@ -1444,19 +1444,19 @@ html{-webkit-text-size-adjust:100%;}
 .mapcard-pill-emoji { font-size: 0.85rem; }
 .mapcard-pill-name { font-weight: 700; font-size: 0.78rem; color: var(--navy); }
 
-/* When zoomed, counter-scale cards so they stay readable */
+/* When zoomed in (2x), counter-scale cards toward readable size.
+   Base cards are tiny (0.7) and sit over markers; on zoom-in they enlarge to read. */
 .map-inner[style*="scale"] .map-card { transform: translate(-50%,-50%) scale(0.5); }
-.map-inner[style*="scale"] .map-card:hover { transform: translate(-50%,-50%) scale(0.54); }
-.map-inner[style*="scale"] .map-card.is-pinned { transform: translate(-50%,-50%) scale(0.56); }
-.map-inner[style*="scale"] .map-pin { transform: translate(-50%,-100%) scale(0.5); transform-origin: bottom center; }
+.map-inner[style*="scale"] .map-card:hover { transform: translate(-50%,-50%) scale(0.55); }
+.map-inner[style*="scale"] .map-card.is-pinned { transform: translate(-50%,-50%) scale(0.6); }
 
 /* ── MAP TITLE OVERLAY ── */
 .map-title-overlay { position: absolute; top: clamp(18px,3vw,34px); left: clamp(18px,3vw,34px); z-index: 6; pointer-events: none; max-width: 55%; }
 .map-title { font-weight: 800; font-size: clamp(1.3rem,3vw,2.4rem); color: var(--white); letter-spacing: -0.03em; line-height: 1; margin: 0 0 8px 0; text-shadow: 0 2px 14px rgba(0,0,0,0.5); }
 .map-tagline { font-weight: 400; font-size: clamp(0.8rem,1.3vw,1.05rem); color: rgba(255,255,255,0.92); line-height: 1.4; margin: 0; text-shadow: 0 1px 8px rgba(0,0,0,0.5); max-width: 420px; }
 
-.map-logo { position: absolute; top: clamp(14px,2.5vw,26px); right: clamp(14px,2.5vw,26px); z-index: 6; pointer-events: none; display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.95); padding: 7px 13px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-.map-logo svg { height: clamp(16px,2vw,24px); width: auto; }
+.map-logo { position: absolute; top: clamp(16px,3vw,32px); right: clamp(16px,3vw,32px); z-index: 6; pointer-events: none; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.25)); }
+.map-logo svg { height: clamp(40px,6vw,78px); width: auto; }
 
 /* ── ZOOM OUT BUTTON ── */
 .zoom-out-btn { position: absolute; bottom: clamp(18px,3vw,30px); left: clamp(18px,3vw,30px); z-index: 30; background: rgba(10,37,64,0.95); color: var(--white); border: 1px solid rgba(91,203,245,0.5); border-radius: 999px; padding: 10px 20px; font-family: inherit; font-weight: 700; font-size: 0.85rem; cursor: pointer; opacity: 0; visibility: hidden; transform: translateY(8px); transition: all 0.3s ease; display: flex; align-items: center; gap: 6px; backdrop-filter: blur(6px); box-shadow: 0 4px 14px rgba(0,0,0,0.3); }
@@ -1478,14 +1478,14 @@ html{-webkit-text-size-adjust:100%;}
 .zoom-hint-sub { font-size: 0.72rem; color: var(--muted); font-weight: 500; }
 
 /* ── LEGEND ── */
-.legend { position: absolute; bottom: clamp(18px,3vw,30px); right: clamp(18px,3vw,30px); z-index: 25; background: rgba(15,42,60,0.82); border: 1.5px solid rgba(91,203,245,0.45); border-radius: 14px; backdrop-filter: blur(10px); box-shadow: 0 12px 32px rgba(0,0,0,0.35); width: 340px; max-width: calc(100% - 36px); }
-.legend-header { padding: 10px 16px; border-bottom: 1px solid rgba(91,203,245,0.25); }
-.legend-header-title { font-size: 0.66rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--blue); margin: 0; }
-.legend-items { padding: 10px 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
-.legend-item { background: transparent; border: 1px solid transparent; color: rgba(255,255,255,0.92); font-family: inherit; font-size: 0.76rem; font-weight: 700; padding: 7px 9px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 9px; text-align: left; transition: all 0.15s ease; }
+.legend { position: absolute; bottom: clamp(14px,2.5vw,24px); right: clamp(14px,2.5vw,24px); z-index: 25; background: rgba(15,42,60,0.86); border: 1.5px solid rgba(91,203,245,0.45); border-radius: 12px; backdrop-filter: blur(10px); box-shadow: 0 10px 28px rgba(0,0,0,0.35); width: clamp(220px, 23vw, 300px); max-width: calc(100% - 28px); }
+.legend-header { padding: 7px 12px; border-bottom: 1px solid rgba(91,203,245,0.25); }
+.legend-header-title { font-size: 0.55rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); margin: 0; }
+.legend-items { padding: 6px 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 1px 6px; }
+.legend-item { background: transparent; border: 1px solid transparent; color: rgba(255,255,255,0.92); font-family: inherit; font-size: 0.62rem; font-weight: 700; padding: 4px 6px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 6px; text-align: left; transition: all 0.15s ease; line-height: 1.1; }
 .legend-item:hover { background: rgba(91,203,245,0.15); color: var(--white); }
-.legend-item-emoji { font-size: 1.1rem; line-height: 1; flex-shrink: 0; width: 22px; display: inline-flex; align-items: center; justify-content: center; }
-.legend-item-label { flex: 1; line-height: 1.2; }
+.legend-item-emoji { font-size: 0.85rem; line-height: 1; flex-shrink: 0; width: 16px; display: inline-flex; align-items: center; justify-content: center; }
+.legend-item-label { flex: 1; line-height: 1.15; }
 
 /* ── ICON DEFINITION MODAL ── */
 .icon-def-modal { position: fixed; inset: 0; background: rgba(10,37,64,0.6); backdrop-filter: blur(4px); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 24px; opacity: 0; visibility: hidden; transition: all 0.2s ease; }
@@ -3021,46 +3021,77 @@ const stageIcons = {
     });
     if (pts.length < 2) { svg.innerHTML = ''; return; }
 
-    // Smooth path with gentle curves
-    let d = `M ${pts[0].x} ${pts[0].y}`;
-    for (let i = 1; i < pts.length; i++) {
-      const p0 = pts[i-1], p1 = pts[i];
-      const mx = (p0.x + p1.x) / 2, my = (p0.y + p1.y) / 2;
-      const dx = p1.x - p0.x, dy = p1.y - p0.y;
-      const len = Math.sqrt(dx*dx + dy*dy) || 1;
-      const px = -dy/len * 1.2, py = dx/len * 1.2;
-      d += ` Q ${mx+px} ${my+py} ${p1.x} ${p1.y}`;
+    // Build a smooth path string from a list of points
+    function buildPath(points) {
+      if (points.length < 2) return '';
+      let s = `M ${points[0].x} ${points[0].y}`;
+      for (let i = 1; i < points.length; i++) {
+        const p0 = points[i-1], p1 = points[i];
+        const mx = (p0.x + p1.x) / 2, my = (p0.y + p1.y) / 2;
+        const dx = p1.x - p0.x, dy = p1.y - p0.y;
+        const len = Math.sqrt(dx*dx + dy*dy) || 1;
+        const px = -dy/len * 1.0, py = dx/len * 1.0;
+        s += ` Q ${mx+px} ${my+py} ${p1.x} ${p1.y}`;
+      }
+      return s;
     }
 
-    // Determine where path crosses into "snow" (y < 14) to switch color
-    // Simpler: two layered paths. Lower section blue, summit section white.
+    // Split into lower (blue) and summit (white) sections.
+    // Snow line ~ y < 17. Find the index where the path enters the snow.
+    const SNOW_Y = 17;
+    let splitIdx = pts.length;
+    for (let i = 0; i < pts.length; i++) {
+      if (pts[i].y < SNOW_Y) { splitIdx = i; break; }
+    }
+    // Lower section: pts[0..splitIdx] (include one overlap point for continuity)
+    const lower = pts.slice(0, Math.min(splitIdx + 1, pts.length));
+    // Upper section: from the last lower point through the end
+    const upper = pts.slice(Math.max(splitIdx - 1, 0));
+
+    const dLower = buildPath(lower);
+    const dUpper = upper.length >= 2 ? buildPath(upper) : '';
+
+    const upperSvg = dUpper ? `
+      <path class="trail-shadow" d="${dUpper}" fill="none" stroke="rgba(0,0,0,0.25)"
+        stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path id="trailPathUpper" class="trail-line" d="${dUpper}" fill="none" stroke="#ffffff"
+        stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>` : '';
+
     svg.innerHTML = `
-      <path id="trailShadow" d="${d}" fill="none" stroke="rgba(0,0,0,0.35)"
-        stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
-      <path id="trailPath" d="${d}" fill="none" stroke="#5bcbf5"
-        stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="trail-shadow" d="${dLower}" fill="none" stroke="rgba(0,0,0,0.3)"
+        stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path id="trailPathLower" class="trail-line" d="${dLower}" fill="none" stroke="#34b6ed"
+        stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+      ${upperSvg}
     `;
 
-    const path = $('#trailPath'), shadow = $('#trailShadow');
-    if (path) {
-      const L = path.getTotalLength();
-      [path, shadow].forEach(el => {
-        if (!el) return;
-        el.style.strokeDasharray = `${L} ${L}`;
-        el.style.strokeDashoffset = String(L);
-      });
+    // Animate both with a chunky dash pattern
+    const lowerEl = $('#trailPathLower'), upperEl = $('#trailPathUpper');
+    [lowerEl, upperEl].forEach(el => {
+      if (!el) return;
+      const L = el.getTotalLength();
+      el.style.strokeDasharray = `${L} ${L}`;
+      el.style.strokeDashoffset = String(L);
       requestAnimationFrame(() => {
-        [path, shadow].forEach(el => {
-          if (!el) return;
-          el.style.transition = 'stroke-dashoffset 1.6s cubic-bezier(0.4,0,0.2,1)';
-          el.style.strokeDashoffset = '0';
-        });
+        el.style.transition = 'stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1)';
+        el.style.strokeDashoffset = '0';
         setTimeout(() => {
-          if (path) { path.style.strokeDasharray = '1.1 1.6'; path.style.strokeDashoffset = '0'; }
-          if (shadow) { shadow.style.strokeDasharray = '1.1 1.6'; shadow.style.strokeDashoffset = '0'; }
-        }, 1600);
+          el.style.strokeDasharray = '1.6 1.8';
+          el.style.strokeDashoffset = '0';
+        }, 1500);
       });
-    }
+    });
+    // Also dash the shadows to match
+    $$('.trail-shadow').forEach(el => {
+      const L = el.getTotalLength();
+      el.style.strokeDasharray = `${L} ${L}`;
+      el.style.strokeDashoffset = String(L);
+      requestAnimationFrame(() => {
+        el.style.transition = 'stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1)';
+        el.style.strokeDashoffset = '0';
+        setTimeout(() => { el.style.strokeDasharray = '1.6 1.8'; el.style.strokeDashoffset = '0'; }, 1500);
+      });
+    });
   }
 
   // Pins (teardrop) + Cards (name + emoji + number badge)
@@ -3075,19 +3106,9 @@ const stageIcons = {
       const isPinned = state.pinnedStageNum === stage.num;
       const emojiHtml = c.mapEmojis.map(slug => `<span class="mapcard-emoji">${emojiFor(slug)}</span>`).join('');
 
-      // Pin (skip for stage 19 / journey continues, and Searching uses pill only)
+      // Cards now sit directly over the marker location, so we don't render
+      // separate teardrop pins (the card IS the marker). Pins would clash.
       let pinHtml = '';
-      if (c.pin_x != null && c.pin_y != null) {
-        pinHtml = `
-          <div class="map-pin party-${c.party}" style="left:${c.pin_x}%;top:${c.pin_y}%"
-            data-num="${stage.num}" aria-hidden="true">
-            <svg viewBox="0 0 24 32" width="100%" height="100%">
-              <path d="M12 0 C5.4 0 0 5.4 0 12 C0 21 12 32 12 32 C12 32 24 21 24 12 C24 5.4 18.6 0 12 0 Z"
-                fill="var(--pin-fill)" stroke="var(--pin-stroke)" stroke-width="1.5"/>
-              <circle cx="12" cy="12" r="4.2" fill="none" stroke="var(--pin-ring)" stroke-width="2.2"/>
-            </svg>
-          </div>`;
-      }
 
       // Card
       const cardClass = `map-card border-${c.border}${isPinned ? ' is-pinned' : ''}`;
@@ -3103,9 +3124,14 @@ const stageIcons = {
         `;
       }
 
+      // Card position: sit OVER the marker (pin location) when available,
+      // falling back to the floating card coord for pinless stages (Searching, Journey Continues).
+      const cardX = c.pin_x != null ? c.pin_x : c.card_x;
+      const cardY = c.pin_y != null ? c.pin_y : c.card_y;
+
       return `
         ${pinHtml}
-        <button type="button" class="${cardClass}" style="left:${c.card_x}%;top:${c.card_y}%"
+        <button type="button" class="${cardClass}" style="left:${cardX}%;top:${cardY}%"
           data-num="${stage.num}" aria-label="Stage ${dnum}: ${c.name}">
           ${cardInner}
         </button>
@@ -3189,8 +3215,10 @@ const stageIcons = {
       const s = stages.find(x => x.num === state.pinnedStageNum);
       if (!s) return;
       const c = getStageContent(s, state.persona);
-      // Zoom toward the card position
-      inner.style.transformOrigin = `${c.card_x}% ${c.card_y}%`;
+      // Zoom toward the card's actual rendered position (over the marker)
+      const zx = c.pin_x != null ? c.pin_x : c.card_x;
+      const zy = c.pin_y != null ? c.pin_y : c.card_y;
+      inner.style.transformOrigin = `${zx}% ${zy}%`;
       inner.style.transform = `scale(${state.zoomScale})`;
       if (btn) btn.classList.add('is-visible');
     } else {
