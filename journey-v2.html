@@ -1363,6 +1363,7 @@ html{-webkit-text-size-adjust:100%;}
 .map-pin.party-neo    { --pin-fill: #5bcbf5; --pin-stroke: #ffffff; --pin-ring: #ffffff; }
 .map-pin.party-agent  { --pin-fill: #ffffff; --pin-stroke: #0A2540; --pin-ring: #0A2540; }
 .map-pin.party-escrow { --pin-fill: #2b2f2e; --pin-stroke: #ffffff; --pin-ring: #ffffff; }
+.map-pin.party-moveIn { --pin-fill: #7c3aed; --pin-stroke: #ffffff; --pin-ring: #ffffff; }
 .map-pin.party-neutral{ --pin-fill: #9ca3af; --pin-stroke: #ffffff; --pin-ring: #ffffff; }
 
 /* ── MAP CARDS (labeled stage cards, positioned like the original) ── */
@@ -1473,6 +1474,20 @@ html{-webkit-text-size-adjust:100%;}
 .map-basecamp-top { display: block; font-weight: 800; font-size: 0.72rem; letter-spacing: 0.04em; color: var(--white); line-height: 1.1; }
 .map-basecamp-bot { display: block; font-weight: 800; font-size: 0.72rem; letter-spacing: 0.06em; color: var(--blue); line-height: 1.1; }
 .map-inner[style*="scale"] .map-basecamp { transform: translate(-50%,-50%) scale(0.6); }
+
+/* Curved "journey continues" arrow to the right of the final card */
+.map-journey-arrow {
+  position: absolute;
+  left: 85%;
+  top: 23%;
+  width: 4%;
+  z-index: 5;
+  pointer-events: none;
+  color: #3bb5ef;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.3));
+}
+.map-journey-arrow svg { width: 100%; height: auto; display: block; }
+.map-inner[style*="scale"] .map-journey-arrow { opacity: 0; }
 
 /* ── ZOOM OUT BUTTON ── */
 .zoom-out-btn { position: absolute; bottom: clamp(18px,3vw,30px); left: clamp(18px,3vw,30px); z-index: 30; background: rgba(10,37,64,0.95); color: var(--white); border: 1px solid rgba(91,203,245,0.5); border-radius: 999px; padding: 10px 20px; font-family: inherit; font-weight: 700; font-size: 0.85rem; cursor: pointer; opacity: 0; visibility: hidden; transform: translateY(8px); transition: all 0.3s ease; display: flex; align-items: center; gap: 6px; backdrop-filter: blur(6px); box-shadow: 0 4px 14px rgba(0,0,0,0.3); }
@@ -1664,6 +1679,10 @@ body.zoom-open { overflow: hidden; }
       <img class="map-bg" src="/journey-map.jpg" srcset="/journey-map-1x.jpg 1x, /journey-map.jpg 2x" alt="Aerial mountain illustration representing the homebuying journey" draggable="false">
       <svg id="trailSvg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
       <div id="mapMarkers"></div>
+      <div class="map-journey-arrow"><svg viewBox="0 0 60 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M 4 8 Q 40 6 48 46" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <path d="M 38 40 L 49 50 L 56 38" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></div>
       <div class="map-basecamp">
         <span class="map-basecamp-top">NEW CADETS</span>
         <span class="map-basecamp-bot">BASECAMP</span>
@@ -2238,7 +2257,7 @@ const stages = [
     card_x: 32.4,
     card_y: 73.3,
     pin_x: 32.4,
-    pin_y: 79.8,
+    pin_y: 80.3,
     border: "blue",
     mapEmojis: ["credit-report", "meeting", "application", "doc-submission", "home-inspection"]
   },
@@ -2271,7 +2290,7 @@ const stages = [
     card_x: 19.6,
     card_y: 83.5,
     pin_x: 19.6,
-    pin_y: 90.0,
+    pin_y: 90.5,
     border: "blue",
     mapEmojis: ["credit-report", "meeting", "application", "doc-submission", "home-inspection"]
   },
@@ -2300,7 +2319,7 @@ const stages = [
     card_x: 8.0,
     card_y: 78.1,
     pin_x: 8.0,
-    pin_y: 84.6,
+    pin_y: 85.1,
     border: "blue",
     mapEmojis: ["meeting", "home-inspection"]
   },
@@ -2327,7 +2346,7 @@ const stages = [
     paths: ["purchase-financed", "purchase-cash", "va", "fha"],
     realExample: null,
     link: null,
-    party: "agent",
+    party: "neutral",
     card_x: 8.1,
     card_y: 70.2,
     pin_x: null,
@@ -2357,7 +2376,7 @@ const stages = [
     card_x: 5.0,
     card_y: 55.9,
     pin_x: 5.0,
-    pin_y: 62.4,
+    pin_y: 62.9,
     border: "plain",
     mapEmojis: ["application", "meeting"]
   },
@@ -2379,11 +2398,11 @@ const stages = [
     paths: ["purchase-financed", "purchase-cash", "va", "fha"],
     realExample: null,
     link: null,
-    party: "neo",
+    party: "escrow",
     card_x: 8.3,
     card_y: 46.8,
     pin_x: 8.3,
-    pin_y: 53.3,
+    pin_y: 53.8,
     border: "plain",
     mapEmojis: ["time-sensitive", "funds-escrow"]
   },
@@ -2413,7 +2432,7 @@ const stages = [
     card_x: 15.1,
     card_y: 46.8,
     pin_x: 15.1,
-    pin_y: 53.3,
+    pin_y: 53.8,
     border: "blue",
     mapEmojis: ["time-sensitive", "home-inspection"]
   },
@@ -2446,7 +2465,7 @@ const stages = [
     card_x: 21.6,
     card_y: 45.3,
     pin_x: 21.6,
-    pin_y: 51.8,
+    pin_y: 52.3,
     border: "blue",
     mapEmojis: ["time-sensitive", "termite", "home-inspection", "hazard-zone"]
   },
@@ -2479,7 +2498,7 @@ const stages = [
     card_x: 26.8,
     card_y: 37.8,
     pin_x: 26.8,
-    pin_y: 44.3,
+    pin_y: 44.8,
     border: "blue",
     mapEmojis: ["hazard-zone"]
   },
@@ -2505,7 +2524,7 @@ const stages = [
     card_x: 30.6,
     card_y: 31.7,
     pin_x: 30.6,
-    pin_y: 38.2,
+    pin_y: 38.7,
     border: "blue",
     mapEmojis: ["home-inspection"]
   },
@@ -2531,7 +2550,7 @@ const stages = [
     card_x: 35.7,
     card_y: 28.2,
     pin_x: 35.7,
-    pin_y: 34.7,
+    pin_y: 35.2,
     border: "blue",
     mapEmojis: ["time-sensitive"]
   },
@@ -2557,7 +2576,7 @@ const stages = [
     card_x: 42.6,
     card_y: 26.5,
     pin_x: 42.6,
-    pin_y: 33.0,
+    pin_y: 33.5,
     border: "blue",
     mapEmojis: ["loan-docs"]
   },
@@ -2583,7 +2602,7 @@ const stages = [
     card_x: 48.4,
     card_y: 20.9,
     pin_x: 48.4,
-    pin_y: 27.4,
+    pin_y: 27.9,
     border: "blue",
     mapEmojis: ["sign-docs"]
   },
@@ -2609,7 +2628,7 @@ const stages = [
     card_x: 52.3,
     card_y: 16.8,
     pin_x: 52.3,
-    pin_y: 23.3,
+    pin_y: 23.8,
     border: "blue",
     mapEmojis: ["funds-escrow"]
   },
@@ -2635,7 +2654,7 @@ const stages = [
     card_x: 56.1,
     card_y: 11.3,
     pin_x: 56.1,
-    pin_y: 17.8,
+    pin_y: 18.3,
     border: "plain",
     mapEmojis: ["time-sensitive"]
   },
@@ -2665,7 +2684,7 @@ const stages = [
     card_x: 61.5,
     card_y: 4.6,
     pin_x: 61.5,
-    pin_y: 11.1,
+    pin_y: 11.6,
     border: "black",
     mapEmojis: ["meeting"]
   },
@@ -2691,7 +2710,7 @@ const stages = [
     card_x: 66.5,
     card_y: 10.3,
     pin_x: 66.5,
-    pin_y: 16.8,
+    pin_y: 17.3,
     border: "plain",
     mapEmojis: ["keys"]
   },
@@ -2713,11 +2732,11 @@ const stages = [
     paths: ["purchase-financed", "purchase-cash", "va", "fha"],
     realExample: null,
     link: null,
-    party: "neutral",
+    party: "moveIn",
     card_x: 73.1,
     card_y: 13.8,
     pin_x: 73.1,
-    pin_y: 20.3,
+    pin_y: 20.8,
     border: "purple",
     mapEmojis: ["ongoing"]
   },
@@ -2742,7 +2761,7 @@ const stages = [
     paths: ["purchase-financed", "purchase-cash", "va", "fha", "refi"],
     realExample: null,
     link: "/mortgage-under-management",
-    party: "neo",
+    party: "neutral",
     card_x: 79.3,
     card_y: 21.5,
     pin_x: null,
@@ -3045,36 +3064,57 @@ const stageIcons = {
       return s;
     }
 
-    // Split into lower (blue) and summit (white) sections.
-    // Snow line ~ y < 17. Find the index where the path enters the snow.
-    const SNOW_Y = 17;
+    // Split into lower (blue) and summit (white) sections at the snow line.
+    const SNOW_Y = 16;
     let splitIdx = pts.length;
     for (let i = 0; i < pts.length; i++) {
       if (pts[i].y < SNOW_Y) { splitIdx = i; break; }
     }
-    // Lower section: pts[0..splitIdx] (include one overlap point for continuity)
     const lower = pts.slice(0, Math.min(splitIdx + 1, pts.length));
-    // Upper section: from the last lower point through the end
     const upper = pts.slice(Math.max(splitIdx - 1, 0));
 
     const dLower = buildPath(lower);
     const dUpper = upper.length >= 2 ? buildPath(upper) : '';
 
+    // Build directional arrowheads at intervals along the path.
+    // Place an arrow at the midpoint between every couple of stages.
+    function buildArrows(points, color) {
+      let out = '';
+      for (let i = 1; i < points.length; i++) {
+        // arrow between points[i-1] and points[i], at ~60% along
+        const p0 = points[i-1], p1 = points[i];
+        const t = 0.55;
+        const ax = p0.x + (p1.x - p0.x) * t;
+        const ay = p0.y + (p1.y - p0.y) * t;
+        const angle = Math.atan2(p1.y - p0.y, p1.x - p0.x) * 180 / Math.PI;
+        // Small chevron arrow (pointing in travel direction)
+        out += `<g transform="translate(${ax} ${ay}) rotate(${angle})">
+          <path d="M -0.7 -0.9 L 0.6 0 L -0.7 0.9" fill="none" stroke="${color}"
+            stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>`;
+      }
+      return out;
+    }
+
     const upperSvg = dUpper ? `
-      <path class="trail-shadow" d="${dUpper}" fill="none" stroke="rgba(0,0,0,0.22)"
-        stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="trail-shadow" d="${dUpper}" fill="none" stroke="rgba(0,0,0,0.18)"
+        stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round"/>
       <path id="trailPathUpper" class="trail-line" d="${dUpper}" fill="none" stroke="#ffffff"
-        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>` : '';
+        stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>` : '';
 
     svg.innerHTML = `
-      <path class="trail-shadow" d="${dLower}" fill="none" stroke="rgba(0,0,0,0.28)"
-        stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="trail-shadow" d="${dLower}" fill="none" stroke="rgba(0,0,0,0.22)"
+        stroke-width="0.95" stroke-linecap="round" stroke-linejoin="round"/>
       <path id="trailPathLower" class="trail-line" d="${dLower}" fill="none" stroke="#3bb5ef"
-        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/>
       ${upperSvg}
+      <g class="trail-arrows">
+        ${buildArrows(lower, '#2596d4')}
+        ${buildArrows(upper, '#ffffff')}
+      </g>
     `;
 
-    // Animate both with a chunky dash pattern (longer dashes like the original)
+    // Animate both with a fine dotted pattern (delicate round dots like the original)
     const lowerEl = $('#trailPathLower'), upperEl = $('#trailPathUpper');
     [lowerEl, upperEl].forEach(el => {
       if (!el) return;
@@ -3085,12 +3125,12 @@ const stageIcons = {
         el.style.transition = 'stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1)';
         el.style.strokeDashoffset = '0';
         setTimeout(() => {
-          el.style.strokeDasharray = '2.4 2.2';
+          // Fine round dots: tiny dash, larger gap, round caps make them dots
+          el.style.strokeDasharray = '0.01 1.4';
           el.style.strokeDashoffset = '0';
         }, 1500);
       });
     });
-    // Also dash the shadows to match
     $$('.trail-shadow').forEach(el => {
       const L = el.getTotalLength();
       el.style.strokeDasharray = `${L} ${L}`;
@@ -3098,9 +3138,16 @@ const stageIcons = {
       requestAnimationFrame(() => {
         el.style.transition = 'stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1)';
         el.style.strokeDashoffset = '0';
-        setTimeout(() => { el.style.strokeDasharray = '2.4 2.2'; el.style.strokeDashoffset = '0'; }, 1500);
+        setTimeout(() => { el.style.strokeDasharray = '0.01 1.4'; el.style.strokeDashoffset = '0'; }, 1500);
       });
     });
+    // Fade arrows in after the trail draws
+    const arrowGroup = svg.querySelector('.trail-arrows');
+    if (arrowGroup) {
+      arrowGroup.style.opacity = '0';
+      arrowGroup.style.transition = 'opacity 0.6s ease 1.5s';
+      requestAnimationFrame(() => { arrowGroup.style.opacity = '1'; });
+    }
   }
 
   // Pins (teardrop) + Cards (name + emoji + number badge)
