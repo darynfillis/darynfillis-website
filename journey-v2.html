@@ -1370,34 +1370,34 @@ html{-webkit-text-size-adjust:100%;}
 .map-pin.party-escrow { --pin-fill: #2b2f2e; --pin-stroke: #ffffff; --pin-ring: #ffffff; }
 .map-pin.party-neutral{ --pin-fill: #9ca3af; --pin-stroke: #ffffff; --pin-ring: #ffffff; }
 
-/* ── MAP CARDS (the labeled stage cards — sit OVER markers, tiny until zoom) ── */
+/* ── MAP CARDS (labeled stage cards, positioned like the original) ── */
 .map-card {
   position: absolute;
-  transform: translate(-50%, -50%) scale(0.7);
+  transform: translate(-50%, -50%) scale(1);
   background: var(--white);
   border: 1.5px solid var(--rule);
   border-radius: 10px;
-  padding: 4px 8px 5px;
+  padding: 5px 9px 6px;
   cursor: pointer;
   font-family: inherit;
   z-index: 4;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.28);
+  box-shadow: 0 2px 9px rgba(0,0,0,0.25);
   transition: transform 0.18s ease, box-shadow 0.18s ease;
   text-align: center;
   width: max-content;
-  max-width: 88px;
+  max-width: 92px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 3px;
 }
 .map-card:hover {
-  transform: translate(-50%, -50%) scale(0.82);
+  transform: translate(-50%, -50%) scale(1.08);
   box-shadow: 0 8px 22px rgba(0,0,0,0.32);
   z-index: 20;
 }
 .map-card.is-pinned {
-  transform: translate(-50%, -50%) scale(0.85);
+  transform: translate(-50%, -50%) scale(1.1);
   z-index: 25;
 }
 
@@ -1417,10 +1417,11 @@ html{-webkit-text-size-adjust:100%;}
 /* Border variants matching the original artwork */
 .map-card.border-blue {
   border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(91,203,245,0.25), 0 3px 12px rgba(0,0,0,0.22);
+  border-width: 2px;
+  box-shadow: 0 2px 9px rgba(0,0,0,0.22);
 }
 .map-card.border-plain { border-color: rgba(255,255,255,0.9); }
-.map-card.border-black { border-color: #0A2540; border-width: 3px; }
+.map-card.border-black { border-color: #0A2540; border-width: 2px; }
 .map-card.border-purple {
   border-color: #7c3aed;
   box-shadow: 0 0 0 3px rgba(124,58,237,0.22), 0 3px 12px rgba(0,0,0,0.22);
@@ -1444,11 +1445,12 @@ html{-webkit-text-size-adjust:100%;}
 .mapcard-pill-emoji { font-size: 0.85rem; }
 .mapcard-pill-name { font-weight: 700; font-size: 0.78rem; color: var(--navy); }
 
-/* When zoomed in (2x), counter-scale cards toward readable size.
-   Base cards are tiny (0.7) and sit over markers; on zoom-in they enlarge to read. */
-.map-inner[style*="scale"] .map-card { transform: translate(-50%,-50%) scale(0.5); }
-.map-inner[style*="scale"] .map-card:hover { transform: translate(-50%,-50%) scale(0.55); }
-.map-inner[style*="scale"] .map-card.is-pinned { transform: translate(-50%,-50%) scale(0.6); }
+/* When zoomed in (2x), counter-scale cards so they don't become huge.
+   Keeps cards readable but proportionate when the map is magnified. */
+.map-inner[style*="scale"] .map-card { transform: translate(-50%,-50%) scale(0.6); }
+.map-inner[style*="scale"] .map-card:hover { transform: translate(-50%,-50%) scale(0.66); }
+.map-inner[style*="scale"] .map-card.is-pinned { transform: translate(-50%,-50%) scale(0.68); }
+.map-inner[style*="scale"] .map-pin { transform: translate(-50%,-100%) scale(0.6); transform-origin: bottom center; }
 
 /* ── MAP TITLE OVERLAY ── */
 .map-title-overlay { position: absolute; top: clamp(18px,3vw,34px); left: clamp(18px,3vw,34px); z-index: 6; pointer-events: none; max-width: 55%; }
@@ -1457,6 +1459,25 @@ html{-webkit-text-size-adjust:100%;}
 
 .map-logo { position: absolute; top: clamp(16px,3vw,32px); right: clamp(16px,3vw,32px); z-index: 6; pointer-events: none; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.25)); }
 .map-logo svg { height: clamp(40px,6vw,78px); width: auto; }
+
+/* NEW CADETS BASECAMP label (dark navy pill near the village) */
+.map-basecamp {
+  position: absolute;
+  left: 42.5%;
+  top: 70.5%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  pointer-events: none;
+  background: var(--navy);
+  border-radius: 10px;
+  padding: 7px 16px;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+  border: 1.5px solid rgba(91,203,245,0.3);
+}
+.map-basecamp-top { display: block; font-weight: 800; font-size: 0.72rem; letter-spacing: 0.04em; color: var(--white); line-height: 1.1; }
+.map-basecamp-bot { display: block; font-weight: 800; font-size: 0.72rem; letter-spacing: 0.06em; color: var(--blue); line-height: 1.1; }
+.map-inner[style*="scale"] .map-basecamp { transform: translate(-50%,-50%) scale(0.6); }
 
 /* ── ZOOM OUT BUTTON ── */
 .zoom-out-btn { position: absolute; bottom: clamp(18px,3vw,30px); left: clamp(18px,3vw,30px); z-index: 30; background: rgba(10,37,64,0.95); color: var(--white); border: 1px solid rgba(91,203,245,0.5); border-radius: 999px; padding: 10px 20px; font-family: inherit; font-weight: 700; font-size: 0.85rem; cursor: pointer; opacity: 0; visibility: hidden; transform: translateY(8px); transition: all 0.3s ease; display: flex; align-items: center; gap: 6px; backdrop-filter: blur(6px); box-shadow: 0 4px 14px rgba(0,0,0,0.3); }
@@ -1650,6 +1671,10 @@ body.zoom-open { overflow: hidden; }
       <img class="map-bg" src="/journey-map.jpg" srcset="/journey-map-1x.jpg 1x, /journey-map.jpg 2x" alt="Aerial mountain illustration representing the homebuying journey" draggable="false">
       <svg id="trailSvg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
       <div id="mapMarkers"></div>
+      <div class="map-basecamp">
+        <span class="map-basecamp-top">NEW CADETS</span>
+        <span class="map-basecamp-bot">BASECAMP</span>
+      </div>
       <div class="map-title-overlay">
         <h2 id="mapTitle" class="map-title">The homebuyers&rsquo; journey.</h2>
         <p id="mapTagline" class="map-tagline">A step-by-step guide to purchasing a home with financing.</p>
@@ -2184,11 +2209,6 @@ function submitFN() {
 }
 </script>
 <script>
-// ═══════════════════════════════════════════════════════════════════════════
-// JOURNEY V2 DATA — Faithful to original artwork
-// Cards with name+emoji+number, traced positions, original border styles
-// ═══════════════════════════════════════════════════════════════════════════
-
 const stages = [
   {
     num: 1,
@@ -2226,10 +2246,10 @@ const stages = [
     realExample: null,
     link: null,
     party: "neo",
-    card_x: 32.3,
-    card_y: 71.0,
+    card_x: 32.0,
+    card_y: 73.5,
     pin_x: 34.5,
-    pin_y: 78.5,
+    pin_y: 79.0,
     border: "blue",
     mapEmojis: ["credit-report", "meeting", "application", "doc-submission", "home-inspection"]
   },
@@ -2259,10 +2279,10 @@ const stages = [
     realExample: null,
     link: null,
     party: "neo",
-    card_x: 19.6,
-    card_y: 81.0,
-    pin_x: 19.6,
-    pin_y: 88.5,
+    card_x: 19.5,
+    card_y: 83.5,
+    pin_x: 19.5,
+    pin_y: 89.0,
     border: "blue",
     mapEmojis: ["credit-report", "meeting", "application", "doc-submission", "home-inspection"]
   },
@@ -2288,10 +2308,10 @@ const stages = [
     realExample: null,
     link: null,
     party: "neo",
-    card_x: 7.9,
-    card_y: 76.0,
-    pin_x: 15.7,
-    pin_y: 82.5,
+    card_x: 8.0,
+    card_y: 78.0,
+    pin_x: 15.5,
+    pin_y: 83.0,
     border: "blue",
     mapEmojis: ["meeting", "home-inspection"]
   },
@@ -2320,7 +2340,7 @@ const stages = [
     link: null,
     party: "agent",
     card_x: 8.0,
-    card_y: 68.5,
+    card_y: 70.5,
     pin_x: null,
     pin_y: null,
     border: "pill",
@@ -2346,9 +2366,9 @@ const stages = [
     link: null,
     party: "agent",
     card_x: 5.0,
-    card_y: 54.5,
+    card_y: 55.5,
     pin_x: 10.5,
-    pin_y: 61.5,
+    pin_y: 62.0,
     border: "plain",
     mapEmojis: ["application", "meeting"]
   },
@@ -2371,10 +2391,10 @@ const stages = [
     realExample: null,
     link: null,
     party: "neo",
-    card_x: 8.2,
-    card_y: 45.5,
-    pin_x: 22.5,
-    pin_y: 50.5,
+    card_x: 8.3,
+    card_y: 47.0,
+    pin_x: 22.0,
+    pin_y: 51.5,
     border: "plain",
     mapEmojis: ["time-sensitive", "funds-escrow"]
   },
@@ -2402,9 +2422,9 @@ const stages = [
     link: null,
     party: "neo",
     card_x: 15.0,
-    card_y: 45.5,
+    card_y: 47.0,
     pin_x: 31.5,
-    pin_y: 51.0,
+    pin_y: 52.0,
     border: "blue",
     mapEmojis: ["time-sensitive", "home-inspection"]
   },
@@ -2435,9 +2455,9 @@ const stages = [
     link: null,
     party: "agent",
     card_x: 21.5,
-    card_y: 44.0,
+    card_y: 45.5,
     pin_x: 43.0,
-    pin_y: 51.0,
+    pin_y: 51.5,
     border: "blue",
     mapEmojis: ["time-sensitive", "termite", "home-inspection", "hazard-zone"]
   },
@@ -2468,9 +2488,9 @@ const stages = [
     link: null,
     party: "neo",
     card_x: 26.6,
-    card_y: 36.5,
+    card_y: 37.5,
     pin_x: 10.5,
-    pin_y: 49.0,
+    pin_y: 50.0,
     border: "blue",
     mapEmojis: ["hazard-zone"]
   },
@@ -2493,10 +2513,10 @@ const stages = [
     realExample: null,
     link: null,
     party: "neo",
-    card_x: 30.6,
-    card_y: 30.5,
+    card_x: 30.5,
+    card_y: 31.5,
     pin_x: 21.5,
-    pin_y: 41.5,
+    pin_y: 42.0,
     border: "blue",
     mapEmojis: ["home-inspection"]
   },
@@ -2520,9 +2540,9 @@ const stages = [
     link: null,
     party: "neo",
     card_x: 35.6,
-    card_y: 27.5,
+    card_y: 28.0,
     pin_x: 35.0,
-    pin_y: 36.0,
+    pin_y: 36.5,
     border: "blue",
     mapEmojis: ["time-sensitive"]
   },
@@ -2546,9 +2566,9 @@ const stages = [
     link: null,
     party: "neo",
     card_x: 42.5,
-    card_y: 26.0,
+    card_y: 26.5,
     pin_x: 47.5,
-    pin_y: 33.0,
+    pin_y: 33.5,
     border: "blue",
     mapEmojis: ["loan-docs"]
   },
@@ -2572,9 +2592,9 @@ const stages = [
     link: null,
     party: "escrow",
     card_x: 48.3,
-    card_y: 22.0,
+    card_y: 21.0,
     pin_x: 52.0,
-    pin_y: 30.0,
+    pin_y: 30.5,
     border: "blue",
     mapEmojis: ["sign-docs"]
   },
@@ -2598,9 +2618,9 @@ const stages = [
     link: null,
     party: "neo",
     card_x: 52.3,
-    card_y: 16.5,
+    card_y: 17.0,
     pin_x: 59.0,
-    pin_y: 24.0,
+    pin_y: 24.5,
     border: "blue",
     mapEmojis: ["funds-escrow"]
   },
@@ -2624,9 +2644,9 @@ const stages = [
     link: null,
     party: "agent",
     card_x: 56.1,
-    card_y: 13.0,
+    card_y: 13.5,
     pin_x: 62.0,
-    pin_y: 19.0,
+    pin_y: 19.5,
     border: "plain",
     mapEmojis: ["time-sensitive"]
   },
@@ -2680,9 +2700,9 @@ const stages = [
     link: null,
     party: "agent",
     card_x: 66.5,
-    card_y: 9.5,
+    card_y: 10.0,
     pin_x: 72.5,
-    pin_y: 19.0,
+    pin_y: 19.5,
     border: "plain",
     mapEmojis: ["keys"]
   },
@@ -2706,7 +2726,7 @@ const stages = [
     link: null,
     party: "neutral",
     card_x: 73.0,
-    card_y: 13.5,
+    card_y: 14.0,
     pin_x: 82.0,
     pin_y: 22.5,
     border: "purple",
@@ -3052,20 +3072,20 @@ const stageIcons = {
     const dUpper = upper.length >= 2 ? buildPath(upper) : '';
 
     const upperSvg = dUpper ? `
-      <path class="trail-shadow" d="${dUpper}" fill="none" stroke="rgba(0,0,0,0.25)"
-        stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="trail-shadow" d="${dUpper}" fill="none" stroke="rgba(0,0,0,0.22)"
+        stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
       <path id="trailPathUpper" class="trail-line" d="${dUpper}" fill="none" stroke="#ffffff"
-        stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>` : '';
+        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>` : '';
 
     svg.innerHTML = `
-      <path class="trail-shadow" d="${dLower}" fill="none" stroke="rgba(0,0,0,0.3)"
-        stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-      <path id="trailPathLower" class="trail-line" d="${dLower}" fill="none" stroke="#34b6ed"
-        stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="trail-shadow" d="${dLower}" fill="none" stroke="rgba(0,0,0,0.28)"
+        stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round"/>
+      <path id="trailPathLower" class="trail-line" d="${dLower}" fill="none" stroke="#3bb5ef"
+        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       ${upperSvg}
     `;
 
-    // Animate both with a chunky dash pattern
+    // Animate both with a chunky dash pattern (longer dashes like the original)
     const lowerEl = $('#trailPathLower'), upperEl = $('#trailPathUpper');
     [lowerEl, upperEl].forEach(el => {
       if (!el) return;
@@ -3076,7 +3096,7 @@ const stageIcons = {
         el.style.transition = 'stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1)';
         el.style.strokeDashoffset = '0';
         setTimeout(() => {
-          el.style.strokeDasharray = '1.6 1.8';
+          el.style.strokeDasharray = '2.4 2.2';
           el.style.strokeDashoffset = '0';
         }, 1500);
       });
@@ -3089,7 +3109,7 @@ const stageIcons = {
       requestAnimationFrame(() => {
         el.style.transition = 'stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1)';
         el.style.strokeDashoffset = '0';
-        setTimeout(() => { el.style.strokeDasharray = '1.6 1.8'; el.style.strokeDashoffset = '0'; }, 1500);
+        setTimeout(() => { el.style.strokeDasharray = '2.4 2.2'; el.style.strokeDashoffset = '0'; }, 1500);
       });
     });
   }
@@ -3106,9 +3126,19 @@ const stageIcons = {
       const isPinned = state.pinnedStageNum === stage.num;
       const emojiHtml = c.mapEmojis.map(slug => `<span class="mapcard-emoji">${emojiFor(slug)}</span>`).join('');
 
-      // Cards now sit directly over the marker location, so we don't render
-      // separate teardrop pins (the card IS the marker). Pins would clash.
+      // Render the small teardrop pin ON the trail (below the card), matching original.
       let pinHtml = '';
+      if (c.pin_x != null && c.pin_y != null) {
+        pinHtml = `
+          <div class="map-pin party-${c.party}" style="left:${c.pin_x}%;top:${c.pin_y}%"
+            data-num="${stage.num}" aria-hidden="true">
+            <svg viewBox="0 0 24 32" width="100%" height="100%">
+              <path d="M12 0 C5.4 0 0 5.4 0 12 C0 21 12 32 12 32 C12 32 24 21 24 12 C24 5.4 18.6 0 12 0 Z"
+                fill="var(--pin-fill)" stroke="var(--pin-stroke)" stroke-width="1.5"/>
+              <circle cx="12" cy="11.5" r="4" fill="none" stroke="var(--pin-ring)" stroke-width="2.4"/>
+            </svg>
+          </div>`;
+      }
 
       // Card
       const cardClass = `map-card border-${c.border}${isPinned ? ' is-pinned' : ''}`;
@@ -3124,14 +3154,10 @@ const stageIcons = {
         `;
       }
 
-      // Card position: sit OVER the marker (pin location) when available,
-      // falling back to the floating card coord for pinless stages (Searching, Journey Continues).
-      const cardX = c.pin_x != null ? c.pin_x : c.card_x;
-      const cardY = c.pin_y != null ? c.pin_y : c.card_y;
-
+      // Card sits at its own position (offset above the pin), matching the original.
       return `
         ${pinHtml}
-        <button type="button" class="${cardClass}" style="left:${cardX}%;top:${cardY}%"
+        <button type="button" class="${cardClass}" style="left:${c.card_x}%;top:${c.card_y}%"
           data-num="${stage.num}" aria-label="Stage ${dnum}: ${c.name}">
           ${cardInner}
         </button>
@@ -3215,10 +3241,8 @@ const stageIcons = {
       const s = stages.find(x => x.num === state.pinnedStageNum);
       if (!s) return;
       const c = getStageContent(s, state.persona);
-      // Zoom toward the card's actual rendered position (over the marker)
-      const zx = c.pin_x != null ? c.pin_x : c.card_x;
-      const zy = c.pin_y != null ? c.pin_y : c.card_y;
-      inner.style.transformOrigin = `${zx}% ${zy}%`;
+      // Zoom toward the card's position
+      inner.style.transformOrigin = `${c.card_x}% ${c.card_y}%`;
       inner.style.transform = `scale(${state.zoomScale})`;
       if (btn) btn.classList.add('is-visible');
     } else {
