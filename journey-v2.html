@@ -1,14 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
+<html lang="en"><head><meta charset="UTF-8">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNXGMCM9L5"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HNXGMCM9L5');</script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" href="/favicon.png">
-<title>Your Homebuying Journey, Mapped Stage by Stage | Daryn Fillis</title>
-<meta name="description" content="Interactive map of every stage of buying or refinancing a home in Los Angeles. Customized for first-time buyers, move-up buyers, investors, and refinancing. By a Certified Mortgage Advisor.">
-<link rel="canonical" href="https://darynfillis.com/journey-v2">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/png" href="/favicon.png">
+<title>Your Homebuying Journey, Mapped Stage by Stage | Daryn Fillis</title><meta name="description" content="Interactive map of every stage of buying or refinancing a home in Los Angeles. Customized for first-time buyers, move-up buyers, investors, and refinancing. By a Certified Mortgage Advisor."><link rel="canonical" href="https://darynfillis.com/journey-v2">
 <meta property="og:title" content="Your Homebuying Journey, Mapped Stage by Stage | Daryn Fillis"><meta property="og:description" content="Interactive map of every stage of buying or refinancing a home in Los Angeles. Customized for first-time buyers, move-up buyers, investors, and refinancing. By a Certified Mortgage Advisor."><meta property="og:type" content="website"><meta property="og:url" content="https://darynfillis.com/journey-v2"><meta property="og:image" content="https://darynfillis.com/og-home.jpg"><meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebPage","name":"Your Homebuying Journey, Mapped Stage by Stage | Daryn Fillis","description":"Interactive map of every stage of buying or refinancing a home in Los Angeles. Customized for first-time buyers, move-up buyers, investors, and refinancing. By a Certified Mortgage Advisor.","url":"https://darynfillis.com/journey-v2","author":{"@type":"Person","name":"Daryn Fillis","jobTitle":"Certified Mortgage Advisor"}}
@@ -1314,7 +1309,7 @@ html{-webkit-text-size-adjust:100%;}
 }
 
 
-/* ─── JOURNEY V2 STYLES ─── */
+/* JOURNEY V2 */
 /* ════════════════════════════════════════════════════════════════════
    JOURNEY V2 — FAITHFUL CARD STYLES (matches original artwork)
    ════════════════════════════════════════════════════════════════════ */
@@ -1469,18 +1464,18 @@ html{-webkit-text-size-adjust:100%;}
   padding: 7px 16px;
   text-align: center;
   box-shadow: 0 4px 14px rgba(0,0,0,0.35);
-  border: 1.5px solid rgba(91,203,245,0.3);
+  border: 2px solid var(--blue);
 }
 .map-basecamp-top { display: block; font-weight: 800; font-size: 0.72rem; letter-spacing: 0.04em; color: var(--white); line-height: 1.1; }
 .map-basecamp-bot { display: block; font-weight: 800; font-size: 0.72rem; letter-spacing: 0.06em; color: var(--blue); line-height: 1.1; }
 .map-inner[style*="scale"] .map-basecamp { transform: translate(-50%,-50%) scale(0.6); }
 
-/* Curved "journey continues" arrow to the right of the final card */
+/* Curved "journey continues" arrow — sits up-and-right of the final card */
 .map-journey-arrow {
   position: absolute;
-  left: 85%;
-  top: 23%;
-  width: 4%;
+  left: 88%;
+  top: 14%;
+  width: 4.5%;
   z-index: 5;
   pointer-events: none;
   color: #3bb5ef;
@@ -1600,9 +1595,7 @@ body.zoom-open { overflow: hidden; }
   .zoom-section-warning, .zoom-section-example { margin-left: 0; margin-right: 0; }
 }
 
-</style>
-</head>
-<body>
+</style></head><body>
 <nav id="nav">
   <!-- Full NEO color logo — all tiers: N-icon + NEO + Home Loans + powered by better -->
   <a href="/" class="nav-logo" aria-label="Daryn Fillis — Home">
@@ -1659,39 +1652,16 @@ body.zoom-open { overflow: hidden; }
   </div>
 </nav>
 
-<section class="persona-selector-section">
-  <div class="persona-selector-inner">
-    <div class="persona-selector-label">Start Here</div>
-    <h2 class="persona-selector-question">I'm a...</h2>
-    <div id="personaSelector" class="persona-selector"></div>
-  </div>
-</section>
-<section class="journey-intro-v2">
-  <div class="journey-intro-v2-inner">
-    <div id="introEyebrow" class="section-eyebrow">For first-time buyers</div>
-    <h2 id="introH2">Your first home, mapped out from end to end.</h2>
-    <p id="introSub">Every stage you'll go through, what to expect, how long it takes, and what most mortgage professionals get wrong at each step.</p>
-  </div>
-</section>
-<section class="map-section">
-  <div id="mapFrame" class="map-frame">
-    <div class="map-inner" id="mapInner">
-      <img class="map-bg" src="/journey-map.jpg" srcset="/journey-map-1x.jpg 1x, /journey-map.jpg 2x" alt="Aerial mountain illustration representing the homebuying journey" draggable="false">
-      <svg id="trailSvg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
-      <div id="mapMarkers"></div>
-      <div class="map-journey-arrow"><svg viewBox="0 0 60 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M 4 8 Q 40 6 48 46" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round"/>
-  <path d="M 38 40 L 49 50 L 56 38" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-</svg></div>
-      <div class="map-basecamp">
-        <span class="map-basecamp-top">NEW CADETS</span>
-        <span class="map-basecamp-bot">BASECAMP</span>
-      </div>
-      <div class="map-title-overlay">
-        <h2 id="mapTitle" class="map-title">The homebuyers&rsquo; journey.</h2>
-        <p id="mapTagline" class="map-tagline">A step-by-step guide to purchasing a home with financing.</p>
-      </div>
-      <div class="map-logo"><svg class="nav-neo-color" width="96" height="45" viewBox="0 0 381 179" fill="none" xmlns="http://www.w3.org/2000/svg">
+<section class="persona-selector-section"><div class="persona-selector-inner"><div class="persona-selector-label">Start Here</div><h2 class="persona-selector-question">I'm a...</h2><div id="personaSelector" class="persona-selector"></div></div></section>
+<section class="journey-intro-v2"><div class="journey-intro-v2-inner"><div id="introEyebrow" class="section-eyebrow">For first-time buyers</div><h2 id="introH2">Your first home, mapped out from end to end.</h2><p id="introSub">Every stage you'll go through, what to expect, how long it takes, and what most mortgage professionals get wrong at each step.</p></div></section>
+<section class="map-section"><div id="mapFrame" class="map-frame"><div class="map-inner" id="mapInner">
+<img class="map-bg" src="/journey-map.jpg" srcset="/journey-map-1x.jpg 1x, /journey-map.jpg 2x" alt="Aerial mountain illustration representing the homebuying journey" draggable="false">
+<svg id="trailSvg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+<div id="mapMarkers"></div>
+<div class="map-journey-arrow"><svg viewBox="0 0 60 70" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 4 8 Q 40 6 48 46" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M 38 40 L 49 50 L 56 38" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div class="map-basecamp"><span class="map-basecamp-top">NEW CADETS</span><span class="map-basecamp-bot">BASECAMP</span></div>
+<div class="map-title-overlay"><h2 id="mapTitle" class="map-title">The homebuyers&rsquo; journey.</h2><p id="mapTagline" class="map-tagline">A step-by-step guide to purchasing a home with financing.</p></div>
+<div class="map-logo"><svg class="nav-neo-color" width="96" height="45" viewBox="0 0 381 179" fill="none" xmlns="http://www.w3.org/2000/svg">
       <!-- powered by better (bottom text) -->
       <path d="M197.245 173.672V171.146C198.148 171.723 199.086 171.795 199.627 171.795C201.179 171.795 202.117 170.929 202.983 168.728L203.922 166.31L196.379 148.374H199.483L205.257 162.99L210.995 148.374H213.99L205.293 169.702C204.138 172.517 202.803 174.177 199.844 174.177C199.014 174.177 198.075 174.069 197.245 173.672Z" fill="#292B29"/>
       <path d="M180.93 163.351V166.527H178.26V141.121H181.038V151.442C182.121 149.385 184.791 147.905 187.462 147.905C192.298 147.905 196.087 151.947 196.087 157.433C196.087 162.918 192.298 166.96 187.462 166.96C184.755 166.96 182.013 165.444 180.93 163.351ZM186.993 164.398C190.421 164.398 193.272 161.475 193.272 157.433C193.272 153.391 190.457 150.468 187.029 150.468C183.889 150.468 180.858 152.994 180.858 157.433C180.858 161.908 183.925 164.398 186.993 164.398Z" fill="#292B29"/>
@@ -1721,34 +1691,14 @@ body.zoom-open { overflow: hidden; }
       <path d="M3.20706 40.1076V87.7262C3.20706 94.538 7.51095 100.606 13.9379 102.864L73.4355 123.729C76.8671 124.935 80.6065 124.935 84.0381 123.729L143.536 102.864C149.969 100.612 154.273 94.5444 154.273 87.7262V40.1076C154.273 33.2958 149.963 27.2216 143.536 24.9703L84.0381 4.11146C80.6065 2.9056 76.8671 2.9056 73.4355 4.11146L13.9379 24.9767C7.51095 27.228 3.20706 33.2958 3.20706 40.1076Z" fill="#444345"/>
       <path d="M63.1536 66.04C62.8137 65.7963 62.3583 65.7963 62.0183 66.04L46.3614 77.3417C45.9252 77.656 45.3159 77.5598 45.0016 77.1236C44.8862 76.9633 44.822 76.7644 44.8156 76.5656V46.3358C44.822 45.797 45.2646 45.3672 45.8034 45.38C46.0022 45.38 46.2011 45.4506 46.3614 45.5661L108.348 90.3175C108.527 90.4458 108.752 90.5164 108.976 90.5164H120.502C121.093 90.5164 121.567 90.0417 121.567 89.4516V33.6742C121.574 33.0841 121.099 32.6031 120.509 32.6031H120.502H108.675C108.45 32.6031 108.232 32.6736 108.046 32.8019L78.291 54.2893C77.9511 54.533 77.4957 54.533 77.1557 54.2893L47.4005 32.8019C47.2209 32.6672 46.9964 32.5967 46.7719 32.6031H34.9506C34.3605 32.6031 33.8795 33.0841 33.8795 33.6742V89.4388C33.8795 90.0289 34.3541 90.5035 34.9442 90.5035H34.9506H46.4769C46.7014 90.5035 46.9194 90.433 47.1054 90.3047L70.8378 73.1661C71.2675 72.8454 71.3509 72.2425 71.0302 71.8127C70.9725 71.7422 70.9083 71.6716 70.8378 71.6203L63.1536 66.04ZM88.1559 60.6329L109.066 45.5468C109.502 45.2325 110.112 45.3287 110.426 45.7649C110.541 45.9253 110.605 46.1241 110.612 46.3229V76.5592C110.605 77.098 110.163 77.5277 109.624 77.5149C109.425 77.5149 109.226 77.4443 109.066 77.3289L88.1559 62.2364C87.7198 61.9157 87.6236 61.2999 87.9443 60.8638C88.002 60.7804 88.0726 60.7098 88.1559 60.6521V60.6329Z" fill="#52C8EF"/>
     </svg></div>
-    </div>
-    <button type="button" id="zoomOutBtn" class="zoom-out-btn" aria-label="Zoom out"><span>← Zoom out</span></button>
-    <div id="legend" class="legend">
-      <div class="legend-header"><h3 class="legend-header-title">Legend · Tap for definitions</h3></div>
-      <div id="legendItems" class="legend-items"></div>
-    </div>
-  </div>
-</section>
+</div>
+<button type="button" id="zoomOutBtn" class="zoom-out-btn" aria-label="Zoom out"><span>← Zoom out</span></button>
+<div id="legend" class="legend"><div class="legend-header"><h3 class="legend-header-title">Legend · Tap for definitions</h3></div><div id="legendItems" class="legend-items"></div></div>
+</div></section>
 <section id="stagesCards"></section>
 <div id="zoomOverlay" class="zoom-overlay" role="presentation"></div>
-<section style="background:var(--navy);padding:clamp(64px,9vw,100px) clamp(20px,4vw,48px);position:relative;overflow:hidden;text-align:center">
-  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(91,203,245,0.08) 0%,transparent 70%);pointer-events:none"></div>
-  <div class="max-w" style="max-width:720px;position:relative;z-index:1">
-    <div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:20px;padding:6px 14px;border-radius:20px;background:rgba(91,203,245,0.12);border:1px solid rgba(91,203,245,0.25)">
-      <span style="width:6px;height:6px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px var(--blue)"></span>
-      <span style="font-size:0.66rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue)">No-Sales 15-Minute Call</span>
-    </div>
-    <h2 style="font-weight:800;font-size:clamp(1.8rem,3.5vw,2.8rem);color:var(--white);letter-spacing:-0.03em;line-height:1.1;margin:0 0 20px 0">Want to talk through <em style="color:var(--blue);font-style:normal">your situation?</em></h2>
-    <p style="font-weight:200;font-size:clamp(1rem,1.4vw,1.12rem);color:rgba(255,255,255,0.7);line-height:1.75;margin:0 0 32px 0">Wherever you are in the journey, we can spend 15 minutes mapping out what your specific situation looks like. No pitch, no pressure.</p>
-    <a href="/schedule" class="btn btn-blue btn-wobble">Book a 15-minute call</a>
-    <p style="font-weight:200;font-size:0.78rem;color:rgba(255,255,255,0.4);margin:20px 0 0">Or call direct: <a href="tel:4243966967" style="color:var(--blue);text-decoration:none;font-weight:800">424-396-6967</a></p>
-  </div>
-</section>
-<section style="background:var(--white);padding:32px clamp(20px,4vw,48px)">
-  <div class="max-w" style="max-width:720px;padding:24px 28px;background:var(--surface);border-radius:10px;border:1px solid var(--rule)">
-    <p style="font-size:0.8rem;color:var(--muted);line-height:1.7;font-weight:400;margin:0">This interactive guide is for educational purposes and reflects typical timelines and processes. Your actual experience may vary based on loan type, property type, market conditions, and individual circumstances. Daryn Fillis NMLS #1988371. Branch NMLS #2733710. NEO Home Loans powered by Better Mortgage Corporation. Equal Housing Opportunity.</p>
-  </div>
-</section>
+<section style="background:var(--navy);padding:clamp(64px,9vw,100px) clamp(20px,4vw,48px);position:relative;overflow:hidden;text-align:center"><div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(91,203,245,0.08) 0%,transparent 70%);pointer-events:none"></div><div class="max-w" style="max-width:720px;position:relative;z-index:1"><div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:20px;padding:6px 14px;border-radius:20px;background:rgba(91,203,245,0.12);border:1px solid rgba(91,203,245,0.25)"><span style="width:6px;height:6px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px var(--blue)"></span><span style="font-size:0.66rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue)">No-Sales 15-Minute Call</span></div><h2 style="font-weight:800;font-size:clamp(1.8rem,3.5vw,2.8rem);color:var(--white);letter-spacing:-0.03em;line-height:1.1;margin:0 0 20px 0">Want to talk through <em style="color:var(--blue);font-style:normal">your situation?</em></h2><p style="font-weight:200;font-size:clamp(1rem,1.4vw,1.12rem);color:rgba(255,255,255,0.7);line-height:1.75;margin:0 0 32px 0">Wherever you are in the journey, we can spend 15 minutes mapping out what your specific situation looks like. No pitch, no pressure.</p><a href="/schedule" class="btn btn-blue btn-wobble">Book a 15-minute call</a><p style="font-weight:200;font-size:0.78rem;color:rgba(255,255,255,0.4);margin:20px 0 0">Or call direct: <a href="tel:4243966967" style="color:var(--blue);text-decoration:none;font-weight:800">424-396-6967</a></p></div></section>
+<section style="background:var(--white);padding:32px clamp(20px,4vw,48px)"><div class="max-w" style="max-width:720px;padding:24px 28px;background:var(--surface);border-radius:10px;border:1px solid var(--rule)"><p style="font-size:0.8rem;color:var(--muted);line-height:1.7;font-weight:400;margin:0">This interactive guide is for educational purposes and reflects typical timelines and processes. Your actual experience may vary based on loan type, property type, market conditions, and individual circumstances. Daryn Fillis NMLS #1988371. Branch NMLS #2733710. NEO Home Loans powered by Better Mortgage Corporation. Equal Housing Opportunity.</p></div></section>
 
 <footer>
   <div class="footer-grid">
@@ -2256,8 +2206,8 @@ const stages = [
     party: "neo",
     card_x: 32.4,
     card_y: 73.3,
-    pin_x: 32.4,
-    pin_y: 80.3,
+    pin_x: 35.0,
+    pin_y: 79.0,
     border: "blue",
     mapEmojis: ["credit-report", "meeting", "application", "doc-submission", "home-inspection"]
   },
@@ -2289,8 +2239,8 @@ const stages = [
     party: "neo",
     card_x: 19.6,
     card_y: 83.5,
-    pin_x: 19.6,
-    pin_y: 90.5,
+    pin_x: 19.8,
+    pin_y: 89.5,
     border: "blue",
     mapEmojis: ["credit-report", "meeting", "application", "doc-submission", "home-inspection"]
   },
@@ -2318,8 +2268,8 @@ const stages = [
     party: "neo",
     card_x: 8.0,
     card_y: 78.1,
-    pin_x: 8.0,
-    pin_y: 85.1,
+    pin_x: 15.5,
+    pin_y: 83.5,
     border: "blue",
     mapEmojis: ["meeting", "home-inspection"]
   },
@@ -2375,8 +2325,8 @@ const stages = [
     party: "agent",
     card_x: 5.0,
     card_y: 55.9,
-    pin_x: 5.0,
-    pin_y: 62.9,
+    pin_x: 10.8,
+    pin_y: 62.5,
     border: "plain",
     mapEmojis: ["application", "meeting"]
   },
@@ -2401,8 +2351,8 @@ const stages = [
     party: "escrow",
     card_x: 8.3,
     card_y: 46.8,
-    pin_x: 8.3,
-    pin_y: 53.8,
+    pin_x: 13.5,
+    pin_y: 51.5,
     border: "plain",
     mapEmojis: ["time-sensitive", "funds-escrow"]
   },
@@ -2431,8 +2381,8 @@ const stages = [
     party: "neo",
     card_x: 15.1,
     card_y: 46.8,
-    pin_x: 15.1,
-    pin_y: 53.8,
+    pin_x: 20.0,
+    pin_y: 51.0,
     border: "blue",
     mapEmojis: ["time-sensitive", "home-inspection"]
   },
@@ -2464,8 +2414,8 @@ const stages = [
     party: "agent",
     card_x: 21.6,
     card_y: 45.3,
-    pin_x: 21.6,
-    pin_y: 52.3,
+    pin_x: 27.5,
+    pin_y: 49.0,
     border: "blue",
     mapEmojis: ["time-sensitive", "termite", "home-inspection", "hazard-zone"]
   },
@@ -2497,8 +2447,8 @@ const stages = [
     party: "neo",
     card_x: 26.8,
     card_y: 37.8,
-    pin_x: 26.8,
-    pin_y: 44.8,
+    pin_x: 31.5,
+    pin_y: 41.5,
     border: "blue",
     mapEmojis: ["hazard-zone"]
   },
@@ -2523,8 +2473,8 @@ const stages = [
     party: "neo",
     card_x: 30.6,
     card_y: 31.7,
-    pin_x: 30.6,
-    pin_y: 38.7,
+    pin_x: 36.5,
+    pin_y: 36.0,
     border: "blue",
     mapEmojis: ["home-inspection"]
   },
@@ -2549,8 +2499,8 @@ const stages = [
     party: "neo",
     card_x: 35.7,
     card_y: 28.2,
-    pin_x: 35.7,
-    pin_y: 35.2,
+    pin_x: 41.5,
+    pin_y: 33.0,
     border: "blue",
     mapEmojis: ["time-sensitive"]
   },
@@ -2575,8 +2525,8 @@ const stages = [
     party: "neo",
     card_x: 42.6,
     card_y: 26.5,
-    pin_x: 42.6,
-    pin_y: 33.5,
+    pin_x: 47.5,
+    pin_y: 31.0,
     border: "blue",
     mapEmojis: ["loan-docs"]
   },
@@ -2601,8 +2551,8 @@ const stages = [
     party: "escrow",
     card_x: 48.4,
     card_y: 20.9,
-    pin_x: 48.4,
-    pin_y: 27.9,
+    pin_x: 52.0,
+    pin_y: 28.0,
     border: "blue",
     mapEmojis: ["sign-docs"]
   },
@@ -2627,8 +2577,8 @@ const stages = [
     party: "neo",
     card_x: 52.3,
     card_y: 16.8,
-    pin_x: 52.3,
-    pin_y: 23.8,
+    pin_x: 56.5,
+    pin_y: 22.5,
     border: "blue",
     mapEmojis: ["funds-escrow"]
   },
@@ -2653,8 +2603,8 @@ const stages = [
     party: "agent",
     card_x: 56.1,
     card_y: 11.3,
-    pin_x: 56.1,
-    pin_y: 18.3,
+    pin_x: 61.0,
+    pin_y: 18.5,
     border: "plain",
     mapEmojis: ["time-sensitive"]
   },
@@ -2683,8 +2633,8 @@ const stages = [
     party: "escrow",
     card_x: 61.5,
     card_y: 4.6,
-    pin_x: 61.5,
-    pin_y: 11.6,
+    pin_x: 62.5,
+    pin_y: 11.0,
     border: "black",
     mapEmojis: ["meeting"]
   },
@@ -2709,8 +2659,8 @@ const stages = [
     party: "agent",
     card_x: 66.5,
     card_y: 10.3,
-    pin_x: 66.5,
-    pin_y: 17.3,
+    pin_x: 69.5,
+    pin_y: 18.0,
     border: "plain",
     mapEmojis: ["keys"]
   },
@@ -2735,8 +2685,8 @@ const stages = [
     party: "moveIn",
     card_x: 73.1,
     card_y: 13.8,
-    pin_x: 73.1,
-    pin_y: 20.8,
+    pin_x: 76.5,
+    pin_y: 21.0,
     border: "purple",
     mapEmojis: ["ongoing"]
   },
@@ -3463,5 +3413,4 @@ const stageIcons = {
 })();
 
 </script>
-</body>
-</html>
+</body></html>
