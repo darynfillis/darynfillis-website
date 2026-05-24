@@ -765,7 +765,7 @@
   </section>
 
   <main id="app" class="wrap">
-    <div class="version-ribbon">V36 · CSV Import + CCI Impact</div>
+    <div class="version-ribbon">V37 · Lease Value Fix</div>
     <nav class="site-nav" aria-label="Daryn Fillis site navigation">
       <a class="logo" href="https://darynfillis.com">Daryn Fillis</a>
       <div class="nav-links">
@@ -885,10 +885,13 @@
         </div>
       </div>
       <div class="card metric">
-        <div class="label">Lease to Purchase Impact</div>
-        <div id="mLeasePurchaseConversion" class="value">0%</div>
+        <div class="label">Lease Referral Value</div>
+        <div id="mLeaseSygIncome" class="value">$0</div>
+        <div class="note">SYG lease commission + purchase conversion impact</div>
         <div class="split">
+          <div class="split-row"><span>Lease Referrals</span><strong id="mLeaseReferralCount">0</strong></div>
           <div class="split-row"><span>Closed Leases</span><strong id="mClosedLeases">0</strong></div>
+          <div class="split-row"><span>Lease Comm</span><strong id="mLeaseCommission">$0</strong></div>
           <div class="split-row"><span>Led to Purchases</span><strong id="mLeasePurchases">0</strong></div>
           <div class="split-row"><span>Purchase Volume</span><strong id="mLeasePurchaseVolume">$0</strong></div>
         </div>
@@ -1232,8 +1235,9 @@ function calculateDeal(deal){
   const neoPct = num(deal.neoCommissionPercent);
   const sygPct = num(deal.sygProfitPercent);
   const cash = isCashTransaction(deal);
-  const isLease = String(deal.transactionType || '').toLowerCase() === 'lease';
+  const isLease = String(deal.transactionType || '').toLowerCase() === 'lease' || !!deal.leaseReferral;
 
+  // Lease-only transactions and cash purchases do not create NEO mortgage participation.
   if (cash || isLease) {
     deal.loanAmount = 0;
     deal.neoCommissionPercent = 0;
@@ -1257,6 +1261,7 @@ function calculateDeal(deal){
     }
   }
 
+  // SYG commission is based on transaction/lease value.
   if (transaction && sygPct) {
     deal.sygProfitDollars = roundMoney(transaction * (sygPct / 100));
   } else if (!sygPct || !transaction) {
@@ -1381,12 +1386,21 @@ function renderMetrics(){
   const sygClosed = closed.filter(isSygLead);
   const neoClosed = closed.filter(isNeoLead);
 
-  const closedLeases = scopedDeals.filter(d =>
-    String(d.transactionType || '').toLowerCase() === 'lease' &&
-    (String(d.status || '').toLowerCase() === 'closed' || d.leaseClosed)
+  const leaseReferrals = scopedDeals.filter(d =>
+    !!d.leaseReferral ||
+    String(d.transactionType || '').toLowerCase() === 'lease' ||
+    String(d.leadSource || '').toLowerCase().includes('lease')
   );
+
+  const closedLeases = leaseReferrals.filter(d =>
+    String(d.status || '').toLowerCase() === 'closed' || !!d.leaseClosed
+  );
+
   const leasePurchases = scopedDeals.filter(d => !!d.leaseLedToPurchase);
   const leasePurchaseVolume = leasePurchases.reduce((s,d)=>s+num(d.transactionAmount),0);
+  const leaseCommission = closedLeases.reduce((s,d)=>s+num(d.sygProfitDollars),0);
+  const leasePurchaseSygCommission = leasePurchases.reduce((s,d)=>s+num(d.sygProfitDollars),0);
+  const leaseSygIncome = leaseCommission + leasePurchaseSygCommission;
   const leasePurchaseConversion = closedLeases.length ? Math.round((leasePurchases.length / closedLeases.length) * 100) : 0;
 
   const sygClosedVolume = sygClosed.reduce((s,d)=>s+num(d.transactionAmount),0);
@@ -1438,10 +1452,13 @@ function renderMetrics(){
   byId('mClosedSygCommissionFromSyg').textContent = money(closedSygCommissionFromSyg);
   byId('mClosedSygCommissionFromNeo').textContent = money(closedSygCommissionFromNeo);
 
-  byId('mLeasePurchaseConversion').textContent = `${leasePurchaseConversion}%`;
-  byId('mClosedLeases').textContent = closedLeases.length;
-  byId('mLeasePurchases').textContent = leasePurchases.length;
-  byId('mLeasePurchaseVolume').textContent = money(leasePurchaseVolume);
+  if (byId('mLeasePurchaseConversion')) byId('mLeasePurchaseConversion').textContent = `${leasePurchaseConversion}%`;
+  if (byId('mLeaseSygIncome')) byId('mLeaseSygIncome').textContent = money(leaseSygIncome);
+  if (byId('mLeaseReferralCount')) byId('mLeaseReferralCount').textContent = leaseReferrals.length;
+  if (byId('mClosedLeases')) byId('mClosedLeases').textContent = closedLeases.length;
+  if (byId('mLeaseCommission')) byId('mLeaseCommission').textContent = money(leaseCommission);
+  if (byId('mLeasePurchases')) byId('mLeasePurchases').textContent = leasePurchases.length;
+  if (byId('mLeasePurchaseVolume')) byId('mLeasePurchaseVolume').textContent = money(leasePurchaseVolume);
 }
 
 function fillFilters(){
