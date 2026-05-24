@@ -1691,10 +1691,10 @@ body.zoom-open { overflow: hidden; }
       <path d="M3.20706 40.1076V87.7262C3.20706 94.538 7.51095 100.606 13.9379 102.864L73.4355 123.729C76.8671 124.935 80.6065 124.935 84.0381 123.729L143.536 102.864C149.969 100.612 154.273 94.5444 154.273 87.7262V40.1076C154.273 33.2958 149.963 27.2216 143.536 24.9703L84.0381 4.11146C80.6065 2.9056 76.8671 2.9056 73.4355 4.11146L13.9379 24.9767C7.51095 27.228 3.20706 33.2958 3.20706 40.1076Z" fill="#444345"/>
       <path d="M63.1536 66.04C62.8137 65.7963 62.3583 65.7963 62.0183 66.04L46.3614 77.3417C45.9252 77.656 45.3159 77.5598 45.0016 77.1236C44.8862 76.9633 44.822 76.7644 44.8156 76.5656V46.3358C44.822 45.797 45.2646 45.3672 45.8034 45.38C46.0022 45.38 46.2011 45.4506 46.3614 45.5661L108.348 90.3175C108.527 90.4458 108.752 90.5164 108.976 90.5164H120.502C121.093 90.5164 121.567 90.0417 121.567 89.4516V33.6742C121.574 33.0841 121.099 32.6031 120.509 32.6031H120.502H108.675C108.45 32.6031 108.232 32.6736 108.046 32.8019L78.291 54.2893C77.9511 54.533 77.4957 54.533 77.1557 54.2893L47.4005 32.8019C47.2209 32.6672 46.9964 32.5967 46.7719 32.6031H34.9506C34.3605 32.6031 33.8795 33.0841 33.8795 33.6742V89.4388C33.8795 90.0289 34.3541 90.5035 34.9442 90.5035H34.9506H46.4769C46.7014 90.5035 46.9194 90.433 47.1054 90.3047L70.8378 73.1661C71.2675 72.8454 71.3509 72.2425 71.0302 71.8127C70.9725 71.7422 70.9083 71.6716 70.8378 71.6203L63.1536 66.04ZM88.1559 60.6329L109.066 45.5468C109.502 45.2325 110.112 45.3287 110.426 45.7649C110.541 45.9253 110.605 46.1241 110.612 46.3229V76.5592C110.605 77.098 110.163 77.5277 109.624 77.5149C109.425 77.5149 109.226 77.4443 109.066 77.3289L88.1559 62.2364C87.7198 61.9157 87.6236 61.2999 87.9443 60.8638C88.002 60.7804 88.0726 60.7098 88.1559 60.6521V60.6329Z" fill="#52C8EF"/>
     </svg></div>
-</div>
+</div></div>
 <button type="button" id="zoomOutBtn" class="zoom-out-btn" aria-label="Zoom out"><span>← Zoom out</span></button>
 <div id="legend" class="legend"><div class="legend-header"><h3 class="legend-header-title">Legend · Tap for definitions</h3></div><div id="legendItems" class="legend-items"></div></div>
-</div></section>
+</section>
 <section id="stagesCards"></section>
 <div id="zoomOverlay" class="zoom-overlay" role="presentation"></div>
 <section style="background:var(--navy);padding:clamp(64px,9vw,100px) clamp(20px,4vw,48px);position:relative;overflow:hidden;text-align:center"><div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(91,203,245,0.08) 0%,transparent 70%);pointer-events:none"></div><div class="max-w" style="max-width:720px;position:relative;z-index:1"><div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:20px;padding:6px 14px;border-radius:20px;background:rgba(91,203,245,0.12);border:1px solid rgba(91,203,245,0.25)"><span style="width:6px;height:6px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px var(--blue)"></span><span style="font-size:0.66rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue)">No-Sales 15-Minute Call</span></div><h2 style="font-weight:800;font-size:clamp(1.8rem,3.5vw,2.8rem);color:var(--white);letter-spacing:-0.03em;line-height:1.1;margin:0 0 20px 0">Want to talk through <em style="color:var(--blue);font-style:normal">your situation?</em></h2><p style="font-weight:200;font-size:clamp(1rem,1.4vw,1.12rem);color:rgba(255,255,255,0.7);line-height:1.75;margin:0 0 32px 0">Wherever you are in the journey, we can spend 15 minutes mapping out what your specific situation looks like. No pitch, no pressure.</p><a href="/schedule" class="btn btn-blue btn-wobble">Book a 15-minute call</a><p style="font-weight:200;font-size:0.78rem;color:rgba(255,255,255,0.4);margin:20px 0 0">Or call direct: <a href="tel:4243966967" style="color:var(--blue);text-decoration:none;font-weight:800">424-396-6967</a></p></div></section>
@@ -2603,8 +2603,8 @@ const stages = [
     party: "agent",
     card_x: 56.1,
     card_y: 11.3,
-    pin_x: 55.9,
-    pin_y: 18.2,
+    pin_x: 56.8,
+    pin_y: 15.0,
     border: "plain",
     mapEmojis: ["time-sensitive"]
   },
@@ -2633,8 +2633,8 @@ const stages = [
     party: "escrow",
     card_x: 61.5,
     card_y: 4.6,
-    pin_x: 65.9,
-    pin_y: 9.0,
+    pin_x: 61.5,
+    pin_y: 11.5,
     border: "black",
     mapEmojis: ["meeting"]
   },
@@ -2659,8 +2659,8 @@ const stages = [
     party: "agent",
     card_x: 66.5,
     card_y: 10.3,
-    pin_x: 69.0,
-    pin_y: 13.5,
+    pin_x: 65.8,
+    pin_y: 16.2,
     border: "plain",
     mapEmojis: ["keys"]
   },
@@ -2685,8 +2685,8 @@ const stages = [
     party: "moveIn",
     card_x: 73.1,
     card_y: 13.8,
-    pin_x: 76.5,
-    pin_y: 18.5,
+    pin_x: 73.0,
+    pin_y: 20.0,
     border: "purple",
     mapEmojis: ["ongoing"]
   },
