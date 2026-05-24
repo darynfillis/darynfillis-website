@@ -1,18 +1,16 @@
-# SYG V34 Login Debug
+# SYG V35 Blobs Fix
 
-Deploy this version if you cannot get past the password page.
+Fixes MissingBlobsEnvironmentError by calling connectLambda(event) before getStore().
 
-Changes:
-- Password entry is trimmed to remove accidental spaces.
-- Login page now shows exact error:
-  - 401 = wrong password
-  - 404 = function not deployed
-  - 500 = missing SYG_PASSWORD or server setup issue
-- Netlify files are at repo root.
-- Main app file is /syg/index.html.
+Required Netlify env var:
+- SYG_PASSWORD
 
-After deploy, test:
-1. https://darynfillis.com/.netlify/functions/deals
-   Expected without password: Incorrect/Unauthorized response, not 404.
-2. https://darynfillis.com/syg/
-   Enter exact SYG_PASSWORD.
+Deploy root files:
+- /syg/index.html
+- /netlify/functions/deals.js
+- /netlify.toml
+- /package.json
+
+After deploy:
+- Open /syg/
+- Enter the password.
