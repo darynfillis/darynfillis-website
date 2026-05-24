@@ -1361,10 +1361,10 @@ html{-webkit-text-size-adjust:100%;}
 .map-pin.party-moveIn { --pin-fill: #7c3aed; --pin-stroke: #ffffff; --pin-ring: #ffffff; }
 .map-pin.party-neutral{ --pin-fill: #9ca3af; --pin-stroke: #ffffff; --pin-ring: #ffffff; }
 
-/* ── MAP CARDS (labeled stage cards, positioned like the original) ── */
+/* ── MAP CARDS (labeled stage cards, bottom-anchored above their pins) ── */
 .map-card {
   position: absolute;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, -100%) scale(1);
   background: var(--white);
   border: 1.5px solid var(--rule);
   border-radius: 10px;
@@ -1383,12 +1383,12 @@ html{-webkit-text-size-adjust:100%;}
   gap: 3px;
 }
 .map-card:hover {
-  transform: translate(-50%, -50%) scale(1.08);
+  transform: translate(-50%, -100%) scale(1.08);
   box-shadow: 0 8px 22px rgba(0,0,0,0.32);
   z-index: 20;
 }
 .map-card.is-pinned {
-  transform: translate(-50%, -50%) scale(1.1);
+  transform: translate(-50%, -100%) scale(1.1);
   z-index: 25;
 }
 
@@ -1438,9 +1438,9 @@ html{-webkit-text-size-adjust:100%;}
 
 /* When zoomed in (2x), counter-scale cards so they don't become huge.
    Keeps cards readable but proportionate when the map is magnified. */
-.map-inner[style*="scale"] .map-card { transform: translate(-50%,-50%) scale(0.6); }
-.map-inner[style*="scale"] .map-card:hover { transform: translate(-50%,-50%) scale(0.66); }
-.map-inner[style*="scale"] .map-card.is-pinned { transform: translate(-50%,-50%) scale(0.68); }
+.map-inner[style*="scale"] .map-card { transform: translate(-50%,-100%) scale(0.6); }
+.map-inner[style*="scale"] .map-card:hover { transform: translate(-50%,-100%) scale(0.66); }
+.map-inner[style*="scale"] .map-card.is-pinned { transform: translate(-50%,-100%) scale(0.68); }
 .map-inner[style*="scale"] .map-pin { transform: translate(-50%,-100%) scale(0.6); transform-origin: bottom center; }
 
 /* ── MAP TITLE OVERLAY ── */
@@ -2352,7 +2352,7 @@ const stages = [
     card_x: 8.3,
     card_y: 46.8,
     pin_x: 11.1,
-    pin_y: 53.5,
+    pin_y: 54.8,
     border: "plain",
     mapEmojis: ["time-sensitive", "funds-escrow"]
   },
@@ -2382,7 +2382,7 @@ const stages = [
     card_x: 15.1,
     card_y: 46.8,
     pin_x: 15.8,
-    pin_y: 54.4,
+    pin_y: 55.7,
     border: "blue",
     mapEmojis: ["time-sensitive", "home-inspection"]
   },
@@ -2448,7 +2448,7 @@ const stages = [
     card_x: 26.8,
     card_y: 37.8,
     pin_x: 26.8,
-    pin_y: 44.4,
+    pin_y: 45.7,
     border: "blue",
     mapEmojis: ["hazard-zone"]
   },
@@ -2474,7 +2474,7 @@ const stages = [
     card_x: 30.6,
     card_y: 31.7,
     pin_x: 30.4,
-    pin_y: 41.5,
+    pin_y: 42.8,
     border: "blue",
     mapEmojis: ["home-inspection"]
   },
@@ -2604,7 +2604,7 @@ const stages = [
     card_x: 56.1,
     card_y: 11.3,
     pin_x: 56.8,
-    pin_y: 15.0,
+    pin_y: 16.3,
     border: "plain",
     mapEmojis: ["time-sensitive"]
   },
@@ -2634,7 +2634,7 @@ const stages = [
     card_x: 61.5,
     card_y: 4.6,
     pin_x: 61.5,
-    pin_y: 11.5,
+    pin_y: 12.8,
     border: "black",
     mapEmojis: ["meeting"]
   },
@@ -2660,7 +2660,7 @@ const stages = [
     card_x: 66.5,
     card_y: 10.3,
     pin_x: 65.8,
-    pin_y: 16.2,
+    pin_y: 17.5,
     border: "plain",
     mapEmojis: ["keys"]
   },
@@ -2686,7 +2686,7 @@ const stages = [
     card_x: 73.1,
     card_y: 13.8,
     pin_x: 73.0,
-    pin_y: 20.0,
+    pin_y: 21.3,
     border: "purple",
     mapEmojis: ["ongoing"]
   },
@@ -3140,10 +3140,13 @@ const stageIcons = {
         `;
       }
 
-      // Card sits at its own position (offset above the pin), matching the original.
+      // Card is bottom-anchored just ABOVE its pin so it never covers the pin.
+      // Anchor point = pin position minus a gap; card grows upward from there.
+      const anchorX = c.pin_x != null ? c.pin_x : c.card_x;
+      const anchorY = (c.pin_y != null ? c.pin_y : c.card_y) - 4.5;
       return `
         ${pinHtml}
-        <button type="button" class="${cardClass}" style="left:${c.card_x}%;top:${c.card_y}%"
+        <button type="button" class="${cardClass}" style="left:${anchorX}%;top:${anchorY}%"
           data-num="${stage.num}" aria-label="Stage ${dnum}: ${c.name}">
           ${cardInner}
         </button>
