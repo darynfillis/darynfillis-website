@@ -1654,14 +1654,16 @@ body.zoom-open { overflow: hidden; }
 
 <section class="persona-selector-section"><div class="persona-selector-inner"><div class="persona-selector-label">Start Here</div><h2 class="persona-selector-question">I'm a...</h2><div id="personaSelector" class="persona-selector"></div></div></section>
 <section class="journey-intro-v2"><div class="journey-intro-v2-inner"><div id="introEyebrow" class="section-eyebrow">For first-time buyers</div><h2 id="introH2">Your first home, mapped out from end to end.</h2><p id="introSub">Every stage you'll go through, what to expect, how long it takes, and what most mortgage professionals get wrong at each step.</p></div></section>
-<section class="map-section"><div id="mapFrame" class="map-frame"><div class="map-inner" id="mapInner">
-<img class="map-bg" src="/journey-map.jpg" srcset="/journey-map-1x.jpg 1x, /journey-map.jpg 2x" alt="Aerial mountain illustration representing the homebuying journey" draggable="false">
-<svg id="trailSvg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
-<div id="mapMarkers"></div>
-<div class="map-journey-arrow"><svg viewBox="0 0 60 70" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 4 8 Q 40 6 48 46" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M 38 40 L 49 50 L 56 38" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-<div class="map-basecamp"><span class="map-basecamp-top">NEW CADETS</span><span class="map-basecamp-bot">BASECAMP</span></div>
-<div class="map-title-overlay"><h2 id="mapTitle" class="map-title">The homebuyers&rsquo; journey.</h2><p id="mapTagline" class="map-tagline">A step-by-step guide to purchasing a home with financing.</p></div>
-<div class="map-logo"><svg class="nav-neo-color" width="96" height="45" viewBox="0 0 381 179" fill="none" xmlns="http://www.w3.org/2000/svg">
+<section class="map-section">
+  <div id="mapFrame" class="map-frame">
+    <div class="map-inner" id="mapInner">
+      <img class="map-bg" src="/journey-map.jpg" srcset="/journey-map-1x.jpg 1x, /journey-map.jpg 2x" alt="Aerial mountain illustration representing the homebuying journey" draggable="false">
+      <svg id="trailSvg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+      <div id="mapMarkers"></div>
+      <div class="map-journey-arrow"><svg viewBox="0 0 60 70" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 4 8 Q 40 6 48 46" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M 38 40 L 49 50 L 56 38" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="map-basecamp"><span class="map-basecamp-top">NEW CADETS</span><span class="map-basecamp-bot">BASECAMP</span></div>
+      <div class="map-title-overlay"><h2 id="mapTitle" class="map-title">The homebuyers&rsquo; journey.</h2><p id="mapTagline" class="map-tagline">A step-by-step guide to purchasing a home with financing.</p></div>
+      <div class="map-logo"><svg class="nav-neo-color" width="96" height="45" viewBox="0 0 381 179" fill="none" xmlns="http://www.w3.org/2000/svg">
       <!-- powered by better (bottom text) -->
       <path d="M197.245 173.672V171.146C198.148 171.723 199.086 171.795 199.627 171.795C201.179 171.795 202.117 170.929 202.983 168.728L203.922 166.31L196.379 148.374H199.483L205.257 162.99L210.995 148.374H213.99L205.293 169.702C204.138 172.517 202.803 174.177 199.844 174.177C199.014 174.177 198.075 174.069 197.245 173.672Z" fill="#292B29"/>
       <path d="M180.93 163.351V166.527H178.26V141.121H181.038V151.442C182.121 149.385 184.791 147.905 187.462 147.905C192.298 147.905 196.087 151.947 196.087 157.433C196.087 162.918 192.298 166.96 187.462 166.96C184.755 166.96 182.013 165.444 180.93 163.351ZM186.993 164.398C190.421 164.398 193.272 161.475 193.272 157.433C193.272 153.391 190.457 150.468 187.029 150.468C183.889 150.468 180.858 152.994 180.858 157.433C180.858 161.908 183.925 164.398 186.993 164.398Z" fill="#292B29"/>
@@ -1691,9 +1693,10 @@ body.zoom-open { overflow: hidden; }
       <path d="M3.20706 40.1076V87.7262C3.20706 94.538 7.51095 100.606 13.9379 102.864L73.4355 123.729C76.8671 124.935 80.6065 124.935 84.0381 123.729L143.536 102.864C149.969 100.612 154.273 94.5444 154.273 87.7262V40.1076C154.273 33.2958 149.963 27.2216 143.536 24.9703L84.0381 4.11146C80.6065 2.9056 76.8671 2.9056 73.4355 4.11146L13.9379 24.9767C7.51095 27.228 3.20706 33.2958 3.20706 40.1076Z" fill="#444345"/>
       <path d="M63.1536 66.04C62.8137 65.7963 62.3583 65.7963 62.0183 66.04L46.3614 77.3417C45.9252 77.656 45.3159 77.5598 45.0016 77.1236C44.8862 76.9633 44.822 76.7644 44.8156 76.5656V46.3358C44.822 45.797 45.2646 45.3672 45.8034 45.38C46.0022 45.38 46.2011 45.4506 46.3614 45.5661L108.348 90.3175C108.527 90.4458 108.752 90.5164 108.976 90.5164H120.502C121.093 90.5164 121.567 90.0417 121.567 89.4516V33.6742C121.574 33.0841 121.099 32.6031 120.509 32.6031H120.502H108.675C108.45 32.6031 108.232 32.6736 108.046 32.8019L78.291 54.2893C77.9511 54.533 77.4957 54.533 77.1557 54.2893L47.4005 32.8019C47.2209 32.6672 46.9964 32.5967 46.7719 32.6031H34.9506C34.3605 32.6031 33.8795 33.0841 33.8795 33.6742V89.4388C33.8795 90.0289 34.3541 90.5035 34.9442 90.5035H34.9506H46.4769C46.7014 90.5035 46.9194 90.433 47.1054 90.3047L70.8378 73.1661C71.2675 72.8454 71.3509 72.2425 71.0302 71.8127C70.9725 71.7422 70.9083 71.6716 70.8378 71.6203L63.1536 66.04ZM88.1559 60.6329L109.066 45.5468C109.502 45.2325 110.112 45.3287 110.426 45.7649C110.541 45.9253 110.605 46.1241 110.612 46.3229V76.5592C110.605 77.098 110.163 77.5277 109.624 77.5149C109.425 77.5149 109.226 77.4443 109.066 77.3289L88.1559 62.2364C87.7198 61.9157 87.6236 61.2999 87.9443 60.8638C88.002 60.7804 88.0726 60.7098 88.1559 60.6521V60.6329Z" fill="#52C8EF"/>
     </svg></div>
-</div></div>
-<button type="button" id="zoomOutBtn" class="zoom-out-btn" aria-label="Zoom out"><span>← Zoom out</span></button>
-<div id="legend" class="legend"><div class="legend-header"><h3 class="legend-header-title">Legend · Tap for definitions</h3></div><div id="legendItems" class="legend-items"></div></div>
+    </div>
+    <button type="button" id="zoomOutBtn" class="zoom-out-btn" aria-label="Zoom out"><span>← Zoom out</span></button>
+    <div id="legend" class="legend"><div class="legend-header"><h3 class="legend-header-title">Legend · Tap for definitions</h3></div><div id="legendItems" class="legend-items"></div></div>
+  </div>
 </section>
 <section id="stagesCards"></section>
 <div id="zoomOverlay" class="zoom-overlay" role="presentation"></div>
@@ -2604,7 +2607,7 @@ const stages = [
     card_x: 56.1,
     card_y: 11.3,
     pin_x: 56.8,
-    pin_y: 16.3,
+    pin_y: 17.6,
     border: "plain",
     mapEmojis: ["time-sensitive"]
   },
@@ -3140,10 +3143,11 @@ const stageIcons = {
         `;
       }
 
-      // Card is bottom-anchored just ABOVE its pin so it never covers the pin.
-      // Anchor point = pin position minus a gap; card grows upward from there.
+      // Card is bottom-anchored ABOVE the top of its pin with a small gap.
+      // Pin teardrop is ~5% tall (tip at pin_y, top of circle ~pin_y-5).
+      // Card bottom sits at pin_y - 6 so there's a clear gap above the pin's top.
       const anchorX = c.pin_x != null ? c.pin_x : c.card_x;
-      const anchorY = (c.pin_y != null ? c.pin_y : c.card_y) - 4.5;
+      const anchorY = (c.pin_y != null ? c.pin_y : c.card_y) - 6.2;
       return `
         ${pinHtml}
         <button type="button" class="${cardClass}" style="left:${anchorX}%;top:${anchorY}%"

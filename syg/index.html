@@ -725,6 +725,27 @@
         padding: 18px 24px;
       }
     }
+  
+    .csv-import-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 4px;
+      font-family: var(--font);
+      font-weight: 800;
+      font-size: 0.74rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: transparent;
+      color: var(--navy);
+      border: 2px solid var(--navy);
+      line-height: 1;
+    }
+    .csv-import-label:hover { background: var(--navy); color: var(--white); }
+    #csvImport { display: none; }
   </style>
 </head>
 <body>
@@ -744,7 +765,7 @@
   </section>
 
   <main id="app" class="wrap">
-    <div class="version-ribbon">V34 · Login Debug</div>
+    <div class="version-ribbon">V36 · CSV Import + CCI Impact</div>
     <nav class="site-nav" aria-label="Daryn Fillis site navigation">
       <a class="logo" href="https://darynfillis.com">Daryn Fillis</a>
       <div class="nav-links">
@@ -808,6 +829,17 @@
           <div class="split-row"><span>NEO Closed</span><strong id="mClosedNeoUnits">0</strong></div>
         </div>
       </div>
+      <div class="card metric">
+        <div class="label">CCI Impact on SYG</div>
+        <div id="mCciSygIncome" class="value">$0</div>
+        <div class="note">SYG commission from CCI-sourced closed deals</div>
+        <div class="split">
+          <div class="split-row"><span>CCI Leads</span><strong id="mCciLeadCount">0</strong></div>
+          <div class="split-row"><span>Closed CCI</span><strong id="mCciClosedCount">0</strong></div>
+          <div class="split-row"><span>Closed Volume</span><strong id="mCciClosedVolume">$0</strong></div>
+        </div>
+      </div>
+
       <div class="card metric">
         <div class="label">Pipeline Potential</div>
         <div id="mPipelinePurchase" class="value">$0</div>
@@ -887,6 +919,8 @@
         <button id="addDeal">Add deal</button>
         <button id="saveDeals" class="secondary">Save</button>
         <button id="exportCsv" class="secondary">Export CSV</button>
+        <label class="csv-import-label" for="csvImport">Import CSV</label>
+        <input id="csvImport" type="file" accept=".csv,text/csv" />
         <button id="clearFilters" class="secondary">Clear filters</button>
       </div>
 
@@ -1328,6 +1362,10 @@ function renderMetrics(){
 
   const sygLeads = scopedDeals.filter(isSygLead);
   const neoLeads = scopedDeals.filter(isNeoLead);
+  const cciLeads = scopedDeals.filter(d => String(d.leadSource || '').toLowerCase().includes('cci'));
+  const cciClosed = cciLeads.filter(d => String(d.status || '').toLowerCase() === 'closed');
+  const cciClosedVolume = cciClosed.reduce((s,d)=>s+num(d.transactionAmount),0);
+  const cciSygIncome = cciClosed.reduce((s,d)=>s+num(d.sygProfitDollars),0);
 
   const pipelinePurchase = pipeline.reduce((s,d)=>s+num(d.transactionAmount),0);
   const pipelineLoan = pipeline.reduce((s,d)=>s+num(d.loanAmount),0);
@@ -1369,6 +1407,10 @@ function renderMetrics(){
   byId('mTotalLeadCount').textContent = scopedDeals.length;
   byId('mSygLeadCount').textContent = sygLeads.length;
   byId('mNeoLeadCount').textContent = neoLeads.length;
+  if (byId('mCciLeadCount')) byId('mCciLeadCount').textContent = cciLeads.length;
+  if (byId('mCciClosedCount')) byId('mCciClosedCount').textContent = cciClosed.length;
+  if (byId('mCciClosedVolume')) byId('mCciClosedVolume').textContent = money(cciClosedVolume);
+  if (byId('mCciSygIncome')) byId('mCciSygIncome').textContent = money(cciSygIncome);
   byId('mActiveLeadCount').textContent = pipeline.length;
   byId('mDeadLeadCount').textContent = dead.length;
   byId('mClosedLeadCount').textContent = closed.length;
@@ -1410,6 +1452,102 @@ function fillFilters(){
 
 function render(){ header(); renderRows(); renderMetrics(); }
 
+
+function parseCsvLine(line){
+  const result = [];
+  let current = '';
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    const next = line[i + 1];
+    if (char === '"' && inQuotes && next === '"') { current += '"'; i++; }
+    else if (char === '"') { inQuotes = !inQuotes; }
+    else if (char === ',' && !inQuotes) { result.push(current); current = ''; }
+    else { current += char; }
+  }
+  result.push(current);
+  return result;
+}
+
+function normalizeHeader(header){
+  return String(header || '').trim().toLowerCase()
+    .replace(/[$%#]/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+const csvHeaderMap = {
+  'date referred': 'dateReferred',
+  'status': 'status',
+  'current status': 'status',
+  'partnership plus': 'partnershipPlus',
+  'lead source': 'leadSource',
+  'direction': 'referredDirection',
+  'loan cash': 'loanNumber',
+  'loan number cash': 'loanNumber',
+  'loan number': 'loanNumber',
+  'mortgage advisor': 'mortgageAdvisorName',
+  'neo mortgage advisor': 'mortgageAdvisorName',
+  'syg agent': 'sygAgentName',
+  'last name': 'lastName',
+  'first name': 'firstName',
+  'property address': 'propertyAddress',
+  'transaction type': 'transactionType',
+  'lease referral': 'leaseReferral',
+  'lease closed': 'leaseClosed',
+  'lease led to purchase': 'leaseLedToPurchase',
+  'related lease client id': 'relatedLeaseClient',
+  'purchase price transaction': 'transactionAmount',
+  'purchase price lease value': 'transactionAmount',
+  'transaction amount': 'transactionAmount',
+  'purchase price': 'transactionAmount',
+  'ltv': 'ltv',
+  'loan amount': 'loanAmount',
+  'neo commission': 'neoCommissionPercent',
+  'neo commission percent': 'neoCommissionPercent',
+  'neo commission dollars': 'neoCommissionDollars',
+  'mortgage advisor commission': 'mortgageAdvisorCommissionDollars',
+  'syg commission': 'sygProfitPercent',
+  'syg commission percent': 'sygProfitPercent',
+  'syg commission dollars': 'sygProfitDollars',
+  'referral quality': 'referralQuality',
+  'relationship impact': 'relationshipImpact',
+  'notes': 'notes'
+};
+
+function csvValueToFieldValue(key, value){
+  const raw = String(value ?? '').trim();
+  if (['partnershipPlus','leaseReferral','leaseClosed','leaseLedToPurchase'].includes(key)) {
+    return ['true','yes','y','1','x','checked'].includes(raw.toLowerCase());
+  }
+  if (['transactionAmount','ltv','loanAmount','neoCommissionPercent','neoCommissionDollars','mortgageAdvisorCommissionDollars','sygProfitPercent','sygProfitDollars'].includes(key)) {
+    return raw.replace(/[$,%]/g, '');
+  }
+  return raw;
+}
+
+function importCsvText(csvText){
+  const lines = csvText.split(/\r?\n/).filter(line => line.trim());
+  if (lines.length < 2) throw new Error('CSV must include a header row and at least one data row.');
+  const headers = parseCsvLine(lines[0]).map(h => csvHeaderMap[normalizeHeader(h)] || null);
+  const imported = [];
+  for (let i = 1; i < lines.length; i++) {
+    const values = parseCsvLine(lines[i]);
+    const deal = defaultDeal();
+    headers.forEach((key, index) => {
+      if (!key) return;
+      deal[key] = csvValueToFieldValue(key, values[index]);
+    });
+    deal.id = uuid();
+    calculateDeal(deal);
+    imported.push(deal);
+  }
+  deals = [...imported, ...deals];
+  render();
+  setStatus(`${imported.length} deals imported. Review, then click Save.`);
+}
+
+
 function toCsv(){
   const rows = [fields.map(f=>f.label)];
   filteredDeals().forEach(d => rows.push(fields.map(f => {
@@ -1432,6 +1570,19 @@ function downloadCsv(){
 byId('addDeal').onclick = () => { deals.unshift(defaultDeal()); render(); setStatus('Unsaved changes.'); };
 byId('saveDeals').onclick = () => saveDeals().catch(e => setStatus(e.message));
 byId('exportCsv').onclick = downloadCsv;
+if (byId('csvImport')) {
+  byId('csvImport').addEventListener('change', async (event) => {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+    try {
+      const csvText = await file.text();
+      importCsvText(csvText);
+      event.target.value = '';
+    } catch (error) {
+      setStatus(error && error.message ? error.message : 'CSV import failed.');
+    }
+  });
+}
 byId('clearFilters').onclick = () => { ['q','fStatus','fType','fLead','fClosed'].forEach(id=>byId(id).value=''); render(); };
 ['q','fStatus','fType','fLead','fClosed'].forEach(id => byId(id).addEventListener('input', renderRows));
 ['dashQ','dashSygAgent','dashMortgageAdvisor','dashLeadSource','dashStatus'].forEach(id => {
