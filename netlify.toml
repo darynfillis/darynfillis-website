@@ -3,7 +3,7 @@
   functions = "netlify/functions"
 
 [[headers]]
-  for = "/SYG.html"
+  for = "/syg/*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
     Cache-Control = "no-store"

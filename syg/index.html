@@ -744,7 +744,7 @@
   </section>
 
   <main id="app" class="wrap">
-    <div class="version-ribbon">V33 · Lead Summary</div>
+    <div class="version-ribbon">V34 · Login Debug</div>
     <nav class="site-nav" aria-label="Daryn Fillis site navigation">
       <a class="logo" href="https://darynfillis.com">Daryn Fillis</a>
       <div class="nav-links">
@@ -1015,8 +1015,17 @@ async function loadDeals(){
     render();
     return;
   }
+
   const res = await fetch(API_URL, { headers:{'x-syg-password':password} });
-  if (!res.ok) throw new Error('Unable to load deals');
+  if (!res.ok) {
+    let detail = '';
+    try { detail = await res.text(); } catch(e) {}
+    if (res.status === 401) throw new Error('Incorrect password. Check SYG_PASSWORD in Netlify and retype it exactly.');
+    if (res.status === 404) throw new Error('Netlify Function not found. Check netlify/functions/deals.js and netlify.toml at repo root.');
+    if (res.status === 500) throw new Error('Server error. Usually missing SYG_PASSWORD or Netlify Blobs setup. Details: ' + detail);
+    throw new Error('Login failed. HTTP ' + res.status + '. ' + detail);
+  }
+
   const data = await res.json();
   deals = Array.isArray(data) ? data : [];
   byId('modePill').textContent = 'Production';
@@ -1434,14 +1443,17 @@ byId('clearFilters').onclick = () => { ['q','fStatus','fType','fLead','fClosed']
 byId('loginForm').onsubmit = async (e) => {
   e.preventDefault();
   byId('loginError').textContent = '';
-  password = byId('passwordInput').value;
+  password = byId('passwordInput').value.trim();
+
   try {
     await loadDeals();
     sessionStorage.setItem('sygPassword', password);
     byId('login').classList.add('hidden');
     byId('app').classList.remove('hidden');
   } catch(err) {
-    byId('loginError').textContent = 'Incorrect password or Netlify Function is not deployed.';
+    sessionStorage.removeItem('sygPassword');
+    const message = err && err.message ? err.message : 'Unknown login error';
+    byId('loginError').textContent = message;
   }
 };
 
@@ -1451,11 +1463,13 @@ if (IS_PRODUCTION_HOST && !password) {
   byId('app').classList.add('hidden');
   byId('login').classList.remove('hidden');
 } else {
-  loadDeals().catch(() => {
+  loadDeals().catch((err) => {
     if (IS_PRODUCTION_HOST) {
       byId('app').classList.add('hidden');
       byId('login').classList.remove('hidden');
       sessionStorage.removeItem('sygPassword');
+      const loginError = byId('loginError');
+      if (loginError && err && err.message) loginError.textContent = err.message;
     }
   });
 }

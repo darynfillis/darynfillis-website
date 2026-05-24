@@ -1,16 +1,18 @@
-# darynfillis-site
+# SYG V34 Login Debug
 
-## SYG Partnership Ledger
+Deploy this version if you cannot get past the password page.
 
-The SYG app lives in:
+Changes:
+- Password entry is trimmed to remove accidental spaces.
+- Login page now shows exact error:
+  - 401 = wrong password
+  - 404 = function not deployed
+  - 500 = missing SYG_PASSWORD or server setup issue
+- Netlify files are at repo root.
+- Main app file is /syg/index.html.
 
-/syg/
-
-Main entry:
-- /syg/index.html
-
-Recommended URL:
-https://darynfillis.com/syg/
-
-Netlify environment variable required:
-SYG_PASSWORD
+After deploy, test:
+1. https://darynfillis.com/.netlify/functions/deals
+   Expected without password: Incorrect/Unauthorized response, not 404.
+2. https://darynfillis.com/syg/
+   Enter exact SYG_PASSWORD.

@@ -2,7 +2,7 @@
 # SYG Partnership Ledger V33
 
 Visible marker:
-V33 · Lead Summary w/password crushittogether
+V33 · Lead Summary
 
 Changes:
 - Expanded Lead Partnership Performance card.
