@@ -1324,6 +1324,9 @@ html{-webkit-text-size-adjust:100%;}
   background: var(--surface);
   border-bottom: 1px solid var(--rule);
   padding: clamp(10px,1.6vw,16px) clamp(20px,4vw,48px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
 .journey-bar-inner {
   max-width: 1400px;
@@ -1486,12 +1489,15 @@ html{-webkit-text-size-adjust:100%;}
   background: rgba(247,249,252,0.95);
   border: 0.07cqw solid var(--rule);
   border-radius: 999px;
-  padding: 0.36cqw 1.0cqw;
-  display: flex; align-items: center; gap: 0.36cqw;
+  padding: 0.2cqw 0.6cqw;
+  flex-direction: row;
+  display: flex; align-items: center; gap: 0.25cqw;
+  white-space: nowrap;
+  max-width: none;
   box-shadow: 0 0.14cqw 0.57cqw rgba(0,0,0,0.18);
 }
-.mapcard-pill-emoji { font-size: 1.0cqw; }
-.mapcard-pill-name { font-weight: 700; font-size: 0.92cqw; color: var(--navy); }
+.mapcard-pill-emoji { font-size: 0.85cqw; line-height: 1; }
+.mapcard-pill-name { font-weight: 700; font-size: 0.8cqw; color: var(--navy); white-space: nowrap; }
 
 /* When zoomed in (2x), counter-scale cards so they don't become huge.
    Keeps cards readable but proportionate when the map is magnified. */
@@ -1511,7 +1517,7 @@ html{-webkit-text-size-adjust:100%;}
 /* NEW CADETS BASECAMP label (dark navy pill near the village) */
 .map-basecamp {
   position: absolute;
-  left: 42.5%;
+  left: 44.5%;
   top: 70.5%;
   transform: translate(-50%, -50%);
   z-index: 5;
@@ -1537,10 +1543,9 @@ html{-webkit-text-size-adjust:100%;}
   z-index: 5;
   pointer-events: none;
   color: #3bb5ef;
-  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.3));
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.55)) drop-shadow(0 0 2px rgba(0,0,0,0.4));
 }
 .map-journey-arrow svg { width: 100%; height: auto; display: block; }
-.map-inner[style*="scale"] .map-journey-arrow { opacity: 0; }
 
 /* ── ZOOM OUT BUTTON ── */
 .zoom-out-btn { position: absolute; bottom: clamp(18px,3vw,30px); left: clamp(18px,3vw,30px); z-index: 30; background: rgba(10,37,64,0.95); color: var(--white); border: 1px solid rgba(91,203,245,0.5); border-radius: 999px; padding: 10px 20px; font-family: inherit; font-weight: 700; font-size: 0.85rem; cursor: pointer; opacity: 0; visibility: hidden; transform: translateY(8px); transition: all 0.3s ease; display: flex; align-items: center; gap: 6px; backdrop-filter: blur(6px); box-shadow: 0 4px 14px rgba(0,0,0,0.3); }
@@ -1734,7 +1739,7 @@ body.zoom-open { overflow: hidden; }
       <div id="mapMarkers"></div>
       <div class="map-journey-arrow"><svg viewBox="0 0 60 70" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 4 8 Q 40 6 48 46" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M 38 40 L 49 50 L 56 38" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="map-basecamp"><span class="map-basecamp-top">NEW CADETS</span><span class="map-basecamp-bot">BASECAMP</span></div>
-      <div class="map-title-overlay"><h2 id="mapTitle" class="map-title">The homebuyers&rsquo; journey.</h2><p id="mapTagline" class="map-tagline">A step-by-step guide to purchasing a home with financing.</p></div>
+      <div class="map-title-overlay"><h2 id="mapTitle" class="map-title">The homebuyers&rsquo; <span style="color:var(--blue)">journey.</span></h2><p id="mapTagline" class="map-tagline">A step-by-step guide to purchasing a home with financing.</p></div>
       <div class="map-logo"><svg class="nav-neo-color" width="96" height="45" viewBox="0 0 381 179" fill="none" xmlns="http://www.w3.org/2000/svg">
       <!-- powered by better (bottom text) -->
       <path d="M197.245 173.672V171.146C198.148 171.723 199.086 171.795 199.627 171.795C201.179 171.795 202.117 170.929 202.983 168.728L203.922 166.31L196.379 148.374H199.483L205.257 162.99L210.995 148.374H213.99L205.293 169.702C204.138 172.517 202.803 174.177 199.844 174.177C199.014 174.177 198.075 174.069 197.245 173.672Z" fill="#292B29"/>
@@ -3042,7 +3047,7 @@ const stageIcons = {
     },
     'refi': {
       title: "The refinance journey.",
-      tagline: "Refinancing in LA, honestly.",
+      tagline: "A straight answer on whether refinancing is worth it for you.",
       eyebrow: 'For refinancing',
       h2: "Your refinance, mapped out honestly.",
       sub: "Every stage of a refinance. If a refi doesn't make sense for your situation, I'll tell you. Most mortgage professionals won't.",
@@ -3091,8 +3096,8 @@ const stageIcons = {
     const i = PERSONA_INTROS[state.persona]; if (!i) return;
     const t = $('#mapTitle');
     if (t) {
-      // Color ONLY the word "journey" blue; everything else (incl. "investor's") white.
-      t.innerHTML = i.title.replace(/\bjourney\b/i, '<span style="color:var(--blue)">$&</span>');
+      // Color the word "journey" AND its trailing period blue; rest stays white.
+      t.innerHTML = i.title.replace(/(journey)(\.?)/i, '<span style="color:var(--blue)">$1$2</span>');
     }
     const tg = $('#mapTagline'); if (tg) tg.textContent = i.tagline;
   }
