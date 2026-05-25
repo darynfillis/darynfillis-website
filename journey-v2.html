@@ -1472,12 +1472,13 @@ html{-webkit-text-size-adjust:100%;}
 .map-basecamp-bot { display: block; font-weight: 800; font-size: 0.72rem; letter-spacing: 0.06em; color: var(--blue); line-height: 1.1; }
 .map-inner[style*="scale"] .map-basecamp { transform: translate(-50%,-50%) scale(0.6); }
 
-/* Curved "journey continues" arrow — sits just right of the final card, close to it */
+/* Curved "journey continues" arrow — positioned to match the artwork:
+   detected at center (84.6, 21.3), just right of the Journey Continues card. */
 .map-journey-arrow {
   position: absolute;
-  left: 84.5%;
-  top: 24%;
-  width: 4%;
+  left: 83.0%;
+  top: 18.5%;
+  width: 3.6%;
   z-index: 5;
   pointer-events: none;
   color: #3bb5ef;
@@ -2315,8 +2316,8 @@ const stages = [
     pin_y: null,
     border: "pill",
     mapEmojis: [],
-    cardOffsetX: 0.0,
-    cardOffsetY: 4.0
+    cardOffsetX: -0.1,
+    cardOffsetY: 8.9
   },
   {
     num: 5,
@@ -2761,7 +2762,7 @@ const stages = [
     border: "navy",
     mapEmojis: ["home-inspection"],
     cardOffsetX: 0.0,
-    cardOffsetY: 4.5
+    cardOffsetY: 10.5
   }
 ];
 
