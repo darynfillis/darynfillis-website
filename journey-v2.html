@@ -1340,9 +1340,11 @@ html{-webkit-text-size-adjust:100%;}
 
 /* ── TRAIL SVG ── */
 #trailSvg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+#connectorSvg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; }
+.card-connector { stroke: rgba(255,255,255,0.85); stroke-width: 0.25; stroke-dasharray: 0.4 0.5; stroke-linecap: round; }
 
 /* ── MARKERS LAYER ── */
-#mapMarkers { position: absolute; inset: 0; z-index: 3; }
+#mapMarkers { position: absolute; inset: 0; z-index: 4; }
 
 /* ── TEARDROP PINS ── */
 .map-pin {
@@ -1470,12 +1472,12 @@ html{-webkit-text-size-adjust:100%;}
 .map-basecamp-bot { display: block; font-weight: 800; font-size: 0.72rem; letter-spacing: 0.06em; color: var(--blue); line-height: 1.1; }
 .map-inner[style*="scale"] .map-basecamp { transform: translate(-50%,-50%) scale(0.6); }
 
-/* Curved "journey continues" arrow — sits up-and-right of the final card */
+/* Curved "journey continues" arrow — sits just right of the final card, close to it */
 .map-journey-arrow {
   position: absolute;
-  left: 88%;
-  top: 14%;
-  width: 4.5%;
+  left: 84.5%;
+  top: 24%;
+  width: 4%;
   z-index: 5;
   pointer-events: none;
   color: #3bb5ef;
@@ -1659,6 +1661,7 @@ body.zoom-open { overflow: hidden; }
     <div class="map-inner" id="mapInner">
       <img class="map-bg" src="/journey-map.jpg" srcset="/journey-map-1x.jpg 1x, /journey-map.jpg 2x" alt="Aerial mountain illustration representing the homebuying journey" draggable="false">
       <svg id="trailSvg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+      <svg id="connectorSvg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
       <div id="mapMarkers"></div>
       <div class="map-journey-arrow"><svg viewBox="0 0 60 70" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 4 8 Q 40 6 48 46" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M 38 40 L 49 50 L 56 38" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="map-basecamp"><span class="map-basecamp-top">NEW CADETS</span><span class="map-basecamp-bot">BASECAMP</span></div>
@@ -2212,7 +2215,9 @@ const stages = [
     pin_x: 34.5,
     pin_y: 79.9,
     border: "blue",
-    mapEmojis: ["credit-report", "meeting", "application", "doc-submission", "home-inspection"]
+    mapEmojis: ["credit-report", "meeting", "application", "doc-submission", "home-inspection"],
+    cardOffsetX: 0.0,
+    cardOffsetY: 0.0
   },
   {
     num: 2,
@@ -2245,7 +2250,9 @@ const stages = [
     pin_x: 18.4,
     pin_y: 90.8,
     border: "blue",
-    mapEmojis: ["credit-report", "meeting", "application", "doc-submission", "home-inspection"]
+    mapEmojis: ["credit-report", "meeting", "application", "doc-submission", "home-inspection"],
+    cardOffsetX: 0.0,
+    cardOffsetY: 0.0
   },
   {
     num: 3,
@@ -2274,7 +2281,9 @@ const stages = [
     pin_x: 7.7,
     pin_y: 85.1,
     border: "blue",
-    mapEmojis: ["meeting", "home-inspection"]
+    mapEmojis: ["meeting", "home-inspection"],
+    cardOffsetX: 0.0,
+    cardOffsetY: 0.0
   },
   {
     num: 4,
@@ -2305,7 +2314,9 @@ const stages = [
     pin_x: null,
     pin_y: null,
     border: "pill",
-    mapEmojis: []
+    mapEmojis: [],
+    cardOffsetX: 0.0,
+    cardOffsetY: 4.0
   },
   {
     num: 5,
@@ -2331,7 +2342,9 @@ const stages = [
     pin_x: 5.4,
     pin_y: 63.3,
     border: "plain",
-    mapEmojis: ["application", "meeting"]
+    mapEmojis: ["application", "meeting"],
+    cardOffsetX: 0.0,
+    cardOffsetY: 0.0
   },
   {
     num: 6,
@@ -2357,7 +2370,9 @@ const stages = [
     pin_x: 11.1,
     pin_y: 54.8,
     border: "plain",
-    mapEmojis: ["time-sensitive", "funds-escrow"]
+    mapEmojis: ["time-sensitive", "funds-escrow"],
+    cardOffsetX: -2.0,
+    cardOffsetY: 0.0
   },
   {
     num: 7,
@@ -2387,7 +2402,9 @@ const stages = [
     pin_x: 15.8,
     pin_y: 55.7,
     border: "blue",
-    mapEmojis: ["time-sensitive", "home-inspection"]
+    mapEmojis: ["time-sensitive", "home-inspection"],
+    cardOffsetX: 0.0,
+    cardOffsetY: 0.0
   },
   {
     num: 8,
@@ -2420,7 +2437,9 @@ const stages = [
     pin_x: 21.6,
     pin_y: 52.8,
     border: "blue",
-    mapEmojis: ["time-sensitive", "termite", "home-inspection", "hazard-zone"]
+    mapEmojis: ["time-sensitive", "termite", "home-inspection", "hazard-zone"],
+    cardOffsetX: 0.0,
+    cardOffsetY: 0.0
   },
   {
     num: 9,
@@ -2453,7 +2472,9 @@ const stages = [
     pin_x: 26.8,
     pin_y: 45.7,
     border: "blue",
-    mapEmojis: ["hazard-zone"]
+    mapEmojis: ["hazard-zone"],
+    cardOffsetX: 0.0,
+    cardOffsetY: 0.0
   },
   {
     num: 10,
@@ -2479,7 +2500,9 @@ const stages = [
     pin_x: 30.4,
     pin_y: 42.8,
     border: "blue",
-    mapEmojis: ["home-inspection"]
+    mapEmojis: ["home-inspection"],
+    cardOffsetX: 0.0,
+    cardOffsetY: -1.0
   },
   {
     num: 11,
@@ -2505,7 +2528,9 @@ const stages = [
     pin_x: 36.3,
     pin_y: 36.1,
     border: "blue",
-    mapEmojis: ["time-sensitive"]
+    mapEmojis: ["time-sensitive"],
+    cardOffsetX: 0.0,
+    cardOffsetY: 0.0
   },
   {
     num: 12,
@@ -2531,7 +2556,9 @@ const stages = [
     pin_x: 42.6,
     pin_y: 33.6,
     border: "blue",
-    mapEmojis: ["loan-docs"]
+    mapEmojis: ["loan-docs"],
+    cardOffsetX: 0.0,
+    cardOffsetY: 0.0
   },
   {
     num: 13,
@@ -2557,7 +2584,9 @@ const stages = [
     pin_x: 48.8,
     pin_y: 27.7,
     border: "blue",
-    mapEmojis: ["sign-docs"]
+    mapEmojis: ["sign-docs"],
+    cardOffsetX: 0.0,
+    cardOffsetY: 0.0
   },
   {
     num: 14,
@@ -2583,7 +2612,9 @@ const stages = [
     pin_x: 52.4,
     pin_y: 23.5,
     border: "blue",
-    mapEmojis: ["funds-escrow"]
+    mapEmojis: ["funds-escrow"],
+    cardOffsetX: 0.0,
+    cardOffsetY: 0.0
   },
   {
     num: 15,
@@ -2609,7 +2640,9 @@ const stages = [
     pin_x: 56.8,
     pin_y: 17.6,
     border: "plain",
-    mapEmojis: ["time-sensitive"]
+    mapEmojis: ["time-sensitive"],
+    cardOffsetX: 0.0,
+    cardOffsetY: 0.0
   },
   {
     num: 16,
@@ -2639,7 +2672,9 @@ const stages = [
     pin_x: 61.5,
     pin_y: 12.8,
     border: "black",
-    mapEmojis: ["meeting"]
+    mapEmojis: ["meeting"],
+    cardOffsetX: 0.0,
+    cardOffsetY: 0.0
   },
   {
     num: 17,
@@ -2665,7 +2700,9 @@ const stages = [
     pin_x: 65.8,
     pin_y: 17.5,
     border: "plain",
-    mapEmojis: ["keys"]
+    mapEmojis: ["keys"],
+    cardOffsetX: 0.0,
+    cardOffsetY: 0.0
   },
   {
     num: 18,
@@ -2691,7 +2728,9 @@ const stages = [
     pin_x: 73.0,
     pin_y: 21.3,
     border: "purple",
-    mapEmojis: ["ongoing"]
+    mapEmojis: ["ongoing"],
+    cardOffsetX: 0.0,
+    cardOffsetY: 0.0
   },
   {
     num: 19,
@@ -2720,7 +2759,9 @@ const stages = [
     pin_x: null,
     pin_y: null,
     border: "navy",
-    mapEmojis: ["home-inspection"]
+    mapEmojis: ["home-inspection"],
+    cardOffsetX: 0.0,
+    cardOffsetY: 4.5
   }
 ];
 
@@ -2876,6 +2917,7 @@ const stageIcons = {
       pin_x: stage.pin_x, pin_y: stage.pin_y,
       border: stage.border, mapEmojis: stage.mapEmojis || [],
       party: stage.party || 'neutral',
+      cardOffsetX: stage.cardOffsetX || 0, cardOffsetY: stage.cardOffsetY || 0,
       summary: (v && v.summary) || stage.summary,
       what: (v && v.what) || stage.what,
       time: (v && v.time) || stage.time,
@@ -3143,11 +3185,15 @@ const stageIcons = {
         `;
       }
 
-      // Card is bottom-anchored ABOVE the top of its pin with a small gap.
-      // Pin teardrop is ~5% tall (tip at pin_y, top of circle ~pin_y-5).
-      // Card bottom sits at pin_y - 6 so there's a clear gap above the pin's top.
-      const anchorX = c.pin_x != null ? c.pin_x : c.card_x;
-      const anchorY = (c.pin_y != null ? c.pin_y : c.card_y) - 6.2;
+      // Card is bottom-anchored above its pin, then shifted by a per-card offset
+      // so crowded cards can spread apart. A thin connector line (rendered in the
+      // connector SVG) ties the card back to its pin. Gap is zoom-aware.
+      const pinX = c.pin_x != null ? c.pin_x : c.card_x;
+      const pinY = c.pin_y != null ? c.pin_y : c.card_y;
+      const gap = state.isZoomed ? 3.0 : 7.6;
+      const anchorX = pinX + (c.cardOffsetX || 0);
+      const anchorY = pinY - gap + (c.cardOffsetY || 0);
+
       return `
         ${pinHtml}
         <button type="button" class="${cardClass}" style="left:${anchorX}%;top:${anchorY}%"
@@ -3159,6 +3205,28 @@ const stageIcons = {
 
     // Wire card clicks
     layer.addEventListener('click', onMarkerClick);
+
+    // Render connector lines in a dedicated SVG behind the cards
+    renderConnectors(visible);
+  }
+
+  function renderConnectors(visible) {
+    let svg = $('#connectorSvg');
+    if (!svg) return;
+    const gap = state.isZoomed ? 3.0 : 7.6;
+    svg.innerHTML = visible.map(stage => {
+      const c = getStageContent(stage, state.persona);
+      if (c.pin_x == null || c.pin_y == null) return '';
+      const pinX = c.pin_x, pinY = c.pin_y;
+      const anchorX = pinX + (c.cardOffsetX || 0);
+      const anchorY = pinY - gap + (c.cardOffsetY || 0);
+      const pinTopY = pinY - 4.8;
+      // Only draw a visible connector if the card is meaningfully offset sideways,
+      // otherwise the card sits directly above and no line is needed.
+      const dx = Math.abs(anchorX - pinX);
+      if (dx < 0.8) return '';
+      return `<line class="card-connector" x1="${anchorX}" y1="${anchorY}" x2="${pinX}" y2="${pinTopY}"></line>`;
+    }).join('');
   }
 
   let markerClickBound = false;
@@ -3234,8 +3302,10 @@ const stageIcons = {
       const s = stages.find(x => x.num === state.pinnedStageNum);
       if (!s) return;
       const c = getStageContent(s, state.persona);
-      // Zoom toward the card's position
-      inner.style.transformOrigin = `${c.card_x}% ${c.card_y}%`;
+      // Zoom toward the pin (the focal point); the card sits just above it.
+      const zx = c.pin_x != null ? c.pin_x : c.card_x;
+      const zy = c.pin_y != null ? c.pin_y : c.card_y;
+      inner.style.transformOrigin = `${zx}% ${zy}%`;
       inner.style.transform = `scale(${state.zoomScale})`;
       if (btn) btn.classList.add('is-visible');
     } else {
