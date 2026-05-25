@@ -1319,48 +1319,53 @@ html{-webkit-text-size-adjust:100%;}
 .persona-selector-inner { max-width: 1080px; margin: 0 auto; }
 .persona-selector-label { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--blue-dark); margin-bottom: 8px; text-align: center; }
 .persona-selector-question { font-weight: 800; font-size: clamp(1rem,1.6vw,1.25rem); color: var(--navy); letter-spacing: -0.02em; line-height: 1.2; margin: 0 0 12px 0; text-align: center; }
-/* ── COMBINED THIN BAR: intro text + persona chooser in one strip ── */
+/* ── STICKY BAR: persona chooser on top row, intro text below ── */
 .journey-bar {
   background: var(--surface);
   border-bottom: 1px solid var(--rule);
   padding: clamp(10px,1.6vw,16px) clamp(20px,4vw,48px);
+  margin-top: 70px;
   position: sticky;
-  top: 0;
-  z-index: 50;
+  top: 70px;
+  z-index: 150;
 }
 .journey-bar-inner {
   max-width: 1400px;
   margin: 0 auto;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: clamp(16px,3vw,40px);
+  gap: 8px;
+}
+/* Row 1: I'M A... + pills, always centered and consistent across personas */
+.journey-bar-chooser {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
   flex-wrap: wrap;
 }
-.journey-bar-text { flex: 1 1 auto; min-width: 240px; }
-.journey-bar-eyebrow {
-  display: inline-block; font-size: 0.6rem; font-weight: 800;
-  letter-spacing: 0.16em; text-transform: uppercase; color: var(--blue-dark);
-  margin-bottom: 3px;
-}
-.journey-bar-title {
-  font-weight: 800; font-size: clamp(1.05rem,1.7vw,1.4rem); color: var(--navy);
-  letter-spacing: -0.02em; line-height: 1.15; margin: 0;
-}
-.journey-bar-chooser { flex: 0 0 auto; display: flex; align-items: center; gap: 10px; }
 .journey-bar-chooser-label {
-  font-size: 0.6rem; font-weight: 800; letter-spacing: 0.14em;
+  font-size: 0.62rem; font-weight: 800; letter-spacing: 0.14em;
   text-transform: uppercase; color: var(--muted); white-space: nowrap;
 }
-.persona-selector { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+.persona-selector { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
 .persona-btn { background: var(--white); color: var(--navy); border: 1.5px solid var(--rule); border-radius: 999px; padding: 7px 16px; font-family: inherit; font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: all 0.18s ease; white-space: nowrap; }
 .persona-btn:hover { border-color: var(--blue); color: var(--blue-dark); transform: translateY(-1px); }
 .persona-btn.is-active { background: var(--navy); border-color: var(--navy); color: var(--white); box-shadow: 0 4px 14px rgba(10,37,64,0.18); }
+/* Row 2: intro text, centered below the chooser */
+.journey-bar-text { text-align: center; }
+.journey-bar-eyebrow {
+  display: inline-block; font-size: 0.6rem; font-weight: 800;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--blue-dark);
+  margin-bottom: 1px;
+}
+.journey-bar-title {
+  font-weight: 800; font-size: clamp(1rem,1.6vw,1.35rem); color: var(--navy);
+  letter-spacing: -0.02em; line-height: 1.15; margin: 0;
+}
 @media (max-width: 720px) {
-  .journey-bar-inner { flex-direction: column; align-items: stretch; gap: 10px; }
-  .journey-bar-text { text-align: center; }
-  .journey-bar-chooser { flex-direction: column; align-items: center; gap: 6px; }
-  .persona-selector { justify-content: center; }
+  .journey-bar-chooser { flex-direction: column; gap: 6px; }
 }
 
 /* ── INTRO ── */
@@ -1377,7 +1382,7 @@ html{-webkit-text-size-adjust:100%;}
    persona selector and intro above it, so the full image is visible without
    scrolling. Width derives from the height cap via the 16:9 ratio. */
 .map-frame {
-  max-width: min(1400px, calc((100vh - 180px) * 1.7778));
+  max-width: min(1400px, calc((100vh - 230px) * 1.7778));
   margin: 0 auto;
   position: relative;
   background: var(--navy);
@@ -1537,9 +1542,13 @@ html{-webkit-text-size-adjust:100%;}
    detected at center (84.6, 21.3), just right of the Journey Continues card. */
 .map-journey-arrow {
   position: absolute;
-  left: 83.0%;
-  top: 18.5%;
+  /* Top-center of the arrow is pinned to a fixed map coordinate just right of
+     the Journey Continues card. The arrow scales WITH the map (no counter-scale),
+     so it stays locked to this point at 1x and at every zoom level. */
+  left: 84.6%;
+  top: 18.0%;
   width: 3.6%;
+  transform: translateX(-50%);
   z-index: 5;
   pointer-events: none;
   color: #3bb5ef;
@@ -1719,14 +1728,14 @@ body.zoom-open { overflow: hidden; }
 
 <section class="journey-bar">
   <div class="journey-bar-inner">
+    <div class="journey-bar-chooser">
+      <span class="journey-bar-chooser-label">I&rsquo;m a&hellip;</span>
+      <div id="personaSelector" class="persona-selector"></div>
+    </div>
     <div class="journey-bar-text">
       <span id="introEyebrow" class="journey-bar-eyebrow">For first-time buyers</span>
       <h1 id="introH2" class="journey-bar-title">Your first home, mapped out from end to end.</h1>
       <span id="introSub" hidden></span>
-    </div>
-    <div class="journey-bar-chooser">
-      <span class="journey-bar-chooser-label">I&rsquo;m a&hellip;</span>
-      <div id="personaSelector" class="persona-selector"></div>
     </div>
   </div>
 </section>
@@ -2575,8 +2584,8 @@ const stages = [
     pin_y: 42.8,
     border: "blue",
     mapEmojis: ["home-inspection"],
-    cardOffsetX: 0.0,
-    cardOffsetY: -1.0
+    cardOffsetX: -0.8,
+    cardOffsetY: -2.5
   },
   {
     num: 11,
