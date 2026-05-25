@@ -1663,10 +1663,61 @@ body.zoom-open { overflow: hidden; }
 .zoom-link { display: block; margin-top: 18px; font-size: 0.92rem; color: var(--blue); font-weight: 700; text-decoration: none; text-align: center; padding: 12px; border: 1px solid var(--rule); border-radius: 8px; transition: all 0.15s ease; }
 .zoom-link:hover { border-color: var(--blue); background: var(--surface); }
 
+/* ── PREV / NEXT NAV inside an opened card ── */
+.zoom-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid var(--rule);
+}
+.zoom-nav-btn {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--rule);
+  background: var(--white);
+  color: var(--navy);
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+.zoom-nav-btn span[aria-hidden="true"] { font-size: 1.2rem; line-height: 1; color: var(--blue); flex-shrink: 0; }
+.zoom-nav-next { flex-direction: row; justify-content: flex-end; text-align: right; }
+.zoom-nav-btn:hover:not(.is-disabled) { border-color: var(--blue); background: var(--surface); transform: translateY(-1px); }
+.zoom-nav-label { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.zoom-nav-kicker { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.zoom-nav-name { font-size: 0.9rem; font-weight: 700; color: var(--navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.zoom-nav-btn.is-disabled { opacity: 0.4; cursor: default; }
+.zoom-nav-btn.is-disabled span[aria-hidden="true"] { color: var(--muted); }
+.zoom-nav-counter {
+  flex: 0 0 auto;
+  align-self: center;
+  padding: 0 14px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  text-align: center;
+}
+
 @media (max-width: 600px) {
   .zoom-overlay { padding: 12px; }
   .zoom-panel { padding: 24px 22px; }
   .zoom-section-warning, .zoom-section-example { margin-left: 0; margin-right: 0; }
+  .zoom-nav { flex-direction: column; }
+  .zoom-nav-next { flex-direction: row; justify-content: flex-start; text-align: left; }
+  .zoom-nav-next .zoom-nav-label { order: 2; }
+  .zoom-nav-counter { order: 0; padding: 4px 0; }
 }
 
 </style></head><body>
@@ -3587,7 +3638,11 @@ const stageIcons = {
     if (!stage) return;
     const c = getStageContent(stage, state.persona);
     const dnum = getDisplayNum(stage, state.persona);
-    const total = visibleStages(state.persona).length;
+    const visible = visibleStages(state.persona);
+    const total = visible.length;
+    const idx = visible.findIndex(s => s.num === num);
+    const prevStage = idx > 0 ? visible[idx - 1] : null;
+    const nextStage = idx < visible.length - 1 ? visible[idx + 1] : null;
     const overlay = $('#zoomOverlay');
     if (!overlay) return;
     hideZoomHint();
@@ -3596,11 +3651,17 @@ const stageIcons = {
     const exSec = c.realExample ? `<div class="zoom-section zoom-section-example"><div class="zoom-section-eyebrow zoom-section-eyebrow-example">A real client example</div><p>${c.realExample}</p></div>` : '';
     const ctaSec = c.cta ? `<div class="zoom-cta"><p class="zoom-cta-text">${c.cta.text}</p><a href="${c.cta.href}" class="btn btn-blue btn-wobble">Book a 15-minute call</a></div>` : '';
 
+    const prevBtn = prevStage
+      ? `<button type="button" class="zoom-nav-btn zoom-nav-prev" data-num="${prevStage.num}"><span aria-hidden="true">←</span><span class="zoom-nav-label"><span class="zoom-nav-kicker">Previous</span><span class="zoom-nav-name">${prevStage.name}</span></span></button>`
+      : `<span class="zoom-nav-btn is-disabled" aria-hidden="true"><span>←</span><span class="zoom-nav-label"><span class="zoom-nav-kicker">Start of journey</span></span></span>`;
+    const nextBtn = nextStage
+      ? `<button type="button" class="zoom-nav-btn zoom-nav-next" data-num="${nextStage.num}"><span class="zoom-nav-label"><span class="zoom-nav-kicker">Next</span><span class="zoom-nav-name">${nextStage.name}</span></span><span aria-hidden="true">→</span></button>`
+      : `<span class="zoom-nav-btn is-disabled" aria-hidden="true"><span class="zoom-nav-label"><span class="zoom-nav-kicker">End of journey</span></span><span>→</span></span>`;
+
     overlay.innerHTML = `
       <div class="zoom-panel" role="dialog" aria-labelledby="zoomTitle" aria-modal="true">
         <button type="button" class="zoom-close" aria-label="Close" id="zoomClose">×</button>
         <div class="zoom-meta">
-          <span class="zoom-stage-num">Stage ${dnum} of ${total}</span>
           <span class="zoom-stage-time">⏱ ${c.time}</span>
         </div>
         <h2 id="zoomTitle" class="zoom-title">${c.name}</h2>
@@ -3609,12 +3670,30 @@ const stageIcons = {
         <div class="zoom-section"><div class="zoom-section-eyebrow">What Happens</div><p>${c.what}</p><p class="zoom-expect"><strong>What to expect:</strong> ${c.expect}</p></div>
         <div class="zoom-section zoom-section-warning"><div class="zoom-section-eyebrow zoom-section-eyebrow-warning">⚠ ${c.doneWrongLabel}</div><p>${c.doneWrong}</p></div>
         ${exSec}${ctaSec}${linkSec}
+        <div class="zoom-nav">${prevBtn}<span class="zoom-nav-counter">Stage ${dnum} of ${total}</span>${nextBtn}</div>
       </div>`;
     overlay.classList.add('is-open');
     document.body.classList.add('zoom-open');
     setTimeout(() => { const b = $('#zoomClose'); if (b) b.focus(); }, 50);
     $('#zoomClose').addEventListener('click', closeZoomView);
     overlay.addEventListener('click', e => { if (e.target === overlay) closeZoomView(); });
+    // Prev/next: re-pin the map to that stage AND swap the panel content, so the
+    // map zoom follows along and the user can keep moving without leaving.
+    overlay.querySelectorAll('.zoom-nav-btn[data-num]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = parseInt(btn.dataset.num, 10);
+        state.pinnedStageNum = target;
+        state.isZoomed = true;
+        state.panX = 0; state.panY = 0;
+        renderMap();
+        updateZoomState();
+        updateStageCardsActive();
+        const panel = overlay.querySelector('.zoom-panel');
+        if (panel) panel.scrollTop = 0;
+        openZoomView(target);
+        if (typeof gtag !== 'undefined') gtag('event', 'journey_zoom_nav', { stage_num: target, persona: state.persona });
+      });
+    });
     if (typeof gtag !== 'undefined') gtag('event', 'journey_zoom_open', { stage_num: c.num, stage_name: c.name, persona: state.persona });
   }
 
@@ -3644,11 +3723,19 @@ const stageIcons = {
   }
 
   document.addEventListener('keydown', e => {
-    if (e.key !== 'Escape') return;
     const dm = $('#iconDefModal'), ov = $('#zoomOverlay');
-    if (dm && dm.classList.contains('is-visible')) dm.classList.remove('is-visible');
-    else if (ov && ov.classList.contains('is-open')) closeZoomView();
-    else if (state.isZoomed) zoomOut();
+    const panelOpen = ov && ov.classList.contains('is-open');
+    if (e.key === 'Escape') {
+      if (dm && dm.classList.contains('is-visible')) dm.classList.remove('is-visible');
+      else if (panelOpen) closeZoomView();
+      else if (state.isZoomed) zoomOut();
+      return;
+    }
+    // Left/Right arrows move between stages when a card panel is open.
+    if (panelOpen && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) {
+      const btn = ov.querySelector(e.key === 'ArrowRight' ? '.zoom-nav-next' : '.zoom-nav-prev');
+      if (btn) { e.preventDefault(); btn.click(); }
+    }
   });
 
   function init() {
