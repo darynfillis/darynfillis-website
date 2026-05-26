@@ -1472,6 +1472,9 @@ html{-webkit-text-size-adjust:100%;}
   white-space: normal;
   word-break: normal;
 }
+.mapcard-name.mapcard-nowrap { white-space: nowrap; }
+/* A card whose name must stay on one line gets a wider cap to fit it. */
+.map-card:has(.mapcard-nowrap) { max-width: 11cqw; }
 .mapcard-emojis { display: flex; flex-wrap: wrap; gap: 0.18cqw; justify-content: center; align-items: center; max-width: 100%; }
 .mapcard-emoji { font-size: 0.92cqw; line-height: 1; }
 
@@ -1768,57 +1771,47 @@ body.zoom-open { overflow: hidden; }
   50%      { opacity: 0.55; transform: translate(-50%, -50%) scale(1.15); }
 }
 
-/* — Campfire: a glowing ember + rising smoke, sitting on flat open ground
-     near basecamp (on the terrain, not over the label). */
-.map-campfire {
+/* — Rooftop smoke stacks: thin wisps rising from village building chimneys.
+     Placed on logical rooftops in the art. Each .map-smoke is a chimney point. */
+.map-smoke {
   position: absolute;
-  left: 40.0%;
-  top: 76.5%;
-  width: 2.4%;
+  width: 1.4%;
+  aspect-ratio: 1 / 3;
   transform: translateX(-50%);
   z-index: 5;
   pointer-events: none;
 }
-.map-campfire .ember {
-  position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
-  width: 60%; aspect-ratio: 1; border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%;
-  background: radial-gradient(circle at 50% 70%, #fff0b8 0%, #ffb13c 45%, #ff5a2c 100%);
-  box-shadow: 0 0 1.2cqw 0.3cqw rgba(255,138,60,0.6);
-  filter: blur(0.12cqw);
-  animation: emberFlicker 1.3s ease-in-out infinite;
+.map-smoke span {
+  position: absolute; left: 50%; bottom: 0;
+  width: 36%; aspect-ratio: 1; border-radius: 50%;
+  background: rgba(225,228,232,0.5);
+  filter: blur(0.18cqw);
+  animation: smokeRise 5s ease-out infinite;
 }
-.map-campfire .smoke {
-  position: absolute; left: 50%; bottom: 55%;
-  width: 32%; aspect-ratio: 1; border-radius: 50%;
-  background: rgba(225,230,235,0.55);
-  filter: blur(0.2cqw);
-  animation: smokeRise 4.0s ease-out infinite;
-}
-.map-campfire .smoke.s2 { animation-delay: 2.0s; }
-@keyframes emberFlicker {
-  0%, 100% { opacity: 0.9; transform: translateX(-50%) scale(1); }
-  50%      { opacity: 1;   transform: translateX(-50%) scale(1.15); }
-}
+.map-smoke span.p2 { animation-delay: 1.7s; }
+.map-smoke span.p3 { animation-delay: 3.4s; }
 @keyframes smokeRise {
-  0%   { opacity: 0;    transform: translate(-50%, 0) scale(0.5); }
-  25%  { opacity: 0.55; }
-  100% { opacity: 0;    transform: translate(-30%, -300%) scale(1.7); }
+  0%   { opacity: 0;    transform: translate(-50%, 0) scale(0.4); }
+  20%  { opacity: 0.5; }
+  100% { opacity: 0;    transform: translate(-20%, -320%) scale(1.6); }
 }
 
-/* — Summit flag at the peak (Close Escrow). Cloth flutters. */
+/* — Summit flag: placed just in front of (below-right of) the summit pin,
+     since the peak is near the top edge of the map. */
 .map-flag {
   position: absolute;
-  left: 61.4%;
-  top: 9.5%;
-  width: 3.2%;
+  left: 63.5%;
+  top: 13.5%;
+  width: 2.6%;
+  aspect-ratio: 3 / 4;
   transform: translate(-50%, -100%);
-  z-index: 5;
+  z-index: 6;
   pointer-events: none;
   filter: drop-shadow(0 0.15cqw 0.3cqw rgba(0,0,0,0.5));
 }
-.map-flag .pole { position: absolute; left: 0; bottom: 0; width: 6%; height: 100%; background: linear-gradient(#9a6a3a,#6b4423); border-radius: 0.3cqw; }
+.map-flag .pole { position: absolute; left: 0; bottom: 0; width: 8%; height: 100%; background: linear-gradient(#9a6a3a,#6b4423); border-radius: 0.3cqw; }
 .map-flag .cloth {
-  position: absolute; left: 6%; top: 0; width: 88%; height: 52%;
+  position: absolute; left: 8%; top: 0; width: 86%; height: 48%;
   background: linear-gradient(135deg, #6fd4f7 0%, #3bb5ef 100%);
   clip-path: polygon(0 0, 100% 10%, 90% 50%, 100% 90%, 0 100%);
   transform-origin: left center;
@@ -1846,7 +1839,7 @@ body.zoom-open { overflow: hidden; }
 
 /* Honor reduced-motion: freeze everything ambient. */
 @media (prefers-reduced-motion: reduce) {
-  .map-pin::after, .map-campfire .ember, .map-campfire .smoke,
+  .map-pin::after, .map-smoke span,
   .map-flag .cloth, .trail-arrows .trail-chevron, .map-journey-arrow svg {
     animation: none !important;
   }
@@ -1936,7 +1929,7 @@ body.zoom-open { overflow: hidden; }
       <svg id="trailSvg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
       <svg id="connectorSvg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
       <div id="mapMarkers"></div>
-      <div class="map-campfire"><span class="smoke"></span><span class="smoke s2"></span><span class="ember"></span></div>
+      <div class="map-smoke" style="left:34.6%;top:81.0%"><span></span><span class="p2"></span><span class="p3"></span></div><div class="map-smoke" style="left:40.2%;top:79.8%"><span></span><span class="p2"></span><span class="p3"></span></div><div class="map-smoke" style="left:43.6%;top:79.8%"><span></span><span class="p2"></span><span class="p3"></span></div><div class="map-smoke" style="left:53.0%;top:83.4%"><span></span><span class="p2"></span><span class="p3"></span></div>
       <div class="map-flag"><span class="pole"></span><span class="cloth"></span></div>
       <div class="map-journey-arrow"><svg viewBox="0 0 60 70" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 4 8 Q 40 6 48 46" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M 38 40 L 49 50 L 56 38" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="map-basecamp"><span class="map-basecamp-top">NEW CADETS</span><span class="map-basecamp-bot">BASECAMP</span></div>
@@ -2916,7 +2909,7 @@ const stages = [
     pin_y: 17.6,
     border: "plain",
     mapEmojis: ["time-sensitive"],
-    cardOffsetX: 0.0,
+    cardOffsetX: -4.0,
     cardOffsetY: 0.0
   },
   {
@@ -2947,9 +2940,10 @@ const stages = [
     pin_x: 61.5,
     pin_y: 12.8,
     border: "black",
-    mapEmojis: ["meeting"],
+    mapEmojis: [],
     cardOffsetX: 0.0,
-    cardOffsetY: 0.0
+    cardOffsetY: 2.0,
+    noWrap: true
   },
   {
     num: 17,
@@ -2976,8 +2970,8 @@ const stages = [
     pin_y: 17.5,
     border: "plain",
     mapEmojis: ["keys"],
-    cardOffsetX: 0.0,
-    cardOffsetY: 0.0
+    cardOffsetX: 2.5,
+    cardOffsetY: 1.0
   },
   {
     num: 18,
@@ -3192,7 +3186,7 @@ const stageIcons = {
       num: stage.num, name: stage.name,
       card_x: stage.card_x, card_y: stage.card_y,
       pin_x: stage.pin_x, pin_y: stage.pin_y,
-      border: stage.border, mapEmojis: stage.mapEmojis || [],
+      border: stage.border, mapEmojis: stage.mapEmojis || [], noWrap: stage.noWrap || false,
       party: stage.party || 'neutral',
       cardOffsetX: stage.cardOffsetX || 0, cardOffsetY: stage.cardOffsetY || 0,
       summary: (v && v.summary) || stage.summary,
@@ -3461,9 +3455,9 @@ const stageIcons = {
         // Searching — small pill with house emoji + name
         cardInner = `<span class="mapcard-pill-emoji">🏡</span><span class="mapcard-pill-name">${c.name}</span>`;
       } else {
-        // Centered name (wraps naturally) + centered emoji row beneath. No number badge.
+        // Centered name (wraps naturally unless noWrap) + centered emoji row beneath.
         cardInner = `
-          <span class="mapcard-name">${c.name}</span>
+          <span class="mapcard-name${c.noWrap ? ' mapcard-nowrap' : ''}">${c.name}</span>
           ${emojiHtml ? `<div class="mapcard-emojis">${emojiHtml}</div>` : ''}
         `;
       }
