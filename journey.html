@@ -1331,7 +1331,7 @@ html{-webkit-text-size-adjust:100%;}
   border-bottom: 1px solid var(--rule);
   padding: clamp(10px,1.6vw,16px) clamp(20px,4vw,48px);
   position: sticky;
-  top: 70px;
+  top: 101px;
   z-index: 150;
 }
 .journey-bar-inner {
@@ -1387,7 +1387,7 @@ html{-webkit-text-size-adjust:100%;}
    persona selector and intro above it, so the full image is visible without
    scrolling. Width derives from the height cap via the 16:9 ratio. */
 .map-frame {
-  max-width: min(1400px, calc((100vh - 230px) * 1.7778));
+  max-width: min(1400px, calc((100vh - 240px) * 1.7778));
   margin: 0 auto;
   position: relative;
   background: var(--navy);
@@ -1726,7 +1726,7 @@ body.zoom-open { overflow: hidden; }
 }
 
 /* ── BREADCRUMB (matches the rest of the site) ── */
-.breadcrumb-bar { background: var(--white); border-bottom: 1px solid var(--rule); padding: 6px 48px; margin-top: 70px; }
+.breadcrumb-bar { background: var(--white); border-bottom: 1px solid var(--rule); padding: 6px 48px; margin-top: 70px; position: sticky; top: 70px; z-index: 140; }
 .breadcrumb-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .breadcrumb-item { font-size: 0.7rem; font-weight: 600; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; white-space: nowrap; transition: color 0.15s; }
 .breadcrumb-item:hover { color: var(--navy); }
