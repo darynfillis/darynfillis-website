@@ -1734,6 +1734,124 @@ body.zoom-open { overflow: hidden; }
 .breadcrumb-sep { font-size: 0.65rem; color: var(--muted); opacity: 0.5; }
 @media (max-width: 480px) { .breadcrumb-bar { padding: 5px 20px; } }
 
+/* ════════════════════════════════════════════════════════════
+   TIER 1 AMBIENT MOTION — subtle, slow, looping life on the map.
+   All effects use opacity/scale on dedicated elements or pseudo-
+   elements so they never fight the pin/basecamp/zoom transforms.
+   Everything is disabled under prefers-reduced-motion.
+   ════════════════════════════════════════════════════════════ */
+
+/* — Pin "breathing": a soft glow ring pulses behind each milestone pin.
+     Pseudo-element on the wrapping div; positioned over the pin's circle. */
+.map-pin::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 36%;
+  width: 160%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--pin-fill, #5bcbf5) 0%, rgba(91,203,245,0) 65%);
+  opacity: 0.5;
+  pointer-events: none;
+  animation: pinPulse 3.4s ease-in-out infinite;
+}
+.map-pin.party-agent::after  { background: radial-gradient(circle, #ffffff 0%, rgba(255,255,255,0) 65%); }
+.map-pin.party-escrow::after { background: radial-gradient(circle, #5bcbf5 0%, rgba(91,203,245,0) 65%); }
+.map-pin.party-moveIn::after { background: radial-gradient(circle, #b98cff 0%, rgba(124,58,237,0) 65%); }
+/* Stagger so pins don't pulse in unison */
+.map-pin:nth-of-type(3n)::after   { animation-delay: 0.9s; }
+.map-pin:nth-of-type(3n+1)::after { animation-delay: 1.8s; }
+@keyframes pinPulse {
+  0%, 100% { opacity: 0.15; transform: translate(-50%, -50%) scale(0.75); }
+  50%      { opacity: 0.55; transform: translate(-50%, -50%) scale(1.15); }
+}
+
+/* — Campfire: a glowing ember + rising smoke, sitting on flat open ground
+     near basecamp (on the terrain, not over the label). */
+.map-campfire {
+  position: absolute;
+  left: 40.0%;
+  top: 76.5%;
+  width: 2.4%;
+  transform: translateX(-50%);
+  z-index: 5;
+  pointer-events: none;
+}
+.map-campfire .ember {
+  position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+  width: 60%; aspect-ratio: 1; border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%;
+  background: radial-gradient(circle at 50% 70%, #fff0b8 0%, #ffb13c 45%, #ff5a2c 100%);
+  box-shadow: 0 0 1.2cqw 0.3cqw rgba(255,138,60,0.6);
+  filter: blur(0.12cqw);
+  animation: emberFlicker 1.3s ease-in-out infinite;
+}
+.map-campfire .smoke {
+  position: absolute; left: 50%; bottom: 55%;
+  width: 32%; aspect-ratio: 1; border-radius: 50%;
+  background: rgba(225,230,235,0.55);
+  filter: blur(0.2cqw);
+  animation: smokeRise 4.0s ease-out infinite;
+}
+.map-campfire .smoke.s2 { animation-delay: 2.0s; }
+@keyframes emberFlicker {
+  0%, 100% { opacity: 0.9; transform: translateX(-50%) scale(1); }
+  50%      { opacity: 1;   transform: translateX(-50%) scale(1.15); }
+}
+@keyframes smokeRise {
+  0%   { opacity: 0;    transform: translate(-50%, 0) scale(0.5); }
+  25%  { opacity: 0.55; }
+  100% { opacity: 0;    transform: translate(-30%, -300%) scale(1.7); }
+}
+
+/* — Summit flag at the peak (Close Escrow). Cloth flutters. */
+.map-flag {
+  position: absolute;
+  left: 61.4%;
+  top: 9.5%;
+  width: 3.2%;
+  transform: translate(-50%, -100%);
+  z-index: 5;
+  pointer-events: none;
+  filter: drop-shadow(0 0.15cqw 0.3cqw rgba(0,0,0,0.5));
+}
+.map-flag .pole { position: absolute; left: 0; bottom: 0; width: 6%; height: 100%; background: linear-gradient(#9a6a3a,#6b4423); border-radius: 0.3cqw; }
+.map-flag .cloth {
+  position: absolute; left: 6%; top: 0; width: 88%; height: 52%;
+  background: linear-gradient(135deg, #6fd4f7 0%, #3bb5ef 100%);
+  clip-path: polygon(0 0, 100% 10%, 90% 50%, 100% 90%, 0 100%);
+  transform-origin: left center;
+  animation: flagWave 2.4s ease-in-out infinite;
+}
+@keyframes flagWave {
+  0%, 100% { transform: skewY(-3deg) scaleX(1); }
+  50%      { transform: skewY(4deg) scaleX(0.92); }
+}
+
+/* — Trail chevrons flowing upward (handled in JS by toggling a class;
+     this fades them in a marching sequence). */
+.trail-arrows .trail-chevron { animation: chevFlow 2.8s linear infinite; }
+@keyframes chevFlow {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 1; }
+}
+
+/* — Journey-continues arrow: gentle nudge toward the next range. */
+.map-journey-arrow svg { animation: arrowNudge 3s ease-in-out infinite; }
+@keyframes arrowNudge {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(6%, -4%); }
+}
+
+/* Honor reduced-motion: freeze everything ambient. */
+@media (prefers-reduced-motion: reduce) {
+  .map-pin::after, .map-campfire .ember, .map-campfire .smoke,
+  .map-flag .cloth, .trail-arrows .trail-chevron, .map-journey-arrow svg {
+    animation: none !important;
+  }
+}
+
 </style></head><body>
 <nav id="nav">
   <!-- Full NEO color logo — all tiers: N-icon + NEO + Home Loans + powered by better -->
@@ -1818,6 +1936,8 @@ body.zoom-open { overflow: hidden; }
       <svg id="trailSvg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
       <svg id="connectorSvg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
       <div id="mapMarkers"></div>
+      <div class="map-campfire"><span class="smoke"></span><span class="smoke s2"></span><span class="ember"></span></div>
+      <div class="map-flag"><span class="pole"></span><span class="cloth"></span></div>
       <div class="map-journey-arrow"><svg viewBox="0 0 60 70" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 4 8 Q 40 6 48 46" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M 38 40 L 49 50 L 56 38" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="map-basecamp"><span class="map-basecamp-top">NEW CADETS</span><span class="map-basecamp-bot">BASECAMP</span></div>
       <div class="map-title-overlay"><h2 id="mapTitle" class="map-title">The homebuyers&rsquo; <span style="color:var(--blue)">journey.</span></h2><p id="mapTagline" class="map-tagline">A step-by-step guide to purchasing a home with financing.</p></div>
@@ -3243,8 +3363,10 @@ const stageIcons = {
         const ax = p0.x + (p1.x - p0.x) * t;
         const ay = p0.y + (p1.y - p0.y) * t;
         const angle = Math.atan2(p1.y - p0.y, p1.x - p0.x) * 180 / Math.PI;
+        // Staggered delay makes the chevrons "flow" up the trail in sequence.
+        const delay = (i * 0.18).toFixed(2);
         // Small chevron arrow (pointing in travel direction)
-        out += `<g transform="translate(${ax} ${ay}) rotate(${angle})">
+        out += `<g class="trail-chevron" style="animation-delay:${delay}s" transform="translate(${ax} ${ay}) rotate(${angle})">
           <path d="M -0.7 -0.9 L 0.6 0 L -0.7 0.9" fill="none" stroke="${color}"
             stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
         </g>`;
