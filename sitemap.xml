@@ -4,7 +4,7 @@
   <!-- Core pages -->
   <url>
     <loc>https://darynfillis.com/</loc>
-    <lastmod>2026-04-24</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -22,7 +22,7 @@
   </url>
   <url>
     <loc>https://darynfillis.com/faq</loc>
-    <lastmod>2026-04-24</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -49,6 +49,18 @@
   <url>
     <loc>https://darynfillis.com/pmi-strategy</loc>
     <lastmod>2026-04-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://darynfillis.com/rsu-strategy</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://darynfillis.com/relocation-strategy</loc>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -159,7 +171,7 @@
   <!-- Journey -->
   <url>
     <loc>https://darynfillis.com/journey</loc>
-    <lastmod>2026-04-28</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -262,6 +274,13 @@
   <url>
     <loc>https://darynfillis.com/neighborhoods/marina-del-rey</loc>
     <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://darynfillis.com/journey-v2</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
