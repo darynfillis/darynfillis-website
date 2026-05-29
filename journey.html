@@ -1845,6 +1845,71 @@ body.zoom-open { overflow: hidden; }
   }
 }
 
+
+
+/* ── ANIMATED CHIMNEY SMOKE (lodge village) ──
+   Plumes sit at fixed map % coords inside #mapInner so they scale with the map.
+   Each plume is its own size via modifier classes. */
+.map-smoke {
+  position: absolute;
+  z-index: 4;
+  pointer-events: none;
+  transform: translateX(-50%);
+  /* default size — overridden per plume */
+  width: 3cqw;
+  height: 6cqw;
+}
+.map-smoke.smoke-lg { width: 3.6cqw; height: 7cqw; }
+.map-smoke.smoke-sm { width: 2.2cqw; height: 5cqw; }
+
+.map-smoke .puff {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 1.4cqw;
+  height: 1.4cqw;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%,
+              rgba(255,255,255,0.95) 0%,
+              rgba(255,255,255,0.80) 35%,
+              rgba(255,255,255,0.45) 65%,
+              rgba(255,255,255,0) 100%);
+  transform: translate(-50%, 0) scale(0.6);
+  opacity: 0;
+  animation: smokeRise 8s linear infinite;
+  filter: blur(0.15cqw);
+  will-change: transform, opacity;
+}
+/* Smaller plume's puffs are themselves smaller */
+.map-smoke.smoke-sm .puff { width: 1.0cqw; height: 1.0cqw; }
+.map-smoke.smoke-lg .puff { width: 1.6cqw; height: 1.6cqw; }
+
+.map-smoke .puff:nth-child(1) { animation-delay: 0s; }
+.map-smoke .puff:nth-child(2) { animation-delay: 1.3s; }
+.map-smoke .puff:nth-child(3) { animation-delay: 2.6s; }
+.map-smoke .puff:nth-child(4) { animation-delay: 4.0s; }
+.map-smoke .puff:nth-child(5) { animation-delay: 5.3s; }
+.map-smoke .puff:nth-child(6) { animation-delay: 6.6s; }
+/* second plume — different timing so they don't sync visually */
+.map-smoke.smoke-b .puff { animation-duration: 9s; }
+.map-smoke.smoke-b .puff:nth-child(1) { animation-delay: 0.8s; }
+.map-smoke.smoke-b .puff:nth-child(2) { animation-delay: 2.3s; }
+.map-smoke.smoke-b .puff:nth-child(3) { animation-delay: 3.8s; }
+.map-smoke.smoke-b .puff:nth-child(4) { animation-delay: 5.3s; }
+.map-smoke.smoke-b .puff:nth-child(5) { animation-delay: 6.8s; }
+.map-smoke.smoke-b .puff:nth-child(6) { animation-delay: 8.0s; }
+
+@keyframes smokeRise {
+  0%   { transform: translate(-50%, 0) scale(0.55); opacity: 0; }
+  18%  { opacity: 0.95; }
+  60%  { opacity: 0.55; }
+  100% { transform: translate(calc(-50% - 1.5cqw), -5.5cqw) scale(2.2); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .map-smoke .puff { animation: none; opacity: 0.45; transform: translate(-50%, -2.5cqw) scale(1.4); }
+}
+}
+
 </style></head><body>
 <nav id="nav">
   <!-- Full NEO color logo — all tiers: N-icon + NEO + Home Loans + powered by better -->
@@ -1912,7 +1977,7 @@ body.zoom-open { overflow: hidden; }
       <svg id="connectorSvg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
       <div id="mapMarkers"></div>
       <div class="map-journey-arrow"><svg viewBox="0 0 60 70" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 4 8 Q 40 6 48 46" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M 38 40 L 49 50 L 56 38" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="map-basecamp"><span class="map-basecamp-top">NEW CADETS</span><span class="map-basecamp-bot">BASECAMP</span></div>
+      <div class="map-basecamp"><span class="map-basecamp-top">NEW CADETS</span><span class="map-basecamp-bot">BASECAMP</span></div><div class="map-smoke smoke-lg" style="left:43.5%; top:71%;"><span class="puff"></span><span class="puff"></span><span class="puff"></span><span class="puff"></span><span class="puff"></span><span class="puff"></span></div><div class="map-smoke smoke-b smoke-sm" style="left:51.0%; top:73%;"><span class="puff"></span><span class="puff"></span><span class="puff"></span><span class="puff"></span><span class="puff"></span><span class="puff"></span></div>
       <div class="map-title-overlay"><h2 id="mapTitle" class="map-title">The homebuyers&rsquo; <span style="color:var(--blue)">journey.</span></h2><p id="mapTagline" class="map-tagline">A step-by-step guide to purchasing a home with financing.</p></div>
       <div class="map-logo"><svg class="nav-neo-color" width="96" height="45" viewBox="0 0 381 179" fill="none" xmlns="http://www.w3.org/2000/svg">
       <!-- powered by better (bottom text) -->
