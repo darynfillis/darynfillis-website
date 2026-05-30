@@ -1977,7 +1977,7 @@ body.zoom-open { overflow: hidden; }
       <svg id="connectorSvg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
       <div id="mapMarkers"></div>
       <div class="map-journey-arrow"><svg viewBox="0 0 60 70" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 4 8 Q 40 6 48 46" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M 38 40 L 49 50 L 56 38" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="map-basecamp"><span class="map-basecamp-top">NEW CADETS</span><span class="map-basecamp-bot">BASECAMP</span></div><div class="map-smoke smoke-lg" style="left:43.5%; top:79.0%;"><span class="puff"></span><span class="puff"></span><span class="puff"></span><span class="puff"></span><span class="puff"></span><span class="puff"></span></div><div class="map-smoke smoke-b smoke-sm" style="left:53.0%; top:83.5%;"><span class="puff"></span><span class="puff"></span><span class="puff"></span><span class="puff"></span><span class="puff"></span><span class="puff"></span></div>
+      <div class="map-basecamp"><span class="map-basecamp-top">NEW CADETS</span><span class="map-basecamp-bot">BASECAMP</span></div><div class="map-smoke smoke-lg" style="left:43.5%; top:75.0%;"><span class="puff"></span><span class="puff"></span><span class="puff"></span><span class="puff"></span><span class="puff"></span><span class="puff"></span></div><div class="map-smoke smoke-b smoke-sm" style="left:53.0%; top:79.5%;"><span class="puff"></span><span class="puff"></span><span class="puff"></span><span class="puff"></span><span class="puff"></span><span class="puff"></span></div>
       <div class="map-title-overlay"><h2 id="mapTitle" class="map-title">The homebuyers&rsquo; <span style="color:var(--blue)">journey.</span></h2><p id="mapTagline" class="map-tagline">A step-by-step guide to purchasing a home with financing.</p></div>
       <div class="map-logo"><svg class="nav-neo-color" width="96" height="45" viewBox="0 0 381 179" fill="none" xmlns="http://www.w3.org/2000/svg">
       <!-- powered by better (bottom text) -->
@@ -2507,7 +2507,7 @@ const stages = [
       "move-up": {
         summary: "We map your full picture including your current home's equity and timing.",
         what: "We review your application, credit, current home's equity position, and timing. I build a strategy that handles both the sale and the purchase without putting you in a stressful contingent position."
-      },
+    },
       investor: {
         summary: "We map your investment strategy, then meet to build the plan.",
         what: "We review your application, credit, current rental portfolio, and cash-flow targets, and get clear on your investment Dreams and Goals. For self-employed or write-off-heavy investors, I identify which loan products fit (DSCR, which qualifies on the property's rent rather than your tax returns, bank statement, or asset-based loans) before pulling credit. Then we sit down for a consultation: we get clear on your debt structure, set a budget for the acquisition, confirm we're a good fit, and walk through your Mortgage Strategy Plan in detail so you know your true costs and which financing actually accomplishes your investment goals. If time allows, I send your file to underwriting to get a head start."
@@ -2516,9 +2516,16 @@ const stages = [
         summary: "We figure out if refinancing actually saves you money.",
         what: "I review your current loan, your goals (rate reduction, cash-out, term change), and run the breakeven math. If a refinance doesn't make sense, I'll tell you that. Most mortgage professionals won't.",
         doneWrong: "Most refi mortgage professionals hide the closing costs in the new loan balance and tell you your payment is going down. The payment IS going down, but you're paying for it for 30 years. The right way to evaluate a refi is breakeven months, not monthly payment. Most won't show you that math because it would talk you out of half the refis they push."
+      },
+      "va": {
+        summary: "We confirm your eligibility, then build your VA plan.",
+        what: "We start by pulling your Certificate of Eligibility (COE), which confirms you can use your VA home loan benefit and shows how much entitlement you have. I can usually pull it electronically in minutes. Then we sit down for a consultation: we get clear on your debt structure, set a realistic budget around what VA actually lets you do (often zero down), discuss your Dreams and Goals, and walk through your Mortgage Strategy Plan in detail. The VA benefit changes the math in ways conventional buyers don't deal with: no PMI, no minimum down payment, and a VA funding fee instead. I show you all of it on paper so you know exactly what your monthly looks like.",
+        expect: "A real conversation, your COE in hand, and a Mortgage Strategy Plan that reflects how VA actually works, not generic homebuying advice.",
+        honestTruth: "The VA benefit is one of the most powerful homebuying tools in the country, and it's also the one most mortgage professionals understand the least. I work with service members and veterans constantly. The first conversation is where we figure out whether VA, conventional, or something else fits your situation best. Sometimes VA isn't the answer. I tell you that honestly.",
+        doneWrong: "Most mortgage professionals do a soft credit pull, hand you a generic pre-qualification letter, and treat your VA loan as a 'special program' they'll figure out later. That's how veterans end up steered into conventional loans with PMI, or VA loans structured to maximize the lender's fees instead of your benefit. The right approach starts with your COE, treats VA as the primary structure, and builds the plan around your entitlement."
       }
     },
-    visibleFor: ["first-time", "move-up", "investor", "refi"],
+    visibleFor: ["first-time", "move-up", "investor", "refi", "va"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha", "refi"],
     realExample: null,
     link: null,
@@ -2553,7 +2560,7 @@ const stages = [
         what: "I collect your current mortgage statement, income docs, and updated asset documentation. Refis are typically lighter than purchase submissions but the same packaging principles apply."
       }
     },
-    visibleFor: ["first-time", "move-up", "investor", "refi"],
+    visibleFor: ["first-time", "move-up", "investor", "refi", "va"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha", "refi"],
     realExample: null,
     link: null,
@@ -2594,10 +2601,21 @@ const stages = [
         cta: {
           text: "Find the right investor loan before your next offer",
           href: "/schedule"
+    }
+      },
+      "va": {
+        summary: "Pre-approval built around your VA benefit and entitlement.",
+        what: "For VA buyers, pre-approval is about three numbers: your entitlement (how much VA backs without a down payment), the VA funding fee on this purchase, and your residual income (VA's own measure of what you have left after fixed expenses each month). I run all three. Most VA buyers can purchase with zero down up to their county loan limit and don't need PMI. The funding fee gets financed into the loan rather than paid at closing. If you have a service-connected disability rating of 10% or higher, the funding fee is waived entirely. If you're using your benefit for the second time without paying off the prior VA loan, second-tier entitlement math kicks in and the numbers change. We model all of this before you write an offer.",
+        expect: "A pre-approval that reflects what VA actually lets you do, including zero down if it fits, the right funding fee, and a clear sense of your residual income.",
+        honestTruth: "VA doesn't require a down payment, but sometimes putting a little down reduces your funding fee enough to make the math better long-term. That's an actual conversation, not a sales pitch. I'll show you the breakeven on $0 down versus 5% down versus 10% down so you can decide based on numbers, not the loan officer's preference.",
+        doneWrong: "Most VA pre-approvals are run as if VA were just a 0% down conventional loan. They miss the funding fee disability waiver, they miss second-tier entitlement when it applies, and they never explain residual income. The right approach treats VA as its own product with its own math, not an afterthought.",
+        cta: {
+          text: "Pull your COE and get pre-approved →",
+          href: "/schedule"
         }
       }
     },
-    visibleFor: ["first-time", "move-up", "investor"],
+    visibleFor: ["first-time", "move-up", "investor", "va"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha"],
     realExample: null,
     link: null,
@@ -2630,7 +2648,7 @@ const stages = [
         what: "I run DSCR analysis on specific properties you're considering — does the rental income support the loan payment? I flag financing risks specific to investment property (rental caps in HOAs, short-term-rental restrictions, building warrantability)."
       }
     },
-    visibleFor: ["first-time", "move-up", "investor"],
+    visibleFor: ["first-time", "move-up", "investor", "va"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha"],
     realExample: null,
     link: null,
@@ -2658,7 +2676,7 @@ const stages = [
     doneWrongLabel: "What Most Mortgage Professionals Get Wrong",
     cta: null,
     personas: {},
-    visibleFor: ["first-time", "move-up", "investor"],
+    visibleFor: ["first-time", "move-up", "investor", "va"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha"],
     realExample: null,
     link: null,
@@ -2685,8 +2703,14 @@ const stages = [
     doneWrong: "Most mortgage professionals don't proactively warn you about wire fraud. They send you escrow's wire instructions and move on. Then when something goes wrong, they say 'you should have called to verify.' The right approach walks you through the verification process before you wire a dollar, because $50,000+ stolen via wire fraud is recoverable about 30% of the time.",
     doneWrongLabel: "What Most Mortgage Professionals Get Wrong",
     cta: null,
-    personas: {},
-    visibleFor: ["first-time", "move-up", "investor"],
+    personas: {
+      "va": {
+        summary: "Escrow opens. For VA buyers, seller concessions can do real work.",
+        what: "Escrow opens with the title company, your earnest money deposit goes in, and title work begins. For VA buyers, here's where a difference shows up: VA allows the seller to pay up to 4% of the loan amount toward closing costs and concessions, which is more than conventional loans typically allow. That can cover your funding fee, prepaid taxes and insurance, even debt payoff in some cases. I work with your agent to structure the offer so seller concessions are negotiated where they help you, not left on the table.",
+        honestTruth: "Seller concessions are negotiation room conventional buyers don't have. Most VA buyers never use them because their loan officer doesn't bring it up before the offer is written. By the time you're in escrow, it's too late to renegotiate the concession. We talk about this BEFORE you write the offer."
+      }
+    },
+    visibleFor: ["first-time", "move-up", "investor", "va"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha"],
     realExample: null,
     link: null,
@@ -2716,7 +2740,7 @@ const stages = [
     personas: {
       refi: {
         what: "Federal regulations require lenders to issue a Loan Estimate within 3 business days of application. For refis, this is where you can clearly see the closing costs you're being asked to absorb — and whether the rate truly justifies them."
-      },
+    },
       investor: {
         summary: "Business-purpose investor loans are often exempt from the federal Loan Estimate.",
         time: "Varies by loan type",
@@ -2725,9 +2749,15 @@ const stages = [
         honestTruth: "Exempt from TRID does not mean exempt from scrutiny. Business-purpose loans skip the federal disclosure forms, which puts the burden on you and your advisor to confirm the rate, points, and fees in writing before you commit. That is where I make sure nothing is buried.",
         doneWrong: "Some lenders treat the TRID exemption as license to stay vague on investor loans, since they don't have to hand you a standardized form. The right approach gives you a clear written breakdown of every cost whether or not the law requires the form.",
         doneWrongLabel: "What Most Mortgage Professionals Get Wrong"
+      },
+      "va": {
+        summary: "Federal Loan Estimate, with VA's funding fee in place of PMI.",
+        what: "Federal rules require lenders to send you a Loan Estimate within 3 business days of your application. For VA loans, the form looks similar to a conventional LE with one big difference: there's no PMI line item, but there is a VA funding fee. The funding fee is typically financed into the loan. I walk you through every number on the form: rate, payment, closing costs, and the funding fee breakdown specifically.",
+        honestTruth: "The Loan Estimate is the most important document in the first half of the deal. For VA buyers, it's where you confirm two things: that you're getting the funding fee disability exemption if you're entitled to it, and that no PMI is being charged anywhere. I've seen LEs where a 'PMI equivalent' showed up that shouldn't have. That gets caught here, not at closing.",
+        doneWrong: "Some mortgage professionals don't bother explaining the funding fee on a VA Loan Estimate, just say 'don't worry about it, it gets rolled in.' That's true, but it's not the same as understanding what you're paying for. If you have a disability rating that exempts you, the fee should be $0. Confirming that takes 30 seconds and it's the difference between paying nothing and paying thousands."
       }
     },
-    visibleFor: ["first-time", "move-up", "investor", "refi"],
+    visibleFor: ["first-time", "move-up", "investor", "refi", "va"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha", "refi"],
     realExample: null,
     link: null,
@@ -2760,9 +2790,16 @@ const stages = [
     personas: {
       investor: {
         what: "For investment properties, the inspection has different priorities. You care about systems (HVAC age, roof life, electrical), tenant safety, and items that affect insurability. Cosmetic issues are less important."
+    },
+      "va": {
+        summary: "Home inspection is yours; the VA appraiser will also check property requirements.",
+        what: "You hire your own home inspector for a normal buyer's inspection, exactly like any other buyer. Separately, when the VA appraiser visits the property, they'll check VA's Minimum Property Requirements (MPRs): safe and working heating, water supply, roof condition, electrical and plumbing, lead paint on pre-1978 homes, and a handful of other items. Termite inspections used to be required on all VA loans in California; that changed and they're now only sometimes required, typically when the VA appraiser flags potential infestation. Even when not required, many California buyers order one because the findings can become a real negotiation point.",
+        honestTruth: "MPRs are not your home inspection. They're VA's own habitability check, and they can flag things conventional appraisers wouldn't, like a missing handrail or a furnace that smells funny. If an MPR fails, the seller typically needs to fix it before closing. We talk about this upfront so a VA appraisal isn't a surprise to the seller's agent.",
+        doneWrongLabel: "What Most Buyers Get Wrong Here",
+        doneWrong: "Most VA buyers don't realize MPRs exist until the appraisal report comes back with a flagged item. The right approach mentions VA MPRs to the listing agent at the offer stage so the seller knows what's coming, and budgets for a possible repair credit if the property has obvious issues."
       }
     },
-    visibleFor: ["first-time", "move-up", "investor"],
+    visibleFor: ["first-time", "move-up", "investor", "va"],
     paths: ["purchase-financed", "va", "fha"],
     realExample: null,
     link: null,
@@ -2795,9 +2832,16 @@ const stages = [
     personas: {
       refi: {
         what: "For refis, the appraisal determines your loan-to-value ratio, which affects rate, PMI requirement, and whether the refi makes financial sense. Cash-out refis are particularly sensitive — if the appraisal comes in low, your cash-out amount drops."
+    },
+      "va": {
+        summary: "VA appraisal: value plus property requirements, in one visit.",
+        what: "The VA appraiser does two jobs in one visit. First, they estimate the property's value, exactly like a conventional appraisal. Second, they check the property against VA's Minimum Property Requirements (MPRs) and note any items that fail. Either issue can affect the deal: a low value can trigger appraisal gap negotiation, and a failed MPR generally needs to be fixed before closing. Before the report comes back, we map out an appraisal gap strategy so a low value doesn't kill the deal.",
+        expect: "An appraisal report that includes both the value and a list of any MPR items. Most VA appraisals come back clean. When they don't, we have a plan ready.",
+        honestTruth: "VA appraisers tend to be more conservative than conventional appraisers, partly because of the MPR review. That conservatism is sometimes a problem (low value on a fast-moving property) and sometimes a benefit (catches issues that protect you). The fix for a low value is the same playbook as conventional: request reconsideration with better comps, renegotiate price, restructure the loan, or split the difference. The fix for an MPR failure is seller repair or seller credit.",
+        doneWrong: "Most VA buyers panic when an MPR is flagged. The right approach reads the report carefully, distinguishes a real issue (broken heating system) from a paperwork issue (handrail missing on three steps), and negotiates a repair or credit accordingly. Walking away over a $200 MPR fix is a mistake that loses you the home."
       }
     },
-    visibleFor: ["first-time", "move-up", "investor", "refi"],
+    visibleFor: ["first-time", "move-up", "investor", "refi", "va"],
     paths: ["purchase-financed", "va", "fha", "refi"],
     realExample: null,
     link: null,
@@ -2825,7 +2869,7 @@ const stages = [
     doneWrongLabel: "What Most Mortgage Professionals Get Wrong",
     cta: null,
     personas: {},
-    visibleFor: ["first-time", "move-up", "investor", "refi"],
+    visibleFor: ["first-time", "move-up", "investor", "refi", "va"],
     paths: ["purchase-financed", "va", "fha", "refi"],
     realExample: null,
     link: null,
@@ -2863,7 +2907,7 @@ const stages = [
         doneWrongLabel: "What Most Mortgage Professionals Get Wrong"
       }
     },
-    visibleFor: ["first-time", "move-up", "investor", "refi"],
+    visibleFor: ["first-time", "move-up", "investor", "refi", "va"],
     paths: ["purchase-financed", "va", "fha", "refi"],
     realExample: null,
     link: null,
@@ -2891,7 +2935,7 @@ const stages = [
     doneWrongLabel: "What Most Mortgage Professionals Get Wrong",
     cta: null,
     personas: {},
-    visibleFor: ["first-time", "move-up", "investor", "refi"],
+    visibleFor: ["first-time", "move-up", "investor", "refi", "va"],
     paths: ["purchase-financed", "va", "fha", "refi"],
     realExample: null,
     link: null,
@@ -2919,7 +2963,7 @@ const stages = [
     doneWrongLabel: "What Most Mortgage Professionals Get Wrong",
     cta: null,
     personas: {},
-    visibleFor: ["first-time", "move-up", "investor", "refi"],
+    visibleFor: ["first-time", "move-up", "investor", "refi", "va"],
     paths: ["purchase-financed", "va", "fha", "refi"],
     realExample: null,
     link: null,
@@ -2947,7 +2991,7 @@ const stages = [
     doneWrongLabel: "What Most Mortgage Professionals Get Wrong",
     cta: null,
     personas: {},
-    visibleFor: ["first-time", "move-up", "investor", "refi"],
+    visibleFor: ["first-time", "move-up", "investor", "refi", "va"],
     paths: ["purchase-financed", "va", "fha", "refi"],
     realExample: null,
     link: null,
@@ -2984,7 +3028,7 @@ const stages = [
         doneWrongLabel: "What Most Investors Get Wrong Here"
       }
     },
-    visibleFor: ["first-time", "move-up", "investor"],
+    visibleFor: ["first-time", "move-up", "investor", "va"],
     paths: ["purchase-financed", "va", "fha"],
     realExample: null,
     link: null,
@@ -3016,7 +3060,7 @@ const stages = [
         what: "For refis, recording typically happens 3 business days after signing (the federal right-of-rescission period for primary residences). After recording, the new loan replaces the old one."
       }
     },
-    visibleFor: ["first-time", "move-up", "investor", "refi"],
+    visibleFor: ["first-time", "move-up", "investor", "refi", "va"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha", "refi"],
     realExample: null,
     link: null,
@@ -3054,7 +3098,7 @@ const stages = [
         doneWrongLabel: "What Most Investors Get Wrong Here"
       }
     },
-    visibleFor: ["first-time", "move-up", "investor"],
+    visibleFor: ["first-time", "move-up", "investor", "va"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha"],
     realExample: null,
     link: null,
@@ -3093,7 +3137,7 @@ const stages = [
         doneWrongLabel: "What Most Investors Get Wrong Here"
       }
     },
-    visibleFor: ["first-time", "move-up", "investor"],
+    visibleFor: ["first-time", "move-up", "investor", "va"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha"],
     realExample: null,
     link: null,
@@ -3123,8 +3167,14 @@ const stages = [
       text: "Learn how Mortgage Under Management works",
       href: "/mortgage-under-management"
     },
-    personas: {},
-    visibleFor: ["first-time", "move-up", "investor", "refi"],
+    personas: {
+      "va": {
+        summary: "I watch your VA loan after closing. Two things matter most.",
+        what: "Through Mortgage Under Management, I keep an eye on your loan after closing. For VA borrowers specifically, two things matter most. First: the VA Interest Rate Reduction Refinance Loan (IRRRL), often called a VA streamline. It has minimal documentation, no new appraisal in most cases, and no income verification, which makes it an easy refinance to do when rates drop. Second: VA loans are assumable, meaning a future buyer can take over your loan rather than getting their own. If rates rise meaningfully and you sell, an assumable low-rate VA loan can become a real selling point.",
+        doneWrong: "Most mortgage professionals never tell VA borrowers about IRRRL or assumability. They wait until they can pitch you a full refinance with full fees. The right approach checks IRRRL math any time rates drop more than a quarter point, and reminds you about assumability if you decide to sell."
+      }
+    },
+    visibleFor: ["first-time", "move-up", "investor", "refi", "va"],
     paths: ["purchase-financed", "purchase-cash", "va", "fha", "refi"],
     realExample: null,
     link: "/mortgage-under-management",
@@ -3193,7 +3243,7 @@ const icons = [
     slug: "termite",
     emoji: "🐛",
     label: "Termite Inspection",
-    definition: "California requires a termite inspection (or 'pest report') for most home sales. Can be a deal point if the report turns up damage or active infestation."
+    definition: "A termite or \"pest\" inspection checks for wood-destroying organisms and damage. Not required by California state law and not required on most conventional loans. VA loans only sometimes require one, typically when the appraiser flags potential infestation. It is often ordered anyway by the buyer or required by contract because findings can become a real negotiation point."
   },
   {
     slug: "appraisal",
@@ -3237,7 +3287,24 @@ const icons = [
     label: "Keys",
     definition: "The physical (and digital) keys to the home — house keys, garage remotes, alarm codes, gate fobs. Change locks on day one regardless of how trustworthy the prior owner seemed."
   }
-];
+  ,{
+    slug: "va-funding-fee",
+    emoji: "🎖️",
+    label: "VA Funding Fee",
+    definition: "A one-time fee VA borrowers pay in place of mortgage insurance. It funds the VA loan program. The amount depends on your down payment, first vs. subsequent use of the benefit, and military service category. Most borrowers finance it into the loan rather than pay it at closing. Veterans with a service-connected disability rating of 10% or higher are exempt."
+  },
+  {
+    slug: "coe",
+    emoji: "📜",
+    label: "Certificate of Eligibility",
+    definition: "Also called a COE. The document from the VA that confirms you're eligible to use the VA home loan benefit and shows how much entitlement you have available. Active-duty service members, veterans, National Guard, reservists, and some surviving spouses can qualify. Your lender can pull this for you electronically in most cases."
+  },
+  {
+    slug: "mpr",
+    emoji: "🏠",
+    label: "VA Property Requirements",
+    definition: "Minimum Property Requirements (MPRs) are VA's standards for habitability. A VA appraiser checks for safe and working heating, water supply, roof condition, electrical and plumbing systems, lead paint on pre-1978 homes, and a few other items conventional appraisers don't. If the property fails an MPR, the seller typically needs to fix it before closing."
+  }];
 
 const stageIcons = {
   "1": ["application", "meeting", "credit-report"],
@@ -3321,7 +3388,7 @@ const stageIcons = {
 
   const PERSONA_LABELS = {
     'first-time': 'First-time buyer', 'move-up': 'Move-up buyer',
-    'investor': 'Investor', 'refi': 'Refinancing',
+    'investor': 'Investor', 'refi': 'Refinancing', 'va': 'VA Buyer',
   };
 
   const PERSONA_INTROS = {
@@ -3353,13 +3420,20 @@ const stageIcons = {
       h2: "Your refinance, mapped out honestly.",
       sub: "Every stage of a refinance. If a refi doesn't make sense for your situation, I'll tell you. Most mortgage professionals won't.",
     },
+    'va': {
+      title: "The VA buyer's journey.",
+      tagline: "Buying with your VA benefit, with the differences that matter.",
+      eyebrow: 'For service members and veterans',
+      h2: "Your VA purchase, mapped out end to end.",
+      sub: "Every stage of buying with your VA benefit. The eligibility, the funding fee, the property requirements, and the seller concessions VA buyers can negotiate that conventional buyers cannot.",
+    },
   };
 
   // ── PERSONA SELECTOR ──
   function renderPersonaSelector() {
     const c = $('#personaSelector');
     if (!c) return;
-    c.innerHTML = ['first-time','move-up','investor','refi'].map(p => `
+    c.innerHTML = ['first-time','move-up','investor','refi','va'].map(p => `
       <button type="button" class="persona-btn ${state.persona===p?'is-active':''}"
         data-persona="${p}" aria-pressed="${state.persona===p}">${PERSONA_LABELS[p]}</button>
     `).join('');
