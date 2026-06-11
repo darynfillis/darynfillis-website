@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Condo Warrantability Check | Daryn Fillis</title>
+<meta name="description" content="A 2-minute self-check for California condo sellers and listing agents. Find out where your building stands on financing before you list.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0A2540;
+    --navy-mid: #0d3050;
+    --blue: #5bcbf5;
+    --blue-deep: #2596c9;
+    --ink: #1c2530;
+    --muted: #5e6b7a;
+    --rule: #e2e8f0;
+    --surface: #f4f7fa;
+    --paper: #ffffff;
+    --green: #1f9d6b;
+    --amber: #d98a1f;
+    --red: #cf4a3c;
+    --shadow: 0 1px 3px rgba(10,37,64,0.06), 0 8px 24px rgba(10,37,64,0.06);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--ink);
+    background: var(--surface);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+
+  /* HEADER */
+  header {
+    background: var(--navy);
+    color: #fff;
+    padding: 14px 0;
+    border-bottom: 3px solid var(--blue);
+  }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .brand { font-weight: 800; font-size: 15px; letter-spacing: 0.02em; }
+  .brand span { color: var(--blue); }
+  .brand small { display: block; font-weight: 400; font-size: 11px; color: rgba(255,255,255,0.6); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
+
+  /* HERO */
+  .hero { background: var(--navy); color: #fff; padding: 48px 0 56px; }
+  .eyebrow {
+    font-size: 12px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--blue); margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-weight: 800; font-size: 34px; line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 16px;
+  }
+  .hero h1 em { color: var(--blue); font-style: normal; }
+  .hero p { font-size: 16px; color: rgba(255,255,255,0.78); font-weight: 400; max-width: 560px; }
+
+  /* AUDIENCE TOGGLE */
+  .toggle {
+    display: inline-flex; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 999px; padding: 4px; margin-top: 28px; gap: 4px;
+  }
+  .toggle button {
+    font-family: inherit; font-weight: 600; font-size: 13px; letter-spacing: 0.04em;
+    color: rgba(255,255,255,0.7); background: transparent; border: none; cursor: pointer;
+    padding: 9px 20px; border-radius: 999px; transition: all 0.18s ease;
+  }
+  .toggle button.active { background: var(--blue); color: var(--navy); font-weight: 800; }
+
+  /* METER (signature element) */
+  .meter-zone {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(244,247,250,0.92); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule); padding: 14px 0;
+  }
+  .meter-zone .wrap { display: flex; align-items: center; gap: 16px; }
+  .meter-label { font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+  .meter-track { flex: 1; height: 10px; background: #dde5ee; border-radius: 999px; overflow: hidden; position: relative; }
+  .meter-fill {
+    height: 100%; width: 0%; border-radius: 999px;
+    background: linear-gradient(90deg, var(--green), var(--blue));
+    transition: width 0.5s cubic-bezier(.2,.7,.3,1), background 0.5s ease;
+  }
+  .meter-count { font-size: 12px; font-weight: 600; color: var(--muted); white-space: nowrap; min-width: 78px; text-align: right; }
+
+  /* QUESTIONS */
+  main { padding: 36px 0 60px; }
+  .group { margin-bottom: 30px; }
+  .group-head {
+    display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .group-head h2 { font-size: 13px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); }
+  .group-head .gtag { font-size: 11px; color: var(--muted); font-weight: 600; }
+
+  .q {
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 12px;
+    padding: 18px 20px; margin-bottom: 12px; box-shadow: var(--shadow); transition: border-color 0.2s ease;
+  }
+  .q.answered { border-color: #cdd8e4; }
+  .q-text { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .q-help { font-size: 13px; color: var(--muted); font-weight: 400; margin-bottom: 14px; }
+  .opts { display: flex; gap: 8px; flex-wrap: wrap; }
+  .opt {
+    font-family: inherit; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; cursor: pointer;
+    border: 1.5px solid var(--rule); background: #fff; color: var(--muted);
+    padding: 9px 18px; border-radius: 8px; transition: all 0.15s ease; flex: 1; min-width: 90px;
+  }
+  .opt:hover { border-color: var(--blue); color: var(--navy); }
+  .opt.sel-good { background: var(--green); border-color: var(--green); color: #fff; }
+  .opt.sel-bad { background: var(--red); border-color: var(--red); color: #fff; }
+  .opt.sel-unsure { background: var(--amber); border-color: var(--amber); color: #fff; }
+
+  /* RESULT */
+  .result { display: none; }
+  .result.show { display: block; animation: fade 0.5s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(12px);} to { opacity: 1; transform: none;} }
+
+  .verdict {
+    border-radius: 16px; padding: 30px 28px; color: #fff; margin-bottom: 24px; box-shadow: var(--shadow);
+  }
+  .verdict.good { background: linear-gradient(135deg, #157a52, var(--green)); }
+  .verdict.warn { background: linear-gradient(135deg, #b9741a, var(--amber)); }
+  .verdict.high { background: linear-gradient(135deg, #a83a2e, var(--red)); }
+  .verdict .vlabel { font-size: 12px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.85; margin-bottom: 10px; }
+  .verdict h2 { font-size: 26px; font-weight: 800; line-height: 1.2; margin-bottom: 10px; }
+  .verdict p { font-size: 15px; font-weight: 400; opacity: 0.95; }
+
+  .report {
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 14px;
+    padding: 26px; margin-bottom: 22px; box-shadow: var(--shadow);
+  }
+  .report h3 {
+    font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy);
+    margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--rule);
+  }
+  .finding { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f0f4f8; }
+  .finding:last-child { border-bottom: none; }
+  .finding .dot { flex-shrink: 0; width: 10px; height: 10px; border-radius: 50%; margin-top: 6px; }
+  .finding .dot.good { background: var(--green); }
+  .finding .dot.bad { background: var(--red); }
+  .finding .dot.unsure { background: var(--amber); }
+  .finding .ftext strong { display: block; font-size: 14px; color: var(--ink); margin-bottom: 2px; }
+  .finding .ftext span { font-size: 13px; color: var(--muted); }
+
+  /* LOAN READ (agent + seller) */
+  .loans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .loan {
+    border: 1px solid var(--rule); border-radius: 10px; padding: 14px; text-align: center; background: #fbfdff;
+  }
+  .loan .lname { font-size: 12px; font-weight: 800; letter-spacing: 0.06em; color: var(--navy); margin-bottom: 8px; }
+  .loan .lstatus { font-size: 12px; font-weight: 600; padding: 4px 0; border-radius: 6px; }
+  .loan .lstatus.ok { color: var(--green); }
+  .loan .lstatus.maybe { color: var(--amber); }
+  .loan .lstatus.tough { color: var(--red); }
+
+  /* CTA + EMAIL */
+  .cta-card {
+    background: var(--navy); color: #fff; border-radius: 16px; padding: 30px 28px; margin-bottom: 20px;
+  }
+  .cta-card h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; border: none; padding: 0; letter-spacing: -0.01em; color: #fff; text-transform: none; }
+  .cta-card p { font-size: 14px; color: rgba(255,255,255,0.78); margin-bottom: 20px; }
+  .btn {
+    display: inline-block; font-family: inherit; font-weight: 800; font-size: 14px; letter-spacing: 0.03em;
+    background: var(--blue); color: var(--navy); text-decoration: none; padding: 14px 28px; border-radius: 10px;
+    border: none; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(91,203,245,0.4); }
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn.ghost { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.3); }
+  .btn.ghost:hover { border-color: var(--blue); box-shadow: none; }
+
+  .email-card {
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 14px; padding: 24px 26px; box-shadow: var(--shadow);
+  }
+  .email-card h3 { font-size: 16px; font-weight: 800; color: var(--navy); margin-bottom: 6px; border: none; padding: 0; letter-spacing: -0.01em; text-transform: none; }
+  .email-card p { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+  .email-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .email-row input {
+    flex: 1; min-width: 200px; font-family: inherit; font-size: 14px; padding: 12px 14px;
+    border: 1.5px solid var(--rule); border-radius: 9px; color: var(--ink);
+  }
+  .email-row input:focus { outline: none; border-color: var(--blue); }
+  .email-note { font-size: 12px; color: var(--muted); margin-top: 12px; }
+  .email-ok { display: none; color: var(--green); font-weight: 600; font-size: 14px; margin-top: 12px; }
+
+  /* ACTION BUTTONS */
+  .actions { text-align: center; margin-top: 10px; }
+  .seemore {
+    font-family: inherit; font-weight: 800; font-size: 15px; letter-spacing: 0.03em;
+    background: var(--blue); color: var(--navy); border: none; border-radius: 10px;
+    padding: 16px 36px; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .seemore:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(91,203,245,0.4); }
+  .seemore:disabled { background: #d4dde7; color: #fff; cursor: not-allowed; }
+  .restart { display: inline-block; margin-top: 16px; font-size: 13px; color: var(--muted); background: none; border: none; cursor: pointer; font-family: inherit; text-decoration: underline; }
+
+  /* FOOTER */
+  footer { background: var(--navy); color: rgba(255,255,255,0.55); padding: 28px 0; font-size: 12px; line-height: 1.7; }
+  footer strong { color: rgba(255,255,255,0.8); }
+  footer a { color: var(--blue); text-decoration: none; }
+
+  .disclaimer { font-size: 12px; color: var(--muted); text-align: center; margin: 24px auto 0; max-width: 600px; line-height: 1.6; }
+
+  @media (max-width: 560px) {
+    .hero h1 { font-size: 27px; }
+    .loans { grid-template-columns: 1fr; }
+    .verdict h2 { font-size: 22px; }
+    .meter-label { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Netlify Forms: hidden static form for build-time detection.
+     The live submit (in JS) posts to this same form name with these field names.
+     Zapier picks this up via the native Netlify Forms trigger. -->
+<form name="condo-check" netlify netlify-honeypot="bot-field" hidden>
+  <input type="text" name="first_name">
+  <input type="email" name="email">
+  <input type="text" name="mode">
+  <input type="text" name="verdict">
+  <textarea name="results_summary"></textarea>
+  <input type="text" name="bot-field">
+</form>
+
+<header>
+  <div class="wrap">
+    <div class="brand">Daryn <span>Fillis</span><small id="brandsub">Certified Mortgage Advisor</small></div>
+    <div class="brand" style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.6)">NEO Home Loans</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow" id="eyebrow">The 2-minute condo check</div>
+    <h1 id="herotitle">Find out if your building will <em>survive financing</em>.</h1>
+    <p id="herosub">Most condo deals that fall apart do it at the project level, not the borrower level. Answer a few questions about the building and get a plain-language read on where it stands, plus what to line up before you list.</p>
+    <div class="toggle">
+      <button id="tab-seller" class="active" onclick="setMode('seller')">I'm selling</button>
+      <button id="tab-agent" onclick="setMode('agent')">I'm the listing agent</button>
+    </div>
+  </div>
+</section>
+
+<div class="meter-zone">
+  <div class="wrap">
+    <span class="meter-label">Building read</span>
+    <div class="meter-track"><div class="meter-fill" id="meterfill"></div></div>
+    <span class="meter-count" id="metercount">0 of 9</span>
+  </div>
+</div>
+
+<main>
+  <div class="wrap">
+    <div id="quiz"></div>
+
+    <div class="actions" id="actionzone">
+      <button class="seemore" id="seemore" disabled onclick="showResult()">Answer all questions to see your read</button>
+    </div>
+
+    <!-- RESULT -->
+    <div class="result" id="result">
+      <div class="verdict" id="verdict">
+        <div class="vlabel">Your building read</div>
+        <h2 id="verdict-title"></h2>
+        <p id="verdict-body"></p>
+      </div>
+
+      <div class="report">
+        <h3 id="loanhead">Likely financing paths</h3>
+        <div class="loans" id="loans"></div>
+      </div>
+
+      <div class="report">
+        <h3>What I'd line up before listing</h3>
+        <div id="findings"></div>
+      </div>
+
+      <div class="cta-card">
+        <h3 id="ctatitle">Want me to check the actual building?</h3>
+        <p id="ctabody">This is a directional read, not an underwriting decision. Send me the address and I'll pull the real project data and tell you exactly where it stands. No cost, no obligation.</p>
+        <div class="btn-row">
+          <a class="btn" id="ctabtn" href="https://darynfillis.com/schedule" target="_blank" rel="noopener">Book a free project check</a>
+          <a class="btn ghost" href="tel:4243966967">Call 424-396-6967</a>
+        </div>
+      </div>
+
+      <div class="email-card">
+        <h3>Email me a copy of these results</h3>
+        <p>I'll send a summary of your building read. No spam, and I won't share your address with anyone.</p>
+        <div class="email-row">
+          <input type="email" id="email" placeholder="you@email.com" aria-label="Your email address">
+          <input type="text" id="fname" placeholder="First name" aria-label="Your first name" style="max-width:160px;">
+          <button class="btn" onclick="captureEmail()">Send it</button>
+        </div>
+        <div class="email-ok" id="emailok">Got it. Check your inbox shortly.</div>
+        <div class="email-note">Prefer to skip this? Your read above is yours to keep, no email needed.</div>
+      </div>
+
+      <button class="restart" onclick="restart()">Start over</button>
+      <p class="disclaimer">This tool gives a directional read based on your answers. It is not a warrantability determination or a loan approval. Final eligibility is decided at application through full underwriting against current agency and investor guidelines. Daryn Fillis, NMLS #1988371, NEO Home Loans, a division of Better Mortgage Corporation. Equal Housing Opportunity.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <strong>Daryn Fillis</strong> &middot; Certified Mortgage Advisor, NEO Home Loans, Los Angeles &middot; NMLS #1988371<br>
+    <a href="https://darynfillis.com">darynfillis.com</a> &middot; 424-396-6967 &middot; Powered by Better. Equal Housing Opportunity.
+  </div>
+</footer>
+
+<script>
+// ---- QUESTION BANK ----
+// weight: how much a "bad" answer hurts. category groups them.
+// good/bad/unsure copy used in the findings report.
+const QUESTIONS = [
+  {
+    id: 'occupancy', cat: 'Who lives there',
+    q: 'Are most units owner-occupied (not rentals)?',
+    help: 'Conventional loans generally want at least half the units owner-occupied. Heavy rental concentration is the single most common reason a building fails.',
+    weight: 3,
+    good: { t: 'Healthy owner-occupancy', s: 'Owner-occupied majority keeps the most loan options open.' },
+    bad: { t: 'High rental concentration', s: 'Too many rentals can knock out conventional and government financing. This is worth confirming with exact numbers.' },
+    unsure: { t: 'Owner-occupancy unknown', s: 'Get the current owner-occupied percentage from the HOA. It drives almost everything else.' }
+  },
+  {
+    id: 'singleowner', cat: 'Who lives there',
+    q: 'Does any single person or entity own more than 10% of the units?',
+    help: 'In smaller buildings the threshold is higher, but concentrated ownership is a classic red flag for warrantability.',
+    weight: 2, invert: true,
+    good: { t: 'No single-owner concentration', s: 'Ownership is spread out, which lenders like.' },
+    bad: { t: 'Single-owner concentration', s: 'One owner holding a large share can fail agency limits. The exact unit count and building size determine whether it is a problem.' },
+    unsure: { t: 'Ownership concentration unknown', s: 'Ask the HOA whether any owner or entity holds multiple units.' }
+  },
+  {
+    id: 'reserves', cat: 'The HOA finances',
+    q: 'Does the HOA put at least 10% of its budget into reserves?',
+    help: 'Underfunded reserves are a growing reason buildings get flagged after the 2026 rule changes.',
+    weight: 2,
+    good: { t: 'Reserves funded', s: 'Adequate reserve funding supports project approval.' },
+    bad: { t: 'Thin reserves', s: 'Reserves under the threshold can require a reserve study or trigger a project rejection. Worth reviewing the budget.' },
+    unsure: { t: 'Reserve level unknown', s: 'Pull the current HOA budget and look at the reserve line, or request the reserve study.' }
+  },
+  {
+    id: 'litigation', cat: 'The HOA finances',
+    q: 'Is the HOA free of pending litigation?',
+    help: 'Some litigation is disqualifying, some is not. Structural and safety suits are the serious ones.',
+    weight: 3,
+    good: { t: 'No pending litigation', s: 'A clean litigation status removes a major obstacle.' },
+    bad: { t: 'Pending litigation', s: 'Litigation involving the structure or safety can stop financing entirely. The type and scope matter, so the documents need a real review.' },
+    unsure: { t: 'Litigation status unknown', s: 'Ask the HOA directly and request any disclosure of current or threatened litigation.' }
+  },
+  {
+    id: 'specialassess', cat: 'The HOA finances',
+    q: 'Is the building free of large special assessments right now?',
+    help: 'A current or upcoming special assessment can signal deferred maintenance and affect approval.',
+    weight: 1,
+    good: { t: 'No major assessments', s: 'No outstanding special assessment to explain.' },
+    bad: { t: 'Active special assessment', s: 'Lenders will want to know what it is for and whether the work is funded. Tied to safety or structure, it gets more scrutiny.' },
+    unsure: { t: 'Assessment status unknown', s: 'Check recent HOA meeting minutes and the budget for any assessment activity.' }
+  },
+  {
+    id: 'sb326', cat: 'California specifics',
+    q: 'Has the building completed its SB 326 balcony inspection?',
+    help: 'California requires elevated structure inspections on many condo buildings. A missed or failed inspection is a 2026 flashpoint.',
+    weight: 2,
+    good: { t: 'SB 326 inspection done', s: 'A completed inspection in good standing is exactly what lenders want to see.' },
+    bad: { t: 'SB 326 not completed', s: 'A missing or overdue balcony inspection can hold up financing in California. Confirm the status and any required repairs.' },
+    unsure: { t: 'SB 326 status unknown', s: 'Ask the HOA whether the elevated-structure inspection has been completed and what it found.' }
+  },
+  {
+    id: 'commercial', cat: 'The building itself',
+    q: 'Is the building mostly residential (limited commercial/retail space)?',
+    help: 'Too much commercial square footage pushes a project into non-warrantable territory.',
+    weight: 1,
+    good: { t: 'Primarily residential', s: 'Commercial space is within typical limits.' },
+    bad: { t: 'Significant commercial space', s: 'A high commercial ratio can require a non-warrantable loan. The exact percentage decides it.' },
+    unsure: { t: 'Commercial ratio unknown', s: 'Find out how much of the building is retail, office, or other non-residential use.' }
+  },
+  {
+    id: 'condition', cat: 'The building itself',
+    q: 'Is the building free of major deferred maintenance or safety issues?',
+    help: 'Visible structural problems or deferred repairs can fail the property condition standards.',
+    weight: 2,
+    good: { t: 'Sound condition', s: 'No obvious condition issues to clear.' },
+    bad: { t: 'Deferred maintenance present', s: 'Structural or safety repairs that are needed but not done can fail the building. The specifics need a look.' },
+    unsure: { t: 'Condition unknown', s: 'Review recent inspection reports and HOA minutes for any flagged repairs.' }
+  },
+  {
+    id: 'insurance', cat: 'The building itself',
+    q: 'Does the HOA carry adequate master insurance, including any required coverage?',
+    help: 'Insurance gaps, including in fire and flood zones, have become a frequent reason for project rejection.',
+    weight: 2,
+    good: { t: 'Insurance in place', s: 'Adequate master coverage supports approval.' },
+    bad: { t: 'Possible insurance gap', s: 'Insufficient master coverage can fail the project. In California fire zones this deserves a careful check.' },
+    unsure: { t: 'Insurance adequacy unknown', s: 'Request the master policy declarations and confirm coverage meets agency requirements.' }
+  }
+];
+
+let mode = 'seller';
+let answers = {}; // id -> 'good' | 'bad' | 'unsure'
+
+const COPY = {
+  seller: {
+    eyebrow: 'The 2-minute condo check',
+    title: 'Find out if your building will <em>survive financing</em>.',
+    sub: "Most condo deals that fall apart do it at the project level, not the borrower level. Answer a few questions about the building and get a plain-language read on where it stands, plus what to line up before you list.",
+    brandsub: 'Certified Mortgage Advisor',
+    seemore: 'See my building read',
+    ctatitle: 'Want me to check the actual building?',
+    ctabody: 'This is a directional read, not an underwriting decision. Send me the address and I\'ll pull the real project data and tell you exactly where it stands. No cost, no obligation.',
+    loanhead: 'What this means for your buyer'
+  },
+  agent: {
+    eyebrow: 'For listing agents',
+    title: 'Will this building <em>clear financing</em> for your buyers?',
+    sub: "Before you take the listing, get a fast read on whether the project is likely warrantable and which loan types your buyer pool can actually use. Know the risk before it costs you a deal in week three of escrow.",
+    brandsub: 'Your condo lending partner',
+    seemore: 'See the building read',
+    ctatitle: 'Want the real warrantability read?',
+    ctabody: 'This is directional. Send me the building and I\'ll pull the actual project data, tell you which loan types clear, and flag anything that could stall an escrow. I run these deals every week.',
+    loanhead: 'Which loan types likely clear'
+  }
+};
+
+function setMode(m) {
+  mode = m;
+  document.getElementById('tab-seller').classList.toggle('active', m === 'seller');
+  document.getElementById('tab-agent').classList.toggle('active', m === 'agent');
+  const c = COPY[m];
+  document.getElementById('eyebrow').textContent = c.eyebrow;
+  document.getElementById('herotitle').innerHTML = c.title;
+  document.getElementById('herosub').textContent = c.sub;
+  document.getElementById('brandsub').textContent = c.brandsub;
+  document.getElementById('ctatitle').textContent = c.ctatitle;
+  document.getElementById('ctabody').textContent = c.ctabody;
+  document.getElementById('loanhead').textContent = c.loanhead;
+  // if results are already showing, refresh copy-sensitive bits
+  if (document.getElementById('result').classList.contains('show')) showResult(true);
+}
+
+function buildQuiz() {
+  const quiz = document.getElementById('quiz');
+  quiz.innerHTML = '';
+  const cats = [];
+  QUESTIONS.forEach(q => { if (!cats.includes(q.cat)) cats.push(q.cat); });
+  cats.forEach(cat => {
+    const items = QUESTIONS.filter(q => q.cat === cat);
+    const g = document.createElement('div');
+    g.className = 'group';
+    g.innerHTML = `<div class="group-head"><h2>${cat}</h2><span class="gtag">${items.length} question${items.length>1?'s':''}</span></div>`;
+    items.forEach(q => {
+      const card = document.createElement('div');
+      card.className = 'q'; card.id = 'q-' + q.id;
+      card.innerHTML = `
+        <div class="q-text">${q.q}</div>
+        <div class="q-help">${q.help}</div>
+        <div class="opts">
+          <button class="opt" data-v="good" onclick="answer('${q.id}','good',this)">Yes</button>
+          <button class="opt" data-v="bad" onclick="answer('${q.id}','bad',this)">No</button>
+          <button class="opt" data-v="unsure" onclick="answer('${q.id}','unsure',this)">Not sure</button>
+        </div>`;
+      g.appendChild(card);
+    });
+    quiz.appendChild(g);
+  });
+}
+
+function answer(id, val, btn) {
+  answers[id] = val;
+  const card = document.getElementById('q-' + id);
+  card.classList.add('answered');
+  card.querySelectorAll('.opt').forEach(o => { o.classList.remove('sel-good','sel-bad','sel-unsure'); });
+  // For inverted questions, "No" is the good answer visually; but we store semantic good/bad already.
+  // Color reflects whether the answer is favorable.
+  const q = QUESTIONS.find(x => x.id === id);
+  let favorable;
+  if (val === 'unsure') favorable = 'unsure';
+  else if (q.invert) favorable = (val === 'bad') ? 'good' : 'bad';
+  else favorable = val;
+  btn.classList.add('sel-' + favorable);
+  updateMeter();
+}
+
+function updateMeter() {
+  const total = QUESTIONS.length;
+  const done = Object.keys(answers).length;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById('meterfill').style.width = pct + '%';
+  document.getElementById('metercount').textContent = done + ' of ' + total;
+  const btn = document.getElementById('seemore');
+  if (done === total) {
+    btn.disabled = false;
+    btn.textContent = COPY[mode].seemore;
+  } else {
+    btn.disabled = true;
+    btn.textContent = (total - done) + ' question' + ((total-done)>1?'s':'') + ' left';
+  }
+}
+
+function scoreBuilding() {
+  // Normalize each answer to favorable/unfavorable/unsure, weight the unfavorable + unsure.
+  let riskPoints = 0, maxPoints = 0, badCount = 0, unsureCount = 0;
+  QUESTIONS.forEach(q => {
+    maxPoints += q.weight;
+    const a = answers[q.id];
+    let favorable;
+    if (a === 'unsure') { favorable = 'unsure'; }
+    else if (q.invert) { favorable = (a === 'bad') ? 'good' : 'bad'; }
+    else { favorable = a; }
+    if (favorable === 'bad') { riskPoints += q.weight; badCount++; }
+    else if (favorable === 'unsure') { riskPoints += q.weight * 0.5; unsureCount++; }
+  });
+  const riskRatio = riskPoints / maxPoints;
+  let band;
+  if (riskRatio < 0.12 && badCount === 0) band = 'good';
+  else if (riskRatio < 0.4) band = 'warn';
+  else band = 'high';
+  return { band, badCount, unsureCount, riskRatio };
+}
+
+function loanRead(band, badCount) {
+  // directional only
+  if (band === 'good') return { conv: 'ok', fha: 'ok', va: 'ok' };
+  if (band === 'warn') return { conv: 'maybe', fha: 'maybe', va: 'maybe' };
+  return { conv: 'tough', fha: 'tough', va: 'tough' };
+}
+
+function showResult(refreshOnly) {
+  const res = scoreBuilding();
+  const verdict = document.getElementById('verdict');
+  verdict.className = 'verdict ' + res.band;
+
+  const titles = {
+    good: 'Looks likely warrantable',
+    warn: 'Some flags worth checking',
+    high: 'High risk, check before you list'
+  };
+  const bodies = {
+    seller: {
+      good: 'Based on your answers, nothing here points to a project-level problem. Confirm the exact numbers and you should have the full range of loan options available to your buyers.',
+      warn: 'A few answers point to areas that can affect financing. None of these is automatically disqualifying, but they are exactly the things a lender will scrutinize. Worth nailing down before you list.',
+      high: 'Several answers point to issues that commonly make a building non-warrantable. That does not mean the deal is dead, but it does mean you want a real read before listing so you are not surprised in escrow.'
+    },
+    agent: {
+      good: 'Nothing in these answers points to a project-level problem. Confirm the exact figures and your buyer pool should have full financing flexibility on this listing.',
+      warn: 'A few answers flag areas a lender will scrutinize. Not deal-killers on their own, but worth confirming before you take the listing so financing does not stall mid-escrow.',
+      high: 'Several answers point to common non-warrantability triggers. The listing is still workable, but your buyer pool may narrow to specific loan types. Get the real read before you commit.'
+    }
+  };
+  document.getElementById('verdict-title').textContent = titles[res.band];
+  document.getElementById('verdict-body').textContent = bodies[mode][res.band];
+
+  // loan read
+  const lr = loanRead(res.band, res.badCount);
+  const statusText = { ok: 'Likely available', maybe: 'Needs confirming', tough: 'May be limited' };
+  const loansEl = document.getElementById('loans');
+  loansEl.innerHTML = '';
+  [['Conventional','conv'],['FHA','fha'],['VA','va']].forEach(([name,key]) => {
+    const div = document.createElement('div');
+    div.className = 'loan';
+    div.innerHTML = `<div class="lname">${name}</div><div class="lstatus ${lr[key]}">${statusText[lr[key]]}</div>`;
+    loansEl.appendChild(div);
+  });
+
+  // findings
+  const findings = document.getElementById('findings');
+  findings.innerHTML = '';
+  // Show unfavorable and unsure first, then favorable
+  const ordered = [...QUESTIONS].sort((a,b) => {
+    const rank = id => { const v = answers[id]; const q = QUESTIONS.find(x=>x.id===id);
+      let fav; if (v==='unsure') fav='unsure'; else if (q.invert) fav=(v==='bad')?'good':'bad'; else fav=v;
+      return fav === 'bad' ? 0 : fav === 'unsure' ? 1 : 2; };
+    return rank(a.id) - rank(b.id);
+  });
+  ordered.forEach(q => {
+    const v = answers[q.id];
+    let fav; if (v==='unsure') fav='unsure'; else if (q.invert) fav=(v==='bad')?'good':'bad'; else fav=v;
+    const info = fav === 'good' ? q.good : fav === 'bad' ? q.bad : q.unsure;
+    const div = document.createElement('div');
+    div.className = 'finding';
+    div.innerHTML = `<div class="dot ${fav}"></div><div class="ftext"><strong>${info.t}</strong><span>${info.s}</span></div>`;
+    findings.appendChild(div);
+  });
+
+  document.getElementById('result').classList.add('show');
+  document.getElementById('actionzone').style.display = 'none';
+  if (!refreshOnly) {
+    document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function buildResultsSummary() {
+  const res = scoreBuilding();
+  const bandLabel = { good: 'Looks likely warrantable', warn: 'Some flags worth checking', high: 'High risk, check before listing' }[res.band];
+  const roleWord = (mode === 'agent' ? 'listing agent' : 'seller');
+
+  // Plain-language interpretation of the verdict, by band and role
+  const meaning = {
+    good: 'What this means: based on your answers, nothing points to a project-level problem. Confirm the exact numbers and the building should have the full range of loan options open to buyers. This is a good sign, but it is still worth verifying the figures before you rely on it.',
+    warn: 'What this means: a few of your answers point to areas a lender will look at closely. None of them is automatically disqualifying, but they are exactly the things that can slow down or complicate financing. These are worth nailing down before the building goes on the market.',
+    high: 'What this means: several of your answers point to issues that commonly make a building non-warrantable, which means standard conventional financing may not be available the usual way. This does not mean a sale is impossible. It means you want a real review before listing so there are no surprises in escrow, and there are loan programs built for exactly these situations.'
+  };
+
+  const lines = [];
+  lines.push('YOUR CALIFORNIA CONDO CHECK RESULTS');
+  lines.push('');
+  lines.push('You took this as a ' + roleWord + '.');
+  lines.push('');
+  lines.push('Building read: ' + bandLabel);
+  lines.push('');
+  lines.push(meaning[res.band]);
+  lines.push('');
+  lines.push('-----------------------------------------');
+  lines.push('');
+
+  // Group answers by category
+  const cats = [];
+  QUESTIONS.forEach(q => { if (!cats.includes(q.cat)) cats.push(q.cat); });
+  const answerWord = { good: 'Yes', bad: 'No', unsure: 'Not sure' };
+  lines.push('HERE IS WHAT YOU TOLD ME ABOUT THE BUILDING:');
+  lines.push('');
+  cats.forEach(cat => {
+    lines.push(cat.toUpperCase());
+    QUESTIONS.filter(q => q.cat === cat).forEach(q => {
+      const a = answers[q.id];
+      lines.push('- ' + q.q + ' ' + (answerWord[a] || 'No answer'));
+    });
+    lines.push('');
+  });
+
+  // Loan read with a plain explanation of the labels
+  const lr = loanRead(res.band, res.badCount);
+  const statusText = { ok: 'Likely available', maybe: 'Needs confirming', tough: 'May be limited' };
+  lines.push('-----------------------------------------');
+  lines.push('');
+  lines.push('LIKELY FINANCING PATHS:');
+  lines.push('- Conventional: ' + statusText[lr.conv]);
+  lines.push('- FHA: ' + statusText[lr.fha]);
+  lines.push('- VA: ' + statusText[lr.va]);
+  lines.push('');
+  lines.push('"Likely available" means nothing in your answers blocks that loan type. "Needs confirming" means it depends on details we should check. "May be limited" means that path could be harder and may need a specialized program.');
+  lines.push('');
+  lines.push('-----------------------------------------');
+  lines.push('');
+
+  // Guide CTA
+  lines.push('WANT THE FULL PLAYBOOK?');
+  lines.push('If you do not already have it, my free California condo guide walks through every one of these items in plain language, including what to gather, the 2026 rule changes, and what to do if the building is not warrantable. Get it here:');
+  lines.push('https://darynfillis.com/cal-condo');
+  lines.push('');
+
+  // Disclaimer + next step
+  lines.push('A note on this read: it is directional, based only on your answers. It is not a warrantability determination or a loan approval. Final eligibility is decided at application through full underwriting. If you want certainty, reply to this email and I will pull the real project data and tell you exactly where the building stands. No cost.');
+  lines.push('');
+  lines.push('Daryn Fillis | Certified Mortgage Advisor | NEO Home Loans | NMLS #1988371 | 424-396-6967');
+
+  return lines.join('\n');
+}
+
+function encodeForm(data) {
+  return Object.keys(data)
+    .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
+    .join('&');
+}
+
+function captureEmail() {
+  const email = document.getElementById('email').value.trim();
+  const fname = document.getElementById('fname').value.trim();
+  if (!email || !/^[^@]+@[^@]+\.[^@]+$/.test(email)) {
+    document.getElementById('email').focus();
+    document.getElementById('email').style.borderColor = 'var(--red)';
+    return;
+  }
+
+  const res = scoreBuilding();
+  const verdict = { good: 'Likely warrantable', warn: 'Some flags', high: 'High risk' }[res.band];
+
+  const payload = {
+    'form-name': 'condo-check',
+    first_name: fname,
+    email: email,
+    mode: (mode === 'agent' ? 'Listing agent' : 'Seller'),
+    verdict: verdict,
+    results_summary: buildResultsSummary(),
+    'bot-field': ''
+  };
+
+  // Post to Netlify Forms (captured + stored; Zapier reads via native trigger)
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: encodeForm(payload)
+  })
+  .then(() => {
+    document.getElementById('emailok').style.display = 'block';
+    document.querySelector('.email-row').style.display = 'none';
+  })
+  .catch(() => {
+    // Show a recoverable error rather than a false confirmation
+    document.getElementById('email').style.borderColor = 'var(--red)';
+    document.getElementById('emailok').textContent = 'Something went wrong sending that. Please try again or call 424-396-6967.';
+    document.getElementById('emailok').style.color = 'var(--red)';
+    document.getElementById('emailok').style.display = 'block';
+  });
+}
+
+function restart() {
+  answers = {};
+  document.getElementById('result').classList.remove('show');
+  document.getElementById('actionzone').style.display = 'block';
+  document.querySelectorAll('.q').forEach(c => {
+    c.classList.remove('answered');
+    c.querySelectorAll('.opt').forEach(o => o.classList.remove('sel-good','sel-bad','sel-unsure'));
+  });
+  document.querySelector('.email-row').style.display = 'flex';
+  document.getElementById('emailok').style.display = 'none';
+  document.getElementById('email').value = '';
+  document.getElementById('fname').value = '';
+  updateMeter();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// init: support ?mode=agent deep link for the separate landing page
+const params = new URLSearchParams(window.location.search);
+if (params.get('mode') === 'agent') mode = 'agent';
+buildQuiz();
+setMode(mode);
+updateMeter();
+</script>
+
+</body>
+</html>
