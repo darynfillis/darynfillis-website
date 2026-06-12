@@ -1397,6 +1397,223 @@ html{-webkit-text-size-adjust:100%;}
   container-type: inline-size;
   container-name: map;
 }
+
+
+/* ─────────────────────────────────────────────────────────
+   Fullscreen controls — overlay icon button on the map
+   ───────────────────────────────────────────────────────── */
+.fs-controls {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 50;
+  display: flex;
+  gap: 8px;
+}
+.fs-btn-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(10, 37, 64, 0.78);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.18);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  backdrop-filter: blur(8px);
+  transition: background 160ms var(--ease), transform 160ms var(--ease);
+}
+.fs-btn-icon:hover { background: rgba(10, 37, 64, 0.95); transform: scale(1.05); }
+.fs-btn-icon:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+/* Labeled buttons below the persona switcher */
+.fs-launchers {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: -8px 0 18px 0;
+  flex-wrap: wrap;
+  padding: 0 16px;
+}
+.fs-btn-text {
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  padding: 9px 16px;
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  cursor: pointer;
+  transition: background 160ms var(--ease), border-color 160ms var(--ease), color 160ms var(--ease);
+}
+.fs-btn-text:hover {
+  background: var(--surface);
+  border-color: var(--blue);
+  color: var(--navy);
+}
+.fs-btn-text-primary {
+  background: var(--navy);
+  color: var(--white);
+  border-color: var(--navy);
+}
+.fs-btn-text-primary:hover {
+  background: var(--navy-mid);
+  border-color: var(--navy-mid);
+  color: var(--white);
+}
+.fs-btn-text:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+/* ─────────────────────────────────────────────────────────
+   IN-PAGE EXPAND mode — when body.is-fs-page is set,
+   #mapFrame fills the viewport from inside the page
+   ───────────────────────────────────────────────────────── */
+body.is-fs-page {
+  overflow: hidden;
+}
+body.is-fs-page #mapFrame {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  border-radius: 0;
+  margin: 0;
+  max-width: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a1820;
+  padding: 0;
+}
+body.is-fs-page #mapFrame .map-inner {
+  /* Honor aspect ratio: fill the smaller dimension, letterbox the other */
+  width: min(100vw, calc(100vh * 1920 / 1080));
+  height: min(100vh, calc(100vw * 1080 / 1920));
+  max-width: 100vw;
+  max-height: 100vh;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────────────────────
+   TRUE FULLSCREEN — when #mapFrame is browser-fullscreen,
+   the :fullscreen pseudo applies AND :-webkit-full-screen on Safari
+   ───────────────────────────────────────────────────────── */
+#mapFrame:fullscreen,
+#mapFrame:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  border-radius: 0;
+  margin: 0;
+  background: #0a1820;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+#mapFrame:fullscreen .map-inner,
+#mapFrame:-webkit-full-screen .map-inner {
+  width: min(100vw, calc(100vh * 1920 / 1080));
+  height: min(100vh, calc(100vw * 1080 / 1920));
+  max-width: 100vw;
+  max-height: 100vh;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────────────────────
+   When in EITHER fullscreen mode, float the persona switcher
+   and persona intro into the map as floating overlays
+   ───────────────────────────────────────────────────────── */
+body.is-fs-active .persona-selector,
+#mapFrame:fullscreen ~ * .persona-selector {
+  /* not used — we toggle via body class only */
+}
+
+body.is-fs-active .persona-selector {
+  position: fixed;
+  bottom: 20px;
+  top: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1500;
+  background: rgba(10, 37, 64, 0.82);
+  padding: 6px 10px;
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+body.is-fs-active .persona-selector .persona-btn {
+  font-size: 11px;
+  padding: 5px 10px;
+  color: rgba(255,255,255,0.78);
+  background: transparent;
+  border-color: rgba(255,255,255,0.15);
+}
+body.is-fs-active .persona-selector .persona-btn.is-active {
+  background: var(--blue);
+  color: var(--navy);
+  border-color: var(--blue);
+}
+body.is-fs-active .persona-selector .persona-prefix {
+  color: rgba(255,255,255,0.6);
+  font-size: 10px;
+}
+
+/* Hide the journey-bar intro + fs-launchers + everything outside the map in fullscreen */
+body.is-fs-active .journey-bar-text,
+body.is-fs-active .journey-bar-chooser-label,
+body.is-fs-active .fs-launchers,
+body.is-fs-active nav,
+body.is-fs-active .breadcrumb-bar,
+body.is-fs-active footer,
+body.is-fs-active .map-bottom,
+body.is-fs-active .map-rules {
+  display: none !important;
+}
+/* Keep .journey-bar itself rendering so the persona-selector inside it has layout context.
+   Just collapse its visual footprint so it doesn't take up page space. */
+body.is-fs-active .journey-bar {
+  height: 0;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  overflow: visible;
+  z-index: 1500;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+body.is-fs-active .journey-bar-inner,
+body.is-fs-active .journey-bar-chooser {
+  height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+}
+
+/* In fullscreen, the icon button switches its glyph (expand → shrink) */
+body.is-fs-active .fs-icon-expand { display: none; }
+body.is-fs-active .fs-icon-shrink { display: block !important; }
+
+/* Zoom panel (when a stage is opened) overlays nicely in fullscreen */
+body.is-fs-active .zoom-panel {
+  z-index: 1200;
+}
+
+/* Small screens — labeled buttons stack and icon button is slightly smaller */
+@media (max-width: 600px) {
+  .fs-controls { top: 8px; right: 8px; }
+  .fs-btn-icon { width: 32px; height: 32px; }
+  .fs-launchers { gap: 8px; }
+  .fs-btn-text { font-size: 12px; padding: 8px 12px; }
+}
+
 .map-inner { position: relative; width: 100%; aspect-ratio: 1920/1080; transition: transform 0.7s cubic-bezier(0.4,0,0.2,1); transform-origin: center center; }
 .map-inner.is-zoomed { cursor: grab; }
 #mapFrame.is-panning { cursor: grabbing; }
@@ -1969,8 +2186,16 @@ body.zoom-open { overflow: hidden; }
 
 <nav class="breadcrumb-bar" aria-label="Breadcrumb"><div class="breadcrumb-inner"><a href="/" class="breadcrumb-item">Home</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-item current" aria-current="page">The Journey</span></div></nav>
 <section class="journey-bar"><div class="journey-bar-inner"><div class="journey-bar-chooser"><span class="journey-bar-chooser-label">I&rsquo;m a&hellip;</span><div id="personaSelector" class="persona-selector"></div></div><div class="journey-bar-text"><span id="introEyebrow" class="journey-bar-eyebrow">For first-time buyers</span><h1 id="introH2" class="journey-bar-title">Your first home, mapped out from end to end.</h1><span id="introSub" hidden></span></div></div></section>
+
+<div class="fs-launchers">
+  <button type="button" class="fs-btn-text" data-fs-action="page" title="Expand without leaving the page">↕ Expand map</button>
+  <button type="button" class="fs-btn-text fs-btn-text-primary" data-fs-action="browser" title="True fullscreen (Esc to exit)">⛶ View fullscreen</button>
+</div>
 <section class="map-section">
   <div id="mapFrame" class="map-frame">
+    <div class="fs-controls">
+      <button type="button" class="fs-btn-icon" data-fs-action="toggle" aria-label="Toggle fullscreen" title="Fullscreen (F)"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fs-icon-expand" d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/><path class="fs-icon-shrink" d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" style="display:none"/></svg></button>
+    </div>
     <div class="map-inner" id="mapInner">
       <img class="map-bg" src="/journey-map.jpg" srcset="/journey-map-1x.jpg 1x, /journey-map.jpg 2x" alt="Aerial mountain illustration representing the homebuying journey" draggable="false">
       <svg id="trailSvg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
@@ -4075,4 +4300,102 @@ const stageIcons = {
 })();
 
 </script>
+
+<script>
+/* Fullscreen controller for the journey map.
+   Two modes: 'page' (in-page expand) and 'browser' (true requestFullscreen).
+   Either mode sets body.is-fs-active for shared overlay styling. */
+(function(){
+  const mapFrame = document.getElementById('mapFrame');
+  if (!mapFrame) return;
+  const body = document.body;
+  let currentMode = null; // 'page' | 'browser' | null
+
+  function setActive(mode) {
+    currentMode = mode;
+    body.classList.toggle('is-fs-active', !!mode);
+    body.classList.toggle('is-fs-page', mode === 'page');
+  }
+
+  function enterPage() {
+    setActive('page');
+    // Move focus into the map for accessibility
+    mapFrame.setAttribute('tabindex', '-1');
+    mapFrame.focus({preventScroll: true});
+  }
+
+  function exitPage() {
+    setActive(null);
+  }
+
+  function enterBrowser() {
+    const req = mapFrame.requestFullscreen || mapFrame.webkitRequestFullscreen || mapFrame.msRequestFullscreen;
+    if (!req) {
+      // Browser doesn't support — fall back to page mode
+      enterPage();
+      return;
+    }
+    req.call(mapFrame).then(() => {
+      setActive('browser');
+    }).catch(err => {
+      console.warn('Fullscreen request failed:', err);
+      // Fall back to page mode silently
+      enterPage();
+    });
+  }
+
+  function exitBrowser() {
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+      const exit = document.exitFullscreen || document.webkitExitFullscreen;
+      if (exit) exit.call(document);
+    }
+    setActive(null);
+  }
+
+  function toggle() {
+    if (currentMode === 'browser') exitBrowser();
+    else if (currentMode === 'page') exitPage();
+    else enterBrowser(); // default toggle from icon = true fullscreen
+  }
+
+  // Wire up the buttons
+  document.addEventListener('click', function(e) {
+    const btn = e.target.closest('[data-fs-action]');
+    if (!btn) return;
+    const action = btn.dataset.fsAction;
+    if (action === 'page') {
+      currentMode === 'page' ? exitPage() : enterPage();
+    } else if (action === 'browser') {
+      currentMode === 'browser' ? exitBrowser() : enterBrowser();
+    } else if (action === 'toggle') {
+      toggle();
+    }
+  });
+
+  // Esc handler for page mode (browser mode handles Esc natively)
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && currentMode === 'page') {
+      exitPage();
+    } else if (e.key === 'f' || e.key === 'F') {
+      // Don't intercept if user is typing in a field
+      const t = e.target.tagName;
+      if (t === 'INPUT' || t === 'TEXTAREA' || e.target.isContentEditable) return;
+      toggle();
+    }
+  });
+
+  // Listen for browser fullscreen exit (via Esc or other means)
+  document.addEventListener('fullscreenchange', function() {
+    if (!document.fullscreenElement && currentMode === 'browser') {
+      setActive(null);
+    }
+  });
+  document.addEventListener('webkitfullscreenchange', function() {
+    if (!document.webkitFullscreenElement && currentMode === 'browser') {
+      setActive(null);
+    }
+  });
+})();
+</script>
+
 </body></html>
