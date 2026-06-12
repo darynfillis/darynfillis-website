@@ -1,3 +1,2 @@
-# Netlify redirects
-# Anything not matched serves 404.html with a 404 status
-/*    /404.html    404
+/success.html  /success/  301!
+/thanks.html   /success/  301!
