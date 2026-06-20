@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Competitive Referral Intelligence Dashboard | Michelle Rogers, CrossCountry Mortgage</title>
+<style>
+    :root {
+        --bg: #0f172a;
+        --panel: #111827;
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --line: #293447;
+        --accent: #38bdf8;
+        --accent2: #22c55e;
+        --unit: #f59e0b;
+        --white: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+        background: linear-gradient(135deg, #0f172a 0%, #111827 55%, #0b1120 100%);
+        color: var(--text);
+        line-height: 1.45;
+    }
+    .page {
+        width: min(1220px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 34px 0 60px;
+    }
+    .hero {
+        display: grid;
+        grid-template-columns: 1.6fr .9fr;
+        gap: 24px;
+        align-items: stretch;
+        margin-bottom: 22px;
+    }
+    .hero-card, .panel, .metric, .callout {
+        background: rgba(17, 24, 39, .92);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    }
+    .hero-card { padding: 30px; }
+    .eyebrow {
+        color: var(--accent);
+        font-size: 13px;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+    h1 {
+        font-size: clamp(30px, 4vw, 54px);
+        line-height: .98;
+        margin: 0 0 16px;
+        letter-spacing: -.04em;
+    }
+    .subtitle {
+        color: var(--muted);
+        max-width: 820px;
+        font-size: 17px;
+        margin: 0;
+    }
+    .assumption {
+        padding: 22px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .assumption h3 { margin: 0 0 8px; font-size: 16px; }
+    .assumption p { margin: 0; color: var(--muted); font-size: 14px; }
+    .metrics {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin: 22px 0;
+    }
+    .metric {
+        padding: 20px;
+        min-height: 132px;
+    }
+    .metric .label { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+    .metric .value { font-size: 28px; font-weight: 800; letter-spacing: -.03em; margin-bottom: 4px; }
+    .metric .note { color: var(--muted); font-size: 12px; }
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        margin-top: 18px;
+    }
+    .panel {
+        padding: 22px;
+        overflow: hidden;
+    }
+    .panel h2 { font-size: 20px; margin: 0 0 12px; letter-spacing: -.02em; }
+    .panel p { color: var(--muted); margin: 0 0 16px; }
+    .stack {
+        border-radius: 13px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        height: 46px;
+        display: flex;
+        margin: 14px 0 10px;
+        background: #0b1120;
+    }
+    .stack .syg {
+        background: linear-gradient(90deg, var(--accent), #60a5fa);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #04111f;
+        font-weight: 800;
+        font-size: 13px;
+    }
+    .stack .syg.unit-color {
+        background: linear-gradient(90deg, var(--unit), #fbbf24);
+    }
+    .stack .other {
+        background: #334155;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #d1d5db;
+        font-weight: 700;
+        font-size: 13px;
+    }
+    .legend { display: flex; gap: 18px; flex-wrap: wrap; color: var(--muted); font-size: 13px; }
+    .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; margin-right: 7px; vertical-align: middle; }
+    .dot.syg-dot { background: var(--accent); }
+    .dot.unit-dot { background: var(--unit); }
+    .dot.other-dot { background: #64748b; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th {
+        text-align: left;
+        color: #cbd5e1;
+        font-weight: 700;
+        padding: 11px 10px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255,255,255,.025);
+    }
+    td {
+        padding: 10px;
+        border-bottom: 1px solid rgba(41,52,71,.75);
+        color: #e5e7eb;
+        vertical-align: middle;
+    }
+    tr:last-child td { border-bottom: 0; }
+    .highlight-row td { background: rgba(56, 189, 248, .075); }
+    .mini-bar {
+        width: 100%;
+        height: 8px;
+        background: #263244;
+        border-radius: 999px;
+        overflow: hidden;
+    }
+    .mini-bar span {
+        display: block;
+        height: 100%;
+        background: var(--accent2);
+        border-radius: 999px;
+    }
+    .mini-bar.unit span { background: var(--unit); }
+    .full { grid-column: 1 / -1; }
+    .callouts {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-top: 18px;
+    }
+    .callout {
+        padding: 20px;
+        border-top: 4px solid var(--accent);
+    }
+    .callout:nth-child(2) { border-top-color: var(--unit); }
+    .callout:nth-child(3) { border-top-color: var(--accent2); }
+    .callout h3 { margin: 0 0 8px; font-size: 17px; }
+    .callout p { margin: 0; color: var(--muted); font-size: 14px; }
+    .revenue-grid, .insight-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+    }
+    .rev, .insight {
+        background: rgba(255,255,255,.04);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 15px;
+    }
+    .rev .bps, .insight .small { color: var(--muted); font-size: 12px; margin-bottom: 6px; }
+    .rev .amt, .insight .big { font-size: 20px; font-weight: 800; }
+    .talk-track {
+        background: rgba(56, 189, 248, .08);
+        border: 1px solid rgba(56, 189, 248, .25);
+        border-radius: 16px;
+        padding: 20px;
+        color: #e0f2fe;
+        font-size: 18px;
+        font-weight: 650;
+    }
+    .footer {
+        margin-top: 28px;
+        color: var(--muted);
+        font-size: 12px;
+        border-top: 1px solid var(--line);
+        padding-top: 18px;
+    }
+    @media print {
+        body { background: #fff; color: #111827; }
+        .hero-card, .panel, .metric, .callout, .assumption {
+            background: #fff;
+            color: #111827;
+            box-shadow: none;
+            border-color: #d1d5db;
+        }
+        .subtitle, .panel p, .metric .label, .metric .note, .assumption p, .callout p, .footer, .legend { color: #4b5563; }
+        td, th { color: #111827; border-color: #e5e7eb; }
+        h1, h2, h3, .metric .value { color: #111827; }
+        .page { width: 96%; padding: 20px 0; }
+    }
+    @media (max-width: 1000px) {
+        .hero, .grid, .metrics, .callouts, .revenue-grid, .insight-grid { grid-template-columns: 1fr; }
+    }
+</style>
+</head>
+<body>
+<div class="page">
+    <section class="hero">
+        <div class="hero-card">
+            <div class="eyebrow">Competitive Referral Intelligence</div>
+            <h1>Michelle Rogers / CrossCountry Mortgage Referral Dashboard</h1>
+            <p class="subtitle">Leadership-facing view of expanded Michelle Rogers production, plus volume, unit count, and average loan amount from the submitted agent data. The key finding is that Stephanie Younger Group appears to be a major source of both production dollars and recurring referral flow.</p>
+        </div>
+        <div class="assumption hero-card">
+            <h3>Working assumption</h3>
+            <p>All production in the submitted dataset is assumed to be flowing to Michelle Rogers at CrossCountry Mortgage. Stephanie Younger Group membership is based on the names previously identified in the dataset.</p>
+        </div>
+    </section>
+
+    <section class="metrics">
+        <div class="metric">
+            <div class="label">Michelle Rogers total loan count</div>
+            <div class="value">100</div>
+            <div class="note">All loans in expanded dataset</div>
+        </div>
+        <div class="metric">
+            <div class="label">Michelle Rogers total loan volume</div>
+            <div class="value">$109.7M</div>
+            <div class="note">$109,699,000 total volume</div>
+        </div>
+        <div class="metric">
+            <div class="label">Michelle Rogers avg loan amount</div>
+            <div class="value">$1.10M</div>
+            <div class="note">$1,096,990 average loan amount</div>
+        </div>
+        <div class="metric">
+            <div class="label">Expanded dataset status</div>
+            <div class="value">Added</div>
+            <div class="note">Includes purchase, refi, and equity records</div>
+        </div>
+    </section>
+
+    <section class="metrics">
+        <div class="metric">
+            <div class="label">Total listed volume</div>
+            <div class="value">$84,087,797</div>
+            <div class="note">Across all agents in dataset</div>
+        </div>
+        <div class="metric">
+            <div class="label">SYG listed volume</div>
+            <div class="value">$36,773,550</div>
+            <div class="note">43.7% of total volume</div>
+        </div>
+        <div class="metric">
+            <div class="label">Total unit count</div>
+            <div class="value">72</div>
+            <div class="note">Across all listed entries</div>
+        </div>
+        <div class="metric">
+            <div class="label">SYG unit count</div>
+            <div class="value">26</div>
+            <div class="note">36.1% of total units</div>
+        </div>
+        <div class="metric">
+            <div class="label">SYG avg loan amount</div>
+            <div class="value">$1,414,367</div>
+            <div class="note">SYG volume divided by SYG units</div>
+        </div>
+    </section>
+
+    <section class="grid">
+        <div class="panel">
+            <h2>Volume Concentration</h2>
+            <p>Stephanie Younger Group-affiliated agents account for nearly half of the assumed CrossCountry-linked dollar volume.</p>
+            <div class="stack">
+                <div class="syg" style="width:43.7%">43.7%</div>
+                <div class="other" style="width:56.3%">56.3%</div>
+            </div>
+            <div class="legend">
+                <span><span class="dot syg-dot"></span>SYG: $36,773,550</span>
+                <span><span class="dot other-dot"></span>Other: $47,314,247</span>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>Unit Count Concentration</h2>
+            <p>Stephanie Younger Group-affiliated agents account for more than one-third of listed unit activity.</p>
+            <div class="stack">
+                <div class="syg unit-color" style="width:36.1%">36.1%</div>
+                <div class="other" style="width:63.9%">63.9%</div>
+            </div>
+            <div class="legend">
+                <span><span class="dot unit-dot"></span>SYG: 26 units</span>
+                <span><span class="dot other-dot"></span>Other: 46 units</span>
+            </div>
+        </div>
+
+        <div class="panel full">
+            <h2>Average Loan Amount Read</h2>
+            <p>The expanded Michelle Rogers dataset totals 100 loans, $109,699,000 in volume, and a $1,096,990 average loan amount. The comparison cards below preserve the prior agent-list analysis.</p>
+            <div class="insight-grid">
+                <div class="insight">
+                    <div class="small">Total dataset avg</div>
+                    <div class="big">$1,167,886</div>
+                </div>
+                <div class="insight">
+                    <div class="small">SYG avg</div>
+                    <div class="big">$1,414,367</div>
+                </div>
+                <div class="insight">
+                    <div class="small">Non-SYG avg</div>
+                    <div class="big">$1,028,571</div>
+                </div>
+                <div class="insight">
+                    <div class="small">SYG premium vs. total avg</div>
+                    <div class="big">21.1%</div>
+                </div>
+            </div>
+            <p style="margin-top:14px;">SYG's average loan amount is higher than the overall dataset average. This supports the read that the relationship is valuable on both unit flow and deal size.</p>
+        </div>
+
+        <div class="panel full">
+            <h2>Estimated Gross Revenue Range</h2>
+            <p>Directional revenue estimates using common mortgage basis-point assumptions. These are not confirmed CrossCountry margins.</p>
+            <div class="revenue-grid">
+                <div class="rev"><div class="bps">75 bps on total volume</div><div class="amt">$630,658</div></div>
+                <div class="rev"><div class="bps">100 bps on total volume</div><div class="amt">$840,878</div></div>
+                <div class="rev"><div class="bps">125 bps on total volume</div><div class="amt">$1,051,097</div></div>
+                <div class="rev"><div class="bps">150 bps on total volume</div><div class="amt">$1,261,317</div></div>
+            </div>
+            <p style="margin-top:14px;">For Stephanie Younger Group volume alone, the same range is approximately <strong>$275,802</strong> to <strong>$551,603</strong>.</p>
+        </div>
+
+        <div class="panel full">
+            <h2>SYG Contributors by Volume, Units, and Average Loan Amount</h2>
+            <p>This table now shows the unit count next to each producer's volume, plus average loan amount by agent.</p>
+            <table>
+                <thead>
+                    <tr><th>Agent</th><th>Units</th><th>Volume</th><th>Avg Loan Amount</th><th>Share of SYG Volume</th><th>Weight</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Stephanie Younger</td><td>11</td><td>$16,814,400</td><td>$1,528,582</td><td>45.7%</td><td><div class='mini-bar'><span style='width:45.7%'></span></div></td></tr>
+<tr><td>Josh Perelson</td><td>2</td><td>$4,160,000</td><td>$2,080,000</td><td>11.3%</td><td><div class='mini-bar'><span style='width:11.3%'></span></div></td></tr>
+<tr><td>Chloe Nash</td><td>1</td><td>$3,000,000</td><td>$3,000,000</td><td>8.2%</td><td><div class='mini-bar'><span style='width:8.2%'></span></div></td></tr>
+<tr><td>Stephanie Singletary</td><td>1</td><td>$2,368,000</td><td>$2,368,000</td><td>6.4%</td><td><div class='mini-bar'><span style='width:6.4%'></span></div></td></tr>
+<tr><td>Christopher Birdsall</td><td>3</td><td>$1,890,000</td><td>$630,000</td><td>5.1%</td><td><div class='mini-bar'><span style='width:5.1%'></span></div></td></tr>
+<tr><td>Rose Vasilj</td><td>1</td><td>$1,695,750</td><td>$1,695,750</td><td>4.6%</td><td><div class='mini-bar'><span style='width:4.6%'></span></div></td></tr>
+<tr><td>Camille Dorflinger</td><td>2</td><td>$1,658,000</td><td>$829,000</td><td>4.5%</td><td><div class='mini-bar'><span style='width:4.5%'></span></div></td></tr>
+<tr><td>Amber McLain</td><td>1</td><td>$1,606,400</td><td>$1,606,400</td><td>4.4%</td><td><div class='mini-bar'><span style='width:4.4%'></span></div></td></tr>
+<tr><td>Meredith Salamunovich</td><td>1</td><td>$1,258,000</td><td>$1,258,000</td><td>3.4%</td><td><div class='mini-bar'><span style='width:3.4%'></span></div></td></tr>
+<tr><td>Tyler Davidson</td><td>1</td><td>$1,008,000</td><td>$1,008,000</td><td>2.7%</td><td><div class='mini-bar'><span style='width:2.7%'></span></div></td></tr>
+<tr><td>Eric Zarenko</td><td>1</td><td>$765,000</td><td>$765,000</td><td>2.1%</td><td><div class='mini-bar'><span style='width:2.1%'></span></div></td></tr>
+<tr><td>Esther Eunji Shim</td><td>1</td><td>$550,000</td><td>$550,000</td><td>1.5%</td><td><div class='mini-bar'><span style='width:1.5%'></span></div></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="panel">
+            <h2>SYG Contributors by Unit Count</h2>
+            <table>
+                <thead>
+                    <tr><th>Agent</th><th>Units</th><th>Volume</th><th>Avg Loan Amount</th><th>Share of SYG Units</th><th>Weight</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Stephanie Younger</td><td>11</td><td>$16,814,400</td><td>$1,528,582</td><td>42.3%</td><td><div class='mini-bar unit'><span style='width:42.3%'></span></div></td></tr>
+<tr><td>Christopher Birdsall</td><td>3</td><td>$1,890,000</td><td>$630,000</td><td>11.5%</td><td><div class='mini-bar unit'><span style='width:11.5%'></span></div></td></tr>
+<tr><td>Josh Perelson</td><td>2</td><td>$4,160,000</td><td>$2,080,000</td><td>7.7%</td><td><div class='mini-bar unit'><span style='width:7.7%'></span></div></td></tr>
+<tr><td>Camille Dorflinger</td><td>2</td><td>$1,658,000</td><td>$829,000</td><td>7.7%</td><td><div class='mini-bar unit'><span style='width:7.7%'></span></div></td></tr>
+<tr><td>Chloe Nash</td><td>1</td><td>$3,000,000</td><td>$3,000,000</td><td>3.8%</td><td><div class='mini-bar unit'><span style='width:3.8%'></span></div></td></tr>
+<tr><td>Stephanie Singletary</td><td>1</td><td>$2,368,000</td><td>$2,368,000</td><td>3.8%</td><td><div class='mini-bar unit'><span style='width:3.8%'></span></div></td></tr>
+<tr><td>Rose Vasilj</td><td>1</td><td>$1,695,750</td><td>$1,695,750</td><td>3.8%</td><td><div class='mini-bar unit'><span style='width:3.8%'></span></div></td></tr>
+<tr><td>Amber McLain</td><td>1</td><td>$1,606,400</td><td>$1,606,400</td><td>3.8%</td><td><div class='mini-bar unit'><span style='width:3.8%'></span></div></td></tr>
+<tr><td>Meredith Salamunovich</td><td>1</td><td>$1,258,000</td><td>$1,258,000</td><td>3.8%</td><td><div class='mini-bar unit'><span style='width:3.8%'></span></div></td></tr>
+<tr><td>Tyler Davidson</td><td>1</td><td>$1,008,000</td><td>$1,008,000</td><td>3.8%</td><td><div class='mini-bar unit'><span style='width:3.8%'></span></div></td></tr>
+<tr><td>Eric Zarenko</td><td>1</td><td>$765,000</td><td>$765,000</td><td>3.8%</td><td><div class='mini-bar unit'><span style='width:3.8%'></span></div></td></tr>
+<tr><td>Esther Eunji Shim</td><td>1</td><td>$550,000</td><td>$550,000</td><td>3.8%</td><td><div class='mini-bar unit'><span style='width:3.8%'></span></div></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="panel">
+            <h2>Volume vs. Unit Count Read</h2>
+            <div class="insight-grid" style="grid-template-columns:1fr 1fr;">
+                <div class="insight">
+                    <div class="small">SYG share of dollar volume</div>
+                    <div class="big">43.7%</div>
+                </div>
+                <div class="insight">
+                    <div class="small">SYG share of unit count</div>
+                    <div class="big">36.1%</div>
+                </div>
+            </div>
+            <p style="margin-top:14px;">SYG's dollar-volume share is higher than its unit-count share. That indicates above-average deal size relative to the full dataset.</p>
+        </div>
+
+        <div class="panel full">
+            <h2>Top 15 Agents by Volume With Unit Count and Average Loan Amount</h2>
+            <table>
+                <thead>
+                    <tr><th>#</th><th>Agent</th><th>Brokerage</th><th>Units</th><th>Volume</th><th>Avg Loan Amount</th><th>Cluster</th></tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight-row"><td>1</td><td>Stephanie Younger</td><td>Compass</td><td>11</td><td>$16,814,400</td><td>$1,528,582</td><td>Stephanie Younger Group</td></tr>
+<tr class=""><td>2</td><td>Christopher Fajardo</td><td>Compass</td><td>2</td><td>$4,230,000</td><td>$2,115,000</td><td>Other</td></tr>
+<tr class=""><td>3</td><td>Ryan Jancula</td><td>Compass</td><td>2</td><td>$4,230,000</td><td>$2,115,000</td><td>Other</td></tr>
+<tr class="highlight-row"><td>4</td><td>Josh Perelson</td><td>Compass</td><td>2</td><td>$4,160,000</td><td>$2,080,000</td><td>Stephanie Younger Group</td></tr>
+<tr class=""><td>5</td><td>Alexis Balner Hsu</td><td>Vista Sotheby&#x27;s International Realty</td><td>4</td><td>$3,989,883</td><td>$997,471</td><td>Other</td></tr>
+<tr class="highlight-row"><td>6</td><td>Chloe Nash</td><td>Compass</td><td>1</td><td>$3,000,000</td><td>$3,000,000</td><td>Stephanie Younger Group</td></tr>
+<tr class="highlight-row"><td>7</td><td>Stephanie Singletary</td><td>Compass</td><td>1</td><td>$2,368,000</td><td>$2,368,000</td><td>Stephanie Younger Group</td></tr>
+<tr class=""><td>8</td><td>Liz Gallucci Bird</td><td>Vista Sotheby&#x27;s International Realty</td><td>1</td><td>$2,270,000</td><td>$2,270,000</td><td>Other</td></tr>
+<tr class=""><td>9</td><td>Kristofer Everett-Einarsson</td><td>Carolwood Partners Inc.</td><td>1</td><td>$2,120,000</td><td>$2,120,000</td><td>Other</td></tr>
+<tr class=""><td>10</td><td>Ed Kaminsky</td><td>Exp Realty Of California, Inc</td><td>2</td><td>$2,118,699</td><td>$1,059,350</td><td>Other</td></tr>
+<tr class="highlight-row"><td>11</td><td>Christopher Birdsall</td><td>Compass</td><td>3</td><td>$1,890,000</td><td>$630,000</td><td>Stephanie Younger Group</td></tr>
+<tr class=""><td>12</td><td>Michelle Abel</td><td>Vista Sotheby&#x27;s International Realty</td><td>1</td><td>$1,785,000</td><td>$1,785,000</td><td>Other</td></tr>
+<tr class="highlight-row"><td>13</td><td>Rose Vasilj</td><td>Compass</td><td>1</td><td>$1,695,750</td><td>$1,695,750</td><td>Stephanie Younger Group</td></tr>
+<tr class="highlight-row"><td>14</td><td>Camille Dorflinger</td><td>Compass</td><td>2</td><td>$1,658,000</td><td>$829,000</td><td>Stephanie Younger Group</td></tr>
+<tr class="highlight-row"><td>15</td><td>Amber McLain</td><td>Compass</td><td>1</td><td>$1,606,400</td><td>$1,606,400</td><td>Stephanie Younger Group</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="callouts">
+        <div class="callout">
+            <h3>Primary insight</h3>
+            <p>This looks less like a single-agent relationship and more like a team-level lender relationship inside Stephanie Younger Group.</p>
+        </div>
+        <div class="callout">
+            <h3>Unit-count implication</h3>
+            <p>With 26 of 72 units, SYG appears to be a repeatable source of transaction flow, not a one-off high-ticket anomaly.</p>
+        </div>
+        <div class="callout">
+            <h3>Average-loan implication</h3>
+            <p>SYG average loan amount is approximately $1,414,367, which is above the full dataset average of $1,167,886.</p>
+        </div>
+    </section>
+
+    <section class="panel full" style="margin-top:18px;">
+        <h2>Recommended Leadership Narrative</h2>
+        <div class="talk-track">
+            “This is a 100-loan, $109.7 million production picture. It is not just a volume opportunity. It is a unit-flow and high-average-loan-amount opportunity. Stephanie Younger Group appears to represent meaningful production dollars, recurring referral activity, and stronger-than-average deal size.”
+        </div>
+        <p style="margin-top:16px;">The strategic path is not to tell agents that we are better at mortgages. The stronger approach is to show where they are leaving repeat, referral, listing-side, and move-up business on the table.</p>
+    </section>
+
+    <section class="panel full" style="margin-top:18px;">
+        <h2>Priority Targets</h2>
+        <table>
+            <thead>
+                <tr><th>Priority</th><th>Target</th><th>Reason</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>Stephanie Younger</td><td>Anchor relationship. Largest identified volume source and highest unit-count source.</td></tr>
+                <tr><td>2</td><td>Josh Perelson</td><td>High-volume SYG contributor with repeated activity and a strong average loan amount.</td></tr>
+                <tr><td>3</td><td>Chloe Nash</td><td>High average loan amount from limited unit count.</td></tr>
+                <tr><td>4</td><td>Christopher Birdsall</td><td>Strong unit count and meaningful volume.</td></tr>
+                <tr><td>5</td><td>Stephanie Singletary</td><td>Meaningful volume and visible team contributor.</td></tr>
+                <tr><td>6</td><td>Camille Dorflinger, Amber McLain, Rose Vasilj, Meredith Salamunovich</td><td>Mid-tier contributors who may be more accessible entry points into the team ecosystem.</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <div class="footer">
+        Prepared from user-provided production and agent-count data. Figures are directional and should be validated against source reporting before being used for compensation, recruiting, or formal market-share claims.
+    </div>
+</div>
+</body>
+</html>
