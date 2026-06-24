@@ -1,171 +1,570 @@
-# Tahoe Lakefront Property Landing Page
+# darynfillis.com
 
-This is a static Netlify-ready property landing page for 7600 N Lake Blvd #34.
+Personal mortgage advisory website for Daryn Fillis, Certified Mortgage Advisor at NEO Home Loans.
 
-## Deploy
+This site is built to educate buyers, homeowners, and real estate partners in Los Angeles. It includes strategy pages, local neighborhood pages, Field Notes articles, lead magnet landing pages, calculators, scheduling pages, and a private SYG partnership dashboard.
 
-1. Upload this folder to Netlify or connect it to a Git repo.
-2. In Netlify, enable Forms/Form detection.
-3. Deploy the site.
-4. In Netlify, go to Forms and add email notifications for the `private-showing` form.
+## Project status
 
-Netlify will capture the showing request form because the form is present in static HTML and includes `name="private-showing"` plus `data-netlify="true"`.
+This is a static HTML site deployed on Netlify.
 
-## Hero video
+There is no required frontend build process for normal page edits. Most pages are standalone `.html` files with page-level CSS and JavaScript. Netlify is used for hosting, forms, redirects, headers, and the SYG serverless function.
 
-The current hero uses `assets/images/meta/hero-poster.jpg` as a static image.
+GitHub repository:
 
-When the hero video is ready:
-
-1. Save the video as `assets/video/hero-video.mp4`.
-2. In `index.html`, replace the hero image with the commented `<video>` block directly below it.
-3. Keep the poster image as the fallback.
-
-Recommended video settings: MP4/H.264, 1080p, short loop, muted background footage, compressed for web.
-
-## Before launch
-
-Confirm final active-listing facts before publishing: price, MLS status, bed/bath count, square footage, HOA, showing instructions, rental/STR rules, brokerage disclaimer, and any required agent compliance language.
-
-
-## Krys contact details
-
-The contact block, footer, hidden Netlify form fields, and success page now include:
-
-- Instagram: https://www.instagram.com/krysbenyamein
-- Phone: 714-588-1017
-- Email: krysbenyamein@gmail.com
-
-Netlify form email notifications are configured inside Netlify, not inside this HTML file. Add krysbenyamein@gmail.com and any team inboxes as notification recipients after deployment.
-
-## Outbound place links
-
-Neighborhood, resort, water-access, airport, grocery, and market cards are clickable. External links open in a new tab. The Ski Country card jumps to the detailed resort section on the same page.
-
-
-## Netlify Forms fix applied
-
-The showing form now uses Netlify's static HTML detection pattern:
-
-```html
-<form name="private-showing" method="POST" netlify netlify-honeypot="bot-field" action="/success/">
-  <input type="hidden" name="form-name" value="private-showing">
+```text
+https://github.com/darynfillis/darynfillis-website.git
 ```
 
-A matching success page exists at both `/success/` and `success.html`. The form posts to `/success/` because extensionless success paths are the safest Netlify pattern. `_redirects` also forwards older `/success.html` and `/thanks.html` paths to `/success/`.
+## Tech stack
 
-After redeploying, open Netlify Dashboard > Forms and make sure form detection is enabled. Then submit one test lead. If the form appears as `private-showing`, add email notifications for Krys and the real estate team in Netlify Dashboard > Forms > Form notifications.
+- Static HTML, CSS, and JavaScript
+- Netlify hosting
+- Netlify Forms for lead capture
+- Netlify Functions for `/netlify/functions/deals.js`
+- Netlify Blobs for SYG dashboard storage
+- `netlify.toml` for deploy settings and headers
+- `_redirects` for custom routing and 404 behavior
+- `_headers` for asset and security headers
+- `sitemap.xml` and `robots.txt` for SEO and crawler controls
 
+## Local development
 
-## Added launch pages
-- `/404.html` uses the existing illustrated Tahoe artwork style, not property photography.
-- `/accessibility/` includes a simple accessibility statement and Krys contact info.
-- `/privacy/` explains form collection and use.
-- `/terms/` includes reliable-but-not-guaranteed, buyer verification, financing, and Equal Housing Opportunity language.
+Install dependencies only if you need to run Netlify locally or work on the SYG function.
 
-## Quick accessibility fixes included
-- Visible focus states.
-- Decorative icons marked as hidden from assistive tech.
-- Audience-toggle inactive copy marked `aria-hidden`.
-- Toggle/filter buttons use `aria-pressed`.
-- Netlify honeypot field is hidden and removed from tab order.
+```bash
+npm install
+npm run dev
+```
 
+The `npm run dev` script runs:
 
-## Favicon package
+```bash
+netlify dev
+```
 
-The 34 favicon assets are included in `/assets/favicons/` and all static page heads have been patched to reference them.
+For simple HTML edits, opening the relevant `.html` file in a browser is usually enough for layout review. Use Netlify Dev when testing forms, redirects, or serverless functions.
 
+## Deployment
 
-## OG Image Update
-The Open Graph image is the selected retro FOR SALE poster at assets/images/meta/og-image.jpg, exported at 1200 x 630 for social previews.
+The site is designed to deploy from the project root.
 
+Netlify configuration:
 
-## OGv2 / iMessage social preview
+```toml
+[build]
+  publish = "."
+```
 
-The primary social preview image is:
+Recommended deployment flow:
 
-`/assets/images/meta/OGv2.jpg?v=2`
+1. Make changes locally or through GitHub.
+2. Test the edited pages on desktop and mobile widths.
+3. Confirm forms submit correctly if a form was changed.
+4. Confirm internal links use clean URLs, such as `/about` instead of `/about.html`.
+5. Update `sitemap.xml` when adding or removing indexable pages.
+6. Commit to GitHub and let Netlify deploy from the connected repository.
 
-The site uses absolute Open Graph image URLs for better compatibility with iMessage, Facebook, LinkedIn, Slack, and other preview scrapers.
+## Main site structure
 
-After deploying, test directly:
+```text
+/
+├── index.html                         # Homepage
+├── about.html                         # About Daryn
+├── schedule.html                      # Booking page
+├── faq.html                           # Common mortgage questions
+├── for-agents.html                    # Real estate partner page
+├── field-notes.html                   # Field Notes index
+├── field-notes/                       # Blog and newsletter-style articles
+├── neighborhoods/                     # Local LA neighborhood pages
+├── calculator.html                    # Mortgage calculator
+├── buying-vs-renting.html             # Buy vs rent calculator
+├── cal-condo.html                     # California condo page
+├── cal-condo-buyer.html               # Condo buyer lead magnet
+├── cal-condo-seller.html              # Condo seller lead magnet
+├── thanks-*.html                      # Thank-you pages for forms and downloads
+├── syg/                               # Private SYG dashboard pages
+├── netlify/functions/deals.js         # SYG data API
+├── sitemap.xml                        # Search engine sitemap
+├── robots.txt                         # Crawler rules
+├── netlify.toml                       # Netlify config
+├── _redirects                         # Netlify redirects and 404 rule
+├── _headers                           # Netlify headers
+└── package.json                       # Netlify CLI and function dependency setup
+```
 
-`https://laketahoecondo.netlify.app/assets/images/meta/OGv2.jpg?v=2`
+## Page categories
 
-Then paste the homepage URL into a new iMessage thread. If an older image appears, send the URL with a cache-busting query once:
+### Core pages
 
-`https://laketahoecondo.netlify.app/?v=2`
+These are the main public brand and conversion pages.
 
+- `index.html`
+- `about.html`
+- `schedule.html`
+- `faq.html`
+- `for-agents.html`
+- `ig.html`
 
-## OGv3 iMessage fix
+### Strategy pages
 
-Primary OG image is now a root-level image for maximum iMessage compatibility:
+These pages explain specific mortgage planning concepts and are usually indexable.
 
-`https://laketahoecondo.netlify.app/OGv3.jpg?v=3`
+Examples:
 
-The site now has one OG/Twitter image block per HTML page and no alternate OG image file references.
+- `no-cost-refinance.html`
+- `competitive-offer-strategy.html`
+- `mortgage-under-management.html`
+- `pmi-strategy.html`
+- `rsu-strategy.html`
+- `relocation-strategy.html`
+- `interest-rate-vs-cost.html`
+- `move-up-method.html`
+- `self-employed.html`
+- `first-time-buyers.html`
+- `military-veterans.html`
 
-After deploy:
-1. Open `https://laketahoecondo.netlify.app/OGv3.jpg?v=3` directly.
-2. Open `https://laketahoecondo.netlify.app/?v=3` in Safari.
-3. Paste `https://laketahoecondo.netlify.app/?v=3` into a new iMessage thread.
+### Tools and calculators
 
-If iMessage still shows the old card, delete the thread and try again because Apple caches previews aggressively.
+These pages are more interactive and may include page-level JavaScript.
 
+Examples:
 
-## OGv4 iMessage no-crop fix
+- `calculator.html`
+- `buying-vs-renting.html`
+- `rate-watch.html`
+- `refi-rate-watch.html`
+- `journey.html`
 
-The previous OG image was cropped to fit 1200x630, which trimmed the top and bottom of the poster. OGv4 preserves the full poster inside a 1200x630 canvas with safe padding.
+### Field Notes
 
-Primary image:
+Field Notes is the article and newsletter section.
 
-`https://laketahoecondo.netlify.app/OGv4.jpg?v=4`
+Index:
 
-Test after deployment:
-1. Open `https://laketahoecondo.netlify.app/OGv4.jpg?v=4` directly.
-2. Paste `https://laketahoecondo.netlify.app/?v=4` into a brand-new iMessage thread.
-3. If iMessage still shows the old card, delete the thread and test again. Apple caches link previews aggressively.
+- `field-notes.html`
 
+Article folder:
 
-## OGv5 iMessage edge-fill version
+- `field-notes/`
 
-OGv5 removes the beige padding. It preserves the full poster without cropping by using a blurred full-bleed version of the artwork behind the fitted poster.
+When adding a Field Notes article:
 
-Primary image:
+1. Create the article file inside `field-notes/`.
+2. Use a clean slug, such as `field-notes/example-topic.html`.
+3. Add the article card or link to `field-notes.html`.
+4. Add the article to `sitemap.xml` if it should be indexed.
+5. Add or update the article image in `field-notes/images/` when needed.
+6. Use an absolute canonical URL without `.html`, such as `https://darynfillis.com/field-notes/example-topic`.
 
-`https://laketahoecondo.netlify.app/OGv5.jpg?v=5`
+### Neighborhood pages
 
-Test:
-`https://laketahoecondo.netlify.app/?v=5`
+Neighborhood pages live in:
 
+```text
+neighborhoods/
+```
 
-## OGv6 correct-size poster
+Current examples:
 
-OGv6 uses the correctly-wide poster artwork and resizes it directly to 1200x630.
-No crop. No beige padding. No blurred background.
+- `neighborhoods/santa-monica.html`
+- `neighborhoods/manhattan-beach.html`
+- `neighborhoods/marina-del-rey.html`
 
-Primary image:
+When adding a neighborhood page:
 
-`https://laketahoecondo.netlify.app/OGv6.jpg`
+1. Duplicate the closest existing neighborhood page.
+2. Update title, meta description, canonical URL, Open Graph tags, and page content.
+3. Keep claims specific and current, especially pricing, inventory, insurance, HOA, zoning, and financing details.
+4. Add the page to `sitemap.xml`.
+5. Link to it from relevant pages if it should be discoverable.
 
-Test after deploy:
+### Lead magnets and thank-you pages
 
-`https://laketahoecondo.netlify.app/OGv6.jpg`
+Lead magnet pages generally include Netlify forms and route users to thank-you pages.
 
-Then paste this into a brand-new iMessage thread:
+Examples:
 
-`https://laketahoecondo.netlify.app/?v=6`
+- `decode3.html`
+- `self-employed-playbook.html`
+- `cal-condo-buyer.html`
+- `cal-condo-seller.html`
+- `thanks-playbook.html`
+- `thanks-condo-buyer-guide.html`
+- `thanks-condo-seller-guide.html`
+- `thanks-rate-watch.html`
+- `thanks-partnership.html`
 
+Thank-you pages should usually use:
 
-## Matching 34 favicon
+```html
+<meta name="robots" content="noindex, follow">
+```
 
-The favicon now uses the same circular 34 badge from the OG poster artwork.
+Gated PDFs or post-submit assets should be blocked in `robots.txt` when they are not meant to be indexed directly.
 
-Primary favicon paths:
+## Adding a new page
 
-`/favicon.ico`
-`/favicon-32x32.png`
-`/apple-touch-icon.png`
-`/site.webmanifest`
+Use this workflow every time a new page is added.
 
-If the old favicon still appears after deploying, hard refresh or open a private window. Browsers cache favicons aggressively.
+1. Pick the page type.
+   - Core page
+   - Strategy page
+   - Field Notes article
+   - Neighborhood page
+   - Lead magnet
+   - Thank-you page
+   - Tool or calculator
+
+2. Choose a clean URL slug.
+   - Use lowercase.
+   - Use hyphens between words.
+   - Avoid dates unless the date is part of the content strategy.
+   - Keep the public URL extensionless, even though the file is `.html`.
+
+3. Duplicate a similar existing page.
+   - Strategy page: duplicate a strategy page.
+   - Article: duplicate a Field Notes article.
+   - Neighborhood page: duplicate an existing neighborhood page.
+   - Thank-you page: duplicate a related thank-you page.
+
+4. Update the `<head>`.
+   - `<title>`
+   - Meta description
+   - Canonical URL
+   - Robots directive
+   - Open Graph title, description, URL, and image
+   - Twitter card title, description, and image
+   - Author and local geo tags where relevant
+
+5. Update body content.
+   - Hero headline
+   - Subheadline
+   - CTA buttons
+   - Internal links
+   - Footer links
+   - Legal and compliance language
+
+6. Update site discovery.
+   - Add indexable pages to `sitemap.xml`.
+   - Add article links to `field-notes.html` when relevant.
+   - Add neighborhood links to relevant pages when relevant.
+   - Update `ig.html` if the new page should be featured from social media.
+   - Add redirects in `_redirects` if replacing or renaming an existing page.
+
+7. Test before publishing.
+   - Desktop layout
+   - Mobile layout
+   - Navigation links
+   - CTA buttons
+   - Forms
+   - Thank-you page redirects
+   - Social preview image
+   - Spelling, numbers, and mortgage compliance language
+
+## SEO conventions
+
+Use clean canonical URLs without `.html`.
+
+Correct:
+
+```html
+<link rel="canonical" href="https://darynfillis.com/no-cost-refinance">
+```
+
+Avoid:
+
+```html
+<link rel="canonical" href="https://darynfillis.com/no-cost-refinance.html">
+```
+
+Every indexable page should include:
+
+- One unique `<title>`
+- One unique meta description
+- One canonical URL
+- Open Graph metadata
+- Twitter card metadata
+- A clear H1
+- Internal links to related pages
+- A primary CTA
+
+Recommended title format:
+
+```text
+Page Topic | Daryn Fillis
+```
+
+For local SEO pages:
+
+```text
+Buying a Home in [Neighborhood] | Daryn Fillis
+```
+
+For strategy pages:
+
+```text
+[Mortgage Strategy Topic] in Los Angeles | Daryn Fillis
+```
+
+## Sitemap rules
+
+Update `sitemap.xml` when adding, removing, or renaming public indexable pages.
+
+Do include:
+
+- Homepage
+- Core pages
+- Strategy pages
+- Field Notes articles
+- Neighborhood pages
+- Tools and calculators that should rank in search
+
+Do not include:
+
+- Thank-you pages
+- Private dashboard pages
+- Gated PDFs
+- Test pages
+- Pages with `noindex`
+
+Use realistic priorities:
+
+- Homepage: `1.0`
+- Major conversion pages: `0.8` to `0.9`
+- Articles and neighborhood pages: `0.6` to `0.85`
+- Utility or legal pages: `0.3` to `0.5`
+
+## Robots rules
+
+`robots.txt` currently allows the public site to be crawled and blocks direct access to gated assets like the 2026 housing market PDF and confirmation page.
+
+When adding new gated assets, add them to `robots.txt` if they should not be indexed directly.
+
+Example:
+
+```text
+Disallow: /example-gated-file.pdf
+Disallow: /example-confirmed
+```
+
+## Forms
+
+Forms are handled through Netlify Forms.
+
+A Netlify form should include:
+
+```html
+<form name="example-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks-example">
+  <input type="hidden" name="form-name" value="example-form">
+  <p style="display:none">
+    <label>Do not fill this out: <input name="bot-field" tabindex="-1"></label>
+  </p>
+</form>
+```
+
+After adding or changing a form:
+
+1. Deploy to Netlify.
+2. Submit a test form.
+3. Confirm the form appears in the Netlify dashboard.
+4. Confirm notifications are configured in Netlify.
+5. Confirm the user lands on the correct thank-you page.
+
+## SYG dashboard
+
+The `syg/` folder contains private partnership dashboard pages.
+
+Related files:
+
+```text
+syg/index.html
+syg/rogers_intel.html
+syg/README.md
+netlify/functions/deals.js
+```
+
+The SYG dashboard uses the Netlify Function:
+
+```text
+/.netlify/functions/deals
+```
+
+The function requires this Netlify environment variable:
+
+```text
+SYG_PASSWORD
+```
+
+Do not expose `SYG_PASSWORD` in client-side code, public files, screenshots, or documentation.
+
+## Brand voice
+
+The site should sound like a mortgage advisor who is strategic, calm, practical, and direct.
+
+Use language that is:
+
+- Clear
+- Plainspoken
+- Strategic
+- Locally relevant to Los Angeles
+- Helpful without sounding salesy
+- Focused on long-term financial impact, not just rates
+
+Avoid language that is:
+
+- Overhyped
+- Fear-based
+- Rate-shopper focused
+- Overly technical without explanation
+- Full of guarantees or promises
+
+Good positioning themes:
+
+- Better decisions before the offer
+- Mortgage strategy, not just mortgage quotes
+- Buyer confidence in a competitive market
+- Wealth building through real estate
+- Planning before, during, and after the transaction
+- Support for real estate partners who want stronger clients and cleaner closings
+
+## Mortgage compliance guardrails
+
+Before publishing mortgage-related content, confirm that claims are accurate and compliant.
+
+Do not promise:
+
+- Loan approval
+- A specific rate
+- A specific payment
+- Future home appreciation
+- Guaranteed refinance savings
+- Guaranteed tax benefits
+- Guaranteed investment returns
+
+Use careful language around:
+
+- Affordability
+- Qualification
+- Mortgage rates
+- APR
+- Down payment requirements
+- Program eligibility
+- Investment returns
+- Home appreciation
+- Tax deductibility
+
+When needed, include appropriate NMLS, Equal Housing, company, and licensing disclosures according to current company compliance requirements.
+
+## Image and asset conventions
+
+Common root-level assets include:
+
+- `DFillis_Headshot.jpg`
+- `Fillis_Headshot.png`
+- `hero.mp4`
+- `og-home.jpg`
+- `og-schedule.jpg`
+- `og-playbook.jpg`
+- `og-partnership.jpg`
+- `og-self-employed.jpg`
+- `favicon.png`
+- `site.webmanifest`
+
+Field Notes images live in:
+
+```text
+field-notes/images/
+```
+
+Use absolute URLs for Open Graph images:
+
+```html
+<meta property="og:image" content="https://darynfillis.com/og-home.jpg">
+```
+
+Social preview images should ideally be 1200 x 630 pixels.
+
+## Redirects and headers
+
+`_redirects` currently includes a catch-all rule that serves `404.html` for unmatched paths:
+
+```text
+/*    /404.html    404
+```
+
+When renaming a public page, add a redirect before the catch-all rule.
+
+Example:
+
+```text
+/old-page    /new-page    301
+/*           /404.html    404
+```
+
+`_headers` controls content types, favicon behavior, cache rules, and basic security headers.
+
+Be careful when editing `_headers`, especially for favicons, social preview images, and security headers.
+
+## Cleanup notes
+
+Items that should not be part of a clean production repo or deployment package:
+
+- `.DS_Store`
+- `__MACOSX/`
+- Local scratch folders
+- Export artifacts
+- Unneeded zip files
+- Old test files
+- Private data
+
+Current maintenance items to verify:
+
+- `README.md` should be replaced with this current project README.
+- `sitemap.xml` lists `/journey-v2`, but the zip should be checked for a matching page before keeping that URL live.
+- `_headers` includes references to `OGv6.jpg`; verify whether that image is still used or remove stale header entries.
+- Some older pages may contain stale or duplicated metadata from copied templates. Check meta titles, descriptions, and robots directives before relying on a page for SEO.
+
+## Working with AI on this project
+
+When asking an AI assistant to add or edit a page, provide:
+
+```text
+Page name:
+Desired URL slug:
+Audience:
+Primary goal:
+Main CTA:
+Source content:
+SEO keyword focus:
+Should this be indexed? Yes or no:
+Related pages to link to:
+Any compliance language required:
+```
+
+Expected AI workflow:
+
+1. Duplicate the closest existing page type.
+2. Update copy, layout, metadata, CTA, and internal links.
+3. Update `sitemap.xml` if the page should be indexed.
+4. Update `robots.txt` if the page or asset should be blocked.
+5. Test links, forms, mobile layout, and metadata.
+6. Return the changed files or an updated project zip.
+
+## Ownership
+
+Project owner:
+
+```text
+Daryn Fillis
+Certified Mortgage Advisor
+NMLS 1988371
+NEO Home Loans
+Los Angeles, California
+```
+
+Primary website:
+
+```text
+https://darynfillis.com
+```
