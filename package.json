@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "dev": "netlify dev"
+    "dev": "netlify dev",
+    "build": "node scripts/apply-neighborhoods.js"
   },
   "dependencies": {
     "@netlify/blobs": "^8.1.0"
