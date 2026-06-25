@@ -1,4 +1,7 @@
 const fs = require('fs');
+const path = require('path');
+
+const SKIP_DIRS = new Set(['.git', 'node_modules', '__MACOSX', '.netlify']);
 
 function rewritePage(file, block) {
   let html = fs.readFileSync(file, 'utf8');
@@ -10,6 +13,76 @@ function rewritePage(file, block) {
   html = html.slice(0, startIndex) + block.trim() + '\n\n' + html.slice(footerIndex);
   html = html.replaceAll('class="btn btn-primary"', 'class="btn btn-blue btn-wobble"');
   fs.writeFileSync(file, html);
+}
+
+function listHtmlFiles(dir = '.') {
+  const results = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (SKIP_DIRS.has(entry.name)) continue;
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      results.push(...listHtmlFiles(fullPath));
+    } else if (entry.isFile() && entry.name.endsWith('.html')) {
+      results.push(fullPath);
+    }
+  }
+  return results;
+}
+
+function addNeighborhoodToNavBlock(html) {
+  return html.replace(/(<div[^>]*class=["'][^"']*\bnav-links\b[^"']*["'][^>]*>)([\s\S]*?)(<\/div>)/g, (match, open, inner, close) => {
+    if (inner.includes('href="/neighborhoods"') || inner.includes("href='/neighborhoods'")) return match;
+
+    const link = '\n    <a href="/neighborhoods">Neighborhoods</a>';
+    if (inner.includes('href="/journey"')) {
+      inner = inner.replace(/(\s*<a href="\/journey"[^>]*>[\s\S]*?<\/a>)/, `$1${link}`);
+    } else if (inner.includes('href="/field-notes"')) {
+      inner = inner.replace(/(\s*<a href="\/field-notes"[^>]*>[\s\S]*?<\/a>)/, `$1${link}`);
+    } else {
+      inner = inner.replace(/\s*$/, `${link}\n  `);
+    }
+
+    return open + inner + close;
+  });
+}
+
+function addNeighborhoodToFooter(html) {
+  return html.replace(/(<footer[\s\S]*?<\/footer>)/, footerMatch => {
+    if (footerMatch.includes('href="/neighborhoods"') || footerMatch.includes("href='/neighborhoods'")) return footerMatch;
+
+    let footer = footerMatch;
+    const link = '\n      <a href="/neighborhoods">Neighborhood Guides</a>';
+    if (footer.includes('<a href="/journey">The Journey</a>')) {
+      footer = footer.replace('      <a href="/journey">The Journey</a>', `      <a href="/journey">The Journey</a>${link}`);
+    } else if (footer.includes('<a href="/field-notes">Field Notes</a>')) {
+      footer = footer.replace('      <a href="/field-notes">Field Notes</a>', `      <a href="/field-notes">Field Notes</a>${link}`);
+    }
+    return footer;
+  });
+}
+
+function updateGlobalNavigation() {
+  const files = listHtmlFiles();
+  let changed = 0;
+
+  for (const file of files) {
+    let html = fs.readFileSync(file, 'utf8');
+    const original = html;
+
+    if (html.includes('nav-links')) {
+      html = addNeighborhoodToNavBlock(html);
+    }
+    if (html.includes('<footer')) {
+      html = addNeighborhoodToFooter(html);
+    }
+
+    if (html !== original) {
+      fs.writeFileSync(file, html);
+      changed += 1;
+    }
+  }
+
+  return changed;
 }
 
 const guideCards = `
@@ -226,5 +299,6 @@ const westchesterBlock = `
 
 rewritePage('neighborhoods.html', neighborhoodsBlock);
 rewritePage('neighborhoods/westchester.html', westchesterBlock);
+const changedMenus = updateGlobalNavigation();
 
-console.log('Neighborhood pages aligned to existing site formatting.');
+console.log(`Neighborhood pages aligned to existing site formatting. Updated navigation on ${changedMenus} HTML files.`);
