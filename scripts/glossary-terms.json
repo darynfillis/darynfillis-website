@@ -1,0 +1,602 @@
+[
+  {
+    "term": "1031 exchange",
+    "category": "Real estate investing",
+    "definition": "A tax-deferral strategy that lets an investor sell one investment property and buy another qualifying property while deferring capital gains taxes when IRS rules are followed."
+  },
+  {
+    "term": "2-1 buydown",
+    "category": "Mortgage costs",
+    "definition": "A temporary buydown where the buyer's payment is calculated at an interest rate 2 percentage points lower in year one and 1 percentage point lower in year two before returning to the note rate."
+  },
+  {
+    "term": "Addendum",
+    "category": "Real estate contracts",
+    "definition": "A written addition to a purchase agreement that changes, clarifies, or adds terms after the original contract is prepared."
+  },
+  {
+    "term": "Adjustable-rate mortgage (ARM)",
+    "category": "Mortgage types",
+    "definition": "A mortgage with an interest rate that can change after an initial fixed period. The future rate usually adjusts based on an index, margin, caps, and the loan's adjustment schedule."
+  },
+  {
+    "term": "Agency",
+    "category": "Real estate representation",
+    "definition": "The legal relationship between a real estate professional and a buyer or seller. Agency determines whom the agent represents and what duties they owe."
+  },
+  {
+    "term": "Amortization",
+    "category": "Mortgage payments",
+    "definition": "The process of paying down a loan over time through scheduled payments that include interest and principal. Early payments usually go mostly toward interest."
+  },
+  {
+    "term": "Annual percentage rate (APR)",
+    "category": "Mortgage costs",
+    "definition": "A broader cost measure that expresses the yearly cost of borrowing, including the interest rate and certain loan charges, so borrowers can compare loan offers more consistently."
+  },
+  {
+    "term": "Appraisal",
+    "category": "Valuation",
+    "definition": "A licensed appraiser's opinion of a property's value, usually ordered by the lender to help confirm the home supports the loan amount."
+  },
+  {
+    "term": "Appraisal contingency",
+    "category": "Real estate contracts",
+    "definition": "A contract condition that can let a buyer renegotiate or cancel if the property appraises below the agreed purchase price and the parties do not resolve the gap."
+  },
+  {
+    "term": "Appraised value",
+    "category": "Valuation",
+    "definition": "The value assigned to a property in an appraisal report. Lenders commonly use it with the purchase price to calculate loan-to-value."
+  },
+  {
+    "term": "Appreciation",
+    "category": "Real estate value",
+    "definition": "An increase in a property's value over time due to market demand, improvements, inflation, location, or other factors."
+  },
+  {
+    "term": "As-is sale",
+    "category": "Real estate contracts",
+    "definition": "A sale where the seller does not agree upfront to make repairs. Buyers may still have inspection rights depending on the contract."
+  },
+  {
+    "term": "Assumable mortgage",
+    "category": "Mortgage types",
+    "definition": "A mortgage that may be transferred from the seller to the buyer if the loan program, lender, and investor rules allow it."
+  },
+  {
+    "term": "Backup offer",
+    "category": "Real estate contracts",
+    "definition": "An offer accepted by a seller only if the primary accepted offer cancels or fails to close."
+  },
+  {
+    "term": "Balloon payment",
+    "category": "Mortgage payments",
+    "definition": "A large final payment due at the end of some loan terms because the regular payments did not fully pay off the loan balance."
+  },
+  {
+    "term": "Basis point",
+    "category": "Mortgage pricing",
+    "definition": "One one-hundredth of one percentage point. Mortgage pricing and rate changes are often described in basis points."
+  },
+  {
+    "term": "Bridge loan",
+    "category": "Mortgage types",
+    "definition": "Short-term financing that can help a homeowner buy a new property before selling an existing one."
+  },
+  {
+    "term": "Buydown",
+    "category": "Mortgage costs",
+    "definition": "A strategy where money is paid upfront to reduce the borrower's interest rate or monthly payment, either temporarily or for the life of the loan."
+  },
+  {
+    "term": "Buyer agent",
+    "category": "Real estate representation",
+    "definition": "A real estate agent who represents the buyer's interests in a home search, offer strategy, negotiations, and closing process."
+  },
+  {
+    "term": "Capitalization rate",
+    "category": "Real estate investing",
+    "definition": "A common investment metric that compares a property's net operating income to its value or purchase price."
+  },
+  {
+    "term": "Cash-out refinance",
+    "category": "Refinance",
+    "definition": "A refinance where the new loan is larger than the payoff of the existing loan and the borrower receives some of the difference as cash."
+  },
+  {
+    "term": "Cash to close",
+    "category": "Closing costs",
+    "definition": "The estimated amount a buyer needs to bring to closing after down payment, closing costs, prepaid items, credits, deposits, and adjustments are considered."
+  },
+  {
+    "term": "Clear to close",
+    "category": "Underwriting",
+    "definition": "The lender's confirmation that final underwriting conditions have been satisfied and the file can move toward closing documents and funding."
+  },
+  {
+    "term": "Closing",
+    "category": "Closing process",
+    "definition": "The final step in a real estate transaction when documents are signed, funds are handled, title transfers, and the transaction is completed."
+  },
+  {
+    "term": "Closing costs",
+    "category": "Closing costs",
+    "definition": "The fees and charges due around closing, which may include lender fees, title and escrow fees, recording charges, prepaid interest, insurance, and taxes."
+  },
+  {
+    "term": "Closing Disclosure",
+    "category": "Mortgage disclosures",
+    "definition": "A final mortgage disclosure that details the loan terms, projected payments, closing costs, cash to close, and other key loan information before closing."
+  },
+  {
+    "term": "Combined loan-to-value (CLTV)",
+    "category": "Mortgage ratios",
+    "definition": "A ratio that compares all loans secured by the property to the property's value. It is often used when there is a second mortgage or HELOC."
+  },
+  {
+    "term": "Comparative market analysis (CMA)",
+    "category": "Valuation",
+    "definition": "An agent-prepared estimate of a home's likely market value based on recent comparable sales, active listings, property condition, and local market context."
+  },
+  {
+    "term": "Concession",
+    "category": "Real estate contracts",
+    "definition": "A negotiated benefit one party gives another, such as a seller credit toward closing costs or a repair credit."
+  },
+  {
+    "term": "Condo questionnaire",
+    "category": "Condo financing",
+    "definition": "A lender-requested document completed by an HOA or management company that helps determine whether a condo project meets loan program requirements."
+  },
+  {
+    "term": "Conforming loan",
+    "category": "Mortgage types",
+    "definition": "A mortgage that meets the size, underwriting, and eligibility standards for sale to Fannie Mae or Freddie Mac."
+  },
+  {
+    "term": "Contingency",
+    "category": "Real estate contracts",
+    "definition": "A contract condition that must be satisfied or waived for the transaction to move forward, such as financing, appraisal, inspection, or sale of another home."
+  },
+  {
+    "term": "Conventional loan",
+    "category": "Mortgage types",
+    "definition": "A mortgage that is not insured or guaranteed by a government agency such as FHA, VA, or USDA."
+  },
+  {
+    "term": "Counteroffer",
+    "category": "Real estate contracts",
+    "definition": "A response to an offer that changes one or more terms. The original offer is usually no longer binding once a counteroffer is made."
+  },
+  {
+    "term": "Credit score",
+    "category": "Underwriting",
+    "definition": "A numerical measure of credit risk based on credit history. Lenders use credit scores when evaluating eligibility, pricing, and mortgage insurance."
+  },
+  {
+    "term": "Debt service coverage ratio (DSCR)",
+    "category": "Real estate investing",
+    "definition": "A ratio that compares a property's income to its debt payment. Some investor loan programs qualify the property more than the borrower's personal income."
+  },
+  {
+    "term": "Debt-to-income ratio (DTI)",
+    "category": "Mortgage ratios",
+    "definition": "A comparison of monthly debt obligations to gross monthly income. Lenders use DTI to evaluate whether a borrower can reasonably manage the proposed payment."
+  },
+  {
+    "term": "Deed",
+    "category": "Title",
+    "definition": "A legal document that transfers ownership of real property from one party to another."
+  },
+  {
+    "term": "Deed of trust",
+    "category": "Title",
+    "definition": "A security instrument used in many states, including California, that gives a lender an interest in the property until the loan is repaid."
+  },
+  {
+    "term": "Discount points",
+    "category": "Mortgage costs",
+    "definition": "Optional upfront fees paid to the lender in exchange for a lower interest rate. One point usually equals 1 percent of the loan amount."
+  },
+  {
+    "term": "Down payment",
+    "category": "Mortgage basics",
+    "definition": "The portion of the purchase price the buyer pays upfront instead of financing with the mortgage."
+  },
+  {
+    "term": "Due diligence",
+    "category": "Real estate contracts",
+    "definition": "The buyer's investigation period or process for reviewing inspections, disclosures, title, HOA documents, financing, insurance, and other property details."
+  },
+  {
+    "term": "Earnest money deposit",
+    "category": "Real estate contracts",
+    "definition": "A good-faith deposit a buyer places into escrow after an offer is accepted. It may be applied to the buyer's funds at closing."
+  },
+  {
+    "term": "Easement",
+    "category": "Title",
+    "definition": "A legal right for someone to use part of another person's property for a specific purpose, such as access, utilities, or drainage."
+  },
+  {
+    "term": "Equity",
+    "category": "Real estate value",
+    "definition": "The difference between a property's market value and the debt secured by it."
+  },
+  {
+    "term": "Escrow account",
+    "category": "Mortgage payments",
+    "definition": "A lender-managed account used to collect and pay property taxes, homeowners insurance, and sometimes other housing-related bills."
+  },
+  {
+    "term": "Escrow transaction",
+    "category": "Closing process",
+    "definition": "A neutral third-party process that holds funds, documents, and instructions until the purchase contract and closing requirements are satisfied."
+  },
+  {
+    "term": "FHA loan",
+    "category": "Mortgage types",
+    "definition": "A mortgage insured by the Federal Housing Administration, often used by buyers who need more flexible credit, down payment, or qualifying guidelines."
+  },
+  {
+    "term": "Fee simple",
+    "category": "Title",
+    "definition": "A broad form of real property ownership where the owner holds the land and improvements, subject to taxes, laws, liens, and recorded restrictions."
+  },
+  {
+    "term": "FICO score",
+    "category": "Underwriting",
+    "definition": "A widely used credit scoring model. Mortgage lenders often use specific FICO versions when underwriting a loan."
+  },
+  {
+    "term": "Fixed-rate mortgage",
+    "category": "Mortgage types",
+    "definition": "A mortgage with an interest rate that stays the same for the life of the loan, which keeps the principal and interest payment stable."
+  },
+  {
+    "term": "Float down",
+    "category": "Mortgage pricing",
+    "definition": "A rate-lock feature that may allow a borrower to move to a lower rate if market rates improve before closing, subject to lender rules."
+  },
+  {
+    "term": "Funding",
+    "category": "Closing process",
+    "definition": "The lender's release of loan proceeds so the transaction can record or the refinance can close."
+  },
+  {
+    "term": "Gift funds",
+    "category": "Mortgage basics",
+    "definition": "Money given to a borrower by an eligible donor to help with down payment, closing costs, or reserves, subject to documentation and program rules."
+  },
+  {
+    "term": "Grant deed",
+    "category": "Title",
+    "definition": "A deed commonly used in California to transfer real property ownership with certain implied assurances from the seller."
+  },
+  {
+    "term": "Gross monthly income",
+    "category": "Underwriting",
+    "definition": "Income before taxes and deductions. Mortgage lenders often use gross monthly income when calculating debt-to-income ratio."
+  },
+  {
+    "term": "Hazard insurance",
+    "category": "Insurance",
+    "definition": "Insurance that helps protect the home against certain physical damage risks. It is usually part of a homeowners insurance policy."
+  },
+  {
+    "term": "Home equity line of credit (HELOC)",
+    "category": "Mortgage types",
+    "definition": "A revolving line of credit secured by home equity. Borrowers can draw, repay, and draw again during the draw period under the loan's terms."
+  },
+  {
+    "term": "Home inspection",
+    "category": "Due diligence",
+    "definition": "A professional evaluation of a home's condition, including major systems and visible defects. It is separate from the lender's appraisal."
+  },
+  {
+    "term": "Homeowners association (HOA)",
+    "category": "Condo and HOA",
+    "definition": "An organization that manages a community, condo project, or planned development and enforces rules, collects dues, and maintains shared areas."
+  },
+  {
+    "term": "HOA dues",
+    "category": "Condo and HOA",
+    "definition": "Regular payments owners make to a homeowners association. Lenders typically include HOA dues when qualifying a borrower."
+  },
+  {
+    "term": "Homeowners insurance",
+    "category": "Insurance",
+    "definition": "Insurance that generally protects the home, certain belongings, and liability risks. Lenders usually require it before closing."
+  },
+  {
+    "term": "Impound account",
+    "category": "Mortgage payments",
+    "definition": "Another name for an escrow account used to collect and pay property taxes and insurance with the monthly mortgage payment."
+  },
+  {
+    "term": "Index",
+    "category": "Mortgage pricing",
+    "definition": "A benchmark rate used to calculate future interest rate adjustments on an adjustable-rate mortgage."
+  },
+  {
+    "term": "Interest rate",
+    "category": "Mortgage pricing",
+    "definition": "The percentage charged by the lender for borrowing the principal balance. It is not the same as APR."
+  },
+  {
+    "term": "Interest-only mortgage",
+    "category": "Mortgage types",
+    "definition": "A mortgage that allows payments of interest only for a set period. Principal is not reduced during the interest-only period unless extra payments are made."
+  },
+  {
+    "term": "Jumbo loan",
+    "category": "Mortgage types",
+    "definition": "A mortgage larger than the conforming loan limit for the area. Jumbo loans often have different underwriting, reserve, and pricing requirements."
+  },
+  {
+    "term": "Leaseback",
+    "category": "Real estate contracts",
+    "definition": "An arrangement where the seller remains in the home for an agreed period after closing, usually paying rent or receiving a negotiated occupancy term."
+  },
+  {
+    "term": "Lender credit",
+    "category": "Mortgage costs",
+    "definition": "A credit from the lender that can reduce closing costs, often in exchange for accepting a higher interest rate."
+  },
+  {
+    "term": "Lien",
+    "category": "Title",
+    "definition": "A legal claim against a property, often tied to a debt such as a mortgage, tax bill, judgment, or contractor claim."
+  },
+  {
+    "term": "Listing agent",
+    "category": "Real estate representation",
+    "definition": "The real estate agent who represents the seller and markets the property for sale."
+  },
+  {
+    "term": "Loan Estimate",
+    "category": "Mortgage disclosures",
+    "definition": "A mortgage disclosure that shows estimated loan terms, payments, closing costs, cash to close, and other comparison details early in the application process."
+  },
+  {
+    "term": "Loan officer",
+    "category": "Mortgage process",
+    "definition": "The mortgage professional who helps a borrower review options, structure the loan strategy, submit an application, and move through approval and closing."
+  },
+  {
+    "term": "Loan-to-value ratio (LTV)",
+    "category": "Mortgage ratios",
+    "definition": "A ratio comparing the loan amount to the property's value or purchase price. Lower LTV usually means more equity or a larger down payment."
+  },
+  {
+    "term": "Lock period",
+    "category": "Mortgage pricing",
+    "definition": "The length of time a mortgage rate lock is valid. Common lock periods may be 30, 45, or 60 days, depending on lender options."
+  },
+  {
+    "term": "Margin",
+    "category": "Mortgage pricing",
+    "definition": "The fixed amount added to an ARM index to determine the adjusted interest rate after the initial fixed period."
+  },
+  {
+    "term": "Mortgage insurance",
+    "category": "Mortgage costs",
+    "definition": "Insurance that protects the lender if a borrower defaults. It may be required on conventional, FHA, USDA, or other loan programs depending on structure."
+  },
+  {
+    "term": "Mortgage note",
+    "category": "Mortgage documents",
+    "definition": "The legal promise to repay the mortgage debt. It states the loan amount, interest rate, payment terms, and other repayment obligations."
+  },
+  {
+    "term": "Multiple Listing Service (MLS)",
+    "category": "Real estate market",
+    "definition": "A database real estate professionals use to share property listings, status changes, sale data, and compensation or showing details."
+  },
+  {
+    "term": "Non-QM loan",
+    "category": "Mortgage types",
+    "definition": "A non-qualified mortgage that does not fit standard Qualified Mortgage rules. These loans may use alternative documentation or different underwriting methods."
+  },
+  {
+    "term": "Offer",
+    "category": "Real estate contracts",
+    "definition": "A buyer's written proposal to purchase a property, including price, financing terms, contingencies, timing, deposit, and other contract terms."
+  },
+  {
+    "term": "Origination charges",
+    "category": "Mortgage costs",
+    "definition": "Lender charges for processing, underwriting, or originating the mortgage. These appear in the loan cost section of mortgage disclosures."
+  },
+  {
+    "term": "Pending",
+    "category": "Real estate market",
+    "definition": "A listing status showing the seller has accepted an offer and the property is under contract, though it may not have closed yet."
+  },
+  {
+    "term": "PITI",
+    "category": "Mortgage payments",
+    "definition": "Principal, interest, taxes, and insurance. It is a common shorthand for the core monthly housing payment components."
+  },
+  {
+    "term": "Points",
+    "category": "Mortgage costs",
+    "definition": "Upfront mortgage charges expressed as a percentage of the loan amount. Points may be used for pricing, origination, or rate reduction depending on the context."
+  },
+  {
+    "term": "Pre-approval",
+    "category": "Mortgage process",
+    "definition": "A lender review of a buyer's credit, income, assets, and loan scenario before making an offer. Strong pre-approval can help the buyer and agent write with confidence."
+  },
+  {
+    "term": "Pre-qualification",
+    "category": "Mortgage process",
+    "definition": "An early estimate of borrowing ability, often based on limited or self-reported information. It is usually less complete than a true pre-approval."
+  },
+  {
+    "term": "Preliminary title report",
+    "category": "Title",
+    "definition": "A report showing current ownership, liens, easements, restrictions, and title exceptions that may affect the property before closing."
+  },
+  {
+    "term": "Prepaid items",
+    "category": "Closing costs",
+    "definition": "Costs collected at closing for items that apply after closing, such as prepaid interest, homeowners insurance premiums, and initial escrow deposits."
+  },
+  {
+    "term": "Prepayment penalty",
+    "category": "Mortgage costs",
+    "definition": "A fee some loans may charge if the borrower pays off the mortgage early. Many residential mortgage loans do not have one, but it should always be checked."
+  },
+  {
+    "term": "Principal",
+    "category": "Mortgage payments",
+    "definition": "The loan balance borrowed and still owed, not including interest. Principal also describes the portion of a payment that reduces the loan balance."
+  },
+  {
+    "term": "Private mortgage insurance (PMI)",
+    "category": "Mortgage costs",
+    "definition": "Mortgage insurance on many conventional loans when the borrower has less than 20 percent equity or down payment, subject to loan and investor rules."
+  },
+  {
+    "term": "Purchase agreement",
+    "category": "Real estate contracts",
+    "definition": "The written contract between buyer and seller that sets the price, terms, contingencies, deadlines, and obligations for the home purchase."
+  },
+  {
+    "term": "Rate-and-term refinance",
+    "category": "Refinance",
+    "definition": "A refinance focused on changing the interest rate, loan term, or loan type without taking significant cash out."
+  },
+  {
+    "term": "Rate lock",
+    "category": "Mortgage pricing",
+    "definition": "An agreement from the lender to hold a specific mortgage rate and pricing for a defined period, subject to loan and lock conditions."
+  },
+  {
+    "term": "Real estate owned (REO)",
+    "category": "Real estate market",
+    "definition": "Property owned by a lender or institution after foreclosure or a failed foreclosure auction."
+  },
+  {
+    "term": "Recast",
+    "category": "Mortgage payments",
+    "definition": "A payment recalculation after a borrower makes a large principal reduction. The loan balance drops and the payment may be re-amortized without a full refinance."
+  },
+  {
+    "term": "Recording",
+    "category": "Closing process",
+    "definition": "The official filing of documents such as deeds and deeds of trust with the county recorder, making the transaction part of the public record."
+  },
+  {
+    "term": "Refinance",
+    "category": "Refinance",
+    "definition": "Replacing an existing mortgage with a new one, usually to change the rate, payment, term, loan type, or available equity strategy."
+  },
+  {
+    "term": "Reserves",
+    "category": "Underwriting",
+    "definition": "Assets left after closing that could cover future mortgage payments. Some loan programs require a specific number of months of reserves."
+  },
+  {
+    "term": "Reverse mortgage",
+    "category": "Mortgage types",
+    "definition": "A mortgage available to eligible older homeowners that can convert home equity into loan proceeds, with repayment usually due when the borrower sells, moves, or passes away."
+  },
+  {
+    "term": "Second mortgage",
+    "category": "Mortgage types",
+    "definition": "A loan secured by the property behind the first mortgage, such as a HELOC or home equity loan."
+  },
+  {
+    "term": "Seller credit",
+    "category": "Closing costs",
+    "definition": "A credit the seller agrees to give the buyer toward allowed closing costs, prepaid items, or other eligible expenses."
+  },
+  {
+    "term": "Seller disclosure",
+    "category": "Due diligence",
+    "definition": "Seller-provided information about known property conditions, defects, repairs, hazards, or other facts that may affect the buyer's decision."
+  },
+  {
+    "term": "Seller market",
+    "category": "Real estate market",
+    "definition": "A market condition where demand is strong relative to available homes, often giving sellers more leverage in price and terms."
+  },
+  {
+    "term": "Servicer",
+    "category": "Mortgage process",
+    "definition": "The company that collects mortgage payments, manages escrow accounts, sends statements, and handles loan administration after closing."
+  },
+  {
+    "term": "Short sale",
+    "category": "Real estate market",
+    "definition": "A sale where the lender agrees to accept less than the amount owed on the mortgage, usually because the seller has financial hardship and limited equity."
+  },
+  {
+    "term": "Subject to inspection",
+    "category": "Real estate contracts",
+    "definition": "Contract language or a contingency structure that gives the buyer time to inspect the property and respond according to the agreement."
+  },
+  {
+    "term": "Survey",
+    "category": "Title",
+    "definition": "A professional drawing or report showing property boundaries, improvements, easements, encroachments, and other physical property details."
+  },
+  {
+    "term": "Temporary buydown",
+    "category": "Mortgage costs",
+    "definition": "A buydown that lowers the borrower's payment for an initial period, usually funded by the seller, builder, lender, or buyer at closing."
+  },
+  {
+    "term": "Title",
+    "category": "Title",
+    "definition": "The legal concept of ownership rights in a property. Clear title generally means ownership can transfer without unresolved claims or defects."
+  },
+  {
+    "term": "Title insurance",
+    "category": "Title",
+    "definition": "Insurance that protects against covered title defects, liens, or ownership claims that existed before the policy date."
+  },
+  {
+    "term": "Total Interest Percentage (TIP)",
+    "category": "Mortgage disclosures",
+    "definition": "A disclosure showing the total amount of interest paid over the loan term as a percentage of the loan amount, assuming scheduled payments are made."
+  },
+  {
+    "term": "Transfer tax",
+    "category": "Closing costs",
+    "definition": "A state, county, or city tax charged when real estate ownership transfers. Responsibility for payment depends on local custom and contract terms."
+  },
+  {
+    "term": "Underwriting",
+    "category": "Mortgage process",
+    "definition": "The lender's review of credit, income, assets, property, title, insurance, and loan program rules to determine whether the mortgage can be approved."
+  },
+  {
+    "term": "USDA loan",
+    "category": "Mortgage types",
+    "definition": "A mortgage backed by the U.S. Department of Agriculture for eligible rural or suburban properties and borrowers who meet program requirements."
+  },
+  {
+    "term": "VA loan",
+    "category": "Mortgage types",
+    "definition": "A mortgage guaranteed by the U.S. Department of Veterans Affairs for eligible service members, veterans, and surviving spouses."
+  },
+  {
+    "term": "Walk-through",
+    "category": "Closing process",
+    "definition": "A buyer's final visit before closing to confirm the property condition, agreed repairs, and included items are as expected."
+  },
+  {
+    "term": "Warrantability",
+    "category": "Condo financing",
+    "definition": "A condo project's ability to meet loan program standards. Warrantability can be affected by HOA budget, insurance, litigation, investor concentration, commercial space, and other factors."
+  },
+  {
+    "term": "Zoning",
+    "category": "Property rules",
+    "definition": "Local rules that govern how land can be used, what can be built, density, setbacks, parking, and other property restrictions."
+  }
+]
