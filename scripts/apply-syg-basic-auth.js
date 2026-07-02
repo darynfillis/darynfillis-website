@@ -45,6 +45,12 @@ function main() {
 /syg/
   Basic-Auth: ${user}:${password}
 
+/syg/index.html
+  Basic-Auth: ${user}:${password}
+
+/syg.index
+  Basic-Auth: ${user}:${password}
+
 /syg/*
   Basic-Auth: ${user}:${password}
 ${END_MARKER}`;
