@@ -1,3 +1,13 @@
 # Netlify redirects
 # Anything not matched serves 404.html with a 404 status
+/neighborhoods    /neighborhoods.html    200
+/neighborhoods/   /neighborhoods.html    200
+/glossary    /glossary.html    200
+/glossary/   /glossary.html    200
+/darynfillis    /    301
+/darynfillis.html    /    301
+/Fillis_Headshot.png    /daryn-fillis.jpg    301
+/DFillis_Headshot.jpg    /daryn-fillis.jpg    301
+/Condo%20Buyer%20Guide_Digital.pdf    /california-condo-buyers-checklist.pdf    301
+/Condo%20Seller%20Guide_Digital.pdf    /california-condo-sellers-checklist.pdf    301
 /*    /404.html    404

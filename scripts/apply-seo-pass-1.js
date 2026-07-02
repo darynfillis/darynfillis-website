@@ -158,25 +158,5 @@ function updateHtmlFiles() {
   return changed;
 }
 
-function removeSitemapUrl(xml, url) {
-  const escaped = escapeRegExp(url);
-  return xml.replace(new RegExp(`\\s*<url>\\s*<loc>${escaped}<\\/loc>[\\s\\S]*?<\\/url>`, 'g'), '');
-}
-
-function updateSitemap() {
-  const file = 'sitemap.xml';
-  let xml = fs.readFileSync(filePath(file), 'utf8');
-  const original = xml;
-
-  xml = removeSitemapUrl(xml, 'https://darynfillis.com/journey-v2');
-
-  if (xml !== original) {
-    fs.writeFileSync(filePath(file), xml);
-    return true;
-  }
-  return false;
-}
-
 const changedHtml = updateHtmlFiles();
-const changedSitemap = updateSitemap();
-console.log(`SEO pass 1 applied. HTML files changed: ${changedHtml}. Sitemap changed: ${changedSitemap}.`);
+console.log(`SEO pass 1 applied. HTML files changed: ${changedHtml}.`);

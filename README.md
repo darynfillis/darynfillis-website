@@ -460,8 +460,7 @@ When needed, include appropriate NMLS, Equal Housing, company, and licensing dis
 
 Common root-level assets include:
 
-- `DFillis_Headshot.jpg`
-- `Fillis_Headshot.png`
+- `daryn-fillis.jpg`
 - `hero.mp4`
 - `og-home.jpg`
 - `og-schedule.jpg`
@@ -520,9 +519,9 @@ Items that should not be part of a clean production repo or deployment package:
 
 Current maintenance items to verify:
 
-- `README.md` should be replaced with this current project README.
-- `sitemap.xml` lists `/journey-v2`, but the zip should be checked for a matching page before keeping that URL live.
-- `_headers` includes references to `OGv6.jpg`; verify whether that image is still used or remove stale header entries.
+- The canonical headshot asset is `daryn-fillis.jpg`.
+- Condo guide download assets use clean public filenames: `california-condo-buyers-checklist.pdf` and `california-condo-sellers-checklist.pdf`.
+- Generated public pages include `glossary.html`, `neighborhoods.html`, and `neighborhoods/westchester.html`.
 - Some older pages may contain stale or duplicated metadata from copied templates. Check meta titles, descriptions, and robots directives before relying on a page for SEO.
 
 ## Working with AI on this project

@@ -3,6 +3,7 @@ const path = require('path');
 
 const ROOT = process.cwd();
 const TODAY = '2026-06-25';
+const FONT_LINK = '<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;800&display=swap" rel="stylesheet">';
 
 function filePath(file) {
   return path.join(ROOT, file);
@@ -184,7 +185,7 @@ function shellFromTemplate(template, metaBlock, bodyBlock) {
   const nav = navMatch[0];
   const footer = template.slice(footerIndex);
 
-  return `${beforeTitle}${metaBlock}\n${styleThroughBody}\n<a href="#main-content" class="skip-to-main">Skip to main content</a>\n\n${nav}\n\n${bodyBlock}\n\n${footer}`;
+  return `${beforeTitle}${metaBlock}\n\n${FONT_LINK}\n\n${styleThroughBody}\n<a href="#main-content" class="skip-to-main">Skip to main content</a>\n\n${nav}\n\n${bodyBlock}\n\n${footer}`;
 }
 
 function hubMeta() {

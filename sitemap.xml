@@ -4,7 +4,7 @@
   <!-- Core pages -->
   <url>
     <loc>https://darynfillis.com/</loc>
-    <lastmod>2026-05-29</lastmod>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -271,30 +271,44 @@
 
   <url>
     <loc>https://darynfillis.com/neighborhoods/santa-monica</loc>
-    <lastmod>2026-05-18</lastmod>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
 
   <url>
     <loc>https://darynfillis.com/neighborhoods/manhattan-beach</loc>
-    <lastmod>2026-05-18</lastmod>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
 
   <url>
     <loc>https://darynfillis.com/neighborhoods/marina-del-rey</loc>
-    <lastmod>2026-05-18</lastmod>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
 
+
   <url>
-    <loc>https://darynfillis.com/journey-v2</loc>
-    <lastmod>2026-05-19</lastmod>
+    <loc>https://darynfillis.com/neighborhoods</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://darynfillis.com/neighborhoods/westchester</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://darynfillis.com/glossary</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
   </url>
 
 </urlset>
