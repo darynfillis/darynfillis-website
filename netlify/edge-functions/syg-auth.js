@@ -74,7 +74,7 @@ function redirectToLogin(request) {
 function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
   const safeNext = escapeHtml(sanitizeNext(next));
   const errorBlock = error
-    ? '<div class="error" role="alert">That sign-in did not match. Try again.</div>'
+    ? '<div class="error" role="alert">That access name or password did not match. Try again.</div>'
     : '';
 
   return new Response(`<!doctype html>
@@ -83,7 +83,7 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <title>SYG + NEO Sign In | Daryn Fillis</title>
+  <title>SYG + NEO Sign In</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -243,22 +243,7 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
       text-transform: uppercase;
     }
 
-    .identity {
-      min-height: 50px;
-      margin-bottom: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 14px 15px;
-      border: 1px solid var(--rule);
-      border-radius: 6px;
-      background: var(--surface);
-      color: var(--navy);
-      font-size: 0.94rem;
-      font-weight: 800;
-    }
-
+    input[type="text"],
     input[type="password"] {
       width: 100%;
       min-height: 52px;
@@ -272,6 +257,11 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
       box-shadow: 0 10px 30px rgba(7, 27, 51, 0.06);
     }
 
+    input[type="text"] {
+      margin-bottom: 18px;
+    }
+
+    input[type="text"]:focus,
     input[type="password"]:focus {
       outline: 2px solid var(--blue);
       outline-offset: 2px;
@@ -331,9 +321,9 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
   <main class="shell">
     <section class="brand" aria-label="SYG and NEO private workspace">
       <div>
-        <div class="mark"><span></span>Daryn Fillis</div>
-        <h1>Private access for <em>SYG + NEO.</em></h1>
-        <p>A focused workspace for shared strategy, notes, and private collaboration.</p>
+        <div class="mark"><span></span>Private workspace</div>
+        <h1>Private access for <em>The Stephanie Younger Group and NEO Home Loans.</em></h1>
+        <p>Private collaboration, strategy, and shared resources.</p>
       </div>
       <div class="foot">Secure workspace</div>
     </section>
@@ -342,12 +332,12 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
         <input type="hidden" name="next" value="${safeNext}">
         <p class="eyebrow">Sign in</p>
         <h2>Welcome back.</h2>
-        <p class="hint">Enter the shared access password to continue.</p>
+        <p class="hint">Enter the user and password to continue.</p>
         ${errorBlock}
-        <label>Access name</label>
-        <div class="identity">SYG&amp;NEO</div>
+        <label for="username">Access name</label>
+        <input id="username" name="username" type="text" autocomplete="username" required autofocus>
         <label for="password">Password</label>
-        <input id="password" name="password" type="password" autocomplete="current-password" required autofocus>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
         <button type="submit">Continue</button>
         <p class="meta"><a href="/">Return home</a></p>
       </form>
@@ -379,10 +369,11 @@ async function handleLogin(request) {
   if (!password) return signInPage({ error: true, next });
 
   const form = await request.formData();
+  const suppliedUsername = String(form.get('username') || '').trim();
   const suppliedPassword = String(form.get('password') || '');
   const suppliedNext = sanitizeNext(String(form.get('next') || next));
 
-  if (suppliedPassword !== password) {
+  if (suppliedUsername !== USERNAME || suppliedPassword !== password) {
     return signInPage({ error: true, next: suppliedNext });
   }
 
