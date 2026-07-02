@@ -2,7 +2,7 @@
   "scripts": {
     "dev": "netlify dev",
     "build": "node scripts/apply-neighborhoods.js",
-    "postbuild": "node scripts/fix-neighborhood-buttons.js && node scripts/update-westchester-market-cards.js && node scripts/finalize-neighborhood-seo.js && node scripts/apply-glossary.js"
+    "postbuild": "node scripts/fix-neighborhood-buttons.js && node scripts/update-westchester-market-cards.js && node scripts/finalize-neighborhood-seo.js && node scripts/apply-glossary.js && node scripts/apply-seo-pass-1.js && node scripts/apply-aeo-brand-pass-2.js"
   },
   "dependencies": {
     "@netlify/blobs": "^8.1.0"
