@@ -1,18 +1,26 @@
 const USERNAME = 'SYG&NEO';
+const PASSWORD_ENV = 'SYG_BASIC_AUTH_PASSWORD';
 const REALM = 'SYG';
 const COOKIE_NAME = 'syg_access';
 const DEFAULT_NEXT = '/syg/';
+const SESSION_MAX_AGE = 60 * 60 * 24;
+
+function normalized(pathname) {
+  return pathname.toLowerCase();
+}
 
 function isProtectedPath(pathname) {
-  return pathname === '/syg'
-    || pathname === '/syg/'
-    || pathname === '/syg/index.html'
-    || pathname === '/syg.index'
-    || pathname.startsWith('/syg/');
+  const path = normalized(pathname);
+  return path === '/syg'
+    || path === '/syg/'
+    || path === '/syg/index.html'
+    || path === '/syg.index'
+    || path.startsWith('/syg/');
 }
 
 function isLoginPath(pathname) {
-  return pathname === '/syg-login' || pathname === '/syg-login.html';
+  const path = normalized(pathname);
+  return path === '/syg-login' || path === '/syg-login.html';
 }
 
 function escapeHtml(value) {
@@ -20,7 +28,8 @@ function escapeHtml(value) {
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;');
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
 }
 
 function sanitizeNext(value) {
@@ -38,8 +47,7 @@ function sanitizeNext(value) {
 
 function parseCookie(request, name) {
   const cookie = request.headers.get('cookie') || '';
-  const parts = cookie.split(';');
-  for (const part of parts) {
+  for (const part of cookie.split(';')) {
     const [rawName, ...rawValue] = part.trim().split('=');
     if (rawName === name) return decodeURIComponent(rawValue.join('='));
   }
@@ -50,9 +58,7 @@ async function accessToken(password) {
   const input = new TextEncoder().encode(`${USERNAME}:${password}`);
   const digest = await crypto.subtle.digest('SHA-256', input);
   let binary = '';
-  for (const byte of new Uint8Array(digest)) {
-    binary += String.fromCharCode(byte);
-  }
+  for (const byte of new Uint8Array(digest)) binary += String.fromCharCode(byte);
   return btoa(binary).replaceAll('+', '-').replaceAll('/', '_').replace(/=+$/g, '');
 }
 
@@ -63,6 +69,13 @@ function equalToken(actual, expected) {
     diff |= actual.charCodeAt(i) ^ expected.charCodeAt(i);
   }
   return diff === 0;
+}
+
+function noStoreHeaders(extra = {}) {
+  return {
+    'Cache-Control': 'no-store',
+    ...extra
+  };
 }
 
 function redirectToLogin(request) {
@@ -98,9 +111,7 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
       --shadow: 0 24px 70px rgba(7, 27, 51, 0.18);
       --font: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
-
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       min-height: 100vh;
@@ -111,7 +122,6 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
       place-items: center;
       padding: 28px;
     }
-
     .shell {
       width: min(100%, 980px);
       min-height: 620px;
@@ -123,7 +133,6 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
       overflow: hidden;
       box-shadow: var(--shadow);
     }
-
     .brand {
       position: relative;
       display: flex;
@@ -134,7 +143,6 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
       color: var(--white);
       overflow: hidden;
     }
-
     .brand::before {
       content: '';
       position: absolute;
@@ -144,9 +152,7 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
         linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 55%);
       pointer-events: none;
     }
-
     .brand > * { position: relative; z-index: 1; }
-
     .mark {
       display: inline-flex;
       align-items: center;
@@ -157,7 +163,6 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
       text-transform: uppercase;
       color: rgba(255, 255, 255, 0.82);
     }
-
     .mark span {
       width: 9px;
       height: 9px;
@@ -165,7 +170,6 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
       background: var(--blue);
       box-shadow: 0 0 18px rgba(91, 203, 245, 0.9);
     }
-
     h1 {
       margin: 44px 0 18px;
       max-width: 520px;
@@ -174,12 +178,7 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
       letter-spacing: -0.04em;
       font-weight: 800;
     }
-
-    h1 em {
-      color: var(--blue);
-      font-style: normal;
-    }
-
+    h1 em { color: var(--blue); font-style: normal; }
     .brand p {
       max-width: 480px;
       margin: 0;
@@ -188,7 +187,6 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
       line-height: 1.85;
       font-weight: 200;
     }
-
     .foot {
       margin-top: 40px;
       font-size: 0.72rem;
@@ -197,16 +195,13 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
       text-transform: uppercase;
       color: rgba(255, 255, 255, 0.46);
     }
-
     .panel {
       display: flex;
       align-items: center;
       padding: clamp(30px, 5vw, 56px);
       background: var(--white);
     }
-
     form { width: 100%; }
-
     .eyebrow {
       margin: 0 0 10px;
       color: var(--blue-dark);
@@ -215,7 +210,6 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
       letter-spacing: 0.16em;
       text-transform: uppercase;
     }
-
     h2 {
       margin: 0 0 10px;
       color: var(--navy);
@@ -224,7 +218,6 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
       letter-spacing: -0.03em;
       font-weight: 800;
     }
-
     .hint {
       margin: 0 0 28px;
       color: var(--body);
@@ -232,7 +225,6 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
       line-height: 1.7;
       font-weight: 200;
     }
-
     label {
       display: block;
       margin: 0 0 8px;
@@ -242,9 +234,7 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
       letter-spacing: 0.12em;
       text-transform: uppercase;
     }
-
-    input[type="text"],
-    input[type="password"] {
+    input[type="text"], input[type="password"] {
       width: 100%;
       min-height: 52px;
       border: 1px solid var(--rule);
@@ -256,18 +246,12 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
       background: var(--white);
       box-shadow: 0 10px 30px rgba(7, 27, 51, 0.06);
     }
-
-    input[type="text"] {
-      margin-bottom: 18px;
-    }
-
-    input[type="text"]:focus,
-    input[type="password"]:focus {
+    input[type="text"] { margin-bottom: 18px; }
+    input:focus {
       outline: 2px solid var(--blue);
       outline-offset: 2px;
       border-color: var(--blue-dark);
     }
-
     button {
       width: 100%;
       min-height: 52px;
@@ -284,9 +268,7 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
       cursor: pointer;
       box-shadow: 0 14px 30px rgba(22, 134, 184, 0.22);
     }
-
     button:hover { filter: brightness(0.98); transform: translateY(-1px); }
-
     .error {
       margin: 0 0 18px;
       padding: 12px 14px;
@@ -298,7 +280,6 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
       line-height: 1.5;
       font-weight: 600;
     }
-
     .meta {
       margin-top: 18px;
       color: var(--body);
@@ -306,9 +287,7 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
       line-height: 1.6;
       font-weight: 200;
     }
-
     .meta a { color: var(--blue-dark); font-weight: 600; text-decoration: none; }
-
     @media (max-width: 820px) {
       body { padding: 16px; }
       .shell { grid-template-columns: 1fr; min-height: auto; }
@@ -346,10 +325,7 @@ function signInPage({ error = false, next = DEFAULT_NEXT } = {}) {
 </body>
 </html>`, {
     status: error ? 401 : 200,
-    headers: {
-      'Content-Type': 'text/html; charset=utf-8',
-      'Cache-Control': 'no-store'
-    }
+    headers: noStoreHeaders({ 'Content-Type': 'text/html; charset=utf-8' })
   });
 }
 
@@ -362,10 +338,10 @@ async function handleLogin(request) {
   }
 
   if (request.method !== 'POST') {
-    return new Response('Method not allowed', { status: 405 });
+    return new Response('Method not allowed', { status: 405, headers: noStoreHeaders() });
   }
 
-  const password = Netlify.env.get('SYG_BASIC_AUTH_PASSWORD');
+  const password = Netlify.env.get(PASSWORD_ENV);
   if (!password) return signInPage({ error: true, next });
 
   const form = await request.formData();
@@ -378,11 +354,8 @@ async function handleLogin(request) {
   }
 
   const token = await accessToken(password);
-  const headers = new Headers({
-    Location: suppliedNext,
-    'Cache-Control': 'no-store'
-  });
-  headers.append('Set-Cookie', `${COOKIE_NAME}=${encodeURIComponent(token)}; Path=/; Max-Age=86400; HttpOnly; Secure; SameSite=Lax`);
+  const headers = new Headers(noStoreHeaders({ Location: suppliedNext }));
+  headers.append('Set-Cookie', `${COOKIE_NAME}=${encodeURIComponent(token)}; Path=/; Max-Age=${SESSION_MAX_AGE}; HttpOnly; Secure; SameSite=Lax`);
 
   return new Response(null, { status: 303, headers });
 }
@@ -394,7 +367,7 @@ export default async function handler(request, context) {
     return handleLogin(request);
   }
 
-  const password = Netlify.env.get('SYG_BASIC_AUTH_PASSWORD');
+  const password = Netlify.env.get(PASSWORD_ENV);
   if (!password) return redirectToLogin(request);
 
   const expected = await accessToken(password);
@@ -405,5 +378,5 @@ export default async function handler(request, context) {
 }
 
 export const config = {
-  path: ['/syg', '/syg/', '/syg/index.html', '/syg.index', '/syg/*', '/syg-login', '/syg-login.html']
+  path: ['/syg', '/syg/', '/syg/index.html', '/syg.index', '/syg/*', '/SYG', '/SYG/', '/SYG/*', '/syg-login', '/syg-login.html']
 };
