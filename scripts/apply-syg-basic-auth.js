@@ -5,7 +5,7 @@ const ROOT = process.cwd();
 const HEADERS_FILE = path.join(ROOT, '_headers');
 const START_MARKER = '# BEGIN generated /syg basic auth';
 const END_MARKER = '# END generated /syg basic auth';
-const DEFAULT_USER = 'daryn';
+const BASIC_AUTH_USER = 'SYG&NEO';
 
 function stripExistingBlock(content) {
   const pattern = new RegExp(`\n?${START_MARKER}[\s\S]*?${END_MARKER}\n?`, 'g');
@@ -20,7 +20,7 @@ function validateCredential(name, value) {
 }
 
 function main() {
-  const user = process.env.SYG_BASIC_AUTH_USER || DEFAULT_USER;
+  const user = BASIC_AUTH_USER;
   const password = process.env.SYG_BASIC_AUTH_PASSWORD;
 
   validateCredential('SYG_BASIC_AUTH_USER', user);
