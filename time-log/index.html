@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Time Logging + Genius Grid | Daryn Fillis</title>
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/time-log/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner max-w">
+      <a class="brand" href="/" aria-label="Daryn Fillis home">
+        <span class="brand-mark">DF</span>
+        <span><span class="brand-name">Daryn Fillis</span><span class="brand-sub">NEO learning tool</span></span>
+      </a>
+      <nav class="nav-mini" aria-label="Page sections">
+        <a href="#setup">Setup</a>
+        <a href="#time-log">Time log</a>
+        <a href="#genius-grid">Genius grid</a>
+        <a href="#notes">Notes</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="max-w">
+      <div>
+        <span class="eyebrow">Time Management, Structure and Prioritization</span>
+        <h1>Time Logging + <em>Genius Grid</em></h1>
+        <p>Track business tasks in 30-minute blocks, classify each one as red or green against your hourly rate, rate the energy return, and let the Genius Grid organize the work. You can drag cards when the automatic placement needs human judgment.</p>
+      </div>
+      <aside class="status-card" aria-live="polite">
+        <div class="status-line"><span class="status-label">Save status</span><span id="saveStatus" class="save-pill"><span class="save-dot"></span>Loading</span></div>
+        <div class="status-line"><span class="status-label">Worksheet</span><span id="stateKeyLabel" class="status-value">default</span></div>
+        <div class="status-line"><span class="status-label">Last saved</span><span id="lastSavedLabel" class="status-value">Not saved yet</span></div>
+        <div class="status-line"><span class="status-label">Storage</span><span id="storageModeLabel" class="status-value">Website</span></div>
+      </aside>
+    </div>
+  </section>
+
+  <main class="max-w">
+    <section id="setup" class="tool-section">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Step 1</span>
+          <h2 class="h2">Set your hourly filter.</h2>
+          <p class="sub">The Excel formulas are mirrored in the browser: total hours are non-empty 30-minute activity blocks divided by two, green hours are G-coded blocks divided by two, and green percentage is green hours divided by total logged hours.</p>
+        </div>
+        <div class="section-actions"><button id="saveNowBtn" class="btn btn-blue" type="button">Save now</button></div>
+      </div>
+      <div class="card card-pad">
+        <div class="setup-grid">
+          <label class="field"><span class="field-label">Your name</span><input id="personName" type="text" autocomplete="name"></label>
+          <label class="field"><span class="field-label">Income goal</span><input id="incomeGoal" type="number" min="0" step="1000" inputmode="decimal"></label>
+          <label class="field"><span class="field-label">Weeks off</span><input id="weeksOff" type="number" min="0" max="52" step="1" inputmode="numeric"></label>
+          <label class="field"><span class="field-label">Hours per week</span><input id="hoursPerWeek" type="number" min="1" max="120" step="1" inputmode="numeric"></label>
+          <div class="target-box"><span class="field-label">Target hourly rate</span><div id="targetHourly" class="target-value">$0/hr</div><div id="targetFormula" class="formula-text">Income goal / working hours</div></div>
+        </div>
+        <div class="guide-grid">
+          <div class="guide"><strong>Green means high ROI.</strong><p>You would pay your target hourly rate or more for this work because it drives production, referrals, strategy, or scalable growth.</p></div>
+          <div class="guide"><strong>Red means low ROI.</strong><p>You would not pay your target hourly rate for this work. It should be delegated, systemized, batched, or avoided where possible.</p></div>
+          <div class="guide"><strong>ROE means return on energy.</strong><p>Low drains you, neutral is steady, and high gives energy back. That energy rating feeds the Genius Grid.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tool-section">
+      <div class="grid-4">
+        <div class="kpi"><div class="kpi-label">Total 3-week hours logged</div><div id="kpiTotalHours" class="kpi-value">0</div><div class="kpi-note">Formula: COUNTA(activity blocks) / 2</div></div>
+        <div class="kpi"><div class="kpi-label">Total 3-week green hours</div><div id="kpiGreenHours" class="kpi-value">0</div><div class="kpi-note">Formula: COUNTIF(R/G, &quot;G&quot;) / 2</div></div>
+        <div class="kpi"><div class="kpi-label">3-week green percentage</div><div id="kpiGreenPct" class="kpi-value">--</div><div class="kpi-note">Formula: green hours / total hours</div></div>
+        <div class="kpi"><div class="kpi-label">Genius or Excellence activities</div><div id="kpiAboveLine" class="kpi-value">0</div><div class="kpi-note">Auto-built from ROI, ROE, results, and manual moves</div></div>
+      </div>
+    </section>
+
+    <section id="time-log" class="tool-section">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Step 2</span>
+          <h2 class="h2">Log the work.</h2>
+          <p class="sub">Only enter business tasks. Do not enter time sleeping. This keeps the original 3-week structure with 48 half-hour blocks per day, starting at 5:00 AM.</p>
+        </div>
+        <div class="public-note">This page is not password protected. Do not enter borrower names, loan numbers, credit details, income details, or private file information.</div>
+      </div>
+      <div class="card card-pad">
+        <div id="weekTabs" class="week-tabs" role="tablist" aria-label="Weeks"></div>
+        <div id="dayTabs" class="day-tabs" role="tablist" aria-label="Days"></div>
+        <div class="summary-table-wrap"><table class="summary-table" id="dailySummaryTable"></table></div>
+        <div class="card day-editor">
+          <div class="day-editor-head"><div class="day-editor-title" id="dayEditorTitle"></div><button id="clearDayBtn" class="btn btn-outline btn-small" type="button">Clear day</button></div>
+          <div class="log-table-wrap">
+            <table class="log-table" id="logTable">
+              <thead><tr><th>Time</th><th class="col-activity">Activity</th><th class="col-small">R/G</th><th class="col-small">ROE</th><th class="col-small">Results</th></tr></thead>
+              <tbody id="logTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="genius-grid" class="tool-section">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Step 3</span>
+          <h2 class="h2">Review your Genius Grid.</h2>
+          <p class="sub">The grid auto-populates from the transcript logic. Red items move below the line based on results. Green items move into Competence, Excellence, or Genius based on energy. Drag any card into a different zone when your judgment is more accurate.</p>
+        </div>
+        <div class="section-actions"><button id="resetGridBtn" class="btn btn-outline" type="button">Reset grid to auto</button></div>
+      </div>
+      <div class="genius-layout">
+        <div class="grid-board" id="gridBoard">
+          <section class="zone excellence" data-zone="excellence" aria-label="Excellence zone"><header class="zone-head"><div class="zone-title">Excellence</div><div class="zone-sub">High ROI, neutral to high ROE</div></header><div class="zone-body" id="zone-excellence"></div></section>
+          <section class="zone genius" data-zone="genius" aria-label="Genius zone"><header class="zone-head"><div class="zone-title">Genius</div><div class="zone-sub">High ROI, high ROE</div></header><div class="zone-body" id="zone-genius"></div></section>
+          <section class="zone competence" data-zone="competence" aria-label="Competence zone"><header class="zone-head"><div class="zone-title">Competence</div><div class="zone-sub">Low, neutral, or high ROI, low ROE</div></header><div class="zone-body" id="zone-competence"></div></section>
+          <section class="zone incompetence" data-zone="incompetence" aria-label="Incompetence zone"><header class="zone-head"><div class="zone-title">Incompetence</div><div class="zone-sub">Low ROI, low ROE</div></header><div class="zone-body" id="zone-incompetence"></div></section>
+        </div>
+        <aside class="card side-card">
+          <div class="side-title">Top 5 I want to be doing more</div>
+          <p class="side-note">Pulled from Genius first, then Excellence. Reorder cards by dragging.</p>
+          <ol class="top-list" id="topDoMore"></ol>
+          <div style="height: 20px;"></div>
+          <div class="side-title">Top 5 things I need to avoid</div>
+          <p class="side-note">Pulled from Incompetence first, then Competence. Reorder cards by dragging.</p>
+          <ol class="top-list" id="topAvoid"></ol>
+        </aside>
+      </div>
+    </section>
+
+    <section id="notes" class="tool-section">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Step 4</span>
+          <h2 class="h2">Capture the decisions.</h2>
+          <p class="sub">Use this section for the conversation with your boss. These notes save with the rest of the worksheet.</p>
+        </div>
+      </div>
+      <div class="card card-pad notes-grid">
+        <label class="field"><span class="field-label">What I learned from the log</span><textarea id="learningNotes" placeholder="Patterns, wasted time, best green work, and where my schedule needs more structure."></textarea></label>
+        <label class="field"><span class="field-label">Actions I will take</span><textarea id="actionNotes" placeholder="What I will delegate, protect, batch, remove, or do more of."></textarea></label>
+      </div>
+      <p class="footer-note">Website save uses a Netlify Function and Netlify Blobs. If the function is not deployed, the page keeps a local browser backup, but shared viewers will not see those local-only changes.</p>
+    </section>
+  </main>
+
+  <noscript><p style="padding: 24px; font-family: sans-serif;">This tool requires JavaScript to save and calculate the worksheet.</p></noscript>
+
+  <script src="/time-log/app.js" defer></script>
+</body>
+</html>
