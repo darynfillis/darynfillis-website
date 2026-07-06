@@ -1,5 +1,29 @@
 const { connectLambda, getStore } = require("@netlify/blobs");
 
+const jsonHeaders = { "Content-Type": "application/json" };
+const productionDealsUrl = "https://darynfillis.com/.netlify/functions/deals";
+
+async function proxyToProduction(event) {
+  const response = await fetch(productionDealsUrl, {
+    method: event.httpMethod,
+    headers: {
+      "Content-Type": "application/json",
+      "x-syg-password": event.headers["x-syg-password"] || event.headers["X-SYG-Password"] || ""
+    },
+    body: event.httpMethod === "POST" ? (event.body || "[]") : undefined
+  });
+
+  const text = await response.text();
+
+  return {
+    statusCode: response.status,
+    headers: Object.assign({}, jsonHeaders, {
+      "X-SYG-Data-Source": "production-proxy"
+    }),
+    body: text
+  };
+}
+
 exports.handler = async (event) => {
   connectLambda(event);
 
@@ -7,17 +31,13 @@ exports.handler = async (event) => {
   const supplied = event.headers["x-syg-password"] || event.headers["X-SYG-Password"];
 
   if (!password) {
-    return {
-      statusCode: 500,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ error: "Missing SYG_PASSWORD environment variable." })
-    };
+    return proxyToProduction(event);
   }
 
   if (supplied !== password) {
     return {
       statusCode: 401,
-      headers: { "Content-Type": "application/json" },
+      headers: jsonHeaders,
       body: JSON.stringify({ error: "Unauthorized" })
     };
   }
@@ -29,7 +49,7 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: jsonHeaders,
       body: JSON.stringify(existing || [])
     };
   }
@@ -43,7 +63,7 @@ exports.handler = async (event) => {
     } catch (e) {
       return {
         statusCode: 400,
-        headers: { "Content-Type": "application/json" },
+        headers: jsonHeaders,
         body: JSON.stringify({ error: "Invalid JSON." })
       };
     }
@@ -52,14 +72,14 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: jsonHeaders,
       body: JSON.stringify({ ok: true })
     };
   }
 
   return {
     statusCode: 405,
-    headers: { "Content-Type": "application/json" },
+    headers: jsonHeaders,
     body: JSON.stringify({ error: "Method not allowed." })
   };
 };
