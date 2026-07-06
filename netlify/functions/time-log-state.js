@@ -2,10 +2,7 @@ const { connectLambda, getStore } = require("@netlify/blobs");
 
 const jsonHeaders = {
   "Content-Type": "application/json; charset=utf-8",
-  "Cache-Control": "no-store",
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type"
+  "Cache-Control": "no-store"
 };
 
 function safeKey(value) {
@@ -15,10 +12,6 @@ function safeKey(value) {
 }
 
 exports.handler = async (event) => {
-  if (event.httpMethod === "OPTIONS") {
-    return { statusCode: 204, headers: jsonHeaders, body: "" };
-  }
-
   try {
     connectLambda(event);
     const store = getStore("time-log-state");
