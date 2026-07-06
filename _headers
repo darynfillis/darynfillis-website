@@ -6,6 +6,12 @@
   Content-Type: application/manifest+json
   Cache-Control: public, max-age=0, must-revalidate
 
+/time-log
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+/time-log/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+
 /*
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
