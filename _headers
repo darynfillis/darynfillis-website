@@ -6,6 +6,12 @@
   Content-Type: application/manifest+json
   Cache-Control: public, max-age=0, must-revalidate
 
+/syg/admin
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/syg/admin.html
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
 /*
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
