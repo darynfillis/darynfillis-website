@@ -8,6 +8,11 @@ Disallow: /california-condo-buyers-checklist.pdf
 Disallow: /california-condo-sellers-checklist.pdf
 Disallow: /decode3-confirmed
 
+# Internal learning tools
+Disallow: /time-log
+Disallow: /time-log/
+Disallow: /.netlify/functions/time-log-state
+
 # Sitemap
 Sitemap: https://darynfillis.com/sitemap.xml
 
@@ -18,13 +23,19 @@ Disallow: /decoding-2026-housing-market.pdf
 Disallow: /california-condo-buyers-checklist.pdf
 Disallow: /california-condo-sellers-checklist.pdf
 Disallow: /decode3-confirmed
+Disallow: /time-log
+Disallow: /time-log/
+Disallow: /.netlify/functions/time-log-state
 
 User-agent: ChatGPT-User
 Allow: /
 Disallow: /decoding-2026-housing-market.pdf
 Disallow: /california-condo-buyers-checklist.pdf
-Disallow: /california-condo-sellers-checklist.pdf
 Disallow: /decode3-confirmed
+Disallow: /california-condo-sellers-checklist.pdf
+Disallow: /time-log
+Disallow: /time-log/
+Disallow: /.netlify/functions/time-log-state
 
 User-agent: Claude-Web
 Allow: /
@@ -32,6 +43,9 @@ Disallow: /decoding-2026-housing-market.pdf
 Disallow: /california-condo-buyers-checklist.pdf
 Disallow: /california-condo-sellers-checklist.pdf
 Disallow: /decode3-confirmed
+Disallow: /time-log
+Disallow: /time-log/
+Disallow: /.netlify/functions/time-log-state
 
 User-agent: ClaudeBot
 Allow: /
@@ -39,6 +53,9 @@ Disallow: /decoding-2026-housing-market.pdf
 Disallow: /california-condo-buyers-checklist.pdf
 Disallow: /california-condo-sellers-checklist.pdf
 Disallow: /decode3-confirmed
+Disallow: /time-log
+Disallow: /time-log/
+Disallow: /.netlify/functions/time-log-state
 
 User-agent: anthropic-ai
 Allow: /
@@ -46,6 +63,9 @@ Disallow: /decoding-2026-housing-market.pdf
 Disallow: /california-condo-buyers-checklist.pdf
 Disallow: /california-condo-sellers-checklist.pdf
 Disallow: /decode3-confirmed
+Disallow: /time-log
+Disallow: /time-log/
+Disallow: /.netlify/functions/time-log-state
 
 User-agent: PerplexityBot
 Allow: /
@@ -53,6 +73,9 @@ Disallow: /decoding-2026-housing-market.pdf
 Disallow: /california-condo-buyers-checklist.pdf
 Disallow: /california-condo-sellers-checklist.pdf
 Disallow: /decode3-confirmed
+Disallow: /time-log
+Disallow: /time-log/
+Disallow: /.netlify/functions/time-log-state
 
 User-agent: Google-Extended
 Allow: /
@@ -60,6 +83,9 @@ Disallow: /decoding-2026-housing-market.pdf
 Disallow: /california-condo-buyers-checklist.pdf
 Disallow: /california-condo-sellers-checklist.pdf
 Disallow: /decode3-confirmed
+Disallow: /time-log
+Disallow: /time-log/
+Disallow: /.netlify/functions/time-log-state
 
 User-agent: CCBot
 Allow: /
@@ -67,3 +93,6 @@ Disallow: /decoding-2026-housing-market.pdf
 Disallow: /california-condo-buyers-checklist.pdf
 Disallow: /california-condo-sellers-checklist.pdf
 Disallow: /decode3-confirmed
+Disallow: /time-log
+Disallow: /time-log/
+Disallow: /.netlify/functions/time-log-state
