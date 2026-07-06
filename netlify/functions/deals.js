@@ -3,6 +3,11 @@ const { connectLambda, getStore } = require("@netlify/blobs");
 const jsonHeaders = { "Content-Type": "application/json" };
 const productionDealsUrl = "https://darynfillis.com/.netlify/functions/deals";
 
+function isNonProductionDeploy() {
+  const context = process.env.CONTEXT || process.env.NETLIFY_CONTEXT || "";
+  return context && context !== "production";
+}
+
 async function proxyToProduction(event) {
   const response = await fetch(productionDealsUrl, {
     method: event.httpMethod,
@@ -29,12 +34,19 @@ exports.handler = async (event) => {
 
   const password = process.env.SYG_PASSWORD;
   const supplied = event.headers["x-syg-password"] || event.headers["X-SYG-Password"];
+  const nonProduction = isNonProductionDeploy();
 
   if (!password) {
-    return proxyToProduction(event);
+    if (nonProduction) return proxyToProduction(event);
+    return {
+      statusCode: 500,
+      headers: jsonHeaders,
+      body: JSON.stringify({ error: "Missing SYG_PASSWORD environment variable." })
+    };
   }
 
   if (supplied !== password) {
+    if (nonProduction) return proxyToProduction(event);
     return {
       statusCode: 401,
       headers: jsonHeaders,
