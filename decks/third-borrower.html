@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Third Borrower — Live Session</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0A2540; --navy-deep:#071C33; --navy-mid:#0D3050; --panel:#124066;
+  --blue:#5BCBF5; --blue-dark:#38B8E8; --blue-lt:#8FE0FB; --pale:#E3F4FD;
+  --surface:#F7F9FB; --muted:#8A95A3;
+  --red:#FF9999; --red-deep:#B91C1C; --red-bg:#1A0808;
+  --gold:#FFC96B;
+  --font:'Montserrat',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:var(--navy-deep);color:#fff;font-family:var(--font);overflow:hidden}
+button{font-family:var(--font)}
+
+/* ---------- stage scaling (16:9 design space 1280x720) ---------- */
+#viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#stage{width:1280px;height:720px;position:relative;transform-origin:center center;flex:none}
+
+/* ---------- shared slide chrome ---------- */
+.slide{position:absolute;inset:0;padding:72px 88px;display:none;flex-direction:column;justify-content:center;background:var(--navy-deep)}
+.slide.active{display:flex}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--blue);border-radius:999px;
+  padding:8px 20px;font-size:13px;font-weight:600;letter-spacing:.35em;color:var(--pale);width:max-content}
+.eyebrow .dot{width:8px;height:8px;border-radius:50%;background:#FF3131;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+h1{font-weight:800;font-size:58px;line-height:1.12;letter-spacing:-.01em}
+h2{font-weight:800;font-size:44px;line-height:1.15}
+.b{color:var(--blue)}
+.lt{color:var(--blue-lt)}
+.g{color:var(--gold)}
+.body{font-size:20px;line-height:1.55;color:var(--pale);font-weight:400}
+.small{font-size:15px;color:var(--muted);line-height:1.5}
+.quote-bar{border-left:5px solid #FF3131;padding-left:34px}
+.center{align-items:center;text-align:center}
+.card{background:var(--navy-mid);border:1px solid var(--panel);border-radius:14px;padding:28px 30px}
+.tint{background:var(--navy)}
+.statement{background:var(--navy);border-radius:16px;padding:56px 72px}
+
+/* ---------- lobby ---------- */
+#lobby{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;text-align:center}
+#ring{position:relative;width:360px;height:360px;display:flex;align-items:center;justify-content:center}
+#ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
+#ring circle{fill:none;stroke-width:3}
+#ring .track{stroke:var(--navy-mid)}
+#ring .arc{stroke:var(--blue);stroke-linecap:round;transition:stroke-dashoffset 1s linear}
+#ring::before{content:"";position:absolute;inset:-26px;border-radius:50%;
+  background:radial-gradient(circle,rgba(91,203,245,.16),transparent 68%);animation:breathe 5s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.45;transform:scale(.97)}50%{opacity:1;transform:scale(1.03)}}
+#clock{font-weight:800;font-size:92px;letter-spacing:.02em;font-variant-numeric:tabular-nums;position:relative}
+#lobby .when{font-size:15px;font-weight:600;letter-spacing:.28em;color:var(--muted);text-transform:uppercase}
+#lobby h1{font-size:40px}
+.btn{background:var(--blue);color:var(--navy);border:none;border-radius:999px;padding:16px 44px;
+  font-size:17px;font-weight:600;cursor:pointer;letter-spacing:.02em;transition:background .2s}
+.btn:hover{background:var(--blue-dark)}
+.btn:focus-visible,#stage [tabindex]:focus-visible{outline:3px solid var(--blue-lt);outline-offset:3px}
+#gate{position:absolute;inset:0;background:var(--navy-deep);display:flex;flex-direction:column;gap:26px;
+  align-items:center;justify-content:center;z-index:5}
+#gate .small{max-width:460px}
+
+/* ---------- layouts ---------- */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:40px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:36px}
+.stat .n{font-weight:800;font-size:64px;color:var(--blue)}
+.stat .l{font-weight:600;font-size:18px;margin-top:6px}
+.steps{display:grid;grid-template-columns:1fr 42px 1fr 42px 1fr;gap:14px;align-items:stretch;margin-top:44px}
+.step{border:1px solid var(--blue);border-radius:14px;padding:26px 24px;background:var(--navy)}
+.step .num{font-weight:600;font-size:13px;letter-spacing:.3em;color:var(--blue-lt)}
+.step .name{font-weight:800;font-size:24px;margin:8px 0 12px}
+.step p{font-size:14.5px;line-height:1.5;color:var(--pale)}
+.arrow{display:flex;align-items:center;justify-content:center;color:var(--blue);font-size:26px}
+.rows{margin-top:32px;display:flex;flex-direction:column;gap:12px}
+.row{display:grid;grid-template-columns:190px 1fr;gap:22px;align-items:center}
+.row .k{background:var(--panel);border-radius:8px;padding:10px 16px;font-weight:600;font-size:15px;text-align:center}
+.row .v{font-size:18px;color:var(--pale)}
+table{width:100%;border-collapse:collapse;margin-top:28px;font-size:17px}
+th,td{padding:11px 18px;text-align:left}
+thead th{font-weight:600;letter-spacing:.14em;font-size:13px}
+th.old,td.old{background:var(--red-bg);color:var(--red)}
+th.new,td.new{background:var(--navy);color:var(--blue-lt)}
+th.old{background:var(--red-deep);color:#fff}
+th.new{background:var(--panel);color:#fff}
+tbody tr{border-bottom:1px solid var(--navy-mid)}
+td.label{color:var(--surface);font-weight:600;font-size:15.5px}
+.dims{margin-top:32px;display:flex;flex-direction:column;gap:16px}
+.dim{display:grid;grid-template-columns:34px 320px 1fr;gap:18px;align-items:baseline}
+.dim .a{color:var(--blue);font-weight:800}
+.dim .t{font-weight:800;font-size:20px}
+.dim .d{color:var(--pale);font-size:16px}
+
+/* ---------- timeline ---------- */
+.tl{margin-top:44px;position:relative;padding:0 40px}
+.tl .line{position:absolute;left:40px;right:40px;top:14px;height:3px;background:var(--panel)}
+.tl .fill{position:absolute;left:40px;top:14px;height:3px;background:var(--blue);width:0;transition:width .8s ease}
+.tl .pts{display:grid;grid-template-columns:1fr 1fr 1fr;position:relative}
+.tl .pt{display:flex;flex-direction:column;align-items:center;text-align:center}
+.tl .dot{width:30px;height:30px;border-radius:50%;background:var(--navy-deep);border:3px solid var(--blue);z-index:2}
+.tl .pt.key .dot{background:var(--blue);box-shadow:0 0 0 8px rgba(91,203,245,.14)}
+.tl .d8{margin-top:16px;font-weight:800;font-size:21px}
+.tl .lb{margin-top:5px;font-size:13px;letter-spacing:.16em;font-weight:600;color:var(--blue-lt)}
+.tl .ds{margin-top:9px;font-size:14.5px;color:var(--pale);line-height:1.45;max-width:280px}
+.alert{margin-top:30px;background:var(--red-bg);border:1px solid var(--red-deep);border-radius:12px;padding:16px 24px;
+  display:flex;gap:16px;align-items:center}
+.alert .bang{width:30px;height:30px;border-radius:50%;background:var(--red-deep);color:#fff;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex:none;font-size:18px}
+.alert p{color:var(--red);font-size:16px;line-height:1.5}
+
+/* ---------- flags grid ---------- */
+.flags{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px}
+.flag{background:var(--navy);border:1px solid var(--panel);border-radius:11px;padding:16px 18px}
+.flag .n{font-weight:800;font-size:12px;letter-spacing:.22em;color:var(--red)}
+.flag .t{font-weight:800;font-size:17px;margin:6px 0 6px}
+.flag p{font-size:13.5px;line-height:1.45;color:var(--pale)}
+
+/* ---------- checklist ---------- */
+.chk{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;margin-top:34px}
+.chk .col{background:var(--navy);border:1px solid var(--panel);border-radius:14px;padding:22px 22px}
+.chk .col h3{font-size:13px;letter-spacing:.2em;font-weight:800;color:var(--blue-lt)}
+.chk .col .cnt{font-weight:800;font-size:34px;margin:6px 0 12px}
+.chk ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.chk li{font-size:14px;line-height:1.4;color:var(--pale);padding-left:18px;position:relative}
+.chk li::before{content:"→";position:absolute;left:0;color:var(--blue);font-weight:800}
+
+/* ---------- controls ---------- */
+#hud{position:absolute;left:0;right:0;bottom:0;height:52px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 26px;font-size:13px;color:var(--muted);z-index:6;opacity:0;transition:opacity .25s}
+#stage:hover #hud,#hud:focus-within{opacity:1}
+#hud .keys span{margin-right:14px}
+#hud button{background:none;border:1px solid var(--navy-mid);color:var(--pale);border-radius:8px;
+  padding:6px 14px;cursor:pointer;font-size:13px;margin-left:8px}
+#hud button:hover{border-color:var(--blue)}
+#bar{position:absolute;left:0;bottom:0;height:3px;background:var(--blue);width:0;transition:width .3s;z-index:7}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- typewriter ---------- */
+.tcursor{display:inline-block;width:7px;height:.95em;background:var(--blue);margin-left:10px;
+  vertical-align:-.08em;border-radius:2px;animation:blink 1.1s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1;transform:scaleY(1)}50%{opacity:.25;transform:scaleY(.92)}}
+
+/* ---------- click-to-reveal fragments ---------- */
+.frag{visibility:hidden;opacity:0;transition:opacity .35s ease}
+.frag.on{visibility:visible;opacity:1}
+
+/* ---------- presenter view ---------- */
+body.presenter{overflow:auto}
+body.presenter #viewport{display:none}
+#pv{display:none}
+body.presenter #pv{display:grid;grid-template-rows:auto 1fr auto;height:100vh;padding:22px 30px;gap:16px}
+#pv header{display:flex;justify-content:space-between;align-items:center}
+#pv .now{font-weight:800;font-size:26px}
+#pv .next{color:var(--muted);font-size:15px}
+#pv .clockline{font-variant-numeric:tabular-nums;font-weight:600;font-size:22px;color:var(--blue)}
+#pv #pvNotes{background:var(--navy);border:1px solid var(--navy-mid);border-radius:14px;padding:26px 30px;
+  overflow-y:auto;font-size:19px;line-height:1.65;color:var(--pale)}
+#pv #pvNotes p{margin-bottom:14px}
+#pv #pvNotes p.cue{color:var(--muted);font-size:15px;font-style:italic}
+#pv #pvNotes p b{color:var(--blue-lt)}
+#pv footer{display:flex;gap:12px;justify-content:center}
+#pv footer button{background:var(--navy-mid);border:1px solid var(--panel);color:#fff;border-radius:10px;
+  padding:12px 30px;font-size:16px;font-weight:600;cursor:pointer}
+#pv footer button:hover{border-color:var(--blue)}
+</style>
+</head>
+<body>
+<div id="viewport"><div id="stage">
+
+  <!-- ======== LOBBY (slide 0) ======== -->
+  <section class="slide active" id="lobby">
+    <div id="gate">
+      <span class="eyebrow"><span class="dot"></span>LIVE SESSION</span>
+      <h1 style="font-size:44px">The third <span class="b">borrower.</span></h1>
+      <p class="small">Tap below to open the room — the countdown and lobby music start.<br><br><b style="color:var(--blue-lt)">Presenting live?</b> Press <b style="color:#fff">P</b> for floating notes or <b style="color:#fff">N</b> for a second-screen presenter view. Arrow keys advance. <b style="color:#fff">F</b> fullscreen · <b style="color:#fff">M</b> music.<br><br><span style="color:var(--muted)">Skip the countdown entirely: add <b style="color:var(--blue-lt)">?mins=0</b> to the URL, or just press <b style="color:#fff">→</b> after joining.</span></p>
+      <button class="btn" id="enterBtn">Open the room</button>
+    </div>
+    <span class="eyebrow"><span class="dot"></span>LIVE SESSION</span>
+    <div id="ring">
+      <svg viewBox="0 0 360 360"><circle class="track" cx="180" cy="180" r="172"/><circle class="arc" cx="180" cy="180" r="172"/></svg>
+      <div id="clock">--:--</div>
+    </div>
+    <div>
+      <h1>We're starting <span class="b">soon.</span></h1>
+      <p class="when" id="whenLabel" style="margin-top:14px"></p>
+    </div>
+  </section>
+
+  <!-- ======== 1 · TITLE ======== -->
+  <section class="slide center" style="gap:30px">
+    <span class="eyebrow"><span class="dot"></span>LIVE SESSION</span>
+    <h1 style="font-size:70px">The third<br><span class="b">borrower.</span></h1>
+    <p class="body" style="font-weight:600;font-size:22px;letter-spacing:.02em">A California condo method for agents</p>
+    <p class="small" style="font-size:16px;margin-top:-14px">Daryn Fillis &nbsp;·&nbsp; NEO Home Loans &nbsp;·&nbsp; NMLS #1988371</p>
+  </section>
+
+  <!-- ======== 2 · STTS 1: BOLD OPENING ======== -->
+  <section class="slide center" id="problemSlide"><h1 style="font-size:56px;line-height:1.2;max-width:1050px"><span id="typeOut"></span><span class="tcursor" id="typeCursor"></span></h1></section>
+
+  <!-- ======== 3 · STTS 1: THE STAKES ======== -->
+  <section class="slide">
+    <h2>The deal didn't die. <span class="b">It was killed in week three.</span></h2>
+    <p class="small" style="margin-top:10px;font-size:17px">Every condo deal you lose at the project level was knowable <em>before</em> anyone wrote anything.</p>
+    <div class="three-col">
+      <div class="card stat frag"><div class="n">3</div><div class="l">Approvals, not one</div><p class="small" style="margin-top:6px">The lender approves the borrower, the unit, <b style="color:var(--blue-lt)">and the building</b>. All three have to pass. Perfect credit does not save a failed project.</p></div>
+      <div class="card stat frag"><div class="n">1–3</div><div class="l">Weeks of project review</div><p class="small" style="margin-top:6px">That's how long the HOA questionnaire round-trip takes. It starts <em>after</em> you're in contract — which is why the bad news always lands late.</p></div>
+      <div class="card stat frag" style="border-color:var(--red-deep)"><div class="n" style="color:var(--red)">0</div><div class="l">Commissions on a dead deal</div><p class="small" style="margin-top:6px">Buyer's deposit at risk. Seller back on market with a stale DOM. Your name on both sides of it.</p></div>
+    </div>
+    <div class="frag" style="margin-top:34px;text-align:center">
+      <p class="body" style="font-size:25px;line-height:1.45">The building is the <span class="b" style="font-weight:800">third borrower</span> in every condo deal.<br><span style="color:#fff;font-weight:600">It's the only one nobody pre-approves.</span></p>
+    </div>
+  </section>
+
+  <!-- ======== 4 · STTS 2: CREDIBILITY ======== -->
+  <section class="slide">
+    <h1>Why me?</h1>
+    <div style="margin-top:30px;border-left:4px solid var(--blue);padding-left:28px;max-width:940px">
+      <p style="font-weight:800;font-size:20px;letter-spacing:.06em"><span style="color:#fff">DARYN</span> <span class="b">FILLIS</span> <span style="color:var(--muted);font-weight:600">— Certified Mortgage Advisor · Branch Lead</span></p>
+      <p class="body" style="margin-top:16px">I run condo deals across LA County constantly — El Segundo, the South Bay, the Westside. Warrantable, non-warrantable, FHA, VA, conventional, jumbo. Buyers, sellers, agents.</p>
+      <p class="body" style="margin-top:14px">The building review, the warrantability analysis, the project questionnaire, the reserve study, the SB 326 status — <b style="color:#fff">these aren't things most lenders run before you're in contract.</b> I run them before you write the offer.</p>
+      <p class="small" style="margin-top:18px;font-size:15px">NEO Home Loans, powered by Better · NMLS #1988371 · Hablo español con fluidez.</p>
+    </div>
+    <div class="card frag" style="margin-top:28px;border-color:var(--blue);padding:18px 24px;max-width:940px">
+      <p class="body" style="font-size:17px">I also wrote the two guides this session is built on — <span class="b" style="font-weight:600">the Buyer's Pre-Offer Checklist</span> and <span class="b" style="font-weight:600">the Seller's Warrantability Checklist</span>. You're all leaving with both. More on that at the end.</p>
+    </div>
+  </section>
+
+  <!-- ======== 5 · STTS 3+4: ROADMAP + UNIQUE MECHANISM ======== -->
+  <section class="slide">
+    <h2>The Third Borrower <span class="b">Method.</span></h2>
+    <p class="small" style="margin-top:10px;font-size:17px">Three steps. Same method whether you're taking the listing or writing the offer.</p>
+    <div class="steps">
+      <div class="step"><div class="num">01</div><div class="name">CHECK</div><p>Before the offer. Before the listing. One address, one HOA name — status across Fannie, Freddie, FHA, and VA. Under 24 hours. Free.</p></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="num">02</div><div class="name">CLEAR</div><p>Work the 15-item checklist. Six documents, five questions, four conditions. Most of it is phone calls. All of it is knowable pre-offer.</p></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="num">03</div><div class="name">CLOSE</div><p>Warrantable → conventional. Non-warrantable → Condo Solutions. Either way the deal closes. It just closes on purpose instead of by luck.</p></div>
+    </div>
+    <p class="body frag" style="margin-top:36px;text-align:center;font-size:20px">Thirty minutes. I'm going to break three things you believe about condos —<br>then hand you the checklist that makes this permanent.</p>
+  </section>
+
+  <!-- ======== 6 · STTS 5: FALSE BELIEF 1 ======== -->
+  <section class="slide">
+    <div class="quote-bar">
+      <h1>The lender handles the building.<br>That's not my job.</h1>
+      <p class="small" style="margin-top:26px;font-size:16px">Project review is a <em>post-contract</em> process. By the time your lender tells you the building failed, you've burned three weeks, the buyer's deposit is exposed, and the listing is stale.</p>
+    </div>
+  </section>
+
+  <!-- ======== 7 · KILL LINE 1 ======== -->
+  <section class="slide center">
+    <div class="statement"><h2 style="font-size:36px;line-height:1.4">The lender doesn't check the building until week three.<br>You write the offer in week one.<br><span class="b">The gap between those two is where deals die.</span></h2></div>
+  </section>
+
+  <!-- ======== 8 · STTS 5: FALSE BELIEF 2 ======== -->
+  <section class="slide">
+    <div class="quote-bar">
+      <h1>Small buildings are the hard ones.</h1>
+      <p class="small" style="margin-top:26px;font-size:16px">It's the one everybody assumes: no professional management, thin reserves, no doorman — must be a nightmare to finance.</p>
+      <p class="small" style="margin-top:12px;font-size:16px;color:var(--blue-lt)">As of 2026, that got exactly backwards.</p>
+    </div>
+  </section>
+
+  <!-- ======== 9 · THE INVERSION ======== -->
+  <section class="slide">
+    <h2>2026 <span class="b">inverted the risk.</span></h2>
+    <p class="small" style="margin-top:10px;font-size:17px">Where the pain actually lands under the new rules.</p>
+    <div class="two-col" style="margin-top:34px">
+      <div class="card frag" style="border-color:var(--blue);padding:26px 28px">
+        <p class="small" style="letter-spacing:.2em;font-size:12px;font-weight:600;color:var(--blue-lt)">≤ 10 UNITS — GOT EASIER</p>
+        <p style="font-weight:800;font-size:26px;margin-top:10px" class="b">The Waiver</p>
+        <p class="body" style="margin-top:12px;font-size:17px">New in 2026: projects of ten units or fewer can close <b style="color:#fff">without a full project review</b>. The small Mid-City, Echo Park, and Santa Monica conversions that used to sit in an awkward middle ground — too small for thick reserves, too project-like to be a duplex — just got a clean path.</p>
+      </div>
+      <div class="card frag" style="border-color:var(--red-deep);background:var(--red-bg);padding:26px 28px">
+        <p class="small" style="letter-spacing:.2em;font-size:12px;font-weight:600;color:var(--red)">11+ UNITS — GOT HARDER</p>
+        <p style="font-weight:800;font-size:26px;margin-top:10px;color:var(--red)">Full Review, every time</p>
+        <p class="body" style="margin-top:12px;font-size:17px;color:var(--red)">Limited Review is <b style="color:#fff">gone</b> as of Aug 3, 2026. The mid-size buildings that closed on autopilot for years — the ones with a track record — have <b style="color:#fff">never been Full Reviewed</b>. Financials, reserves, insurance, litigation, owner-occupancy. All of it. Every loan.</p>
+      </div>
+    </div>
+    <p class="body frag" style="margin-top:30px;text-align:center;font-size:19px">Your clean closing history in a 40-unit building tells you nothing about 2026.<br><span class="b" style="font-weight:600">It was never tested.</span></p>
+  </section>
+
+  <!-- ======== 10 · KILL LINE 2 ======== -->
+  <section class="slide center">
+    <div class="statement"><h2 style="font-size:36px;line-height:1.4">The ten-unit building just got a waiver.<br>The forty-unit building just lost its shortcut.<br><span class="b">Your instinct about which one is risky is backwards.</span></h2></div>
+  </section>
+
+  <!-- ======== 11 · STTS 5: FALSE BELIEF 3 ======== -->
+  <section class="slide">
+    <div class="quote-bar">
+      <h1>Non-warrantable means the deal is dead.</h1>
+      <p class="small" style="margin-top:26px;font-size:16px">So the buyer walks. Or the listing sits. Or the seller drops the price for no reason at all.</p>
+      <p class="small" style="margin-top:12px;font-size:16px;color:var(--blue-lt)">Many fine LA buildings — selling actively, right now — are non-warrantable. Those deals close every month.</p>
+    </div>
+  </section>
+
+  <!-- ======== 12 · KILL LINE 3 ======== -->
+  <section class="slide center">
+    <div class="statement"><h2 style="font-size:38px;line-height:1.4">Non-warrantable isn't a dead deal.<br>It's a <span class="b">different loan.</span><br><span style="font-size:26px;color:var(--pale);font-weight:400;display:inline-block;margin-top:16px">And you don't find out which one you need in week three.</span></h2></div>
+  </section>
+
+  <!-- ======== 13 · STTS 6: FRAMEWORK — CHECK (the 2026 timeline) ======== -->
+  <section class="slide" style="padding:60px 88px">
+    <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">STEP 01 &nbsp;·&nbsp; CHECK &mdash; WHAT YOU'RE CHECKING AGAINST</p>
+    <h2 style="margin-top:8px;font-size:38px">Three dates. <span class="b">Know all three.</span></h2>
+    <div class="tl">
+      <div class="line"></div><div class="fill" id="tlFill"></div>
+      <div class="pts">
+        <div class="pt frag">
+          <div class="dot"></div>
+          <div class="d8">Mar 18, 2026</div>
+          <div class="lb">RULES ISSUED</div>
+          <div class="ds">Fannie LL-2026-03 · Freddie Bulletin 2026-C. Transition period — <b style="color:var(--blue-lt)">some lenders are already applying the new rules.</b> That inconsistency is itself a reason to check.</div>
+        </div>
+        <div class="pt key frag">
+          <div class="dot"></div>
+          <div class="d8 b">Aug 3, 2026</div>
+          <div class="lb">LIMITED REVIEW DIES</div>
+          <div class="ds"><b style="color:#fff">The key date.</b> Full Review on every conventional loan in a project over ten units. Three weeks away.</div>
+        </div>
+        <div class="pt frag">
+          <div class="dot"></div>
+          <div class="d8">Jan 4, 2027</div>
+          <div class="lb">RESERVE RULE</div>
+          <div class="ds">Reserve funding minimum goes <b style="color:var(--blue-lt)">10% → 15%</b> of the HOA's annual budget. A 50% increase in the required allocation. Buildings at the old floor fall off.</div>
+        </div>
+      </div>
+    </div>
+    <div class="alert frag">
+      <div class="bang">!</div>
+      <p><b style="color:#fff">Already in effect:</b> the critical-repairs rule. Unaddressed safety, structural, or habitability issues make a project <b style="color:#fff">ineligible</b> — not "subject to additional review." Ineligible. Mold, water intrusion, advanced deterioration, a failed inspection, or unfunded repairs over $10,000/unit due within 12 months.</p>
+    </div>
+  </section>
+
+  <!-- ======== 14 · CRITICAL REPAIRS — THE CARVE-OUTS ======== -->
+  <section class="slide" style="padding:56px 88px">
+    <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">CRITICAL REPAIRS &nbsp;·&nbsp; THE PART THAT SAVES DEALS</p>
+    <h2 style="margin-top:8px;font-size:36px">Funding is what <span class="b">removes the issue.</span></h2>
+    <p class="body" style="margin-top:14px;font-size:18px;max-width:1000px">Everyone fixates on the $10,000-per-unit number. That number is real — but it has <b style="color:#fff">carve-outs that agents almost never know about</b>, and they are the difference between a dead listing and a closed one.</p>
+    <div class="two-col" style="margin-top:26px">
+      <div class="card frag" style="background:var(--red-bg);border-color:var(--red-deep);padding:22px 26px">
+        <p class="small" style="letter-spacing:.18em;font-size:11.5px;color:var(--red);font-weight:600">TRIGGERS THE RULE</p>
+        <ul style="list-style:none;margin-top:12px;display:flex;flex-direction:column;gap:9px">
+          <li style="font-size:15.5px;color:var(--red);line-height:1.4">Mold, water intrusion, or damaging leaks</li>
+          <li style="font-size:15.5px;color:var(--red);line-height:1.4">Advanced physical deterioration</li>
+          <li style="font-size:15.5px;color:var(--red);line-height:1.4">A deficiency that could fail within 12 months</li>
+          <li style="font-size:15.5px;color:var(--red);line-height:1.4">A failed state/county/city safety inspection — <b style="color:#fff">an open SB 326 finding lands here</b></li>
+          <li style="font-size:15.5px;color:var(--red);line-height:1.4"><b style="color:#fff">Unfunded</b> repairs &gt; $10,000/unit due within 12 months</li>
+        </ul>
+      </div>
+      <div class="card frag" style="border-color:var(--blue);padding:22px 26px">
+        <p class="small" style="letter-spacing:.18em;font-size:11.5px;color:var(--blue-lt);font-weight:600">DOES <em>NOT</em> TRIGGER IT</p>
+        <ul style="list-style:none;margin-top:12px;display:flex;flex-direction:column;gap:9px">
+          <li style="font-size:15.5px;color:var(--pale);line-height:1.4">Routine and preventive maintenance</li>
+          <li style="font-size:15.5px;color:var(--pale);line-height:1.4">Normal capital replacement on schedule</li>
+          <li style="font-size:15.5px;color:var(--pale);line-height:1.4">Repairs an <b style="color:#fff">individual owner</b> is paying for</li>
+          <li style="font-size:15.5px;color:var(--pale);line-height:1.4">Repairs funded by a <b class="b">special assessment</b></li>
+          <li style="font-size:15.5px;color:var(--pale);line-height:1.4">Damage isolated to a few units that doesn't affect the project's safety or habitability</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card frag" style="margin-top:22px;border-color:var(--blue);padding:16px 24px">
+      <p class="body" style="font-size:17.5px">Read that again: <span class="b" style="font-weight:600">a special assessment is a carve-out, not a red flag.</span> A $30,000-per-unit waterproofing project that's <em>unfunded</em> kills the building. The same project, <em>funded by a voted assessment</em>, is warrantable. Same repair. Different answer. <b style="color:#fff">That's a conversation you can start with an HOA board before you list.</b></p>
+    </div>
+  </section>
+
+  <!-- ======== 15 · SB 326 — THE CA LAYER ======== -->
+  <section class="slide">
+    <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">THE CALIFORNIA-SPECIFIC LAYER</p>
+    <h2 style="margin-top:8px">SB 326. <span class="b">And the myth about the extension.</span></h2>
+    <div class="rows" style="margin-top:30px">
+      <div class="row frag"><div class="k">Who it hits</div><div class="v">HOAs with 3+ units and <b style="color:#fff">wood-supported</b> balconies, decks, walkways, or stairways. That's most older Southern California condo stock.</div></div>
+      <div class="row frag"><div class="k">The deadline</div><div class="v">First inspection was due <b style="color:#fff">January 1, 2025</b>. That is now more than eighteen months past. Every nine years after.</div></div>
+      <div class="row frag"><div class="k">AB 2579</div><div class="v" style="color:var(--red)"><b style="color:#fff">The extension does not apply to condos.</b> It extended SB 721 — rental apartments. If an HOA manager told your seller they have until 2027, they conflated the two laws. Condos had no extension.</div></div>
+      <div class="row frag"><div class="k">The financing link</div><div class="v">An open SB 326 finding is a <b class="b">failed safety inspection</b> — which drops it straight into the critical-repairs rule. That's the whole building, ineligible.</div></div>
+    </div>
+    <div class="card frag" style="margin-top:26px;border-color:var(--blue);padding:16px 24px">
+      <p class="body" style="font-size:17px"><span class="b" style="font-weight:600">Watch for this:</span> "The inspection was done" tells you nothing about whether deficiencies were <em>found</em> or <em>addressed</em>. <b style="color:#fff">Ask for the actual report</b> — not a one-line summary from the listing agent. Typical timeline from contracting to certificate: four to eight weeks. That's a timeline you can only manage if you know about it before you list.</p>
+    </div>
+  </section>
+
+  <!-- ======== 16 · STTS 6: FRAMEWORK — CLEAR (the nine red flags) ======== -->
+  <section class="slide" style="padding:52px 88px">
+    <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">STEP 02 &nbsp;·&nbsp; CLEAR</p>
+    <h2 style="margin-top:6px;font-size:36px">The nine red flags <span class="b">that kill condo deals.</span></h2>
+    <p class="small" style="margin-top:8px;font-size:16px">Almost every non-warrantable project fails for one of these. Knowing which one applies tells you exactly which conversation to have.</p>
+    <div class="flags">
+      <div class="flag frag"><div class="n">01</div><div class="t">Active litigation</div><p>HOA as a party. Construction defect, slip-and-fall, vendor disputes. Neighbor-vs-neighbor generally doesn't count. Ask directly, get it in writing.</p></div>
+      <div class="flag frag"><div class="n">02</div><div class="t">Pending special assessment</div><p>Voted or announced, collection or not. But remember — if it <em>funds a critical repair</em>, it can move the project back <em>to</em> warrantable.</p></div>
+      <div class="flag frag"><div class="n">03</div><div class="t">Investor concentration</div><p>Over 35% non-owner-occupied is a flag. Over 50% renters is typically a full disqualifier.</p></div>
+      <div class="flag frag"><div class="n">04</div><div class="t">Single-entity ownership</div><p>&gt;10% of units in a 21+ unit project (20% in smaller). Usually a developer still holding inventory. Time-limited — know where you are in that curve.</p></div>
+      <div class="flag frag"><div class="n">05</div><div class="t">Excessive commercial space</div><p>Over ~35% of square footage. DTLA, parts of Hollywood. Ground-floor retail is fine in moderation.</p></div>
+      <div class="flag frag"><div class="n">06</div><div class="t">Hotel / transient operations</div><p>Short-term rentals at scale make Fannie treat the whole building as a hotel. Categorically ineligible.</p></div>
+      <div class="flag frag"><div class="n">07</div><div class="t">Inadequate reserves</div><p>Below 10% today = already non-warrantable. Between 10% and 15% = a clock running out on Jan 4, 2027.</p></div>
+      <div class="flag frag"><div class="n">08</div><div class="t">Unaddressed critical repairs</div><p>The rule from three slides ago. Funding is the way out.</p></div>
+      <div class="flag frag"><div class="n">09</div><div class="t">SB 326 non-compliance</div><p>Missing balcony inspection on a wood-framed building. Increasingly treated as material.</p></div>
+    </div>
+  </section>
+
+  <!-- ======== 17 · THE CHECKLIST ======== -->
+  <section class="slide" style="padding:56px 88px">
+    <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">STEP 02 &nbsp;·&nbsp; CLEAR &mdash; THE 15-ITEM CHECKLIST</p>
+    <h2 style="margin-top:6px;font-size:36px">A few phone calls. <span class="b">A whole escrow saved.</span></h2>
+    <div class="chk">
+      <div class="col frag">
+        <h3>DOCUMENTS</h3>
+        <div class="cnt">6</div>
+        <ul>
+          <li>HOA financials — current + prior year</li>
+          <li>Reserve study — <b style="color:#fff">under 30% funded is serious</b></li>
+          <li>Meeting minutes — last 12–24 months</li>
+          <li>Master insurance policy + fidelity bond</li>
+          <li>CC&amp;Rs and bylaws</li>
+          <li>SB 326 report — the report, not a summary</li>
+        </ul>
+      </div>
+      <div class="col frag">
+        <h3>QUESTIONS</h3>
+        <div class="cnt">5</div>
+        <ul>
+          <li>Any pending or active litigation?</li>
+          <li>Any special assessment planned?</li>
+          <li>Current owner-occupancy ratio?</li>
+          <li>% of owners 60+ days delinquent? <b style="color:#fff">(15% cap)</b></li>
+          <li>Short-term rentals — allowed? enforced?</li>
+        </ul>
+      </div>
+      <div class="col frag" style="border-color:var(--blue)">
+        <h3>CONDITIONS</h3>
+        <div class="cnt">4</div>
+        <ul>
+          <li>No single entity over 10% of units</li>
+          <li>Commercial space within limits</li>
+          <li>Reserves at or near the 15% threshold</li>
+          <li style="color:#fff;font-weight:600"><b class="b">Run the project status check.</b> This is the one that catches what the other fourteen miss.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="body frag" style="margin-top:24px;text-align:center;font-size:18px">Sellers: start <b style="color:#fff">two weeks before listing</b> — HOA management is the bottleneck.<br>Buyers: the same fifteen items, run <b style="color:#fff">before you write.</b></p>
+  </section>
+
+  <!-- ======== 18 · STTS 6: FRAMEWORK — CLOSE (Condo Solutions) ======== -->
+  <section class="slide">
+    <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">STEP 03 &nbsp;·&nbsp; CLOSE</p>
+    <h2 style="margin-top:6px">Non-warrantable? <span class="b">Condo Solutions.</span></h2>
+    <table>
+      <thead><tr><th></th><th class="old">WHAT AGENTS ASSUME</th><th class="new">WHAT ACTUALLY HAPPENS</th></tr></thead>
+      <tbody>
+        <tr class="frag"><td class="label">The deal</td><td class="old">Dead. Buyer walks.</td><td class="new">Closes. Different loan, same house.</td></tr>
+        <tr class="frag"><td class="label">The rate</td><td class="old">Way above market</td><td class="new"><b style="color:#fff">Can beat conventional.</b> Cost sits in origination, not the rate.</td></tr>
+        <tr class="frag"><td class="label">Down payment</td><td class="old">"Basically all cash"</td><td class="new">Around 20% — some programs 15%</td></tr>
+        <tr class="frag"><td class="label">Project review</td><td class="old">Same brutal GSE questionnaire</td><td class="new">Streamlined review. <b style="color:#fff">Faster</b>, less HOA back-and-forth.</td></tr>
+        <tr class="frag"><td class="label">Who eats the fee</td><td class="old">The buyer. Deal dies on price.</td><td class="new"><b style="color:#fff">Seller credit offsets it</b> — the unit stays competitive vs. warrantable comps.</td></tr>
+        <tr class="frag"><td class="label">Forever?</td><td class="old">Stuck in it for 30 years</td><td class="new">Refinance to conventional when the project clears. I watch the file and call you.</td></tr>
+      </tbody>
+    </table>
+    <div class="card frag" style="margin-top:24px;border-color:var(--blue);padding:16px 24px">
+      <p class="body" style="font-size:17.5px"><span class="b" style="font-weight:600">The listing-remark play:</span> if the project is non-warrantable, say so — <em>"Cash or non-warrantable financing only. Lender referrals available."</em> You lose the tire-kickers and you signal to serious buyers that there's a path. <b style="color:#fff">A buyer's big-bank lender saying "we can't do this project" with no alternative offered is how an otherwise-fine deal sinks.</b></p>
+    </div>
+  </section>
+
+  <!-- ======== 19 · PROOF / STORY ======== -->
+  <section class="slide">
+    <h1>Week four of escrow.</h1>
+    <p class="small" style="margin-top:12px;font-size:17px;color:var(--blue-lt)">The call I get more than any other.</p>
+    <div style="margin-top:36px;border-left:4px solid var(--blue);padding-left:28px;max-width:900px">
+      <p class="body" style="font-size:22px;line-height:1.6">An LA buyer's agent calls me. Week four. The buyer's conventional financing just got declined — <b style="color:#fff">not because of the buyer. Because of the project.</b> The seller is panicking. The agent is scrambling.</p>
+      <p class="body" style="margin-top:20px;font-size:22px;line-height:1.6">One conversation. We qualify <b style="color:#fff">the same buyer</b> for the non-warrantable program. <span class="b" style="font-weight:600">The deal closes ten days later.</span></p>
+    </div>
+    <p class="body frag" style="margin-top:34px;font-size:21px;max-width:940px">That deal got saved. But it cost four weeks, a terrified buyer, and a seller who nearly went back on market.<br><br><b style="color:#fff">Everything in that phone call was knowable in week zero — from an address and an HOA name.</b></p>
+  </section>
+
+  <!-- ======== 20 · STTS 8: INTEREST CHECK + OFFER ======== -->
+  <section class="slide">
+    <h2 style="font-size:36px">So — how many of you have<br>a condo listing or a condo buyer <span class="b">right now?</span></h2>
+    <p class="body" style="margin-top:16px">Here's what I want you to do with it.</p>
+    <p style="margin-top:26px;font-weight:600;font-size:19px" class="b">Bring me in early. Two things, both free, both yours.</p>
+    <div class="dims">
+      <div class="dim frag"><span class="a">→</span><span class="t">The Project Status Check</span><span class="d">Send me the address and the HOA name. Under 24 hours, you get back: Fannie (CPM), Freddie, FHA (and whether approval lapsed), VA, public litigation records, and my read on anything that looks like a flag. <b style="color:#fff">Before you write. Before you list.</b></span></div>
+      <div class="dim frag"><span class="a">→</span><span class="t">The two guides — yours to give away</span><span class="d">The Buyer's Pre-Offer Checklist and the Seller's Warrantability Checklist. <b style="color:#fff">Hand them to your buyers at consult. Hand them to your sellers at the listing appointment.</b> Fifteen items, the nine red flags, the full critical-repairs appendix.</span></div>
+      <div class="dim frag"><span class="a">→</span><span class="t">No obligation, and I mean it</span><span class="d">Some of the people I run checks for end up working with me. Many don't. Either way you should know where the building stands before you commit your client to it.</span></div>
+    </div>
+    <p class="small frag" style="margin-top:28px;font-style:italic;font-size:16px;color:var(--pale)">One address. One HOA name. One business day.</p>
+  </section>
+
+  <!-- ======== 21 · STTS 9: CTA ======== -->
+  <section class="slide" style="padding:56px 88px">
+    <div style="display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center">
+      <div>
+        <h1 style="font-size:50px">Run the check<br><span class="b">before you write.</span></h1>
+        <p class="body" style="margin-top:20px;font-size:20px">Free. Under 24 hours. Fannie, Freddie, FHA, VA — plus my read on the flags.</p>
+        <div class="card" style="margin-top:24px;border-color:var(--blue);padding:20px 24px">
+          <p class="small" style="letter-spacing:.2em;font-size:11.5px;font-weight:600;color:var(--blue-lt)">SEND ME TWO THINGS</p>
+          <p class="body" style="margin-top:10px;font-size:18px">The property address <span class="small" style="font-size:15px">(with unit #)</span><br>The HOA name <span class="small" style="font-size:15px">(as registered — not the marketing name)</span></p>
+        </div>
+        <p class="body" style="margin-top:20px;font-size:19px"><b class="b">424-396-6967</b> &nbsp;·&nbsp; myadvisors@neohomeloans.com</p>
+      </div>
+      <div style="text-align:center">
+        <div class="card" style="padding:16px;background:#fff;width:max-content"><img id="img-qr-condo" alt="Scan for the free project status check and both condo guides" style="display:block;width:250px;height:250px"></div>
+        <p class="body" style="margin-top:14px;font-size:17px;font-weight:600">darynfillis.com<span class="b">/cal-condo</span></p>
+        <p class="small" style="margin-top:4px;font-size:14px;max-width:250px">Request the check.<br>Download <b style="color:var(--blue-lt)">both guides.</b></p>
+      </div>
+    </div>
+    <p class="body frag" style="margin-top:28px;font-size:19px;text-align:center">Or just put my number in your phone under <b style="color:#fff">"condo"</b> —<br>and text me the address the day you take the listing.</p>
+  </section>
+
+  <!-- ======== 22 · STTS 10: EMOTIONAL CLOSE ======== -->
+  <section class="slide"><h1 style="font-size:64px">Nobody loses a condo deal<br>over something <span class="b">they knew.</span></h1></section>
+
+  <!-- ======== 23 · Q&A ======== -->
+  <section class="slide center" style="background:var(--navy);gap:26px">
+    <span class="eyebrow"><span class="dot"></span>LIVE Q &amp; A</span>
+    <h1 style="font-size:56px">Bring me a building.<br>Ask me anything.</h1>
+    <div style="display:flex;align-items:center;gap:28px;margin-top:6px">
+      <div class="card" style="padding:12px;background:#fff"><img id="img-qr-condo-qa" alt="Scan for the free project status check and both condo guides" style="display:block;width:130px;height:130px"></div>
+      <div style="text-align:left">
+        <p class="body" style="font-size:19px;font-weight:600">darynfillis.com<span class="b">/cal-condo</span></p>
+        <p class="body" style="font-size:19px;margin-top:6px"><b class="b">424-396-6967</b></p>
+        <p class="small" style="font-size:14.5px;margin-top:8px;max-width:280px">Free project status check.<br>Both guides, yours to give away.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== HUD ======== -->
+  <div id="hud">
+    <div class="keys"><span>← → navigate</span><span>F fullscreen</span><span>M music</span><span>L lobby</span><span>N notes</span><span>P floating notes</span></div>
+    <div><span id="counter"></span><button id="muteBtn">Music: off</button><button id="notesBtn">Presenter notes</button><button id="pipBtn">Floating notes</button><button id="fsBtn">Fullscreen</button></div>
+  </div>
+  <div id="bar"></div>
+</div></div>
+
+<div id="pv">
+  <header>
+    <div><div class="now" id="pvNow"></div><div class="next" id="pvNext"></div></div>
+    <div class="clockline" id="pvClock"></div>
+  </header>
+  <div id="pvNotes"></div>
+  <footer>
+    <button id="pvPrev">← Previous</button>
+    <button id="pvNextBtn">Next →</button>
+  </footer>
+</div>
+
+<script>
+const NOTES = {
+"1": [
+  "[Pre-roll. In-person: leave this up as the room fills. Zoom: read the chat, call out brokerages as people join.]",
+  "Keep it warm and low-key. You are lowering the room before the pattern interrupt.",
+  "[At start time — stop. Full stop. Look at the room. Tone shifts.]",
+  "\"Alright. Thirty minutes. If you have a condo listing or a condo buyer right now, this is going to change how you handle it.\"",
+  "[Do NOT say \"thanks for having me\" or \"a little about myself.\" Those words are what slide 2 exists to prevent.]"
+],
+"2": [
+  "[STTS Step 1 — Bold Opening. This is word one. No intro. No welcome. No \"thanks for having me.\"]",
+  "[Let the line finish typing. Then TWO FULL SECONDS OF SILENCE. Do not fill it. Let them look around the room.]",
+  "\"Somebody in this room is going to lose a condo deal in the next ninety days.\"",
+  "[Beat.]",
+  "\"And it will not be because the buyer was weak. It won't be because the price was wrong, or the inspection blew up, or somebody got cold feet.\"",
+  "\"It'll be because of a building. A building nobody looked at until it was too late to do anything about it.\"",
+  "[Beat. Then the turn — lower, direct.]",
+  "\"And here's the part that should bother you. It was knowable. All of it. From an address and an HOA name. One business day.\"",
+  "[Straight into slide 3. No pause. No gear change.]"
+],
+"3": [
+  "[STTS Step 1 continued — The Stakes. Reveal each card on click.]",
+  "\"Here's what most agents don't fully sit with. When your buyer finances a condo, the lender isn't approving one thing. They're approving three.\"",
+  "[Click 1 — the 3.] \"The borrower. The unit. And the building. All three have to pass. A buyer with perfect credit and twenty percent down gets declined because the HOA failed. That happens.\"",
+  "[Click 2 — the 1–3.] \"And project review takes one to three weeks. Here's the killer: it starts AFTER you're in contract. The HOA questionnaire goes out, the management company sits on it, it comes back — and that's week three. That's when the bad news lands. Every time.\"",
+  "[Click 3 — the zero. Slow down.] \"And what does a dead condo deal pay? Buyer's deposit exposed. Seller back on market with a stale DOM. Your name on both sides of it.\"",
+  "[Click 4 — the line. This is the title of the talk. Deliver it to the room, not the screen. Slow.]",
+  "\"The building is the third borrower in every condo deal.\"",
+  "[Beat.] \"And it's the only one nobody pre-approves.\"",
+  "[Let it sit. That's the whole thesis — everything after this is proof. Then into credibility with energy, no wind-down.]"
+],
+"4": [
+  "[STTS Step 2 — Credibility. Short. Relevant proof only. NO resume dump.]",
+  "\"Quick word on why I'm the one telling you this.\"",
+  "\"I'm a Certified Mortgage Advisor and Branch Lead at NEO Home Loans. I run condo deals across LA County constantly — El Segundo, the South Bay, the Westside. Warrantable, non-warrantable, FHA, VA, conventional, jumbo. Buyers, sellers, agents.\"",
+  "\"The building review, the warrantability analysis, the project questionnaire, the reserve study, the SB 326 status — most lenders don't run any of that until you're in contract. I run it before you write the offer. That's the whole difference.\"",
+  "[Click — the guides card.] \"I also wrote the two guides this is built on. A buyer's version and a seller's version. You're all leaving with both — I'll show you how at the end.\"",
+  "[One beat. Straight into the roadmap.]"
+],
+"5": [
+  "[STTS Steps 3 + 4 — Roadmap + Unique Mechanism. This is the reveal. Energy up.]",
+  "\"Here's the method. Three steps. Same method whether you're taking the listing or writing the offer.\"",
+  "\"Step one — CHECK. Before the offer, before the listing. You send me an address and an HOA name. Under twenty-four hours you get back the project's status across Fannie, Freddie, FHA, and VA. That's the mechanism. That's the whole thing. It's free and almost nobody does it.\"",
+  "\"Step two — CLEAR. Work the fifteen-item checklist. Six documents, five questions, four conditions. Most of it is phone calls. All of it is knowable before anyone signs anything.\"",
+  "\"Step three — CLOSE. If the building is warrantable, conventional. If it isn't, we have a program called Condo Solutions and the deal still closes. Either way the deal closes — it just closes on purpose instead of by luck.\"",
+  "[Click — the closing line.] \"Thirty minutes. I'm going to break three things you believe about condos, and then hand you the checklist that makes this permanent.\"",
+  "[Straight into myth one. Do not pause.]"
+],
+"6": [
+  "[STTS Step 5 — Break False Belief 1. Validate it FIRST. It's a reasonable belief.]",
+  "\"Myth one — and I want to validate this, because it makes complete sense. 'The lender handles the building. That's not my job.'\"",
+  "\"And technically, that's true. The lender does run project review. You're not being lazy. That IS the division of labor.\"",
+  "\"But look at WHEN it happens. Project review is a post-contract process. Nobody opens the HOA questionnaire until you're already in escrow. So the lender is doing the work — they're just doing it three weeks too late to help you.\"",
+  "\"By the time your lender says 'the building failed,' you've burned three weeks, the buyer's deposit is exposed, the seller's DOM is stale, and now you're the one making the phone calls.\"",
+  "[Deliver the kill line directly to the room. Pause before advancing.]"
+],
+"7": [
+  "[Kill line 1. Slow. Let it land.]",
+  "\"The lender doesn't check the building until week three.\"",
+  "\"You write the offer in week one.\"",
+  "\"The gap between those two — that's where deals die.\"",
+  "[One full second of silence. Then advance.]"
+],
+"8": [
+  "[STTS Step 5 — Break False Belief 2. THIS IS THE BIG ONE. This is the reversal that earns the room.]",
+  "\"Myth two. And this is the one I hear most in this room specifically: 'small buildings are the hard ones.'\"",
+  "\"Everybody assumes it. No professional management. Thin reserves. No doorman, no big budget, sponsor might still own half of it. Of course it's a nightmare to finance.\"",
+  "[Beat.] \"As of 2026 — that got exactly backwards.\"",
+  "[Advance. Let the inversion do the work.]"
+],
+"9": [
+  "[The inversion. This is the slide that changes how they think. Reveal each side, then the line.]",
+  "[Click 1 — the Waiver.] \"Ten units or fewer: Fannie and Freddie created a Waiver of Project Review. Your buyer can close WITHOUT a full project review. The small Mid-City conversions, the Echo Park fourplex-style buildings, the older parts of Santa Monica — those buildings were stuck in an awkward middle ground for years. Too small for thick reserves. Too project-like to be treated as a duplex. They just got a clean path.\"",
+  "[Click 2 — the right side. Tone shifts.] \"Now the other side. Eleven units and up: Limited Review is GONE. August third. Every conventional loan, Full Review. Financials, reserves, insurance, litigation, owner-occupancy — all of it, every loan.\"",
+  "\"And here's what I need you to actually hear. The mid-size buildings — the forty-unit, the sixty-unit, the ones you've closed in three times and it went fine — those are the ones that have NEVER been Full Reviewed. They breezed through on the streamlined path. Their clean track record isn't evidence they'll pass. It's evidence they were never tested.\"",
+  "[Click 3 — the line.] \"Your closing history in that building tells you nothing about 2026.\"",
+  "[Advance to the kill line.]"
+],
+"10": [
+  "[Kill line 2. This is the money line of the whole talk. Deliver it to the room. Do not rush it.]",
+  "\"The ten-unit building just got a waiver.\"",
+  "\"The forty-unit building just lost its shortcut.\"",
+  "\"Your instinct about which one is risky — is backwards.\"",
+  "[Hold. Let them sit in it. This is the moment they decide you're worth calling.]"
+],
+"11": [
+  "[STTS Step 5 — Break False Belief 3. Softer than the last one. This one opens a door.]",
+  "\"Myth three. 'Non-warrantable means the deal is dead.'\"",
+  "\"So the buyer walks. Or the listing sits and sits. Or the seller drops the price for a reason nobody actually diagnosed.\"",
+  "\"Here's the truth the industry doesn't talk about: many fine LA buildings — selling actively, right now, in neighborhoods you work — are non-warrantable. And those deals close. Every month.\"",
+  "[Deliver the kill line.]"
+],
+"12": [
+  "[Kill line 3. Then the setup line for the framework.]",
+  "\"Non-warrantable isn't a dead deal. It's a different loan.\"",
+  "[Beat.] \"And you don't want to find out which loan you need in week three.\"",
+  "\"So — three myths down. Here's the method. CHECK, CLEAR, CLOSE. Let's build it.\"",
+  "[Advance directly into the framework.]"
+],
+"13": [
+  "[STTS Step 6 — Teach Framework · Step 1: CHECK. What you're checking against. Build the timeline on clicks.]",
+  "\"Step one is CHECK. But before you can check anything, you need to know what you're checking against. Three dates. This is the whole 2026 picture.\"",
+  "[Click 1 — March 18.] \"March eighteenth, this year. Fannie issued Lender Letter 2026-03, Freddie issued a matching bulletin. Biggest overhaul of condo project standards in years. We're in the transition period right now — which means SOME lenders are already applying the new rules and some aren't. That inconsistency is itself a reason to check, because your buyer's lender might be stricter than the one who closed the last unit in that building.\"",
+  "[Click 2 — August 3. Slow down. This is the key date.] \"August third. Three weeks from now. Limited Review is dead. Every conventional loan in a project over ten units gets a Full Review. This is the one to put in your calendar.\"",
+  "[Click 3 — January 4.] \"January fourth, 2027. The reserve funding minimum goes from ten percent of the HOA's annual budget to fifteen. That's a fifty percent increase in the required allocation. HOAs that have been sitting at the ten percent floor for years — and there are a lot of them in older LA buildings — either raise dues or fall off the list.\"",
+  "\"Which means: a building that is warrantable today may not be warrantable when your buyer wants to refinance or resell. That's a disclosure-adjacent conversation.\"",
+  "[Click 4 — the critical repairs alert. Tone: this is the strict one.] \"And this one is ALREADY in effect. Critical repairs. If a project has unaddressed safety, structural, or habitability issues — the project is ineligible. Not 'subject to additional review.' Not 'requires an explanation.' Ineligible.\"",
+  "[Advance — the carve-outs are next, and they're the part that saves deals.]"
+],
+"14": [
+  "[The carve-outs. THIS IS THE SLIDE THAT MAKES YOU USEFUL TO THEM. Slow down. This is practical.]",
+  "\"Everybody's heard the ten-thousand-dollar-per-unit number. It's real. But it's ONE of five triggers — and more importantly, it has carve-outs that almost no agent knows about. These carve-outs are the difference between a dead listing and a closed one.\"",
+  "[Click 1 — the red column.] \"What triggers it: mold or water intrusion. Advanced deterioration. Anything that could fail within twelve months. A failed government safety inspection — and in California, an open SB 326 finding lands right here, we'll come back to that. And unfunded repairs over ten thousand a unit due within a year.\"",
+  "[Click 2 — the blue column.] \"Now what does NOT trigger it. Routine maintenance — no. Normal capital replacement on schedule — no. Repairs an individual owner is paying for themselves — no. Damage isolated to a couple units that doesn't affect the building's overall habitability — no.\"",
+  "\"And this one.\" [Point at it.] \"Repairs funded by a special assessment.\"",
+  "[Click 3 — the payoff card. Deliver this to the room.] \"Read that again. A special assessment is a CARVE-OUT. Not a red flag. A thirty-thousand-dollar-per-unit waterproofing project that's unfunded kills the building. That same project, funded by a voted assessment, is warrantable. Same repair. Same cost. Different answer.\"",
+  "\"Which means when you're sitting at a listing appointment and the seller says 'the HOA is talking about a big assessment' — that is not automatically bad news. That might be the thing that SAVES the financing. But you have to know to ask, and you have to know what to do with the answer.\"",
+  "[Beat. Then into SB 326.]"
+],
+"15": [
+  "[SB 326. The California layer. The AB 2579 row is the one they'll remember — hit it hard.]",
+  "\"Now the California-specific layer, and this one is a landmine.\"",
+  "[Click 1.] \"SB 326. HOAs with three or more units, wood-supported balconies, decks, walkways, stairways. That's most older Southern California condo stock. If it's concrete and steel, it may not apply. If there's wood — it does.\"",
+  "[Click 2.] \"First inspection was due January first, 2025. That deadline is now more than eighteen months past.\"",
+  "[Click 3 — the AB 2579 row. This is the one. Say it clearly.] \"And here's the misunderstanding I correct constantly. People heard the legislature extended the deadline. AB 2579. It did — for SB 721, which covers rental apartments. It does NOT apply to condos. Condos had no extension. The deadline was January 2025, full stop.\"",
+  "\"So if an HOA management company tells your seller they have until 2027 — they are conflating two different laws. Get the report.\"",
+  "[Click 4.] \"And here's the link that matters. An open SB 326 finding is a failed safety inspection. Which drops it straight into the critical-repairs rule. Which makes the entire building ineligible. Balcony problem, whole building, no financing.\"",
+  "[Click 5 — the watch-for card.] \"Last thing: 'the inspection was done' tells you nothing about whether deficiencies were found or fixed. Ask for the actual report. Not a one-liner from the listing agent. And know that scheduling to certificate is four to eight weeks — which is a timeline you can only manage if you knew before you listed.\"",
+  "[Move to the red flags.]"
+],
+"16": [
+  "[STTS Step 6 — Step 2: CLEAR. The nine red flags. DO NOT read all nine out loud. Pace: hit 2, 3, and 7. Gesture at the rest.]",
+  "\"Step two is CLEAR. Almost every non-warrantable project fails for one of nine specific reasons. I'm not going to read all nine to you — they're in the guide. Let me hit the three you'll actually run into.\"",
+  "[Click through all nine while you talk — let the grid build. Then land on these:]",
+  "\"Number two — pending special assessment. You already know why that one's different now. If it funds a critical repair, it can move the project BACK to warrantable.\"",
+  "\"Number three — investor concentration. Over thirty-five percent non-owner-occupied is a flag. Over fifty percent renters is typically a full disqualifier. This is your newer downtown high-rise that started out rental-investor heavy.\"",
+  "\"Number seven — reserves. Below ten percent today, you're already non-warrantable. Between ten and fifteen, you have a clock running out on January fourth.\"",
+  "\"The pattern I see across LA: pending assessments in mid-century buildings hitting their first big capital project. Investor concentration downtown. SB 326 non-compliance in older buildings with original wood balconies. Mid-City, Echo Park, West Hollywood conversions — watch for a sponsor still holding inventory.\"",
+  "[Advance to the checklist.]"
+],
+"17": [
+  "[The checklist. This is the takeaway artifact. Frame it as THEIRS.]",
+  "\"Here's the whole thing on one slide. Fifteen items, three buckets.\"",
+  "[Click 1.] \"Six documents. Financials, reserve study, meeting minutes, master insurance, CC&Rs, SB 326 report. On the reserve study — the number that matters is Percent Funded. Below fifty is a concern. Below thirty is serious.\"",
+  "[Click 2.] \"Five questions. Litigation, special assessments, owner-occupancy, delinquency — Fannie caps that at fifteen percent of units sixty-plus days late — and short-term rentals.\"",
+  "[Click 3.] \"Four conditions. Single-entity ownership, commercial space, reserves. And the fifteenth item.\" [Point.] \"Run the project status check. That's the one that catches what the other fourteen miss.\"",
+  "[Click 4.] \"Sellers: start this two weeks before listing, because HOA management is the bottleneck. Buyers: same fifteen items, run before you write.\"",
+  "\"All fifteen are in the guides. You're not memorizing this.\"",
+  "[Into Condo Solutions.]"
+],
+"18": [
+  "[STTS Step 6 — Step 3: CLOSE. Reveal row by row. The rate row and the seller-credit row are the surprises — pause on both.]",
+  "\"Step three. The building came back non-warrantable. Now what.\"",
+  "[Click 1.] \"What most agents assume: dead. What actually happens: it closes. Different loan, same house.\"",
+  "[Click 2 — PAUSE HERE. This is a genuine surprise.] \"The rate. Everybody assumes way above market. But the rate on a Condo Solutions loan is not always higher than conventional. Depending on the wholesale partner and the market, it can be competitive — sometimes better. The cost shows up in origination fees, not in the rate.\"",
+  "[Click 3.] \"Down payment hovers around twenty percent. Some programs go to fifteen.\"",
+  "[Click 4.] \"And several of our wholesale partners use a streamlined project review instead of the full GSE questionnaire. So the deal actually closes FASTER, with less back-and-forth with HOA management.\"",
+  "[Click 5 — PAUSE. This is the one that makes them look brilliant to their seller.] \"And here's the play. Because the cost is in origination fees rather than the rate — the seller can cover those fees as a closing credit. Now the unit is competitive against warrantable comps. Buyer gets the rate they want with no closing-cost burden. Seller closes a deal that would otherwise have died at project review. Both sides win.\"",
+  "[Click 6.] \"And it's not forever. When the project clears — HOA funds the deferred maintenance, litigation resolves, reserves hit fifteen percent — the borrower refinances into conventional. I watch the file and I call them when the math works.\"",
+  "[Click 7 — the listing-remark card.] \"Practical: if the project is non-warrantable, put it in the remarks. 'Cash or non-warrantable financing only. Lender referrals available.' You lose the tire-kickers, and you signal to serious buyers there's a path. A big-bank lender saying 'we can't do this project' with no alternative offered — that's how a fine deal sinks.\""
+],
+"19": [
+  "[STTS Step 7 — Proof. Tell it straight. No embellishment. Then turn it.]",
+  "\"Let me tell you the call I get more than any other.\"",
+  "\"An LA buyer's agent calls me. Week four of escrow. The buyer's conventional financing just got declined — not because of the buyer. Because of the project. The seller is panicking. The agent is scrambling.\"",
+  "\"One conversation. We qualify the SAME buyer for the non-warrantable program. The deal closes ten days later.\"",
+  "[Beat. Then turn it — this is the point.]",
+  "[Click — the turn.] \"And that's a good outcome. That deal got saved. But look at what it cost. Four weeks. A terrified buyer. A seller who nearly went back on market with a stale DOM.\"",
+  "\"Every single thing in that phone call was knowable in week zero. From an address and an HOA name.\"",
+  "[Straight into the offer. Don't let the air out.]"
+],
+"20": [
+  "[STTS Step 8 — Interest Check + Offer. In-person: actually ask for hands. Zoom: ask for a YES in chat. WAIT for the response before continuing.]",
+  "\"Show of hands — who has a condo listing or a condo buyer right now?\"",
+  "[Wait. Count them out loud. \"Six, seven — okay, good.\" Do not rush past this.]",
+  "\"Here's what I want you to do with it. Bring me in early. Two things, both free, both yours.\"",
+  "[Click 1.] \"The Project Status Check. Send me the address and the HOA name. Under twenty-four hours you get back: Fannie's Condo Project Manager, Freddie, FHA — including whether the approval quietly lapsed, which happens constantly — VA, public litigation records, and my read on anything that looks like a flag. Before you write. Before you list.\"",
+  "[Click 2.] \"And both guides. The Buyer's Pre-Offer Checklist and the Seller's Warrantability Checklist. These aren't for you to file — they're for you to GIVE AWAY. Hand the buyer's guide to your buyer at consult. Hand the seller's guide to your seller at the listing appointment. Fifteen items, nine red flags, the full critical-repairs appendix in the back.\"",
+  "\"That's a differentiated listing presentation, and it costs you nothing.\"",
+  "[Click 3.] \"And no obligation, and I mean that. Some of the people I run checks for end up working with me. Many don't. Either way you should know where the building stands before you commit your client to it.\"",
+  "[Advance to the CTA.]"
+],
+"21": [
+  "[STTS Step 9 — Call to Action. Separate beat. Be concrete. Then SHUT UP and let them write it down.]",
+  "\"Here's your next step, and I want it to be stupidly easy.\"",
+  "\"Two things: the property address, with the unit number. And the HOA name — as registered, not the building's marketing name, those are often different.\"",
+  "\"Text it, email it, or use the form at darynfillis.com/cal-condo. Both guides download from that same page.\"",
+  "[Click — the phone line.] \"Do this right now: put my number in your phone under 'condo.' Four-two-four, three-nine-six, six-nine-six-seven. And text me the address the day you take the listing.\"",
+  "[GIVE THEM FIVE FULL SECONDS OF SILENCE. Let them actually enter it. Do not fill the silence.]",
+  "[In-person: this is the moment to hold up the printed guides / point at the QR. Zoom: drop the link in chat NOW.]"
+],
+"22": [
+  "[STTS Step 10 — Emotional Close. Warm, direct, unhurried. Eye contact. This is not about math.]",
+  "\"One last thing before questions.\"",
+  "\"Nobody in this room loses a condo deal because they're bad at their job. You lose them because of something in a building you never had a reason to look at — until it was too late to do anything about it.\"",
+  "\"And the thing is, your client doesn't experience that as 'the project failed review.' They experience it as the house they were going to live in, gone. Three weeks in. After they'd already picked the bedroom.\"",
+  "[Beat.]",
+  "\"Nobody loses a condo deal over something they knew.\"",
+  "\"Every one of these is knowable. It takes an address, an HOA name, and one business day. That's the whole ask.\"",
+  "[Hold. Then Q&A.]"
+],
+"23": [
+  "[STTS Step 11 — Q&A. Reinforce the CTA every two answers. Keep the address/HOA ask visible the entire time.]",
+  "\"Bring me a building. Anybody got an address right now — let's look at it live.\"",
+  "[If someone gives you one: THIS IS THE BEST POSSIBLE OUTCOME. Do it in front of the room.]",
+  "[Every two answers, reset the ask: \"And again — address plus HOA name, that's all I need.\"]",
+  "[Likely questions:]",
+  "• \"How long does the check really take?\" — Under 24 hours for the database read. If it needs a fresh HOA questionnaire, that piece depends on the management company.",
+  "• \"What if the building's fine — do I still owe you the deal?\" — No. Genuinely no obligation.",
+  "• \"Can you present this to my office?\" — Yes. Say yes immediately.",
+  "• \"Is my building okay?\" — Never guess in the room. \"Send me the address, I'll have an answer tomorrow.\" That IS the CTA."
+]
+};
+</script>
+<script>
+const ASSETS = {"qr_condo": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbwAAAG8CAIAAAAq0oeIAAAJEklEQVR4nO3dwZEkMRFAUZbYG37gB5bjB35wbjwA/UCRm+p57zxRo6rq/qFLtn59Pp+/AHDmr396AQAvEU2AQDQBAtEECEQTIBBNgEA0AQLRBAhEEyAQTYBANAEC0QQIRBMgEE2AQDQBAtEECEQTIBBNgEA0AQLRBAhEEyAQTYBANAGC37cu9Le//+PWpZ7z73/983/+za3nM/m/Tpys58S2NZ+s51uv861ufVbtNAEC0QQIRBMgEE2AQDQBAtEECEQTIBBNgEA0AQLRBAhEEyC4Nnt+4tbs56TJmfETL65n8r1PznGfePEz/+KaJ2fq7TQBAtEECEQTIBBNgEA0AQLRBAhEEyAQTYBANAEC0QQIRBMgGJ09P7Ht/Otbts07bzv/+iefHf+ib/2enrDTBAhEEyAQTYBANAEC0QQIRBMgEE2AQDQBAtEECEQTIBBNgGDd7Pm32jbvPLmebWejf+tzZoadJkAgmgCBaAIEogkQiCZAIJoAgWgCBKIJEIgmQCCaAIFoAgRmz4fcmr8+uc6288Enz3OfvM6kF9f8rew0AQLRBAhEEyAQTYBANAEC0QQIRBMgEE2AQDQBAtEECEQTIFg3e/6tM7Yvnn+9bT23TP4OwIltM/4nvvV7esJOEyAQTYBANAEC0QQIRBMgEE2AQDQBAtEECEQTIBBNgEA0AYLR2fNvnWU+MTnvvO06J168rxd/T+DEi2ueZKcJEIgmQCCaAIFoAgSiCRCIJkAgmgCBaAIEogkQiCZAIJoAwbXZ8598DvKkbXPTt977tuts4/nsYacJEIgmQCCaAIFoAgSiCRCIJkAgmgCBaAIEogkQiCZAIJoAwei559vcOt/5ZJ731szvi2dST675W2ert/2ewLde54SdJkAgmgCBaAIEogkQiCZAIJoAgWgCBKIJEIgmQCCaAIFoAgS/Pp/PlQttmy+enEWd/F+3TM783vLiM9xm8p1ue1+32GkCBKIJEIgmQCCaAIFoAgSiCRCIJkAgmgCBaAIEogkQiCZAcG32/JbJuddtM7bb1rPNi2dkb/tdghe/Xycmn6GdJkAgmgCBaAIEogkQiCZAIJoAgWgCBKIJEIgmQCCaAIFoAgS/b13oxZnWbfPFt+79xdnqyTWbzf//rzNp2/uy0wQIRBMgEE2AQDQBAtEECEQTIBBNgEA0AQLRBAhEEyAQTYDg2uz5pBfnZ09sW/Ot9XzrfU16ca5823nut9ZjpwkQiCZAIJoAgWgCBKIJEIgmQCCaAIFoAgSiCRCIJkAgmgDBk7Pnk3OmJ7adRX7LtrPRb/2vSdvOfJ/0rfdlpwkQiCZAIJoAgWgCBKIJEIgmQCCaAIFoAgSiCRCIJkAgmgDBr8/n86fX8Mdsm1M+MTnL/OIZ2dvmnSffxbfe14nJe7fTBAhEEyAQTYBANAEC0QQIRBMgEE2AQDQBAtEECEQTIBBNgODa7Pm2s623zeGe8Hz22PZ8ts2nb5s9P3Hr3u00AQLRBAhEEyAQTYBANAEC0QQIRBMgEE2AQDQBAtEECEQTIPh960KTs7rbzv6enLHdNl88adv89S3b1vPiPPgkO02AQDQBAtEECEQTIBBNgEA0AQLRBAhEEyAQTYBANAEC0QQIrp17fsL54N9n25zy5Gds2+8SbPtfkya/y3aaAIFoAgSiCRCIJkAgmgCBaAIEogkQiCZAIJoAgWgCBKIJEFw79/zEtvO4J2d1T7z4fF58htvOcz9x67Mx+Xy+dc7dThMgEE2AQDQBAtEECEQTIBBNgEA0AQLRBAhEEyAQTYBANAGCdeeeT86ZblvPicmztredL79tZnzbbwX8ZJPfUztNgEA0AQLRBAhEEyAQTYBANAEC0QQIRBMgEE2AQDQBAtEECH70uee3/tfk3OuLM9o/2ba5+23fwW2/7XDCThMgEE2AQDQBAtEECEQTIBBNgEA0AQLRBAhEEyAQTYBANAGCa7Pn22ZsT/zkOdwXZ36/1bbfN5j8PG+79xN2mgCBaAIEogkQiCZAIJoAgWgCBKIJEIgmQCCaAIFoAgSiCRD8+nw+Vy40OUP64pz7Nt86F3zLtnvf9v3aZvJd2GkCBKIJEIgmQCCaAIFoAgSiCRCIJkAgmgCBaAIEogkQiCZAsG72/MVzz2958fz0SS8+nxfXfMu33rudJkAgmgCBaAIEogkQiCZAIJoAgWgCBKIJEIgmQCCaAIFoAgSjs+cnts2nn9g2G/vimd23fOt57ts+8ye2PcNb7DQBAtEECEQTIBBNgEA0AQLRBAhEEyAQTYBANAEC0QQIRBMg+H3rQpNzpi/OtH7rvPPJmm/d18l6Jme0t73TF39P4NYznHwXdpoAgWgCBKIJEIgmQCCaAIFoAgSiCRCIJkAgmgCBaAIEogkQXJs9f/Fc5ltuzV+/+AxfnL++NcP+4judfF8vzpWfsNMECEQTIBBNgEA0AQLRBAhEEyAQTYBANAEC0QQIRBMgEE2A4Nrs+Ylt53qfmDzf+cSLc8Hb7n3yGW7z4u8AbGOnCRCIJkAgmgCBaAIEogkQiCZAIJoAgWgCBKIJEIgmQCCaAMHo7PmJyVnUF+dwXzy3+pYX55RPbJvxn/Ti98JOEyAQTYBANAEC0QQIRBMgEE2AQDQBAtEECEQTIBBNgEA0AYJ1s+c/2eQ50S/Op7+45hOTZ9BPfsZurWfb+el2mgCBaAIEogkQiCZAIJoAgWgCBKIJEIgmQCCaAIFoAgSiCRCYPV9k2+zwiW3rmTQ5W31i8jovflZvsdMECEQTIBBNgEA0AQLRBAhEEyAQTYBANAEC0QQIRBMgEE2AYN3s+eR509tsO/f85H9tW89PNvkutn1WJ9lpAgSiCRCIJkAgmgCBaAIEogkQiCZAIJoAgWgCBKIJEIgmQDA6e252+L/bdpb05PnXt0zO1N+6r23v65bJ5zP5GbPTBAhEEyAQTYBANAEC0QQIRBMgEE2AQDQBAtEECEQTIBBNgODX5/P502sAeIadJkAgmgCBaAIEogkQiCZAIJoAgWgCBKIJEIgmQCCaAIFoAgSiCRCIJkAgmgCBaAIEogkQiCZAIJoAgWgCBKIJEIgmQCCaAIFoAgT/Aetz8JkppOc6AAAAAElFTkSuQmCC"};
+</script>
+<script>
+/* ================= scaling ================= */
+const stage = document.getElementById('stage');
+function fit(){ const s = Math.min(innerWidth/1280, innerHeight/720); stage.style.transform = `scale(${s})`; }
+addEventListener('resize', fit); fit();
+
+/* ================= slides & nav ================= */
+const slides = [...document.querySelectorAll('.slide')];
+let cur = 0;
+const counter = document.getElementById('counter'), bar = document.getElementById('bar');
+function show(i, fromBack){
+  cur = Math.max(0, Math.min(slides.length-1, i));
+  slides.forEach((s,k)=>s.classList.toggle('active', k===cur));
+  counter.textContent = cur===0 ? 'Lobby' : `${cur} / ${slides.length-1}`;
+  bar.style.width = cur===0 ? '0' : (cur/(slides.length-1)*100)+'%';
+  const fs = slides[cur].querySelectorAll('.frag');
+  fs.forEach(f=>f.classList.toggle('on', !!fromBack));
+  if(slides[cur].id === 'problemSlide' && typeof runTypewriter === 'function') runTypewriter();
+  syncTimeline();
+  if(typeof ac !== 'undefined' && ac){
+    if(cur !== 0 && musicOn) fadeMusicOut(1.4);
+    else if(cur === 0 && started && !musicOn) setMusic(true);
+  }
+}
+addEventListener('keydown', e=>{
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown') next();
+  else if(e.key==='ArrowLeft'||e.key==='PageUp') prev();
+  else if(e.key==='Home') show(1);
+  else if(e.key==='End') show(slides.length-1);
+  else if(e.key.toLowerCase()==='f') toggleFS();
+  else if(e.key.toLowerCase()==='m') toggleMusic();
+  else if(e.key.toLowerCase()==='l') show(0);
+});
+stage.addEventListener('click', e=>{
+  if(e.target.closest('button')||cur===0) return;
+  const r = stage.getBoundingClientRect();
+  ((e.clientX-r.left)/r.width < .3) ? prev() : next();
+});
+function toggleFS(){ document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
+document.getElementById('fsBtn').onclick = toggleFS;
+
+/* timeline fill tracks revealed points */
+function syncTimeline(){
+  const fill = document.getElementById('tlFill');
+  if(!fill) return;
+  const slide = fill.closest('.slide');
+  if(!slide.classList.contains('active')){ fill.style.width='0'; return; }
+  const pts = [...slide.querySelectorAll('.tl .pt')];
+  const on = pts.filter(p=>p.classList.contains('on')).length;
+  const pct = on<=1 ? 0 : on===2 ? 50 : 100;
+  fill.style.width = `calc(${pct}% - ${pct===0?0:80*pct/100}px)`;
+}
+
+/* ================= countdown target ================= */
+const params = new URLSearchParams(location.search);
+const TZ = 'America/Los_Angeles';
+function pacificWallToEpoch(y,mo,d,h,mi){
+  let guess = Date.UTC(y,mo-1,d,h,mi);
+  for(let i=0;i<3;i++){
+    const p = Object.fromEntries(new Intl.DateTimeFormat('en-US',{timeZone:TZ,year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'numeric',hourCycle:'h23'}).formatToParts(guess).map(x=>[x.type,x.value]));
+    const got = Date.UTC(+p.year,+p.month-1,+p.day,+p.hour,+p.minute);
+    const want = Date.UTC(y,mo-1,d,h,mi);
+    if(got===want) break; guess += want-got;
+  }
+  return guess;
+}
+let target = null, manualMins = null;
+if(params.get('start')){
+  const m = params.get('start').match(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
+  if(m) target = pacificWallToEpoch(+m[1],+m[2],+m[3],+m[4],+m[5]);
+}
+if(!target && params.get('mins')!==null) manualMins = Math.max(0, parseFloat(params.get('mins')));
+if(!target && manualMins===null) manualMins = 5;
+
+const whenLabel = document.getElementById('whenLabel');
+if(target){
+  whenLabel.textContent = new Intl.DateTimeFormat('en-US',{timeZone:TZ,weekday:'long',month:'long',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}).format(target);
+}else{
+  whenLabel.textContent = manualMins===0 ? 'Ready when you are' : `Starting in ${manualMins} minute${manualMins===1?'':'s'}`;
+}
+
+/* ================= countdown display ================= */
+const clock = document.getElementById('clock');
+const arc = document.querySelector('#ring .arc');
+const CIRC = 2*Math.PI*172;
+arc.style.strokeDasharray = CIRC;
+let tick = null, totalSpan = null, started = false;
+function fmt(s){
+  s = Math.max(0, Math.round(s));
+  const h = Math.floor(s/3600), m = Math.floor(s%3600/60), sec = s%60;
+  return h>0 ? `${h}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}` : `${m}:${String(sec).padStart(2,'0')}`;
+}
+function startCountdown(){
+  if(manualMins!==null && !target) target = Date.now() + manualMins*60000;
+  totalSpan = Math.max(1, target - Date.now());
+  function update(){
+    const left = target - Date.now();
+    clock.textContent = fmt(left/1000);
+    clock.style.fontSize = left >= 3600000 ? '68px' : '92px';
+    arc.style.strokeDashoffset = CIRC * (1 - Math.max(0, Math.min(1, left/totalSpan)));
+    if(left <= 0){ clearInterval(tick); fadeMusicOut(3); setTimeout(()=>show(1), 800); }
+  }
+  update(); tick = setInterval(update, 1000);
+}
+
+
+/* ================= lobby music =================
+   TWO SOURCES, in priority order:
+
+   1. A licensed MP3 at ./lobby.mp3  (drop the file next to this HTML — nothing else to change).
+      Override the path with ?track=some-other-file.mp3 if you want a different one per event.
+      NOTE: use a track you are licensed to perform publicly. Spotify/Apple Music tracks are
+      NOT legal here (public performance + sync), and their DRM won't play in a page anyway.
+
+   2. If no MP3 is found, the generated track below plays instead. It is synthesized in the
+      browser from oscillators — no files, no licensing, works offline on a hotel projector.
+      Key of D, 116 BPM, major-9 voicings, syncopated bass, backbeat clap, rotating arpeggio.
+====================================================================================== */
+let ac = null, master = null, sfx = null, noiseBuf = null, musicOn = false, chordTimer = null;
+let mp3 = null, usingMp3 = false;
+const muteBtn = document.getElementById('muteBtn');
+const _q = new URLSearchParams(location.search).get('track');
+const TRACKS = _q ? [_q] : ['lobby.mp3','lobby.m4a'];   // tries each in order, uses the first that loads
+const BPM = 116, BEAT = 60/BPM, BAR = BEAT*4;
+
+/* I – V – vi – IV, but voiced with 9ths and 6ths so it reads "bright/optimistic"
+   rather than "corporate stock loop". Key of D. */
+const CHORDS = [
+  {bass:146.83, tones:[293.66,369.99,440.00,554.37,659.25]},  // Dmaj9   (D F# A C# E)
+  {bass:110.00, tones:[277.18,329.63,440.00,554.37,659.25]},  // A6/9    (A C# E F# B->E)
+  {bass:123.47, tones:[293.66,349.23,440.00,587.33,659.25]},  // Bm7     (B D F# A)
+  {bass: 98.00, tones:[293.66,392.00,493.88,587.33,739.99]},  // Gmaj9   (G B D F# A)
+];
+
+function mkNoise(){
+  const b = ac.createBuffer(1, ac.sampleRate*0.5, ac.sampleRate);
+  const d = b.getChannelData(0);
+  for(let i=0;i<d.length;i++) d[i] = Math.random()*2-1;
+  return b;
+}
+function env(g, t, peak, dur){
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.linearRampToValueAtTime(peak, t+0.005);
+  g.gain.exponentialRampToValueAtTime(0.0001, t+dur);
+}
+function pluck(t, f, peak=0.05, dur=0.22, type='triangle', dest){
+  const o = ac.createOscillator(); o.type = type; o.frequency.value = f;
+  const g = ac.createGain(); env(g, t, peak, dur);
+  o.connect(g); g.connect(dest || master); o.start(t); o.stop(t+dur+0.06);
+}
+function kick(t, peak=0.20){
+  const o = ac.createOscillator(); o.type='sine';
+  o.frequency.setValueAtTime(155, t);
+  o.frequency.exponentialRampToValueAtTime(46, t+0.10);
+  const g = ac.createGain(); env(g, t, peak, 0.16);
+  o.connect(g); g.connect(master); o.start(t); o.stop(t+0.24);
+}
+function clap(t){                                   // backbeat — warmer than a snare
+  const s = ac.createBufferSource(); s.buffer = noiseBuf;
+  const f = ac.createBiquadFilter(); f.type='bandpass'; f.frequency.value=1750; f.Q.value=0.9;
+  const g = ac.createGain(); env(g, t, 0.075, 0.14);
+  s.connect(f); f.connect(g); g.connect(master); s.start(t); s.stop(t+0.2);
+}
+function shaker(t, peak=0.030){
+  const s = ac.createBufferSource(); s.buffer = noiseBuf;
+  const f = ac.createBiquadFilter(); f.type='highpass'; f.frequency.value=7200;
+  const g = ac.createGain(); env(g, t, peak, 0.045);
+  s.connect(f); f.connect(g); g.connect(master); s.start(t); s.stop(t+0.08);
+}
+function pad(t, chord){                             // soft sustained bed under the bar
+  chord.tones.slice(0,3).forEach(f=>{
+    const o = ac.createOscillator(); o.type='sine'; o.frequency.value = f/2;
+    const g = ac.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.linearRampToValueAtTime(0.022, t+BAR*0.35);
+    g.gain.linearRampToValueAtTime(0.0001, t+BAR*0.98);
+    o.connect(g); g.connect(master); o.start(t); o.stop(t+BAR);
+  });
+}
+function scheduleBar(t, chord, barIx){
+  /* drums — four-on-the-floor with a lifted backbeat */
+  kick(t); kick(t + 2*BEAT); kick(t + 3.5*BEAT, 0.13);
+  clap(t + 1*BEAT); clap(t + 3*BEAT);
+  for(let i=0;i<8;i++) shaker(t + i*BEAT/2, i%2 ? 0.034 : 0.020);
+
+  /* syncopated bass — pushes forward instead of sitting on the beat */
+  const bassHits = [0, 0.75, 1.5, 2.5, 3.0, 3.75];
+  bassHits.forEach(off => pluck(t + off*BEAT, chord.bass, 0.095, 0.26, 'sine'));
+
+  /* arpeggio — rising, sixteenth-flavored, alternates shape per bar so it never loops audibly */
+  const shapes = [
+    [0,2,4,3,2,4,3,1],
+    [0,1,2,4,3,2,1,2],
+    [4,3,2,0,1,2,3,4],
+    [0,2,3,4,3,2,1,0],
+  ];
+  const seq = shapes[barIx % shapes.length];
+  seq.forEach((ix,i)=> pluck(t + i*BEAT/2, chord.tones[ix], 0.042, 0.19, 'triangle'));
+
+  /* every 4th bar, a bright top note to open it up */
+  if(barIx % 4 === 3) pluck(t + 3.5*BEAT, chord.tones[4]*2, 0.030, 0.5, 'sine');
+
+  pad(t, chord);
+}
+function scheduleLoop(){
+  let t = ac.currentTime + 0.12, bar = 0;
+  function nextBar(){ scheduleBar(t, CHORDS[bar % CHORDS.length], bar); bar++; t += BAR; }
+  nextBar(); nextBar();
+  chordTimer = setInterval(()=>{ if(t - ac.currentTime < BAR*1.4) nextBar(); }, 140);
+}
+function tryTrack(src){
+  return new Promise(resolve=>{
+    const a = new Audio();
+    a.src = src; a.loop = true; a.volume = 0; a.preload = 'auto';
+    let settled = false;
+    const ok = ()=>{ if(settled) return; settled = true; resolve(a); };
+    const no = ()=>{ if(settled) return; settled = true; resolve(null); };
+    a.addEventListener('canplaythrough', ok, {once:true});
+    a.addEventListener('error', no, {once:true});
+    setTimeout(()=>{ if(!settled) no(); }, 2500);   // missing file / slow net -> next candidate
+  });
+}
+async function initMp3(){
+  for(const src of TRACKS){
+    const a = await tryTrack(src);
+    if(a){ mp3 = a; usingMp3 = true; console.log('[deck] lobby music:', src); return true; }
+  }
+  console.log('[deck] no audio file found — using generated track');
+  return false;
+}
+function initAudio(){
+  ac = new (window.AudioContext||window.webkitAudioContext)();
+  noiseBuf = mkNoise();
+  master = ac.createGain(); master.gain.value = 0;
+  const lp = ac.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value = 9200; lp.Q.value = 0.4;
+  const comp = ac.createDynamicsCompressor();      // glue — keeps it from spiking on a projector
+  comp.threshold.value = -18; comp.ratio.value = 3; comp.attack.value = 0.005; comp.release.value = 0.18;
+  master.connect(lp); lp.connect(comp); comp.connect(ac.destination);
+  sfx = ac.createGain(); sfx.gain.value = 0.6; sfx.connect(ac.destination);
+  if(!usingMp3) scheduleLoop();      // generated track only when there's no MP3
+}
+function rampMp3(to, sec){
+  if(!mp3) return;
+  const from = mp3.volume, steps = Math.max(1, Math.round(sec*30));
+  let i = 0;
+  clearInterval(mp3._ramp);
+  if(to > 0 && mp3.paused) mp3.play().catch(()=>{});
+  mp3._ramp = setInterval(()=>{
+    i++;
+    mp3.volume = Math.max(0, Math.min(1, from + (to-from)*(i/steps)));
+    if(i >= steps){ clearInterval(mp3._ramp); if(to === 0) mp3.pause(); }
+  }, (sec*1000)/steps);
+}
+function setMusic(on){
+  musicOn = on;
+  if(muteBtn) muteBtn.textContent = 'Music: ' + (on ? 'on' : 'off');
+  if(usingMp3){ rampMp3(on ? 0.55 : 0, 1.2); return; }
+  if(!ac) return;
+  const t = ac.currentTime;
+  master.gain.cancelScheduledValues(t);
+  master.gain.setValueAtTime(Math.max(0.0001, master.gain.value), t);
+  master.gain.linearRampToValueAtTime(on ? 0.9 : 0, t + 1.2);
+}
+async function toggleMusic(){
+  if(!ac){ await initMp3(); initAudio(); }
+  if(ac.state==='suspended') ac.resume();
+  setMusic(!musicOn);
+}
+function fadeMusicOut(sec){
+  if(!musicOn) return;
+  if(usingMp3){ rampMp3(0, sec); musicOn = false; if(muteBtn) muteBtn.textContent = 'Music: off'; return; }
+  if(!ac) return;
+  const t = ac.currentTime;
+  master.gain.cancelScheduledValues(t);
+  master.gain.setValueAtTime(master.gain.value, t);
+  master.gain.linearRampToValueAtTime(0, t + sec);
+  musicOn = false; if(muteBtn) muteBtn.textContent = 'Music: off';
+}
+/* keystroke SFX under the typewriter — independent of the music fade */
+function keyClick(){
+  if(!ac || ac.state !== 'running') return;
+  const t = ac.currentTime;
+  const s = ac.createBufferSource(); s.buffer = noiseBuf;
+  const f = ac.createBiquadFilter(); f.type='bandpass';
+  f.frequency.value = 2300 + Math.random()*900; f.Q.value = 1.6;
+  const g = ac.createGain(); env(g, t, 0.10, 0.028);
+  s.connect(f); f.connect(g); g.connect(sfx); s.start(t); s.stop(t+0.05);
+  const o = ac.createOscillator(); o.type='sine';
+  o.frequency.value = 170 + Math.random()*40;
+  const g2 = ac.createGain(); env(g2, t, 0.05, 0.03);
+  o.connect(g2); g2.connect(sfx); o.start(t); o.stop(t+0.06);
+}
+if(muteBtn) muteBtn.onclick = toggleMusic;
+
+/* ================= presenter view & sync ================= */
+const IS_PRESENTER = params.get('presenter') === '1';
+const chan = ('BroadcastChannel' in window) ? new BroadcastChannel('tb-deck') : null;
+function announce(){
+  if(chan) chan.postMessage({type:'state', cur});
+  try{ localStorage.setItem('tb-state', JSON.stringify({cur, t:Date.now()})); }catch(e){}
+}
+const _show = show;
+show = function(i, fb){ _show(i, fb); announce(); };
+
+function slideTitle(i){
+  if(i<=0) return 'Lobby — countdown';
+  if(i>=slides.length) return 'End of deck';
+  const el = slides[i].querySelector('h1,h2');
+  return (el ? el.textContent.trim().replace(/\s+/g,' ') : 'Slide '+i).slice(0,70);
+}
+function renderPresenter(i){
+  document.getElementById('pvNow').textContent = (i===0?'Lobby':`Slide ${i} / ${slides.length-1}`) + ' — ' + slideTitle(i);
+  document.getElementById('pvNext').textContent = 'Next: ' + slideTitle(i+1);
+  const box = document.getElementById('pvNotes');
+  const notes = NOTES[i];
+  box.innerHTML = notes ? notes.map(p=>{
+    const cue = /^\[.*\]$/.test(p);
+    return `<p class="${cue?'cue':''}">${p}</p>`;
+  }).join('') : '<p class="cue">No notes for this slide.</p>';
+}
+if(IS_PRESENTER){
+  document.body.classList.add('presenter');
+  document.title = 'Presenter — The Third Borrower';
+  let pcur = 0; const t0 = Date.now();
+  renderPresenter(0);
+  setInterval(()=>{ const s=Math.floor((Date.now()-t0)/1000);
+    document.getElementById('pvClock').textContent = `Elapsed ${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; },1000);
+  function onState(st){ if(st && typeof st.cur==='number' && st.cur!==pcur){ pcur=st.cur; renderPresenter(pcur); } }
+  if(chan) chan.onmessage = e=>{ if(e.data.type==='state') onState(e.data); };
+  else addEventListener('storage', e=>{ if(e.key==='tb-state') onState(JSON.parse(e.newValue||'{}')); });
+  const nav = d=>{ if(chan) chan.postMessage({type:'nav', d}); try{ localStorage.setItem('tb-nav', JSON.stringify({d, t:Date.now()})); }catch(e){} };
+  document.getElementById('pvPrev').onclick = ()=>nav(-1);
+  document.getElementById('pvNextBtn').onclick = ()=>nav(1);
+  addEventListener('keydown', e=>{ if(e.key==='ArrowRight'||e.key===' ') nav(1); if(e.key==='ArrowLeft') nav(-1); }, true);
+}else{
+  const navMsg = d=> d>0 ? next() : prev();
+  if(chan) chan.onmessage = e=>{ if(e.data.type==='nav') navMsg(e.data.d); };
+  else addEventListener('storage', e=>{ if(e.key==='tb-nav'){ const m=JSON.parse(e.newValue||'{}'); if(typeof m.d==='number') navMsg(m.d); } });
+  function openPresenter(){ open(location.pathname+location.search.replace(/\??$/,'')+(location.search?'&':'?')+'presenter=1','tb-presenter','width=780,height=640'); setTimeout(announce,600); }
+  document.getElementById('notesBtn').onclick = openPresenter;
+  addEventListener('keydown', e=>{ if(e.key.toLowerCase()==='n') openPresenter(); });
+
+  /* ---- floating PiP notes: stays on top even over fullscreen (Chrome 116+) ---- */
+  let pipWin = null;
+  function renderPip(){
+    if(!pipWin || pipWin.closed) return;
+    const d = pipWin.document;
+    d.getElementById('pipNow').textContent = (cur===0?'Lobby':`Slide ${cur} / ${slides.length-1}`) + ' — ' + slideTitle(cur);
+    const notes = NOTES[cur];
+    d.getElementById('pipNotes').innerHTML = notes
+      ? notes.map(p=>`<p class="${/^\[.*\]$/.test(p)?'cue':''}">${p.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</p>`).join('')
+      : '<p class="cue">No notes for this slide.</p>';
+  }
+  async function openPip(){
+    if(!('documentPictureInPicture' in window)){ openPresenter(); return; }
+    if(pipWin && !pipWin.closed){ pipWin.close(); pipWin = null; return; }
+    pipWin = await documentPictureInPicture.requestWindow({width: 460, height: 580});
+    pipWin.document.body.innerHTML = `
+      <div id="pipNow" style="font-weight:800;font-size:15px;margin-bottom:10px"></div>
+      <div id="pipNotes"></div>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button id="pipPrev" style="flex:1;padding:10px;border-radius:8px;border:1px solid #124066;background:#0D3050;color:#fff;font-size:14px;cursor:pointer">← Prev</button>
+        <button id="pipNext" style="flex:1;padding:10px;border-radius:8px;border:1px solid #124066;background:#0D3050;color:#fff;font-size:14px;cursor:pointer">Next →</button>
+      </div>`;
+    const st = pipWin.document.createElement('style');
+    st.textContent = `body{background:#071C33;color:#E3F4FD;font-family:Montserrat,system-ui,sans-serif;padding:16px;font-size:14.5px;line-height:1.6}
+      #pipNotes{overflow-y:auto;max-height:calc(100vh - 130px)} #pipNotes p{margin:0 0 10px}
+      #pipNotes p.cue{color:#8A95A3;font-style:italic;font-size:13px} #pipNow{color:#5BCBF5}`;
+    pipWin.document.head.appendChild(st);
+    pipWin.document.getElementById('pipPrev').onclick = ()=>prev();
+    pipWin.document.getElementById('pipNext').onclick = ()=>next();
+    pipWin.addEventListener('pagehide', ()=>{ pipWin = null; });
+    renderPip();
+  }
+  document.getElementById('pipBtn').onclick = openPip;
+  addEventListener('keydown', e=>{ if(e.key.toLowerCase()==='p') openPip(); });
+  const _announce = announce;
+  announce = function(){ _announce(); renderPip(); };
+}
+
+/* ================= assets ================= */
+for(const [id,src] of Object.entries(ASSETS)){
+  const base = 'img-'+id.replace(/_/g,'-');
+  document.querySelectorAll(`[id^="${base}"]`).forEach(el=> el.src = src);
+}
+
+/* ================= fragments (click-to-reveal) ================= */
+function frags(){ return [...slides[cur].querySelectorAll('.frag')]; }
+function next(){
+  const pending = frags().filter(f=>!f.classList.contains('on'));
+  if(pending.length){ pending[0].classList.add('on'); syncTimeline(); announce(); return; }
+  show(cur+1);
+}
+function prev(){
+  const shown = frags().filter(f=>f.classList.contains('on'));
+  if(shown.length){ shown[shown.length-1].classList.remove('on'); syncTimeline(); announce(); return; }
+  show(cur-1, true);
+}
+
+/* ================= typewriter ================= */
+const TYPE_SEGS = [{t:'Somebody in this room is going to ',cls:''},{t:'lose a condo deal.',cls:'b'}];
+let typeTimer = null;
+function runTypewriter(){
+  const out = document.getElementById('typeOut');
+  clearInterval(typeTimer); out.innerHTML = '';
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+    out.innerHTML = TYPE_SEGS.map(s=>`<span class="${s.cls}">${s.t}</span>`).join(''); return;
+  }
+  let seg = 0, ch = 0;
+  const spans = TYPE_SEGS.map(s=>{ const el=document.createElement('span'); el.className=s.cls; out.appendChild(el); return el; });
+  typeTimer = setInterval(()=>{
+    if(seg >= TYPE_SEGS.length){ clearInterval(typeTimer); return; }
+    spans[seg].textContent += TYPE_SEGS[seg].t[ch++];
+    if(typeof keyClick === 'function') keyClick();
+    if(ch >= TYPE_SEGS[seg].t.length){ seg++; ch=0; }
+  }, 42);
+}
+
+/* ================= enter ================= */
+document.getElementById('enterBtn').onclick = async ()=>{
+  document.getElementById('gate').style.display = 'none';
+  started = true;
+  if(manualMins === 0 && !target){ show(1); return; }   // no countdown: silent, straight to slide 1
+  startCountdown();                                     // start the clock immediately
+  await initMp3();                                      // then look for lobby.mp3
+  initAudio(); if(ac.state==='suspended') ac.resume();
+  setMusic(true);
+};
+show(0);
+</script>
+</body>
+</html>
