@@ -15,6 +15,7 @@
   --red:#FF9999; --red-deep:#B91C1C; --red-bg:#1A0808;
   --gold:#FFC96B;
   --font:'Montserrat',sans-serif;
+  --ease-out:cubic-bezier(.22,1,.36,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;background:var(--navy-deep);color:#fff;font-family:var(--font);overflow:hidden}
@@ -27,6 +28,34 @@ button{font-family:var(--font)}
 /* ---------- shared slide chrome ---------- */
 .slide{position:absolute;inset:0;padding:72px 88px;display:none;flex-direction:column;justify-content:center;background:var(--navy-deep)}
 .slide.active{display:flex}
+
+/* ---------- slide transitions ----------
+   Content drifts in from the direction of travel and settles.
+   Fast (440ms) and GPU-cheap so it stays smooth on a conference projector. */
+.slide.active > *{animation:slideIn .44s cubic-bezier(.22,1,.36,1) both}
+.slide.active.back > *{animation-name:slideInBack}
+@keyframes slideIn{
+  from{opacity:0;transform:translate3d(46px,0,0)}
+  to{opacity:1;transform:translate3d(0,0,0)}
+}
+@keyframes slideInBack{
+  from{opacity:0;transform:translate3d(-46px,0,0)}
+  to{opacity:1;transform:translate3d(0,0,0)}
+}
+/* stagger children so a slide assembles rather than arriving as one slab */
+.slide.active > *:nth-child(2){animation-delay:.05s}
+.slide.active > *:nth-child(3){animation-delay:.10s}
+.slide.active > *:nth-child(4){animation-delay:.15s}
+.slide.active > *:nth-child(5){animation-delay:.20s}
+
+/* the statement / kill-line slides land heavier and slower — these are the money beats */
+.slide.active > .statement{animation:landHeavy .72s cubic-bezier(.16,1,.3,1) both}
+@keyframes landHeavy{
+  from{opacity:0;transform:scale(.955) translate3d(0,14px,0)}
+  to{opacity:1;transform:scale(1) translate3d(0,0,0)}
+}
+/* the typewriter hook gets no entrance — the typing IS the entrance */
+#problemSlide.active > *{animation:none}
 .eyebrow{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--blue);border-radius:999px;
   padding:8px 20px;font-size:13px;font-weight:600;letter-spacing:.35em;color:var(--pale);width:max-content}
 .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:#FF3131;animation:pulse 2s infinite}
@@ -137,7 +166,10 @@ td.label{color:var(--surface);font-weight:600;font-size:15.5px}
   padding:6px 14px;cursor:pointer;font-size:13px;margin-left:8px}
 #hud button:hover{border-color:var(--blue)}
 #bar{position:absolute;left:0;bottom:0;height:3px;background:var(--blue);width:0;transition:width .3s;z-index:7}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .frag{transform:none!important}
+}
 
 /* ---------- typewriter ---------- */
 .tcursor{display:inline-block;width:7px;height:.95em;background:var(--blue);margin-left:10px;
@@ -145,8 +177,9 @@ td.label{color:var(--surface);font-weight:600;font-size:15.5px}
 @keyframes blink{0%,100%{opacity:1;transform:scaleY(1)}50%{opacity:.25;transform:scaleY(.92)}}
 
 /* ---------- click-to-reveal fragments ---------- */
-.frag{visibility:hidden;opacity:0;transition:opacity .35s ease}
-.frag.on{visibility:visible;opacity:1}
+.frag{visibility:hidden;opacity:0;transform:translate3d(0,12px,0);
+  transition:opacity .42s var(--ease-out), transform .42s var(--ease-out)}
+.frag.on{visibility:visible;opacity:1;transform:translate3d(0,0,0)}
 
 /* ---------- presenter view ---------- */
 body.presenter{overflow:auto}
@@ -773,8 +806,23 @@ const slides = [...document.querySelectorAll('.slide')];
 let cur = 0;
 const counter = document.getElementById('counter'), bar = document.getElementById('bar');
 function show(i, fromBack){
+  const prevIx = cur;
   cur = Math.max(0, Math.min(slides.length-1, i));
-  slides.forEach((s,k)=>s.classList.toggle('active', k===cur));
+  const goingBack = cur < prevIx;
+
+  slides.forEach((s,k)=>{
+    s.classList.toggle('active', k===cur);
+    if(k!==cur) s.classList.remove('back');
+  });
+
+  /* Direction of travel: content drifts in from the right going forward,
+     from the left going back. Reflow forces the animation to replay —
+     without it, CSS won't re-run an animation on an already-animated node. */
+  const el = slides[cur];
+  el.classList.remove('back');
+  void el.offsetWidth;                       // reflow: restarts the animation
+  if(goingBack) el.classList.add('back');
+
   counter.textContent = cur===0 ? 'Lobby' : `${cur} / ${slides.length-1}`;
   bar.style.width = cur===0 ? '0' : (cur/(slides.length-1)*100)+'%';
   const fs = slides[cur].querySelectorAll('.frag');
