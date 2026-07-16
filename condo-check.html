@@ -203,6 +203,27 @@
   .seemore:disabled { background: #d4dde7; color: #fff; cursor: not-allowed; }
   .restart { display: inline-block; margin-top: 16px; font-size: 13px; color: var(--muted); background: none; border: none; cursor: pointer; font-family: inherit; text-decoration: underline; }
 
+
+
+  /* GUIDE FUNNEL */
+  .guide-funnel { background: var(--surface); padding: 12px 0 52px; }
+  .guide-funnel-card {
+    background: var(--navy); color: #fff; border-radius: 18px; padding: 34px 30px; box-shadow: var(--shadow); text-align: center;
+  }
+  .guide-funnel-card h2 { font-size: 26px; font-weight: 800; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .guide-funnel-card p { max-width: 580px; margin: 0 auto 24px; color: rgba(255,255,255,0.78); font-size: 14px; }
+  .guide-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; text-align: left; }
+  .guide-option {
+    display: block; background: #fff; color: var(--navy); border: 2px solid rgba(255,255,255,0.18); border-radius: 14px;
+    padding: 20px; text-decoration: none; transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .guide-option:hover { transform: translateY(-3px); border-color: var(--blue); box-shadow: 0 10px 24px rgba(91,203,245,0.28); }
+  .guide-option-blue { background: var(--blue); }
+  .guide-label { display: block; font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue-deep); margin-bottom: 8px; }
+  .guide-option strong { display: block; font-size: 18px; line-height: 1.2; margin-bottom: 8px; }
+  .guide-option small { display: block; color: var(--muted); font-size: 12px; line-height: 1.6; }
+  .guide-option-blue small { color: rgba(10,37,64,0.72); }
+
   /* FOOTER */
   footer { background: var(--navy); color: rgba(255,255,255,0.55); padding: 28px 0; font-size: 12px; line-height: 1.7; }
   footer strong { color: rgba(255,255,255,0.8); }
@@ -213,6 +234,7 @@
   @media (max-width: 560px) {
     .hero h1 { font-size: 27px; }
     .loans { grid-template-columns: 1fr; }
+    .guide-options { grid-template-columns: 1fr; }
     .verdict h2 { font-size: 22px; }
     .meter-label { display: none; }
   }
@@ -315,6 +337,29 @@
       <p class="disclaimer">This tool gives a directional read based on your answers. It is not a warrantability determination or a loan approval. Final eligibility is decided at application through full underwriting against current agency and investor guidelines. Daryn Fillis, NMLS #1988371, NEO Home Loans, a division of Better Mortgage Corporation. Equal Housing Opportunity.</p>
     </div>
   </div>
+
+<section class="guide-funnel" aria-labelledby="guide-funnel-title">
+  <div class="wrap">
+    <div class="guide-funnel-card">
+      <div class="eyebrow">Get the PDF checklist</div>
+      <h2 id="guide-funnel-title">Want the full condo playbook?</h2>
+      <p>Choose the path that fits you and I&rsquo;ll send the right California condo PDF to your inbox immediately. Sellers get the pre-listing checklist. Buyers get the pre-offer checklist.</p>
+      <div class="guide-options">
+        <a class="guide-option" href="/cal-condo-seller">
+          <span class="guide-label">I&rsquo;m selling</span>
+          <strong>Seller&rsquo;s Guide</strong>
+          <small>Pre-listing HOA documents, project red flags, and financing fixes before you go live.</small>
+        </a>
+        <a class="guide-option guide-option-blue" href="/cal-condo-buyer">
+          <span class="guide-label">I&rsquo;m buying</span>
+          <strong>Buyer&rsquo;s Guide</strong>
+          <small>Pre-offer questions, HOA warning signs, reserve study notes, and loan paths to know first.</small>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <footer>
