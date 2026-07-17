@@ -380,6 +380,26 @@
     background: rgba(91,203,245,0.1);
   }
 
+  .footer-secondary-link-wrap {
+    margin-top: 12px;
+  }
+
+  .footer-secondary-link {
+    display: inline-block;
+    font-family: var(--font);
+    font-weight: 800;
+    font-size: 0.64rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue);
+    text-decoration: none;
+    transition: color 0.22s;
+  }
+
+  .footer-secondary-link:hover {
+    color: var(--blue-dark);
+  }
+
   /* Tap feedback on mobile */
   @media (hover: none) {
     .link-card:active {
@@ -455,7 +475,7 @@
     </a>
 
     <!-- 2. Condo Check -->
-    <a href="https://darynfillis.com/condo-check" class="link-card primary">
+    <a href="https://darynfillis.com/condo-check" class="link-card">
       <div class="link-title">Condo Check</div>
       <div class="link-sub">Find out if your building will survive financing</div>
     </a>
@@ -539,7 +559,7 @@
     </p>
     <a href="https://darynfillis.com/" class="footer-site-link">darynfillis.com →</a>
 
-  <div style="margin-top:10px"><a href="/glossary">Mortgage &amp; Real Estate Glossary</a></div>
+    <div class="footer-secondary-link-wrap"><a href="/glossary" class="footer-secondary-link">Mortgage &amp; Real Estate Glossary</a></div>
 </footer>
 
 </div></main>
