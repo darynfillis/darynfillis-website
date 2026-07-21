@@ -269,6 +269,14 @@
     <priority>0.90</priority>
   </url>
 
+  <!-- Sell with Intention (interactive tool) -->
+  <url>
+    <loc>https://darynfillis.com/sell-with-intention</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <url>
     <loc>https://darynfillis.com/neighborhoods/santa-monica</loc>
     <lastmod>2026-06-25</lastmod>
