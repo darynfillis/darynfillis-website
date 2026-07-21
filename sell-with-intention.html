@@ -270,12 +270,15 @@ nav.scrolled { box-shadow: 0 2px 12px rgba(10,37,64,0.08); }
 .pill:hover{border-color:var(--blue)}
 .pill.on{background:var(--navy);border-color:var(--navy);color:var(--white)}
 .obn{font-size:0.78rem;color:var(--body);line-height:1.7;margin-bottom:11px;font-weight:200}
-.og{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:11px}
-.oc{border-radius:11px;padding:12px;background:var(--white);border:1px solid var(--rule)}
+.og{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:9px}
+.oc{border-radius:11px;padding:12px;background:var(--white);border:1px solid var(--rule);min-width:0}
 .oc-w{background:#e6f7ec;border-color:rgba(25,136,55,0.25)}
 .ocl{font-size:0.65rem;color:var(--muted);margin-bottom:3px;text-transform:uppercase;letter-spacing:0.08em;font-weight:700}
 .ocv{font-size:1.05rem;font-weight:800;color:var(--navy)}
 .ocs{font-size:0.7rem;color:var(--body);margin-top:3px}
+.og-diff{border-radius:11px;padding:18px 20px;background:var(--white);border:1px solid var(--rule);margin-bottom:11px;text-align:center}
+.og-diff.og-diff-g{background:#e6f7ec;border-color:rgba(25,136,55,0.25)}
+.og-diff-v{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:800;letter-spacing:-0.02em;margin:4px 0}
 .ben{font-size:0.78rem;background:var(--white);border:1px solid var(--rule);border-radius:11px;padding:12px 14px;color:var(--body);line-height:1.75;font-weight:200}
 .risk-note{font-size:0.72rem;color:#92650a;line-height:1.7;margin-top:10px;font-weight:200}
 .ipc-check{border-radius:11px;padding:13px 15px;margin-top:10px;border:1px solid}
@@ -897,7 +900,11 @@ function calc(){
     <div class="og">
       <div class="oc"><p class="ocl">The Standard List</p><p class="ocv">${fmt(nA)}</p><p class="ocs">No strategy · baseline</p></div>
       <div class="oc oc-w"><p class="ocl">The Full House</p><p class="ocv" style="color:#198837">${fmt(nC)}</p><p class="ocs">Sale at ${fmt(sC)}</p></div>
-      <div class="oc ${dN>=0?'oc-w':''}"><p class="ocl">Vs Standard List</p><p class="ocv" style="color:${dc2}">${dN>=0?'+':''}${fmt(dN)}</p><p class="ocs">${dN>=0?'Ahead of baseline':'Within reach of baseline'}</p></div>
+    </div>
+    <div class="og-diff ${dN>=0?'og-diff-g':''}">
+      <p class="ocl">Vs Standard List</p>
+      <p class="og-diff-v" style="color:${dc2}">${dN>=0?'+':''}${fmt(dN)}</p>
+      <p class="ocs">${dN>=0?'Ahead of baseline':'Within reach of baseline'}</p>
     </div>
     <p class="ben">${ben}</p>
     <div class="ipc-check ${ipcClass}">
