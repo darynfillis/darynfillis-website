@@ -1,46 +1,55 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="robots" content="noindex,nofollow">
-  <title>Mortgage Strategy Intake Mockup | Daryn Fillis</title>
-  <meta name="description" content="A discussion mockup for Daryn Fillis's mortgage strategy intake.">
-  <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/strategy-intake.css">
-  <script src="/assets/strategy-intake.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Mortgage Strategy Intake Mockup | Daryn Fillis</title>
+<meta name="description" content="A private mortgage strategy intake experience for Daryn Fillis clients.">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/strategy-intake.css">
 </head>
 <body>
-  <a class="skip-link" href="#intake-stage">Skip to intake</a>
-  <div class="app-shell">
-    <header class="topbar">
-      <a class="brand" href="/" aria-label="Daryn Fillis home">
-        <span class="brand-mark" aria-hidden="true">DF</span>
-        <span><strong>Daryn Fillis</strong><small>Certified Mortgage Advisor</small></span>
-      </a>
-      <span class="preview-pill"><i aria-hidden="true"></i><b>Mockup</b><span>Nothing is submitted</span></span>
-    </header>
-    <div class="progress-track" aria-hidden="true"><div id="progress"></div></div>
+<a class="skip-link" href="#intake">Skip to intake</a>
+<div class="app-shell">
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Daryn Fillis home">
+      <span class="brand-mark" aria-hidden="true">DF</span>
+      <span class="brand-copy">
+        <span class="brand-name">Daryn Fillis</span>
+        <span class="brand-role">Certified Mortgage Advisor</span>
+      </span>
+    </a>
+    <div class="preview-pill" aria-label="Preview mode. Answers are not transmitted.">
+      <span class="preview-dot" aria-hidden="true"></span>
+      <span>Mockup</span>
+      <span>Nothing is submitted</span>
+    </div>
+  </header>
+  <div class="progress-wrap" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
 
-    <main id="intake-stage">
-      <section class="form-card" aria-labelledby="screen-title">
-        <div class="stage">
-          <div class="meta" id="meta" hidden>
-            <span id="kicker">Mortgage strategy</span>
-            <span id="count"></span>
-          </div>
-          <div id="screen" class="screen" aria-live="polite"></div>
+  <main id="intake">
+    <section class="form-frame" aria-labelledby="screenTitle">
+      <div class="question-stage">
+        <div class="step-meta" id="stepMeta" hidden>
+          <span class="step-kicker" id="stepKicker">Mortgage strategy</span>
+          <span class="step-count" id="stepCount"></span>
         </div>
-        <footer class="form-footer">
-          <button id="back" class="back" type="button" hidden>&larr; Back</button>
-          <span id="key-hint">Press <kbd>Enter</kbd> to continue</span>
-        </footer>
-      </section>
-      <p class="legal">This planning intake is not a mortgage application, credit authorization, approval, commitment to lend, or tax advice. Loan terms and eligibility depend on a complete application and underwriting. Daryn Fillis, NMLS #1988371. NEO Home Loans powered by Better Mortgage Corporation. Equal Housing Opportunity.</p>
-    </main>
-  </div>
+        <div id="screen" class="screen" aria-live="polite"></div>
+      </div>
+      <div class="frame-footer">
+        <button class="back-button" id="backButton" type="button" hidden aria-label="Go back to the previous question">← Back</button>
+        <div class="keyboard-hint" id="keyboardHint">Press <kbd>Enter</kbd> to continue</div>
+      </div>
+    </section>
+    <div class="legal">This planning intake is not a mortgage application, credit authorization, approval, commitment to lend, or tax advice. Loan terms and eligibility depend on a complete application and underwriting. Daryn Fillis, NMLS #1988371. NEO Home Loans powered by Better Mortgage Corporation. Equal Housing Opportunity.</div>
+  </main>
+</div>
+
+<script src="/assets/strategy-intake-config.js" defer></script>
+<script src="/assets/strategy-intake.js" defer></script>
 </body>
 </html>
