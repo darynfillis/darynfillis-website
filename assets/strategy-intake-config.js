@@ -1,372 +1,304 @@
-window.STRATEGY_INTAKE_CONFIG = (function () {
+window.SCENARIO_DESK_CONFIG = (function () {
   'use strict';
-
-  var secureApplicationUrl = 'https://neohomeloans.com/start/r/130676';
 
   function option(value, title, description) {
     return { value: value, title: title, description: description || '' };
   }
 
-  var steps = [
-    {
-      id: 'application_status',
-      type: 'choice',
-      field: 'applicationStatus',
-      kicker: 'Start here',
-      title: 'How far have you already gone with the secure NEO application?',
-      description: 'Your answer controls what this intake skips. We will not ask you to re-enter information that already belongs in your loan file.',
-      options: [
-        option('complete', 'I completed the application and the credit report', 'Skip application-style questions and go directly to strategy.'),
-        option('app_only', 'I completed the application, but not the credit report', 'Keep credit authorization in the secure application and continue with strategy here.'),
-        option('not_started', 'I have not completed the application', 'Use this intake for strategy, then complete financial details securely.'),
-        option('unsure', 'I am not sure', 'Keep this intake non-sensitive and let Daryn identify what is still needed.')
-      ]
-    },
-    {
-      id: 'application_note',
-      type: 'notice',
-      kicker: 'Keep sensitive data secure',
-      title: 'This intake will not duplicate the mortgage application.',
-      description: 'Identity, employment, income, assets, liabilities, real estate owned, and credit information belong in the secure application. This form captures the decisions and tradeoffs the application does not explain.',
-      when: function (state) { return state.applicationStatus && state.applicationStatus !== 'complete'; },
-      noticeTitle: 'What stays in the secure application',
-      bullets: [
-        'Social Security number and identity details',
-        'Employment, income, assets, and liabilities',
-        'Property and current mortgage details',
-        'Credit authorization and the credit report'
-      ],
-      primaryAction: 'Continue with strategy',
-      secondaryLink: { label: 'Open secure application', href: secureApplicationUrl }
-    },
-    {
-      id: 'transaction',
-      type: 'choice',
-      field: 'transaction',
-      kicker: 'Your scenario',
-      title: 'What decision are we planning for?',
-      description: 'Choose the closest fit. The next questions will adapt to the path you select.',
-      twoColumn: true,
-      options: [
-        option('purchase', 'Buy a home'),
-        option('refinance', 'Refinance a current mortgage'),
-        option('move_up', 'Buy the next home while selling the current one'),
-        option('equity', 'Access equity or explore a HELOC'),
-        option('investment', 'Buy or refinance an investment property'),
-        option('explore', 'Compare more than one path')
-      ]
-    },
-    {
-      id: 'primary_outcome',
-      type: 'choice',
-      field: 'primaryOutcome',
-      kicker: 'Your top priority',
-      title: 'If this strategy could accomplish one thing, what should it be?',
-      description: 'This answer becomes the standard we use to compare every option.',
-      options: [
-        option('win', 'Put me in the strongest position to win the right property'),
-        option('payment', 'Keep the monthly payment comfortable'),
-        option('liquidity', 'Preserve cash and financial flexibility'),
-        option('debt', 'Pay debt down faster and improve cash flow'),
-        option('wealth', 'Maximize long-term net worth'),
-        option('simplify', 'Simplify or stabilize my current mortgage'),
-        option('compare', 'Show me the tradeoffs before I decide')
-      ]
-    },
-    {
-      id: 'time_horizon',
-      type: 'choice',
-      field: 'timeHorizon',
-      kicker: 'Planning horizon',
-      title: 'How long do you expect to keep this home or this loan?',
-      description: 'The likely holding period changes the break-even math, cost strategy, and value of flexibility.',
-      twoColumn: true,
-      options: [
-        option('under3', 'Less than 3 years'),
-        option('three5', '3 to 5 years'),
-        option('six10', '6 to 10 years'),
-        option('eleven15', '11 to 15 years'),
-        option('sixteen30', '16 to 30 years'),
-        option('indefinite', 'Indefinitely or not sure')
-      ]
-    },
-    {
-      id: 'payoff_goal',
-      type: 'choice',
-      field: 'payoffGoal',
-      kicker: 'Long-term direction',
-      title: 'What role should mortgage payoff play in the plan?',
-      description: 'This is a planning preference, not a commitment. It helps frame term, cash-flow, and prepayment options.',
-      twoColumn: true,
-      options: [
-        option('under10', 'Paid off within 10 years'),
-        option('fifteen', 'Paid off in about 15 years'),
-        option('twenty', 'Paid off in about 20 years'),
-        option('thirty', 'Paid off in about 30 years'),
-        option('flexible', 'No fixed deadline; flexibility matters more'),
-        option('not_priority', 'Paying it off is not a current priority')
-      ]
-    },
-    {
-      id: 'liquidity_tradeoff',
-      type: 'choice',
-      field: 'liquidityTradeoff',
-      kicker: 'Cash versus payment',
-      title: 'Which tradeoff sounds closest to your preference?',
-      description: 'There is no universally correct answer. The right balance depends on reserves, opportunity cost, risk, and time horizon.',
-      options: [
-        option('preserve', 'Preserve more cash, even if the payment is somewhat higher'),
-        option('deploy', 'Use more cash to reduce the payment and long-term loan cost'),
-        option('balance', 'Balance liquidity and payment'),
-        option('compare', 'Show me the side-by-side math first')
-      ]
-    },
-    {
-      id: 'purchase_cash',
-      type: 'choice',
-      field: 'purchaseCash',
-      kicker: 'Purchase strategy',
-      title: 'Approximately how much cash could be available for the purchase?',
-      description: 'Use a broad range. Account-level balances stay in the secure application.',
-      twoColumn: true,
-      when: function (state) { return ['purchase', 'move_up', 'investment'].indexOf(state.transaction) !== -1; },
-      options: [
-        option('under100', 'Under $100,000'),
-        option('one250', '$100,000 to $250,000'),
-        option('two500', '$250,000 to $500,000'),
-        option('fiveplus', '$500,000 or more'),
-        option('custom', 'I would rather enter a specific amount later'),
-        option('unknown', 'Not sure yet')
-      ]
-    },
-    {
-      id: 'reserves',
-      type: 'choice',
-      field: 'reserves',
-      kicker: 'Financial flexibility',
-      title: 'How much reserve would you prefer to keep after closing?',
-      description: 'Think in months of total household expenses, not only mortgage payments.',
-      when: function (state) { return ['purchase', 'move_up', 'investment'].indexOf(state.transaction) !== -1; },
-      options: [
-        option('three', 'About 3 months of total expenses'),
-        option('six', 'About 6 months'),
-        option('twelve', 'About 12 months'),
-        option('more', 'More than 12 months'),
-        option('optimize', 'Help me determine the right reserve level')
-      ]
-    },
-    {
-      id: 'down_payment',
-      type: 'choice',
-      field: 'downPaymentPreference',
-      kicker: 'Down-payment strategy',
-      title: 'How should we approach the down payment?',
-      description: 'The final recommendation should compare payment, mortgage insurance, liquidity, and long-term cost.',
-      when: function (state) { return ['purchase', 'move_up', 'investment'].indexOf(state.transaction) !== -1; },
-      options: [
-        option('minimum', 'Use the lowest practical down payment'),
-        option('twenty', 'Target 20% down if the math supports it'),
-        option('payment', 'Use enough to reach a specific payment'),
-        option('compare', 'Compare several down-payment levels')
-      ]
-    },
-    {
-      id: 'sale_dependency',
-      type: 'choice',
-      field: 'saleDependency',
-      kicker: 'Current home',
-      title: 'Does this purchase depend on selling another home?',
-      description: 'This changes timing, liquidity, contingency, and buy-before-sell strategy.',
-      when: function (state) { return ['purchase', 'move_up'].indexOf(state.transaction) !== -1; },
-      options: [
-        option('no', 'No, the purchase does not depend on a sale'),
-        option('yes_first', 'Yes, I expect to sell before buying'),
-        option('overlap', 'Possibly; compare buy-before-sell options'),
-        option('already', 'The current home is already listed or under contract')
-      ]
-    },
-    {
-      id: 'refinance_outcome',
-      type: 'choice',
-      field: 'refinanceOutcome',
-      kicker: 'Refinance strategy',
-      title: 'What should a refinance or equity strategy accomplish?',
-      description: 'Select the primary reason. We can compare secondary benefits later.',
-      when: function (state) { return ['refinance', 'equity'].indexOf(state.transaction) !== -1; },
-      options: [
-        option('payment', 'Lower the monthly payment'),
-        option('term', 'Pay the loan off sooner'),
-        option('stabilize', 'Move to a more predictable loan structure'),
-        option('cash', 'Access cash for a specific purpose'),
-        option('debt', 'Consolidate higher-cost debt'),
-        option('remove_mi', 'Remove mortgage insurance'),
-        option('compare', 'Determine whether refinancing is worth doing at all')
-      ]
-    },
-    {
-      id: 'cash_out_purpose',
-      type: 'text',
-      field: 'cashOutPurpose',
-      kicker: 'Use of equity',
-      title: 'What would the equity be used for?',
-      description: 'Describe the purpose, approximate timing, and what a successful outcome would look like. Do not enter account numbers.',
-      placeholder: 'For example: remodel in the next 12 months, consolidate specific debt, fund another property, or create a reserve...',
-      optional: true,
-      when: function (state) {
-        return state.transaction === 'equity' || state.refinanceOutcome === 'cash' || state.refinanceOutcome === 'debt';
-      }
-    },
-    {
-      id: 'extra_debt',
-      type: 'choice',
-      field: 'extraDebtPayments',
-      kicker: 'Debt strategy',
-      title: 'Are you currently paying more than the required amount toward any debt?',
-      description: 'The application shows balances and payments. This tells us how you are intentionally directing cash flow.',
-      options: [
-        option('no', 'No'),
-        option('yes', 'Yes'),
-        option('sometimes', 'Sometimes')
-      ]
-    },
-    {
-      id: 'extra_debt_amount',
-      type: 'text',
-      field: 'extraDebtAmount',
-      kicker: 'Debt strategy',
-      title: 'About how much extra do you pay, and toward which debt?',
-      description: 'A rough monthly amount is enough. Do not include account numbers.',
-      placeholder: 'For example: about $1,000 per month toward the mortgage, or an extra $500 toward student loans...',
-      optional: true,
-      when: function (state) { return state.extraDebtPayments === 'yes' || state.extraDebtPayments === 'sometimes'; }
-    },
-    {
-      id: 'major_purchase',
-      type: 'choice',
-      field: 'majorPurchase',
-      kicker: 'Next three years',
-      title: 'Do you expect a major use of cash in the next three years?',
-      description: 'Planning around the next decision can be more important than optimizing only today\'s payment.',
-      options: [
-        option('no', 'No major use of cash expected'),
-        option('yes', 'Yes'),
-        option('unsure', 'Possibly or not sure')
-      ]
-    },
-    {
-      id: 'major_purchase_details',
-      type: 'text',
-      field: 'majorPurchaseDetails',
-      kicker: 'Protect future liquidity',
-      title: 'What might the cash be needed for?',
-      description: 'Examples include renovation, education, business investment, another property, retirement transition, or family support.',
-      placeholder: 'Describe the likely purpose, timing, and rough magnitude...',
-      optional: true,
-      when: function (state) { return state.majorPurchase === 'yes' || state.majorPurchase === 'unsure'; }
-    },
-    {
-      id: 'income_outlook',
-      type: 'choice',
-      field: 'incomeOutlook',
-      kicker: 'Income planning',
-      title: 'How do you expect household income to behave over the next two years?',
-      description: 'We are looking for direction and variability, not asking you to repeat income figures from the application.',
-      options: [
-        option('stable', 'Fairly stable and predictable'),
-        option('variable', 'Variable, commission-based, bonus-based, or self-employed'),
-        option('increase', 'Likely to increase materially'),
-        option('decrease', 'May decrease or pause'),
-        option('change', 'A job, business, retirement, or household change is likely')
-      ]
-    },
-    {
-      id: 'rate_risk',
-      type: 'choice',
-      field: 'rateRisk',
-      kicker: 'Payment stability',
-      title: 'How much payment or rate variability are you comfortable considering?',
-      description: 'This replaces the outdated fixed-versus-ARM pyramid with a direct risk preference.',
-      options: [
-        option('fixed', 'I value a predictable payment and prefer little or no rate risk'),
-        option('capped', 'I can accept limited, clearly capped variability for meaningful savings'),
-        option('open', 'I am open to more variability if the long-term math is compelling'),
-        option('compare', 'Compare fixed and adjustable structures without assuming my answer')
-      ]
-    },
-    {
-      id: 'closing_costs',
-      type: 'choice',
-      field: 'closingCosts',
-      kicker: 'Cost strategy',
-      title: 'How should we compare closing-cost options?',
-      description: 'Rather than assuming costs should be rolled into the loan, compare cash needed, credits, payment, and break-even time.',
-      options: [
-        option('minimize_cash', 'Minimize cash due at closing'),
-        option('pay_upfront', 'Pay costs upfront when it lowers long-term cost'),
-        option('credits', 'Use seller or lender credits where they make sense'),
-        option('compare', 'Show no-cost, low-cost, and upfront-cost options side by side')
-      ]
-    },
-    {
-      id: 'assumptions',
-      type: 'choice',
-      field: 'assumptions',
-      kicker: 'Planning assumptions',
-      title: 'How should hypothetical planning assumptions be handled?',
-      description: 'Appreciation and investment-return inputs are not forecasts or promises. They are variables used to test the strategy.',
-      options: [
-        option('standard', 'Use Daryn\'s conservative planning assumptions'),
-        option('custom', 'I want to provide custom assumptions'),
-        option('discuss', 'Discuss assumptions with me before modeling')
-      ]
-    },
-    {
-      id: 'custom_assumptions',
-      type: 'assumptions',
-      kicker: 'Planning assumptions',
-      title: 'What hypothetical assumptions should we test?',
-      description: 'Enter annual percentages only. These figures are for scenario analysis and are not predictions.',
-      when: function (state) { return state.assumptions === 'custom'; }
-    },
-    {
-      id: 'additional_context',
-      type: 'text',
-      field: 'additionalContext',
-      kicker: 'Before we talk',
-      title: 'What else should Daryn understand before building the strategy?',
-      description: 'Use this for concerns, competing goals, family context, timing, past experiences, or a decision that feels unresolved.',
-      placeholder: 'Anything that would help make the strategy more useful...',
-      optional: true
-    },
-    {
-      id: 'contact_match',
-      type: 'contact',
-      kicker: 'Match this to your file',
-      title: function (state) {
-        return state.applicationStatus === 'complete' || state.applicationStatus === 'app_only'
-          ? 'What email did you use for the secure application?'
-          : 'Where should the strategy follow-up go?';
-      },
-      description: function (state) {
-        return state.applicationStatus === 'complete' || state.applicationStatus === 'app_only'
-          ? 'This single identifier can match the intake to the correct loan file without repeating the rest of your application.'
-          : 'Only basic contact information belongs here. Detailed financial information stays in the secure application.';
-      }
-    },
-    { id: 'review', type: 'review', kicker: 'Review' }
-  ];
+  function field(name, label, type, options) {
+    return { name: name, label: label, type: type || 'text', options: options || {} };
+  }
 
-  var labels = {};
-  steps.forEach(function (step) {
-    if (!step.field || !step.options) return;
-    labels[step.field] = {};
-    step.options.forEach(function (item) { labels[step.field][item.value] = item.title; });
-  });
+  var yesNo = [option('Yes', 'Yes'), option('No', 'No')];
 
   return {
-    version: 'mockup-1.0',
-    secureApplicationUrl: secureApplicationUrl,
-    steps: steps,
-    labels: labels
+    version: 'source-based-2.0',
+    steps: [
+      {
+        id: 'application_status',
+        type: 'choice',
+        field: 'applicationComplete',
+        kicker: 'Routing question',
+        title: 'Have you already completed the online application and credit report?',
+        description: 'This is the only added question used to skip information already expected in the application and credit file.',
+        options: [
+          option('Yes', 'Yes', 'Both the online application and credit report are complete.'),
+          option('No', 'No', 'One or both are not complete.')
+        ]
+      },
+      {
+        id: 'transaction_type',
+        type: 'choice',
+        field: 'transactionType',
+        kicker: 'Routing question',
+        title: 'Is this for a New House Purchase or Existing House Refinance?',
+        description: 'These are the two scenario sections shown on Page 1 of the source form.',
+        options: [
+          option('New House Purchase', 'New House Purchase'),
+          option('Existing House Refinance', 'Existing House Refinance')
+        ]
+      },
+      {
+        id: 'filtered_notice',
+        type: 'notice',
+        kicker: 'Application fields skipped',
+        title: 'We will not ask for information already expected in the application and credit file.',
+        description: 'The remaining questions below are taken from the supplied Scenario Desk form.',
+        when: function (s) { return s.applicationComplete === 'Yes'; },
+        bullets: [
+          'Skipped: identity and contact information, gross income, property and occupancy, transaction facts, rental income, liquid assets, liabilities, and current mortgage details.',
+          'Retained: source-form planning and preference questions not treated as standard application facts in this mockup.',
+          'The exact skip map can be refined against the actual online application before deployment.'
+        ]
+      },
+      {
+        id: 'full_notice',
+        type: 'notice',
+        kicker: 'Page 1 included',
+        title: 'We will complete the applicable Page 1 sections before continuing to Page 2.',
+        description: 'All client-facing questions remain based on the supplied form.',
+        when: function (s) { return s.applicationComplete === 'No'; },
+        bullets: [
+          'General borrower, property, income, cash-flow, liability, and mortgage information.',
+          'The New House Purchase or Existing House Refinance section selected above.',
+          'Important Goals/Objectives from Page 2.'
+        ]
+      },
+      {
+        id: 'borrower_information',
+        type: 'group',
+        kicker: 'Page 1 - Information',
+        title: 'Information',
+        when: function (s) { return s.applicationComplete === 'No'; },
+        fields: [
+          field('borrower1Name', 'Name:*', 'text', { required: true }),
+          field('borrower1Dob', 'Date of birth:', 'date'),
+          field('borrower2Name', 'Name:* (second borrower, if applicable)'),
+          field('borrower2Dob', 'Date of birth: (second borrower)', 'date'),
+          field('address', 'Address:*', 'text', { required: true, full: true }),
+          field('email', 'Email Address(es):*', 'email', { required: true, full: true }),
+          field('city', 'City:*', 'text', { required: true }),
+          field('state', 'State:*', 'text', { required: true }),
+          field('zip', 'ZIP code:*', 'text', { required: true }),
+          field('county', 'County:*', 'text', { required: true })
+        ]
+      },
+      {
+        id: 'property_income',
+        type: 'group',
+        kicker: 'Page 1 - Information',
+        title: 'Property and income information',
+        when: function (s) { return s.applicationComplete === 'No'; },
+        fields: [
+          field('propertyType', 'Type of property?', 'select', { choices: ['', 'Single family', 'Condo', 'Townhouse', 'Cooperative', '1-4 unit'] }),
+          field('residenceType', 'Type of residence?', 'select', { choices: ['', 'Primary', 'Vacation', 'Investment'] }),
+          field('taxBracket', 'Combined tax bracket:', 'number', { suffix: '%' }),
+          field('grossIncome', 'Most recent gross income:*', 'number', { prefix: '$', required: true })
+        ]
+      },
+      {
+        id: 'purchase_details',
+        type: 'group',
+        kicker: 'Page 1 - New House Purchase Only',
+        title: 'New House Purchase Only:',
+        when: function (s) { return s.applicationComplete === 'No' && s.transactionType === 'New House Purchase'; },
+        fields: [
+          field('purchasePrice', 'What is the purchase price?', 'number', { prefix: '$' }),
+          field('sellingPrice', 'What is the sales price of the home you are selling?', 'number', { prefix: '$' }),
+          field('realtorFee', 'Realtor fee?', 'number', { suffix: '%' }),
+          field('additionalSavings', 'What additional savings do you have available that you would consider utilizing for this purchase?', 'number', { prefix: '$' }),
+          field('idealDownPayment', 'Ideally, what amount would you like to consider as your down payment for this purchase?', 'number', { prefix: '$', full: true })
+        ]
+      },
+      {
+        id: 'purchase_planning',
+        type: 'group',
+        kicker: 'Page 1 - New House Purchase Only',
+        title: 'New House Purchase Only:',
+        description: 'These source-form planning fields remain after the application questions are filtered out.',
+        when: function (s) { return s.applicationComplete === 'Yes' && s.transactionType === 'New House Purchase'; },
+        fields: [
+          field('realtorFee', 'Realtor fee?', 'number', { suffix: '%' }),
+          field('additionalSavings', 'What additional savings do you have available that you would consider utilizing for this purchase?', 'number', { prefix: '$' }),
+          field('idealDownPayment', 'Ideally, what amount would you like to consider as your down payment for this purchase?', 'number', { prefix: '$', full: true })
+        ]
+      },
+      {
+        id: 'refinance_details',
+        type: 'group',
+        kicker: 'Page 1 - Existing House Refinance Only',
+        title: 'Existing House Refinance Only:',
+        when: function (s) { return s.applicationComplete === 'No' && s.transactionType === 'Existing House Refinance'; },
+        fields: [
+          field('currentValue', 'Current value:*', 'number', { prefix: '$', required: true }),
+          field('cashOutRequested', 'Cash-out requested?:', 'number', { prefix: '$' }),
+          field('cashOutPurpose', 'Purpose of cash out:', 'text', { full: true })
+        ]
+      },
+      {
+        id: 'cash_flow',
+        type: 'group',
+        kicker: 'Page 1 - Cash Flow',
+        title: 'Cash Flow:',
+        when: function (s) { return s.applicationComplete === 'No'; },
+        fields: [
+          field('rentCollected', 'Do you collect rent on any properties?', 'number', { prefix: '$' }),
+          field('monthlyPrepayments', 'Do you make additional monthly prepayments?', 'number', { prefix: '$' }),
+          field('propertyAppreciation', 'What appreciation rate do you expect on any property you own?', 'number', { suffix: '%' }),
+          field('investmentAppreciation', 'What appreciation rate do you expect on any investments you make?', 'number', { suffix: '%' })
+        ]
+      },
+      {
+        id: 'retained_page1',
+        type: 'group',
+        kicker: 'Page 1 - Planning Questions',
+        title: 'Planning questions retained from Page 1',
+        description: 'These are source-form questions not treated as standard application or credit-report fields in this mockup.',
+        when: function (s) { return s.applicationComplete === 'Yes'; },
+        fields: [
+          field('taxBracket', 'Combined tax bracket:', 'number', { suffix: '%' }),
+          field('monthlyPrepayments', 'Do you make additional monthly prepayments?', 'number', { prefix: '$' }),
+          field('propertyAppreciation', 'What appreciation rate do you expect on any property you own?', 'number', { suffix: '%' }),
+          field('investmentAppreciation', 'What appreciation rate do you expect on any investments you make?', 'number', { suffix: '%' })
+        ]
+      },
+      {
+        id: 'liabilities',
+        type: 'text',
+        field: 'liabilities',
+        kicker: 'Page 1 - Current Liabilities',
+        title: 'List all current liabilities:*',
+        description: 'For each liability, include Type, Creditor, Rate, Balance, Prin. & Interest, Tax & Insurance, and whether it will be paid off.',
+        placeholder: 'Example: Auto loan | Creditor | 6.5% | $18,000 | $425 | $0 | Payoff: No',
+        when: function (s) { return s.applicationComplete === 'No'; }
+      },
+      {
+        id: 'mortgage_information',
+        type: 'group',
+        kicker: 'Page 1 - Mortgage Information',
+        title: 'Mortgage Information',
+        description: 'Leave the First Mortgage or Second Mortgage fields blank if they do not apply.',
+        when: function (s) { return s.applicationComplete === 'No'; },
+        fields: [
+          field('firstOriginalAmount', 'If First Mortgage - Original Loan Amount:', 'number', { prefix: '$' }),
+          field('firstStartDate', 'If First Mortgage - Original Start Date:', 'date'),
+          field('firstTermType', 'If First Mortgage - Fixed term or Adjustable term:', 'select', { choices: ['', 'Fixed term', 'Adjustable term'] }),
+          field('firstTermYears', 'If First Mortgage - Term:', 'number', { suffix: 'yrs' }),
+          field('firstInterestOnly', 'If First Mortgage - Interest only loan:', 'select', { choices: ['', 'Yes', 'No'] }),
+          field('secondTermType', 'If Second Mortgage - Fixed term or HELOC:', 'select', { choices: ['', 'Fixed term', 'HELOC'] }),
+          field('secondTermYears', 'If Second Mortgage - Fixed term:', 'number', { suffix: 'yrs' }),
+          field('secondOriginalAmount', 'If Second Mortgage - Original Loan Amount:', 'number', { prefix: '$' }),
+          field('secondStartDate', 'If Second Mortgage - Original Start Date:', 'date')
+        ]
+      },
+      {
+        id: 'years_in_loan',
+        type: 'choice',
+        field: 'yearsInLoan',
+        kicker: 'Page 2 - Important Goals/Objectives',
+        title: 'How many years do you think you will have this new loan, or live in this home?',
+        twoColumn: true,
+        options: ['Less than 1 year','2-3 years','4-5 years','6-7 years','8-10 years','11-15 years','16-20 years','21-25 years','26-30 years','More than 30 years'].map(function (v) { return option(v, v); })
+      },
+      {
+        id: 'payoff_timeline',
+        type: 'choice',
+        field: 'payoffTimeline',
+        kicker: 'Page 2 - Important Goals/Objectives',
+        title: 'How soon would you like this home paid off?',
+        twoColumn: true,
+        options: ['Less than 5 years','6-10 years','11-15 years','16-20 years','20-30 years','More than 30 years','Never'].map(function (v) { return option(v, v); })
+      },
+      {
+        id: 'liquid_assets',
+        type: 'choice',
+        field: 'liquidAssets',
+        kicker: 'Page 2 - Information (Cont.)',
+        title: 'What is the approximate combined value of all your liquid assets from bank accounts, mutual funds, CDs and securities?',
+        when: function (s) { return s.applicationComplete === 'No'; },
+        options: ['$25,000 or less','$26,000-$125,000','$126,000 or above'].map(function (v) { return option(v, v); })
+      },
+      {
+        id: 'extra_debt',
+        type: 'choice',
+        field: 'extraDebtPayments',
+        kicker: 'Page 2 - Information (Cont.)',
+        title: 'Are you making any additional monthly payments toward debt?',
+        options: yesNo
+      },
+      {
+        id: 'extra_debt_amount',
+        type: 'text',
+        field: 'extraDebtAmount',
+        kicker: 'Page 2 - Information (Cont.)',
+        title: 'If yes, how much:',
+        placeholder: '$',
+        when: function (s) { return s.extraDebtPayments === 'Yes'; }
+      },
+      {
+        id: 'major_purchases',
+        type: 'choice',
+        field: 'majorPurchases',
+        kicker: 'Page 2 - Information (Cont.)',
+        title: 'Do you have any major purchases planned in the next 3 years?',
+        options: yesNo
+      },
+      {
+        id: 'major_purchase_purpose',
+        type: 'text',
+        field: 'majorPurchasePurpose',
+        kicker: 'Page 2 - Information (Cont.)',
+        title: 'If yes, purpose:',
+        when: function (s) { return s.majorPurchases === 'Yes'; }
+      },
+      {
+        id: 'closing_costs',
+        type: 'choice',
+        field: 'rollClosingCosts',
+        kicker: 'Page 2 - Information (Cont.)',
+        title: 'Roll closing costs into loan?',
+        options: yesNo
+      },
+      {
+        id: 'payment_preference',
+        type: 'choice',
+        field: 'paymentPreference',
+        kicker: 'Page 2 - Information (Cont.)',
+        title: 'Select the option below that best describes your preference:',
+        options: [
+          option('Option 1', 'Option 1', 'Lower payment - Higher tax deduction - Pay little or no principal'),
+          option('Option 2', 'Option 2', 'Higher payment - Lower tax deduction - Pay principal each month')
+        ]
+      },
+      {
+        id: 'risk_pyramid',
+        type: 'choice',
+        field: 'riskPreference',
+        kicker: 'Page 2 - Risk Pyramid',
+        title: 'Please indicate the best match, based on your preference between a fixed and adjustable interest rate.',
+        options: [
+          option('A: Aggressive', 'A: Aggressive', 'Greater volatility - Lowest payment'),
+          option('B: Moderate', 'B: Moderate', 'Predictable volatility - Intermediate payment'),
+          option('C: Conservative', 'C: Conservative', 'No volatility - Highest payment')
+        ]
+      },
+      {
+        id: 'key_objectives',
+        type: 'text',
+        field: 'keyObjectives',
+        kicker: 'Page 2 - Important Goals/Objectives',
+        title: 'My key objectives (e.g., “Pay off all debts and free up cash flow”).',
+        placeholder: 'Type your response...'
+      },
+      {
+        id: 'one_thing',
+        type: 'text',
+        field: 'oneThing',
+        kicker: 'Page 2 - Important Goals/Objectives',
+        title: 'If you could only accomplish one thing, what would it be?',
+        placeholder: 'Type your response...'
+      },
+      { id: 'review', type: 'review', kicker: 'Review' }
+    ]
   };
 })();
