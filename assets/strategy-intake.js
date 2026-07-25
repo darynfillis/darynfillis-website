@@ -4,7 +4,7 @@
   var config = window.SCENARIO_DESK_CONFIG;
   if (!config) return;
 
-  var state = { liabilities: [] };
+  var state = { liabilities: [], noLiabilities: false };
   var current = 'welcome';
   var history = [];
 
@@ -15,6 +15,10 @@
   var stepKicker = document.getElementById('stepKicker');
   var stepCount = document.getElementById('stepCount');
   var keyboardHint = document.getElementById('keyboardHint');
+  var formFrame = document.getElementById('formFrame');
+  var nav = document.getElementById('nav');
+  var navToggle = document.getElementById('navToggle');
+  var navLinks = document.getElementById('navLinks');
 
   function escapeHtml(value) {
     return String(value == null ? '' : value)
@@ -23,6 +27,10 @@
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#039;');
+  }
+
+  function resolve(value) {
+    return typeof value === 'function' ? value(state) : value;
   }
 
   function activeSteps() {
@@ -35,18 +43,14 @@
     return config.steps.find(function (step) { return step.id === id; });
   }
 
-  function titleFor(value) {
-    return typeof value === 'function' ? value(state) : value;
-  }
-
-  function currentIndex() {
-    return activeSteps().findIndex(function (step) { return step.id === current; });
+  function activeIndex(id) {
+    return activeSteps().findIndex(function (step) { return step.id === id; });
   }
 
   function nextId() {
     var steps = activeSteps();
-    var next = steps[currentIndex() + 1];
-    return next ? next.id : 'complete';
+    var index = activeIndex(current);
+    return steps[index + 1] ? steps[index + 1].id : 'complete';
   }
 
   function goNext() {
@@ -56,44 +60,93 @@
   }
 
   function goBack() {
-    if (!history.length) return;
-    current = history.pop();
-    render();
+    var candidate;
+    while (history.length) {
+      candidate = history.pop();
+      if (candidate === 'welcome' || activeIndex(candidate) !== -1) {
+        current = candidate;
+        render();
+        return;
+      }
+    }
   }
 
   function restart() {
-    state = { liabilities: [] };
+    state = { liabilities: [], noLiabilities: false };
     current = 'welcome';
     history = [];
     render();
   }
 
   function stepNumber(step) {
-    return activeSteps().findIndex(function (item) { return item.id === step.id; }) + 1;
+    return activeIndex(step.id) + 1;
+  }
+
+  function progressPercent() {
+    if (current === 'welcome') return 0;
+    if (current === 'complete') return 100;
+    return Math.round((stepNumber(getStep(current)) / Math.max(1, activeSteps().length)) * 100);
+  }
+
+  function sourceBadge(step) {
+    var source = resolve(step.source) || 'Scenario Desk Interview Form';
+    return '<div class="source-badge"><span></span>' + escapeHtml(source) + '</div>';
+  }
+
+  function helpBlocks(step) {
+    var data = step.help || {};
+    if (!data.meaning && !data.where && !data.enter && !data.note) return '';
+    return (data.meaning ? '<div class="help-block"><h3>What this means</h3><p>' + escapeHtml(resolve(data.meaning)) + '</p></div>' : '') +
+      (data.where ? '<div class="help-block"><h3>Where to find it</h3><p>' + escapeHtml(resolve(data.where)) + '</p></div>' : '') +
+      (data.enter ? '<div class="help-block"><h3>What to enter</h3><p>' + escapeHtml(resolve(data.enter)) + '</p></div>' : '') +
+      (data.note ? '<div class="help-note"><strong>Important:</strong> ' + escapeHtml(resolve(data.note)) + '</div>' : '');
+  }
+
+  function renderHelp(step) {
+    var blocks = helpBlocks(step);
+    if (!blocks) return '';
+    return '<aside class="help-panel" aria-label="Help for this question">' +
+      '<div class="help-eyebrow">Help with this question</div>' + blocks + '</aside>';
+  }
+
+  function renderInlineHelp(step) {
+    var blocks = helpBlocks(step);
+    if (!blocks) return '';
+    return '<details class="inline-help" open>' +
+      '<summary>Help finding or understanding this information</summary>' +
+      '<div class="inline-help-body">' + blocks + '</div>' +
+    '</details>';
+  }
+
+  function renderLayout(step, mainHtml) {
+    return '<div class="form-layout">' +
+      '<div class="question-column">' + mainHtml + '</div>' +
+      renderHelp(step) +
+    '</div>';
   }
 
   function questionHeader(step, number) {
     return '<div class="question-number">Question ' + number + '</div>' +
-      '<h2 id="screenTitle">' + escapeHtml(titleFor(step.title)) + '</h2>' +
-      (step.description ? '<p class="lead">' + escapeHtml(titleFor(step.description)) + '</p>' : '') +
-      '<div class="source-badge">' + (step.kicker === 'Routing question' ? 'Added routing question' : step.type === 'notice' ? 'Routing summary' : 'From supplied Scenario Desk form') + '</div>';
+      sourceBadge(step) +
+      '<h2 id="screenTitle">' + escapeHtml(resolve(step.title)) + '</h2>' +
+      (step.plain ? '<p class="lead">' + escapeHtml(resolve(step.plain)) + '</p>' : '') +
+      renderInlineHelp(step);
   }
 
   function renderWelcome() {
-    return '<div class="intro-grid">' +
-      '<div>' +
-        '<div class="question-number">Corrected source-based mockup</div>' +
-        '<h1 id="screenTitle">Scenario Desk, rebuilt as an online intake.</h1>' +
-        '<p class="lead">This version follows the questions and answer choices on the supplied two-page Scenario Desk form. Two routing questions control which sections appear and whether application fields are skipped.</p>' +
-        '<div class="notice-card"><div class="notice-title">How the filter works</div><div class="notice-copy">When the online application and credit report are complete, standard application and credit-file information is skipped. The remaining source-form planning questions continue.</div></div>' +
-        '<div class="action-row"><button class="btn btn-primary" type="button" data-action="start">Begin mockup <span aria-hidden="true">&rarr;</span></button></div>' +
-        '<p class="helper">Discussion mockup only. Nothing is submitted, stored, or sent.</p>' +
+    return '<div class="welcome-grid">' +
+      '<div class="welcome-main">' +
+        '<span class="eyebrow">Mortgage strategy intake</span>' +
+        '<h1 id="screenTitle">You should not have to be a finance expert <em>to complete this.</em></h1>' +
+        '<p class="welcome-lead">Every question includes a plain-English explanation, where to find the information, and what to enter. Estimates are acceptable when exact numbers are not available.</p>' +
+        '<div class="welcome-actions"><button class="btn btn-blue" type="button" data-action="start">Begin the intake <span aria-hidden="true">&rarr;</span></button></div>' +
+        '<p class="welcome-micro">Estimated time: about 8-12 minutes after a completed application, or 15-20 minutes for the full form. This is a discussion mockup. Nothing is submitted or stored.</p>' +
       '</div>' +
-      '<aside class="intro-aside" aria-label="Mockup rules">' +
-        '<div class="trust-item"><span class="trust-icon">1</span><span class="trust-copy"><strong>Source based</strong><span>The questions and answer choices follow the supplied form.</span></span></div>' +
-        '<div class="trust-item"><span class="trust-icon">2</span><span class="trust-copy"><strong>Conditional</strong><span>Completed application data is filtered out.</span></span></div>' +
-        '<div class="trust-item"><span class="trust-icon">3</span><span class="trust-copy"><strong>Not live</strong><span>No response leaves the browser.</span></span></div>' +
-      '</aside>' +
+      '<div class="welcome-side">' +
+        '<div class="welcome-card"><span class="welcome-num">01</span><div><strong>We explain the terms.</strong><p>No mortgage knowledge is assumed.</p></div></div>' +
+        '<div class="welcome-card"><span class="welcome-num">02</span><div><strong>We show you where to look.</strong><p>Statements, contracts, pay stubs, or your best estimate.</p></div></div>' +
+        '<div class="welcome-card"><span class="welcome-num">03</span><div><strong>We skip duplicates.</strong><p>A completed application and credit report remove repeated questions.</p></div></div>' +
+      '</div>' +
     '</div>';
   }
 
@@ -101,190 +154,241 @@
     var selected = state[step.field] || '';
     return '<div class="options' + (step.twoColumn ? ' two-col' : '') + '">' +
       step.options.map(function (item, index) {
-        return '<button class="option' + (selected === item.value ? ' selected' : '') + '" type="button" data-field="' + escapeHtml(step.field) + '" data-value="' + escapeHtml(item.value) + '" aria-pressed="' + (selected === item.value ? 'true' : 'false') + '">' +
+        var isSelected = selected === item.value;
+        return '<button class="option' + (isSelected ? ' selected' : '') + '" type="button" data-field="' + escapeHtml(step.field) + '" data-value="' + escapeHtml(item.value) + '" aria-pressed="' + (isSelected ? 'true' : 'false') + '">' +
           '<span class="option-key" aria-hidden="true">' + String.fromCharCode(65 + index) + '</span>' +
           '<span class="option-copy"><span class="option-title">' + escapeHtml(item.title) + '</span>' +
           (item.description ? '<span class="option-desc">' + escapeHtml(item.description) + '</span>' : '') +
-          '</span></button>';
+          '</span>' +
+        '</button>';
       }).join('') +
     '</div>';
   }
 
+  function renderChoice(step, number) {
+    var main = questionHeader(step, number) + renderOptions(step) +
+      '<p class="selection-note">Select one answer. The form will continue automatically.</p>';
+    return renderLayout(step, main);
+  }
+
   function renderNotice(step, number) {
-    return questionHeader(step, number) +
-      '<div class="notice-card"><div class="notice-title">' + escapeHtml(step.kicker || '') + '</div>' +
-      '<ul class="notice-list">' + (step.bullets || []).map(function (item) { return '<li>' + escapeHtml(item) + '</li>'; }).join('') + '</ul></div>' +
-      '<div class="action-row"><button class="btn btn-primary" type="button" data-action="continue">Continue <span aria-hidden="true">&rarr;</span></button></div>';
+    var bullets = resolve(step.bullets) || [];
+    var main = questionHeader(step, number) +
+      '<div class="notice-card"><ul class="notice-list">' + bullets.map(function (item) {
+        return '<li>' + escapeHtml(item) + '</li>';
+      }).join('') + '</ul></div>' +
+      '<div class="action-row"><button class="btn btn-navy" type="button" data-action="continue">Continue <span aria-hidden="true">&rarr;</span></button></div>';
+    return renderLayout(step, main);
   }
 
   function inputMarkup(item) {
-    var options = item.options || {};
-    var value = state[item.name] || '';
-    var cls = 'field' + (options.full ? ' full' : '');
-    var required = options.required ? ' required' : '';
-    var note = options.prefix === '$' ? 'Dollar amount' : options.suffix === '%' ? 'Percentage' : options.suffix === 'yrs' ? 'Years' : '';
-    var input;
+    var value = state[item.name] == null ? '' : state[item.name];
+    var cls = 'field' + (item.full ? ' full' : '');
+    var requiredLabel = item.required ? '<span class="required-label">Required</span>' : '<span class="optional-label">Optional</span>';
+    var input = '';
+    var describedBy = item.name + '-hint';
 
     if (item.type === 'select') {
-      input = '<select id="' + item.name + '" name="' + item.name + '"' + required + '>' +
-        (options.choices || []).map(function (choice) {
-          return '<option value="' + escapeHtml(choice) + '"' + (value === choice ? ' selected' : '') + '>' + escapeHtml(choice || 'Select one') + '</option>';
+      input = '<select id="' + item.name + '" name="' + item.name + '" aria-describedby="' + describedBy + '">' +
+        (item.choices || []).map(function (choice) {
+          return '<option value="' + escapeHtml(choice) + '"' + (String(value) === String(choice) ? ' selected' : '') + '>' + escapeHtml(choice || 'Select one') + '</option>';
         }).join('') +
       '</select>';
     } else {
-      var type = item.type === 'number' ? 'number' : item.type || 'text';
-      var placeholder = options.prefix || options.suffix || '';
-      input = '<input id="' + item.name + '" name="' + item.name + '" type="' + type + '" value="' + escapeHtml(value) + '" placeholder="' + escapeHtml(placeholder) + '"' + required + '>';
+      var type = item.type === 'date' || item.type === 'email' ? item.type : 'text';
+      var autocomplete = item.autocomplete ? ' autocomplete="' + escapeHtml(item.autocomplete) + '"' : '';
+      var inputmode = item.inputmode ? ' inputmode="' + escapeHtml(item.inputmode) + '"' : '';
+      var multiple = item.multiple ? ' multiple' : '';
+      input = '<div class="input-wrap">' +
+        (item.prefix ? '<span class="input-affix prefix">' + escapeHtml(item.prefix) + '</span>' : '') +
+        '<input id="' + item.name + '" name="' + item.name + '" type="' + type + '" value="' + escapeHtml(value) + '" placeholder="' + escapeHtml(item.placeholder || '') + '" aria-describedby="' + describedBy + '"' + autocomplete + inputmode + multiple + '>' +
+        (item.suffix ? '<span class="input-affix suffix">' + escapeHtml(item.suffix) + '</span>' : '') +
+      '</div>';
     }
 
-    return '<div class="' + cls + '"><label for="' + item.name + '">' + escapeHtml(item.label) + '</label>' + input + (note ? '<span class="field-note">' + escapeHtml(note) + '</span>' : '') + '</div>';
+    return '<div class="' + cls + '" data-field-wrap="' + item.name + '">' +
+      '<div class="field-label-row"><label for="' + item.name + '">' + escapeHtml(item.label) + '</label>' + requiredLabel + '</div>' +
+      input +
+      '<div class="field-meta" id="' + describedBy + '">' +
+        (item.allowUnknown ? '<button class="unknown-button" type="button" data-set-unknown="' + item.name + '">I cannot find this right now</button>' : '<span></span>') +
+      '</div>' +
+      '<div class="field-error" id="' + item.name + '-error" aria-live="polite"></div>' +
+    '</div>';
   }
 
-  function renderGroup(step, number) {
-    return questionHeader(step, number) +
-      '<form id="groupForm" novalidate><div class="fields">' + step.fields.map(inputMarkup).join('') + '</div>' +
-      '<div class="validation" id="groupValidation"></div>' +
-      '<div class="action-row"><button class="btn btn-primary" type="submit">Continue <span aria-hidden="true">&rarr;</span></button></div></form>';
+  function renderFields(step, number) {
+    var main = questionHeader(step, number) +
+      '<form id="fieldsForm" novalidate><div class="fields">' + step.fields.map(inputMarkup).join('') + '</div>' +
+      '<div class="form-error" id="formError" aria-live="polite"></div>' +
+      '<div class="action-row"><button class="btn btn-navy" type="submit">Continue <span aria-hidden="true">&rarr;</span></button></div></form>';
+    return renderLayout(step, main);
   }
 
   function renderText(step, number) {
-    return questionHeader(step, number) +
-      '<div class="fields"><div class="field full"><label for="textResponse">Your response</label>' +
-      '<textarea id="textResponse" placeholder="' + escapeHtml(step.placeholder || '') + '">' + escapeHtml(state[step.field] || '') + '</textarea></div></div>' +
-      '<div class="action-row"><button class="btn btn-primary" type="button" data-action="continue-text">Continue <span aria-hidden="true">&rarr;</span></button></div>';
+    var main = questionHeader(step, number) +
+      '<form id="textForm" novalidate><div class="field full text-field">' +
+        '<div class="field-label-row"><label for="textResponse">Your response</label><span class="required-label">Required</span></div>' +
+        '<textarea id="textResponse" placeholder="' + escapeHtml(step.placeholder || '') + '">' + escapeHtml(state[step.field] || '') + '</textarea>' +
+        '<div class="field-error" id="textResponse-error" aria-live="polite"></div>' +
+      '</div><div class="action-row"><button class="btn btn-navy" type="submit">Continue <span aria-hidden="true">&rarr;</span></button></div></form>';
+    return renderLayout(step, main);
   }
 
   function emptyLiability() {
     return { type: '', creditor: '', rate: '', balance: '', principalInterest: '', taxInsurance: '', payoff: '' };
   }
 
-  function liabilityRows() {
-    var rows = state.liabilities && state.liabilities.length ? state.liabilities : [emptyLiability(), emptyLiability(), emptyLiability()];
-    state.liabilities = rows;
-    return rows.map(function (row, index) {
-      return '<tr data-liability-row="' + index + '">' +
-        '<td><input aria-label="Liability ' + (index + 1) + ' type" data-liability-field="type" value="' + escapeHtml(row.type) + '"></td>' +
-        '<td><input aria-label="Liability ' + (index + 1) + ' creditor" data-liability-field="creditor" value="' + escapeHtml(row.creditor) + '"></td>' +
-        '<td><input aria-label="Liability ' + (index + 1) + ' rate" data-liability-field="rate" value="' + escapeHtml(row.rate) + '" placeholder="%"></td>' +
-        '<td><input aria-label="Liability ' + (index + 1) + ' balance" data-liability-field="balance" value="' + escapeHtml(row.balance) + '" placeholder="$"></td>' +
-        '<td><input aria-label="Liability ' + (index + 1) + ' principal and interest" data-liability-field="principalInterest" value="' + escapeHtml(row.principalInterest) + '" placeholder="$"></td>' +
-        '<td><input aria-label="Liability ' + (index + 1) + ' tax and insurance" data-liability-field="taxInsurance" value="' + escapeHtml(row.taxInsurance) + '" placeholder="$"></td>' +
-        '<td><select aria-label="Liability ' + (index + 1) + ' payoff" data-liability-field="payoff"><option value="">Select</option><option value="Yes"' + (row.payoff === 'Yes' ? ' selected' : '') + '>Yes</option><option value="No"' + (row.payoff === 'No' ? ' selected' : '') + '>No</option></select></td>' +
-      '</tr>';
-    }).join('');
+  function liabilityCard(row, index) {
+    return '<article class="liability-card" data-liability-row="' + index + '">' +
+      '<div class="liability-card-head"><div><span class="liability-number">Liability ' + (index + 1) + '</span><p>Use the latest statement for this account.</p></div>' +
+      (index > 0 ? '<button class="remove-liability" type="button" data-remove-liability="' + index + '">Remove</button>' : '') + '</div>' +
+      '<div class="liability-fields">' +
+        liabilityInput(index, 'type', 'Type**', row.type, 'Mortgage, credit card, auto loan, student loan...') +
+        liabilityInput(index, 'creditor', 'Creditor', row.creditor, 'Company or lender name') +
+        liabilityInput(index, 'rate', 'Rate', row.rate, '%') +
+        liabilityInput(index, 'balance', 'Balance', row.balance, '$') +
+        liabilityInput(index, 'principalInterest', 'Prin. & Interest', row.principalInterest, 'Monthly payment') +
+        liabilityInput(index, 'taxInsurance', 'Tax & Insurance', row.taxInsurance, 'Monthly amount or 0') +
+        '<div class="liability-field"><label for="liability-' + index + '-payoff">Payoff</label><select id="liability-' + index + '-payoff" data-liability-field="payoff"><option value="">Select Yes or No</option><option value="Yes"' + (row.payoff === 'Yes' ? ' selected' : '') + '>Yes</option><option value="No"' + (row.payoff === 'No' ? ' selected' : '') + '>No</option></select></div>' +
+      '</div>' +
+    '</article>';
+  }
+
+  function liabilityInput(index, name, label, value, placeholder) {
+    return '<div class="liability-field"><label for="liability-' + index + '-' + name + '">' + escapeHtml(label) + '</label>' +
+      '<input id="liability-' + index + '-' + name + '" data-liability-field="' + name + '" value="' + escapeHtml(value || '') + '" placeholder="' + escapeHtml(placeholder || '') + '"></div>';
   }
 
   function renderLiabilities(step, number) {
-    return questionHeader(step, number) +
-      '<div class="liability-wrap"><table class="liability-table"><thead><tr>' +
-        '<th>Type</th><th>Creditor</th><th>Rate</th><th>Balance</th><th>Prin. &amp; Interest</th><th>Tax &amp; Insurance</th><th>Payoff</th>' +
-      '</tr></thead><tbody id="liabilityBody">' + liabilityRows() + '</tbody></table></div>' +
-      '<p class="table-helper">At least one liability row is required when this section appears. Use Add another row for additional liabilities.</p>' +
-      '<button class="add-row" type="button" data-action="add-liability">+ Add another row</button>' +
-      '<div class="validation" id="liabilityValidation"></div>' +
-      '<div class="action-row"><button class="btn btn-primary" type="button" data-action="continue-liabilities">Continue <span aria-hidden="true">&rarr;</span></button></div>';
+    if (!state.liabilities.length) state.liabilities.push(emptyLiability());
+    var cards = state.liabilities.map(liabilityCard).join('');
+    var main = questionHeader(step, number) +
+      '<div class="no-liabilities-row"><label><input type="checkbox" id="noLiabilities"' + (state.noLiabilities ? ' checked' : '') + '> I have no current liabilities</label></div>' +
+      '<div id="liabilityCards"' + (state.noLiabilities ? ' hidden' : '') + '>' + cards + '</div>' +
+      '<div class="liability-actions"' + (state.noLiabilities ? ' hidden' : '') + '><button class="add-row" type="button" data-action="add-liability">+ Add another liability</button></div>' +
+      '<div class="form-error" id="liabilityError" aria-live="polite"></div>' +
+      '<div class="action-row"><button class="btn btn-navy" type="button" data-action="continue-liabilities">Continue <span aria-hidden="true">&rarr;</span></button></div>';
+    return renderLayout(step, main);
   }
 
   function renderRisk(step, number) {
-    return questionHeader(step, number) +
-      '<div class="risk-scale" aria-label="Risk Pyramid from the source form">' +
-        '<div class="risk-band"><div class="risk-letter">A</div><div class="risk-copy"><strong>A: Aggressive</strong><span>Greater volatility - Lowest payment</span></div></div>' +
-        '<div class="risk-band"><div class="risk-letter">B</div><div class="risk-copy"><strong>B: Moderate</strong><span>Predictable volatility - Intermediate payment</span></div></div>' +
-        '<div class="risk-band"><div class="risk-letter">C</div><div class="risk-copy"><strong>C: Conservative</strong><span>No volatility - Highest payment</span></div></div>' +
-        '<div class="risk-products">Source-form spectrum: 1 month ARM, 6 month ARM, 12 month ARM, 3 Year ARM, 5 Year ARM, 7 Year ARM, 40 Year FIXED, 30 Year FIXED, 20 Year FIXED, 15 Year FIXED</div>' +
-        '<div class="risk-axis"><span>More volatility / lower payment</span><span>More safety / higher payment</span></div>' +
+    var products = ['1 month ARM', '6 month ARM', '12 month ARM', '3 Year ARM', '5 Year ARM', '7 Year ARM', '40 Year FIXED', '30 Year FIXED', '20 Year FIXED', '15 Year FIXED'];
+    var main = questionHeader(step, number) +
+      '<div class="risk-explainer">' +
+        '<div class="risk-axis-labels"><span>Less safety / lower starting payment</span><span>More safety / higher starting payment</span></div>' +
+        '<div class="risk-line"><span class="risk-marker a">A</span><span class="risk-marker b">B</span><span class="risk-marker c">C</span></div>' +
+        '<div class="risk-products">' + products.map(function (product) { return '<span>' + escapeHtml(product) + '</span>'; }).join('') + '</div>' +
       '</div>' +
       renderOptions(step) +
-      '<div class="original-wording-note">The A, B, and C labels and the fixed-versus-adjustable spectrum are retained from the original Risk Pyramid on Page 2.</div>';
+      '<p class="selection-note">Select A, B, or C. This records a preference only.</p>';
+    return renderLayout(step, main);
   }
 
-  function fieldLabel(step, fieldName) {
-    if (!step.fields) return titleFor(step.title) || fieldName;
-    var found = step.fields.find(function (item) { return item.name === fieldName; });
-    return found ? found.label : fieldName;
-  }
-
-  function displayValue(step, fieldName, value) {
-    if (!value) return 'Not provided';
-    if (step.options) {
-      var found = step.options.find(function (item) { return item.value === value; });
-      if (found) return found.title;
-    }
-    if (step.fields) {
-      var item = step.fields.find(function (field) { return field.name === fieldName; });
-      if (item && item.options) {
-        if (item.options.prefix === '$') return '$' + value;
-        if (item.options.suffix) return value + item.options.suffix;
-      }
-    }
+  function normalizeValue(item, value) {
+    value = String(value == null ? '' : value).trim();
+    if (!value) return '';
+    if (/^not sure$/i.test(value)) return 'Not sure';
+    if (item && item.prefix) return item.prefix + value;
+    if (item && item.suffix) return value + ' ' + item.suffix;
     return value;
   }
 
-  function liabilitySummary(row) {
-    var parts = [];
-    if (row.type) parts.push(row.type);
-    if (row.creditor) parts.push(row.creditor);
-    if (row.rate) parts.push(row.rate + '%');
-    if (row.balance) parts.push('$' + row.balance + ' balance');
-    if (row.principalInterest) parts.push('$' + row.principalInterest + ' P&I');
-    if (row.taxInsurance) parts.push('$' + row.taxInsurance + ' tax & insurance');
-    if (row.payoff) parts.push('Payoff: ' + row.payoff);
-    return parts.join(' | ');
+  function choiceLabel(step, value) {
+    var found = (step.options || []).find(function (item) { return item.value === value; });
+    return found ? found.title : value;
   }
 
-  function renderReview() {
-    var items = [];
-    activeSteps().forEach(function (step) {
-      if ((step.type === 'choice' || step.type === 'risk') && state[step.field]) {
-        items.push([titleFor(step.title), displayValue(step, step.field, state[step.field])]);
-      }
-      if (step.type === 'text' && state[step.field]) {
-        items.push([titleFor(step.title), state[step.field]]);
-      }
-      if (step.type === 'group') {
-        step.fields.forEach(function (item) {
-          if (state[item.name]) items.push([fieldLabel(step, item.name), displayValue(step, item.name, state[item.name])]);
+  function answerRowsForStep(step) {
+    var rows = [];
+    if (step.type === 'choice' || step.type === 'risk') {
+      rows.push({ label: resolve(step.title), value: state[step.field] ? choiceLabel(step, state[step.field]) : 'Not provided' });
+    } else if (step.type === 'text') {
+      rows.push({ label: resolve(step.title), value: state[step.field] || 'Not provided' });
+    } else if (step.type === 'fields') {
+      step.fields.forEach(function (item) {
+        rows.push({ label: item.label, value: normalizeValue(item, state[item.name]) || 'Not provided' });
+      });
+    } else if (step.type === 'liabilities') {
+      if (state.noLiabilities) {
+        rows.push({ label: 'Current liabilities', value: 'No current liabilities' });
+      } else {
+        state.liabilities.forEach(function (row, index) {
+          var parts = [];
+          if (row.type) parts.push(row.type);
+          if (row.creditor) parts.push(row.creditor);
+          if (row.rate) parts.push(row.rate + '%');
+          if (row.balance) parts.push('$' + row.balance + ' balance');
+          if (row.principalInterest) parts.push('$' + row.principalInterest + ' P&I');
+          if (row.taxInsurance) parts.push('$' + row.taxInsurance + ' tax & insurance');
+          if (row.payoff) parts.push('Payoff: ' + row.payoff);
+          rows.push({ label: 'Liability ' + (index + 1), value: parts.length ? parts.join(' | ') : 'Not provided' });
         });
       }
-      if (step.type === 'liabilities') {
-        (state.liabilities || []).forEach(function (row, index) {
-          var summary = liabilitySummary(row);
-          if (summary) items.push(['Liability ' + (index + 1), summary]);
-        });
-      }
+    }
+    return rows;
+  }
+
+  function renderReview(step) {
+    var groups = {};
+    if (state.applicationStatus === 'complete') {
+      groups['From completed application / credit file'] = [
+        { label: 'Borrower information', value: 'Name, date of birth, address, email, city, state, ZIP code, and county are taken from the completed application.' },
+        { label: 'Property and income', value: 'Property type, residence type, gross income, rental income, and liquid assets are taken from the completed application.' },
+        { label: 'Debts and mortgages', value: 'Current liabilities and first- and second-mortgage details are taken from the application and credit file.' },
+        { label: state.transactionType === 'purchase' ? 'Purchase facts' : 'Refinance facts', value: state.transactionType === 'purchase' ? 'Purchase price and the expected sale price of any home being sold are taken from the completed application.' : 'Current value and cash-out amount are taken from the completed application. The purpose is confirmed in this intake.' }
+      ];
+    }
+    activeSteps().forEach(function (activeStep) {
+      if (activeStep.type === 'notice' || activeStep.type === 'review') return;
+      var section = activeStep.section || 'Other';
+      if (!groups[section]) groups[section] = [];
+      groups[section] = groups[section].concat(answerRowsForStep(activeStep));
     });
 
-    return '<div class="question-number">Final review</div>' +
-      '<h2 id="screenTitle">Review the Scenario Desk response.</h2>' +
-      '<p class="lead">This advisor-facing summary includes only the active branch. Nothing is being submitted.</p>' +
-      '<div class="review-grid">' + items.map(function (item) {
-        return '<div class="review-item"><div class="review-label">' + escapeHtml(item[0]) + '</div><div class="review-value">' + escapeHtml(item[1]) + '</div></div>';
-      }).join('') + '</div>' +
-      '<div class="demo-banner"><strong>Demo mode:</strong> selecting Complete mockup does not send data to Netlify, email, a CRM, or a loan system.</div>' +
-      '<div class="action-row"><button class="btn btn-blue" type="button" data-action="complete">Complete mockup <span aria-hidden="true">&rarr;</span></button><button class="btn btn-ghost" type="button" data-action="back">Make a change</button></div>';
+    var groupHtml = Object.keys(groups).map(function (section) {
+      return '<section class="review-section"><div class="review-section-head"><span>' + escapeHtml(section) + '</span></div><div class="review-grid">' +
+        groups[section].map(function (item) {
+          return '<div class="review-item"><div class="review-label">' + escapeHtml(item.label) + '</div><div class="review-value">' + escapeHtml(item.value) + '</div></div>';
+        }).join('') +
+      '</div></section>';
+    }).join('');
+
+    var main = questionHeader(step, stepNumber(step)) +
+      '<p class="review-intro">Review the answers below. Use Back to make changes. The production version will send this summary to the approved secure destination.</p>' +
+      groupHtml +
+      '<div class="demo-banner"><strong>Mockup only:</strong> Nothing is sent to Netlify Forms, email, a CRM, or a loan system.</div>' +
+      '<div class="action-row"><button class="btn btn-blue" type="button" data-action="complete">Complete mockup <span aria-hidden="true">&rarr;</span></button></div>';
+    return '<div class="review-wide">' + main + '</div>';
   }
 
   function renderComplete() {
-    return '<div class="complete-icon" aria-hidden="true">&#10003;</div>' +
-      '<h2 id="screenTitle">The corrected mockup is complete.</h2>' +
-      '<p class="lead">This version uses the supplied Scenario Desk questions and conditionally removes application-style information when the application and credit report are complete.</p>' +
-      '<div class="notice-card"><div class="notice-title">Nothing was transmitted</div><div class="notice-copy">Before deployment, the skip map should be checked against the actual online application and the approved response destination should be connected.</div></div>' +
-      '<div class="action-row"><button class="btn btn-primary" type="button" data-action="restart">Start over</button></div>';
+    return '<div class="complete-screen">' +
+      '<div class="complete-icon" aria-hidden="true">&#10003;</div>' +
+      '<span class="eyebrow">Mockup complete</span>' +
+      '<h2 id="screenTitle">The Scenario Desk is ready for review.</h2>' +
+      '<p class="lead">No information was submitted or stored. In production, this step will confirm secure delivery and identify what happens next.</p>' +
+      '<div class="action-row"><button class="btn btn-navy" type="button" data-action="restart">Start over</button></div>' +
+    '</div>';
   }
 
   function updateChrome(step) {
+    progressBar.style.width = progressPercent() + '%';
     if (current === 'welcome' || current === 'complete') {
       stepMeta.hidden = true;
     } else {
       stepMeta.hidden = false;
-      stepKicker.textContent = step.kicker || 'Scenario Desk';
+      stepKicker.textContent = step.section || 'Scenario Desk';
       stepCount.textContent = stepNumber(step) + ' of ' + activeSteps().length;
     }
-
-    var progressIndex = current === 'welcome' ? 0 : current === 'complete' ? activeSteps().length : Math.max(0, stepNumber(step));
-    progressBar.style.width = Math.round((progressIndex / Math.max(1, activeSteps().length)) * 100) + '%';
     backButton.hidden = !history.length || current === 'complete';
-    keyboardHint.hidden = !step || step.type !== 'choice';
+    keyboardHint.hidden = !step || (step.type !== 'choice' && step.type !== 'risk');
+  }
+
+  function scrollToForm() {
+    if (!formFrame) return;
+    var offset = window.innerWidth <= 680 ? 82 : 92;
+    var top = formFrame.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
   }
 
   function render() {
@@ -294,57 +398,95 @@
 
     if (current === 'welcome') screen.innerHTML = renderWelcome();
     else if (current === 'complete') screen.innerHTML = renderComplete();
-    else if (step.id === 'risk_pyramid' || step.type === 'risk') screen.innerHTML = renderRisk(step, stepNumber(step));
-    else if (step.id === 'liabilities' || step.type === 'liabilities') screen.innerHTML = renderLiabilities(step, stepNumber(step));
-    else if (step.type === 'choice') screen.innerHTML = questionHeader(step, stepNumber(step)) + renderOptions(step);
+    else if (step.type === 'choice') screen.innerHTML = renderChoice(step, stepNumber(step));
     else if (step.type === 'notice') screen.innerHTML = renderNotice(step, stepNumber(step));
-    else if (step.type === 'group') screen.innerHTML = renderGroup(step, stepNumber(step));
+    else if (step.type === 'fields') screen.innerHTML = renderFields(step, stepNumber(step));
     else if (step.type === 'text') screen.innerHTML = renderText(step, stepNumber(step));
-    else if (step.type === 'review') screen.innerHTML = renderReview();
+    else if (step.type === 'liabilities') screen.innerHTML = renderLiabilities(step, stepNumber(step));
+    else if (step.type === 'risk') screen.innerHTML = renderRisk(step, stepNumber(step));
+    else if (step.type === 'review') screen.innerHTML = renderReview(step);
 
     bindEvents(step);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
     window.requestAnimationFrame(function () {
-      var title = screen.querySelector('h1,h2');
+      var title = screen.querySelector('h1, h2');
       if (title) {
         title.tabIndex = -1;
         title.focus({ preventScroll: true });
       }
     });
+    if (current !== 'welcome') scrollToForm();
   }
 
-  function saveGroup(step, form) {
-    var missing = [];
+  function setFieldError(name, message) {
+    var wrap = document.querySelector('[data-field-wrap="' + name + '"]');
+    var error = document.getElementById(name + '-error');
+    if (wrap) wrap.classList.toggle('has-error', Boolean(message));
+    if (error) error.textContent = message || '';
+  }
+
+  function validateFields(step, form) {
+    var firstInvalid = null;
+    var missing = 0;
     step.fields.forEach(function (item) {
       var input = form.elements[item.name];
       var value = input ? String(input.value || '').trim() : '';
       state[item.name] = value;
-      if (item.options && item.options.required && !value) missing.push(item.name);
+      var message = '';
+      var conditionallyRequired = step.id === 'second_mortgage' && item.name === 'secondTermYears' && state.secondTermType === 'Fixed term';
+      if ((item.required || conditionallyRequired) && !value) message = 'Please complete this field or use the cannot-find option.';
+      if (!message && item.type === 'email' && value) {
+        var addresses = value.split(',').map(function (part) { return part.trim(); }).filter(Boolean);
+        var valid = addresses.length && addresses.every(function (address) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(address); });
+        if (!valid) message = 'Enter a valid email address. Separate two addresses with a comma.';
+      }
+      setFieldError(item.name, message);
+      if (message) {
+        missing += 1;
+        if (!firstInvalid) firstInvalid = input;
+      }
     });
-
-    if (missing.length) {
-      var validation = document.getElementById('groupValidation');
-      validation.textContent = 'Please complete the required fields marked with an asterisk.';
-      validation.classList.add('show');
-      if (form.elements[missing[0]]) form.elements[missing[0]].focus();
-      return false;
-    }
-    return true;
+    var formError = document.getElementById('formError');
+    if (formError) formError.textContent = missing ? 'Please complete the highlighted field' + (missing > 1 ? 's' : '') + '.' : '';
+    if (firstInvalid) firstInvalid.focus();
+    return !missing;
   }
 
-  function updateLiabilityFromInput(input) {
-    var row = input.closest('[data-liability-row]');
-    if (!row) return;
-    var index = Number(row.getAttribute('data-liability-row'));
+  function updateLiability(input) {
+    var card = input.closest('[data-liability-row]');
+    if (!card) return;
+    var index = Number(card.getAttribute('data-liability-row'));
     var fieldName = input.getAttribute('data-liability-field');
     if (!state.liabilities[index]) state.liabilities[index] = emptyLiability();
     state.liabilities[index][fieldName] = String(input.value || '').trim();
   }
 
-  function hasLiabilityData() {
-    return (state.liabilities || []).some(function (row) {
-      return Object.keys(row).some(function (key) { return String(row[key] || '').trim(); });
-    });
+  function liabilityHasData(row) {
+    return Object.keys(row).some(function (key) { return String(row[key] || '').trim(); });
+  }
+
+  function liabilityIsComplete(row) {
+    return row.type && row.creditor && row.rate && row.balance && row.principalInterest && row.taxInsurance && row.payoff;
+  }
+
+  function validateLiabilities() {
+    var error = document.getElementById('liabilityError');
+    if (state.noLiabilities) {
+      if (error) error.textContent = '';
+      return true;
+    }
+    var usedRows = state.liabilities.filter(liabilityHasData);
+    if (!usedRows.length) {
+      if (error) error.textContent = 'Add at least one liability or choose I have no current liabilities.';
+      return false;
+    }
+    var incomplete = usedRows.some(function (row) { return !liabilityIsComplete(row); });
+    if (incomplete) {
+      if (error) error.textContent = 'Complete every column for each liability you added. Enter 0 when Tax & Insurance does not apply.';
+      return false;
+    }
+    state.liabilities = usedRows;
+    if (error) error.textContent = '';
+    return true;
   }
 
   function bindEvents(step) {
@@ -352,33 +494,17 @@
       element.addEventListener('click', function () {
         var action = element.getAttribute('data-action');
         if (action === 'start' || action === 'continue') goNext();
-        if (action === 'back') goBack();
         if (action === 'complete') {
           history.push(current);
           current = 'complete';
           render();
         }
         if (action === 'restart') restart();
-        if (action === 'continue-text') {
-          state[step.field] = String(document.getElementById('textResponse').value || '').trim();
-          goNext();
-        }
         if (action === 'add-liability') {
           state.liabilities.push(emptyLiability());
           render();
-          window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
-        if (action === 'continue-liabilities') {
-          if (!hasLiabilityData()) {
-            var validation = document.getElementById('liabilityValidation');
-            validation.textContent = 'Please enter at least one liability row.';
-            validation.classList.add('show');
-            var first = screen.querySelector('[data-liability-field]');
-            if (first) first.focus();
-            return;
-          }
-          goNext();
-        }
+        if (action === 'continue-liabilities' && validateLiabilities()) goNext();
       });
     });
 
@@ -390,55 +516,121 @@
           item.classList.toggle('selected', selected);
           item.setAttribute('aria-pressed', selected ? 'true' : 'false');
         });
-        window.setTimeout(goNext, 150);
+        window.setTimeout(goNext, 220);
       });
     });
 
-    var form = document.getElementById('groupForm');
-    if (form) {
-      form.addEventListener('input', function (event) {
-        if (event.target && event.target.name) state[event.target.name] = String(event.target.value || '').trim();
+    screen.querySelectorAll('[data-set-unknown]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        var name = button.getAttribute('data-set-unknown');
+        var input = document.getElementById(name);
+        if (!input) return;
+        input.value = 'Not sure';
+        state[name] = 'Not sure';
+        setFieldError(name, '');
+        input.focus();
       });
-      form.addEventListener('change', function (event) {
-        if (event.target && event.target.name) state[event.target.name] = String(event.target.value || '').trim();
+    });
+
+    var fieldsForm = document.getElementById('fieldsForm');
+    if (fieldsForm) {
+      fieldsForm.addEventListener('input', function (event) {
+        if (event.target && event.target.name) {
+          state[event.target.name] = String(event.target.value || '').trim();
+          setFieldError(event.target.name, '');
+        }
       });
-      form.addEventListener('submit', function (event) {
+      fieldsForm.addEventListener('change', function (event) {
+        if (event.target && event.target.name) {
+          state[event.target.name] = String(event.target.value || '').trim();
+          setFieldError(event.target.name, '');
+        }
+      });
+      fieldsForm.addEventListener('submit', function (event) {
         event.preventDefault();
-        if (saveGroup(step, form)) goNext();
+        if (validateFields(step, fieldsForm)) goNext();
       });
     }
 
-    var textResponse = document.getElementById('textResponse');
-    if (textResponse) {
+    var textForm = document.getElementById('textForm');
+    if (textForm) {
+      var textResponse = document.getElementById('textResponse');
       textResponse.addEventListener('input', function () {
         state[step.field] = String(textResponse.value || '').trim();
+        document.getElementById('textResponse-error').textContent = '';
+      });
+      textForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var value = String(textResponse.value || '').trim();
+        if (!value) {
+          document.getElementById('textResponse-error').textContent = 'Please enter a response.';
+          textResponse.focus();
+          return;
+        }
+        state[step.field] = value;
+        goNext();
+      });
+    }
+
+    var noLiabilities = document.getElementById('noLiabilities');
+    if (noLiabilities) {
+      noLiabilities.addEventListener('change', function () {
+        state.noLiabilities = noLiabilities.checked;
+        document.getElementById('liabilityCards').hidden = state.noLiabilities;
+        var actions = screen.querySelector('.liability-actions');
+        if (actions) actions.hidden = state.noLiabilities;
+        var error = document.getElementById('liabilityError');
+        if (error) error.textContent = '';
       });
     }
 
     screen.querySelectorAll('[data-liability-field]').forEach(function (input) {
-      input.addEventListener('input', function () { updateLiabilityFromInput(input); });
-      input.addEventListener('change', function () { updateLiabilityFromInput(input); });
+      input.addEventListener('input', function () { updateLiability(input); });
+      input.addEventListener('change', function () { updateLiability(input); });
+    });
+
+    screen.querySelectorAll('[data-remove-liability]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        var index = Number(button.getAttribute('data-remove-liability'));
+        state.liabilities.splice(index, 1);
+        render();
+      });
     });
   }
 
   backButton.addEventListener('click', goBack);
 
   document.addEventListener('keydown', function (event) {
-    if (event.target && event.target.matches('input,textarea,select')) return;
+    if (event.target && event.target.matches('input, textarea, select, button')) return;
     if (current === 'welcome' && event.key === 'Enter') {
       var start = screen.querySelector('[data-action="start"]');
       if (start) start.click();
       return;
     }
-
     var step = getStep(current);
-    if (!step || (step.type !== 'choice' && step.type !== 'risk') && step.id !== 'risk_pyramid') return;
+    if (!step || (step.type !== 'choice' && step.type !== 'risk')) return;
     var key = String(event.key || '').toUpperCase();
     if (!/^[A-Z]$/.test(key)) return;
-    var index = key.charCodeAt(0) - 65;
     var buttons = screen.querySelectorAll('.option');
-    if (index >= 0 && index < buttons.length) buttons[index].click();
+    var index = key.charCodeAt(0) - 65;
+    if (buttons[index]) buttons[index].click();
   });
+
+  if (nav && navToggle && navLinks) {
+    window.addEventListener('scroll', function () {
+      nav.classList.toggle('scrolled', window.scrollY > 30);
+    });
+    navToggle.addEventListener('click', function () {
+      var open = navLinks.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    navLinks.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        navLinks.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
 
   render();
 })();
