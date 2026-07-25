@@ -21,8 +21,9 @@ Added questions are limited to routing and usability:
 - Whether a home is being sold
 - Whether a first mortgage exists
 - Whether a second mortgage or HELOC exists
+- Federal tax filing status, which is required to calculate the source form's tax-bracket field
 
-These additions prevent clients from seeing inapplicable blank sections. Each added question is labeled as a routing question.
+These additions prevent clients from seeing inapplicable blank sections or being asked to calculate information the form can determine. Each added question is labeled as a routing or calculation input.
 
 ## Application-complete routing
 
@@ -40,7 +41,7 @@ When the client confirms both the online application and credit report are compl
 
 The form continues to collect source-form planning inputs that may not be standard application fields:
 
-- Combined tax bracket
+- Federal tax filing status, which will be paired with gross income from the application to estimate the 2026 federal marginal bracket
 - Realtor fee when a home is being sold
 - Additional savings available for a purchase
 - Ideal down payment
@@ -59,6 +60,32 @@ The form continues to collect source-form planning inputs that may not be standa
 - The single most important outcome
 
 This is a best-logic mockup. Before production, the skip list must be compared field by field with the exact NEO application and credit workflow.
+
+## 2026 federal tax-bracket estimate
+
+The paper form asks for a `Combined tax bracket`. The online version does not require the client to know or calculate that number.
+
+For a client completing the full intake, the form asks for:
+
+- Expected 2026 federal filing status
+- Annual gross income before taxes and deductions
+
+The calculator then:
+
+1. Applies the 2026 standard deduction for the selected filing status.
+2. Estimates taxable income as annual gross income minus that standard deduction, never below zero.
+3. Applies the 2026 ordinary-income marginal-rate schedule in IRS Revenue Procedure 2025-32.
+4. Displays an estimated federal marginal bracket.
+
+For a client with a completed application, the mockup asks only for filing status. The production integration should use gross income already stored in the loan file.
+
+The estimate is deliberately labeled `federal`, not `combined`, because the IRS source does not provide state income-tax brackets. California or another state can be layered in later based on state of residence. The result is a planning estimate, not tax advice, and may differ from the actual return because taxable income can be affected by itemized deductions, business deductions, capital gains, retirement contributions, credits, and other tax rules.
+
+2026 standard deductions used:
+
+- Single or Married Filing Separately: `$16,100`
+- Married Filing Jointly or Qualifying Surviving Spouse: `$32,200`
+- Head of Household: `$24,150`
 
 ## Financial-literacy treatment
 
@@ -87,7 +114,7 @@ When an exact amount is not available, the client can use `I cannot find this ri
 
 - Both Name and Date of birth lines
 - Address, Email Address(es), City, State, ZIP code, and County
-- Combined tax bracket and Most recent gross income
+- Combined tax bracket and Most recent gross income; the tax-bracket response is produced by the federal estimator rather than manual client entry
 - Type of property and Type of residence
 - Existing House Refinance Only: Current value, Cash-out requested, Purpose of cash out
 - Cash Flow: rent collected, additional monthly prepayments, expected property appreciation, expected investment appreciation
@@ -134,7 +161,7 @@ The mockup uses the current darynfillis.com system:
 - Minimum 44-pixel touch targets
 - Mobile liabilities cards instead of a wide table
 - Review summary grouped by form section
-- Explicit distinction between required and optional fields
+- Explicit distinction between required, optional, and calculated fields
 - Reduced-motion support
 
 ## Mockup safeguards
@@ -154,3 +181,4 @@ The mockup uses the current darynfillis.com system:
 4. Confirm privacy, consent, retention, access-control, and compliance language.
 5. Confirm the current Better/NEO disclosure language with compliance before production.
 6. Confirm rights to reproduce or adapt the Borrow Smart Mortgage source form and Risk Pyramid.
+7. Decide whether to add a state marginal-rate estimate and, if so, which state table applies based on residence.
