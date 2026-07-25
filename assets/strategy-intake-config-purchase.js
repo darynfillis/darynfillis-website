@@ -12,6 +12,22 @@
   build.steps.push(
     /* Purchase branch */
     {
+      id: 'selling_home_gate',
+      section: 'Purchase',
+      type: 'choice',
+      field: 'sellingHome',
+      source: 'Routing question added for the Page 1 home-sale fields',
+      title: 'Are you selling a home as part of this purchase?',
+      plain: 'If you answer No, we will skip every question about the home being sold, including its expected sales price and Realtor fee.',
+      when: purchase,
+      help: help(
+        'Choose Yes when a current home will be sold before, during, or shortly after this purchase and the sale is part of the financial plan. Choose No when no home sale is involved.',
+        'No document is needed for this routing question.',
+        'Choose Yes or No.'
+      ),
+      options: yesNo
+    },
+    {
       id: 'purchase_price',
       section: 'Purchase',
       type: 'fields',
@@ -27,22 +43,6 @@
       fields: [
         field('purchasePrice', 'What is the purchase price? $', { required: true, prefix: '$', inputmode: 'decimal', full: true, placeholder: 'Purchase or target price', allowUnknown: true })
       ]
-    },
-    {
-      id: 'selling_home_gate',
-      section: 'Purchase',
-      type: 'choice',
-      field: 'sellingHome',
-      source: 'Routing question added for the Page 1 home-sale fields',
-      title: 'Are you selling a home as part of this purchase?',
-      plain: 'This determines whether the sales-price and Realtor-fee questions apply.',
-      when: purchase,
-      help: help(
-        'Choose Yes if proceeds from another home may be used for this purchase, even if that home is not listed yet.',
-        'No document is needed.',
-        'Choose Yes or No.'
-      ),
-      options: yesNo
     },
     {
       id: 'sale_details_full',
