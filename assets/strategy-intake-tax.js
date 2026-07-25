@@ -184,6 +184,11 @@
     input.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
+  function setPanelHtml(panel, html) {
+    if (!panel || panel.innerHTML === html) return;
+    panel.innerHTML = html;
+  }
+
   function panelMarkup(result, statusKey, waitingForApplication) {
     var table = tax2026[statusKey];
 
@@ -253,13 +258,13 @@
       if (!gross) {
         var pendingValue = statusKey ? 'Pending application income' : '';
         setCalculatedValue(bracket, pendingValue);
-        panel.innerHTML = panelMarkup(null, statusKey, true);
+        setPanelHtml(panel, panelMarkup(null, statusKey, true));
         return;
       }
 
       var result = calculate(statusKey, gross.value);
       setCalculatedValue(bracket, result ? result.marginalRate + '% federal estimate' : '');
-      panel.innerHTML = panelMarkup(result, statusKey, false);
+      setPanelHtml(panel, panelMarkup(result, statusKey, false));
     }
 
     if (filing.dataset.taxBound !== '1') {
@@ -279,7 +284,7 @@
 
   var screen = document.getElementById('screen');
   if (screen && window.MutationObserver) {
-    new MutationObserver(enhanceTaxStep).observe(screen, { childList: true, subtree: true });
+    new MutationObserver(enhanceTaxStep).observe(screen, { childList: true });
   }
 
   if (document.readyState === 'loading') {
