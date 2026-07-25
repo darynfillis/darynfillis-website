@@ -1,304 +1,273 @@
-window.SCENARIO_DESK_CONFIG = (function () {
+window.SCENARIO_DESK_BUILD = (function () {
   'use strict';
 
   function option(value, title, description) {
     return { value: value, title: title, description: description || '' };
   }
 
-  function field(name, label, type, options) {
-    return { name: name, label: label, type: type || 'text', options: options || {} };
+  function field(name, label, settings) {
+    settings = settings || {};
+    settings.name = name;
+    settings.label = label;
+    return settings;
   }
 
-  var yesNo = [option('Yes', 'Yes'), option('No', 'No')];
+  function help(meaning, where, enter, note) {
+    return {
+      meaning: meaning || '',
+      where: where || '',
+      enter: enter || '',
+      note: note || ''
+    };
+  }
 
-  return {
-    version: 'source-based-2.0',
-    steps: [
-      {
-        id: 'application_status',
-        type: 'choice',
-        field: 'applicationComplete',
-        kicker: 'Routing question',
-        title: 'Have you already completed the online application and credit report?',
-        description: 'This is the only added question used to skip information already expected in the application and credit file.',
-        options: [
-          option('Yes', 'Yes', 'Both the online application and credit report are complete.'),
-          option('No', 'No', 'One or both are not complete.')
-        ]
+  function fullIntake(state) {
+    return state.applicationStatus !== 'complete';
+  }
+
+  function purchase(state) {
+    return state.transactionType === 'purchase';
+  }
+
+  function refinance(state) {
+    return state.transactionType === 'refinance';
+  }
+
+  var yesNo = [
+    option('Yes', 'Yes'),
+    option('No', 'No')
+  ];
+
+  var steps = [
+    {
+      id: 'application_status',
+      section: 'Start',
+      type: 'choice',
+      field: 'applicationStatus',
+      source: 'Routing question added for this online version',
+      title: 'Have you already completed the online mortgage application and credit report?',
+      plain: 'Your answer determines whether we skip information that should already be in your loan file.',
+      help: help(
+        'Choose Yes only when both the application and the credit report are complete.',
+        'Look for the application-complete confirmation or sign in to your NEO application portal. If you are unsure, choose Not sure and we will show the full form.',
+        'Select the answer that best describes where you are now.'
+      ),
+      options: [
+        option('complete', 'Yes, both are complete', 'Skip standard application and credit-file questions.'),
+        option('not_complete', 'No, one or both are not complete', 'Show every applicable question from the Scenario Desk form.'),
+        option('unsure', 'I am not sure', 'Show the full form so nothing is missed.')
+      ]
+    },
+    {
+      id: 'transaction_type',
+      section: 'Start',
+      type: 'choice',
+      field: 'transactionType',
+      source: 'Routing question based on the two Page 1 sections',
+      title: 'Which situation are we planning for?',
+      plain: 'The original form has one section for a new purchase and another for refinancing a home you already own.',
+      help: help(
+        'A purchase means you are financing a home you plan to buy. A refinance means you are replacing or changing a mortgage on a home you already own.',
+        'No document is needed.',
+        'Choose New House Purchase or Existing House Refinance.'
+      ),
+      options: [
+        option('purchase', 'New House Purchase'),
+        option('refinance', 'Existing House Refinance')
+      ]
+    },
+    {
+      id: 'prep_notice',
+      section: 'Start',
+      type: 'notice',
+      source: 'Preparation guidance added for clarity',
+      title: 'A few documents can make this much easier.',
+      plain: function (state) {
+        return fullIntake(state)
+          ? 'You do not need perfect numbers. Recent statements and reasonable estimates are enough for this first strategy conversation.'
+          : 'Because your application and credit report are complete, most document-based questions will be skipped.';
       },
-      {
-        id: 'transaction_type',
-        type: 'choice',
-        field: 'transactionType',
-        kicker: 'Routing question',
-        title: 'Is this for a New House Purchase or Existing House Refinance?',
-        description: 'These are the two scenario sections shown on Page 1 of the source form.',
-        options: [
-          option('New House Purchase', 'New House Purchase'),
-          option('Existing House Refinance', 'Existing House Refinance')
-        ]
+      bullets: function (state) {
+        if (!fullIntake(state)) {
+          return [
+            'You may want your latest mortgage statement for any extra-payment questions.',
+            'Have a rough idea of future purchases, savings you would use, and your preferred down payment.',
+            'For questions that are estimates or preferences, there is no document to find.'
+          ];
+        }
+        return [
+          'A recent pay stub, W-2, tax return, or current profit-and-loss statement.',
+          'Recent bank, brokerage, debt, and mortgage statements.',
+          purchase(state)
+            ? 'Your purchase contract or target price, plus any estimate for a home you may sell.'
+            : 'A recent appraisal, agent value estimate, or your best estimate of the home value.',
+          'It is acceptable to enter Not sure when you cannot find a number.'
+        ];
       },
-      {
-        id: 'filtered_notice',
-        type: 'notice',
-        kicker: 'Application fields skipped',
-        title: 'We will not ask for information already expected in the application and credit file.',
-        description: 'The remaining questions below are taken from the supplied Scenario Desk form.',
-        when: function (s) { return s.applicationComplete === 'Yes'; },
-        bullets: [
-          'Skipped: identity and contact information, gross income, property and occupancy, transaction facts, rental income, liquid assets, liabilities, and current mortgage details.',
-          'Retained: source-form planning and preference questions not treated as standard application facts in this mockup.',
-          'The exact skip map can be refined against the actual online application before deployment.'
-        ]
-      },
-      {
-        id: 'full_notice',
-        type: 'notice',
-        kicker: 'Page 1 included',
-        title: 'We will complete the applicable Page 1 sections before continuing to Page 2.',
-        description: 'All client-facing questions remain based on the supplied form.',
-        when: function (s) { return s.applicationComplete === 'No'; },
-        bullets: [
-          'General borrower, property, income, cash-flow, liability, and mortgage information.',
-          'The New House Purchase or Existing House Refinance section selected above.',
-          'Important Goals/Objectives from Page 2.'
-        ]
-      },
-      {
-        id: 'borrower_information',
-        type: 'group',
-        kicker: 'Page 1 - Information',
-        title: 'Information',
-        when: function (s) { return s.applicationComplete === 'No'; },
-        fields: [
-          field('borrower1Name', 'Name:*', 'text', { required: true }),
-          field('borrower1Dob', 'Date of birth:', 'date'),
-          field('borrower2Name', 'Name:* (second borrower, if applicable)'),
-          field('borrower2Dob', 'Date of birth: (second borrower)', 'date'),
-          field('address', 'Address:*', 'text', { required: true, full: true }),
-          field('email', 'Email Address(es):*', 'email', { required: true, full: true }),
-          field('city', 'City:*', 'text', { required: true }),
-          field('state', 'State:*', 'text', { required: true }),
-          field('zip', 'ZIP code:*', 'text', { required: true }),
-          field('county', 'County:*', 'text', { required: true })
-        ]
-      },
-      {
-        id: 'property_income',
-        type: 'group',
-        kicker: 'Page 1 - Information',
-        title: 'Property and income information',
-        when: function (s) { return s.applicationComplete === 'No'; },
-        fields: [
-          field('propertyType', 'Type of property?', 'select', { choices: ['', 'Single family', 'Condo', 'Townhouse', 'Cooperative', '1-4 unit'] }),
-          field('residenceType', 'Type of residence?', 'select', { choices: ['', 'Primary', 'Vacation', 'Investment'] }),
-          field('taxBracket', 'Combined tax bracket:', 'number', { suffix: '%' }),
-          field('grossIncome', 'Most recent gross income:*', 'number', { prefix: '$', required: true })
-        ]
-      },
-      {
-        id: 'purchase_details',
-        type: 'group',
-        kicker: 'Page 1 - New House Purchase Only',
-        title: 'New House Purchase Only:',
-        when: function (s) { return s.applicationComplete === 'No' && s.transactionType === 'New House Purchase'; },
-        fields: [
-          field('purchasePrice', 'What is the purchase price?', 'number', { prefix: '$' }),
-          field('sellingPrice', 'What is the sales price of the home you are selling?', 'number', { prefix: '$' }),
-          field('realtorFee', 'Realtor fee?', 'number', { suffix: '%' }),
-          field('additionalSavings', 'What additional savings do you have available that you would consider utilizing for this purchase?', 'number', { prefix: '$' }),
-          field('idealDownPayment', 'Ideally, what amount would you like to consider as your down payment for this purchase?', 'number', { prefix: '$', full: true })
-        ]
-      },
-      {
-        id: 'purchase_planning',
-        type: 'group',
-        kicker: 'Page 1 - New House Purchase Only',
-        title: 'New House Purchase Only:',
-        description: 'These source-form planning fields remain after the application questions are filtered out.',
-        when: function (s) { return s.applicationComplete === 'Yes' && s.transactionType === 'New House Purchase'; },
-        fields: [
-          field('realtorFee', 'Realtor fee?', 'number', { suffix: '%' }),
-          field('additionalSavings', 'What additional savings do you have available that you would consider utilizing for this purchase?', 'number', { prefix: '$' }),
-          field('idealDownPayment', 'Ideally, what amount would you like to consider as your down payment for this purchase?', 'number', { prefix: '$', full: true })
-        ]
-      },
-      {
-        id: 'refinance_details',
-        type: 'group',
-        kicker: 'Page 1 - Existing House Refinance Only',
-        title: 'Existing House Refinance Only:',
-        when: function (s) { return s.applicationComplete === 'No' && s.transactionType === 'Existing House Refinance'; },
-        fields: [
-          field('currentValue', 'Current value:*', 'number', { prefix: '$', required: true }),
-          field('cashOutRequested', 'Cash-out requested?:', 'number', { prefix: '$' }),
-          field('cashOutPurpose', 'Purpose of cash out:', 'text', { full: true })
-        ]
-      },
-      {
-        id: 'cash_flow',
-        type: 'group',
-        kicker: 'Page 1 - Cash Flow',
-        title: 'Cash Flow:',
-        when: function (s) { return s.applicationComplete === 'No'; },
-        fields: [
-          field('rentCollected', 'Do you collect rent on any properties?', 'number', { prefix: '$' }),
-          field('monthlyPrepayments', 'Do you make additional monthly prepayments?', 'number', { prefix: '$' }),
-          field('propertyAppreciation', 'What appreciation rate do you expect on any property you own?', 'number', { suffix: '%' }),
-          field('investmentAppreciation', 'What appreciation rate do you expect on any investments you make?', 'number', { suffix: '%' })
-        ]
-      },
-      {
-        id: 'retained_page1',
-        type: 'group',
-        kicker: 'Page 1 - Planning Questions',
-        title: 'Planning questions retained from Page 1',
-        description: 'These are source-form questions not treated as standard application or credit-report fields in this mockup.',
-        when: function (s) { return s.applicationComplete === 'Yes'; },
-        fields: [
-          field('taxBracket', 'Combined tax bracket:', 'number', { suffix: '%' }),
-          field('monthlyPrepayments', 'Do you make additional monthly prepayments?', 'number', { prefix: '$' }),
-          field('propertyAppreciation', 'What appreciation rate do you expect on any property you own?', 'number', { suffix: '%' }),
-          field('investmentAppreciation', 'What appreciation rate do you expect on any investments you make?', 'number', { suffix: '%' })
-        ]
-      },
-      {
-        id: 'liabilities',
-        type: 'text',
-        field: 'liabilities',
-        kicker: 'Page 1 - Current Liabilities',
-        title: 'List all current liabilities:*',
-        description: 'For each liability, include Type, Creditor, Rate, Balance, Prin. & Interest, Tax & Insurance, and whether it will be paid off.',
-        placeholder: 'Example: Auto loan | Creditor | 6.5% | $18,000 | $425 | $0 | Payoff: No',
-        when: function (s) { return s.applicationComplete === 'No'; }
-      },
-      {
-        id: 'mortgage_information',
-        type: 'group',
-        kicker: 'Page 1 - Mortgage Information',
-        title: 'Mortgage Information',
-        description: 'Leave the First Mortgage or Second Mortgage fields blank if they do not apply.',
-        when: function (s) { return s.applicationComplete === 'No'; },
-        fields: [
-          field('firstOriginalAmount', 'If First Mortgage - Original Loan Amount:', 'number', { prefix: '$' }),
-          field('firstStartDate', 'If First Mortgage - Original Start Date:', 'date'),
-          field('firstTermType', 'If First Mortgage - Fixed term or Adjustable term:', 'select', { choices: ['', 'Fixed term', 'Adjustable term'] }),
-          field('firstTermYears', 'If First Mortgage - Term:', 'number', { suffix: 'yrs' }),
-          field('firstInterestOnly', 'If First Mortgage - Interest only loan:', 'select', { choices: ['', 'Yes', 'No'] }),
-          field('secondTermType', 'If Second Mortgage - Fixed term or HELOC:', 'select', { choices: ['', 'Fixed term', 'HELOC'] }),
-          field('secondTermYears', 'If Second Mortgage - Fixed term:', 'number', { suffix: 'yrs' }),
-          field('secondOriginalAmount', 'If Second Mortgage - Original Loan Amount:', 'number', { prefix: '$' }),
-          field('secondStartDate', 'If Second Mortgage - Original Start Date:', 'date')
-        ]
-      },
-      {
-        id: 'years_in_loan',
-        type: 'choice',
-        field: 'yearsInLoan',
-        kicker: 'Page 2 - Important Goals/Objectives',
-        title: 'How many years do you think you will have this new loan, or live in this home?',
-        twoColumn: true,
-        options: ['Less than 1 year','2-3 years','4-5 years','6-7 years','8-10 years','11-15 years','16-20 years','21-25 years','26-30 years','More than 30 years'].map(function (v) { return option(v, v); })
-      },
-      {
-        id: 'payoff_timeline',
-        type: 'choice',
-        field: 'payoffTimeline',
-        kicker: 'Page 2 - Important Goals/Objectives',
-        title: 'How soon would you like this home paid off?',
-        twoColumn: true,
-        options: ['Less than 5 years','6-10 years','11-15 years','16-20 years','20-30 years','More than 30 years','Never'].map(function (v) { return option(v, v); })
-      },
-      {
-        id: 'liquid_assets',
-        type: 'choice',
-        field: 'liquidAssets',
-        kicker: 'Page 2 - Information (Cont.)',
-        title: 'What is the approximate combined value of all your liquid assets from bank accounts, mutual funds, CDs and securities?',
-        when: function (s) { return s.applicationComplete === 'No'; },
-        options: ['$25,000 or less','$26,000-$125,000','$126,000 or above'].map(function (v) { return option(v, v); })
-      },
-      {
-        id: 'extra_debt',
-        type: 'choice',
-        field: 'extraDebtPayments',
-        kicker: 'Page 2 - Information (Cont.)',
-        title: 'Are you making any additional monthly payments toward debt?',
-        options: yesNo
-      },
-      {
-        id: 'extra_debt_amount',
-        type: 'text',
-        field: 'extraDebtAmount',
-        kicker: 'Page 2 - Information (Cont.)',
-        title: 'If yes, how much:',
-        placeholder: '$',
-        when: function (s) { return s.extraDebtPayments === 'Yes'; }
-      },
-      {
-        id: 'major_purchases',
-        type: 'choice',
-        field: 'majorPurchases',
-        kicker: 'Page 2 - Information (Cont.)',
-        title: 'Do you have any major purchases planned in the next 3 years?',
-        options: yesNo
-      },
-      {
-        id: 'major_purchase_purpose',
-        type: 'text',
-        field: 'majorPurchasePurpose',
-        kicker: 'Page 2 - Information (Cont.)',
-        title: 'If yes, purpose:',
-        when: function (s) { return s.majorPurchases === 'Yes'; }
-      },
-      {
-        id: 'closing_costs',
-        type: 'choice',
-        field: 'rollClosingCosts',
-        kicker: 'Page 2 - Information (Cont.)',
-        title: 'Roll closing costs into loan?',
-        options: yesNo
-      },
-      {
-        id: 'payment_preference',
-        type: 'choice',
-        field: 'paymentPreference',
-        kicker: 'Page 2 - Information (Cont.)',
-        title: 'Select the option below that best describes your preference:',
-        options: [
-          option('Option 1', 'Option 1', 'Lower payment - Higher tax deduction - Pay little or no principal'),
-          option('Option 2', 'Option 2', 'Higher payment - Lower tax deduction - Pay principal each month')
-        ]
-      },
-      {
-        id: 'risk_pyramid',
-        type: 'choice',
-        field: 'riskPreference',
-        kicker: 'Page 2 - Risk Pyramid',
-        title: 'Please indicate the best match, based on your preference between a fixed and adjustable interest rate.',
-        options: [
-          option('A: Aggressive', 'A: Aggressive', 'Greater volatility - Lowest payment'),
-          option('B: Moderate', 'B: Moderate', 'Predictable volatility - Intermediate payment'),
-          option('C: Conservative', 'C: Conservative', 'No volatility - Highest payment')
-        ]
-      },
-      {
-        id: 'key_objectives',
-        type: 'text',
-        field: 'keyObjectives',
-        kicker: 'Page 2 - Important Goals/Objectives',
-        title: 'My key objectives (e.g., “Pay off all debts and free up cash flow”).',
-        placeholder: 'Type your response...'
-      },
-      {
-        id: 'one_thing',
-        type: 'text',
-        field: 'oneThing',
-        kicker: 'Page 2 - Important Goals/Objectives',
-        title: 'If you could only accomplish one thing, what would it be?',
-        placeholder: 'Type your response...'
-      },
-      { id: 'review', type: 'review', kicker: 'Review' }
-    ]
-  };
+      help: help(
+        'The form combines facts from documents with personal preferences and future goals.',
+        'Gather only what you already have. Do not delay the form to obtain perfect figures.',
+        'Use the most recent information available and label an estimate when needed.'
+      )
+    },
+
+    /* Page 1 - Information */
+    {
+      id: 'primary_borrower',
+      section: 'About you',
+      type: 'fields',
+      source: 'Scenario Desk - Page 1 - Information',
+      title: 'Primary borrower information',
+      plain: 'Use the legal name and date of birth that would appear on the mortgage application.',
+      when: fullIntake,
+      help: help(
+        'The borrower is the person whose name and finances will be used for the loan.',
+        'Use a government-issued photo ID, passport, or the information entered on your mortgage application.',
+        'Enter the full legal name and date of birth.'
+      ),
+      fields: [
+        field('borrower1Name', 'Name:*', { required: true, autocomplete: 'name', placeholder: 'Full legal name' }),
+        field('borrower1Dob', 'Date of birth:', { type: 'date', autocomplete: 'bday' })
+      ]
+    },
+    {
+      id: 'second_borrower_gate',
+      section: 'About you',
+      type: 'choice',
+      field: 'hasSecondBorrower',
+      source: 'Routing question added for the second Name and Date of birth lines on Page 1',
+      title: 'Will there be a second borrower on the loan?',
+      plain: 'This could be a spouse, partner, family member, or anyone else applying with you.',
+      when: fullIntake,
+      help: help(
+        'A second borrower is someone whose income, credit, assets, or debts will be included in the loan decision.',
+        'No document is needed.',
+        'Choose Yes only if another person will be an applicant on the loan.'
+      ),
+      options: yesNo
+    },
+    {
+      id: 'second_borrower',
+      section: 'About you',
+      type: 'fields',
+      source: 'Scenario Desk - Page 1 - second Name and Date of birth',
+      title: 'Second borrower information',
+      plain: 'Use the second borrower\'s legal name and date of birth.',
+      when: function (state) { return fullIntake(state) && state.hasSecondBorrower === 'Yes'; },
+      help: help(
+        'This is the other person applying for the loan.',
+        'Use their government-issued photo ID, passport, or the information entered on the mortgage application.',
+        'Enter their full legal name and date of birth.'
+      ),
+      fields: [
+        field('borrower2Name', 'Name:*', { required: true, autocomplete: 'name', placeholder: 'Full legal name' }),
+        field('borrower2Dob', 'Date of birth:', { type: 'date', autocomplete: 'bday' })
+      ]
+    },
+    {
+      id: 'current_address',
+      section: 'About you',
+      type: 'fields',
+      source: 'Scenario Desk - Page 1 - Address, City, State, ZIP code, County',
+      title: 'Current home address',
+      plain: 'Enter the address where you currently live, not the property you may be buying.',
+      when: fullIntake,
+      help: help(
+        'The county is the county for your current home address.',
+        'Use your driver\'s license, utility bill, lease, mortgage statement, or bank statement. If the county is not shown, search the address online or use the county assessor website.',
+        'Enter the complete current address, including county.'
+      ),
+      fields: [
+        field('address', 'Address:*', { required: true, full: true, autocomplete: 'street-address', placeholder: 'Street address' }),
+        field('city', 'City:*', { required: true, autocomplete: 'address-level2' }),
+        field('state', 'State:*', { required: true, autocomplete: 'address-level1', placeholder: 'CA' }),
+        field('zip', 'ZIP code:*', { required: true, autocomplete: 'postal-code', inputmode: 'numeric' }),
+        field('county', 'County:*', { required: true, placeholder: 'For example: Los Angeles County' })
+      ]
+    },
+    {
+      id: 'email_address',
+      section: 'About you',
+      type: 'fields',
+      source: 'Scenario Desk - Page 1 - Email Address(es)',
+      title: 'Email Address(es):*',
+      plain: 'Use the email address you monitor most often. Add a second email if another borrower should receive updates.',
+      when: fullIntake,
+      help: help(
+        'This is the email address used for mortgage communication.',
+        'No document is needed.',
+        'Enter the primary email address. Add a second email address if another borrower should receive updates.'
+      ),
+      fields: [
+        field('email1', 'Primary email address:*', { required: true, type: 'email', autocomplete: 'email', placeholder: 'you@example.com' }),
+        field('email2', 'Second email address (optional)', { type: 'email', autocomplete: 'email', placeholder: 'second@example.com' })
+      ]
+    },
+    {
+      id: 'property_and_residence',
+      section: 'Property',
+      type: 'fields',
+      source: 'Scenario Desk - Page 1 - Type of property and Type of residence',
+      title: 'Property type and how the home will be used',
+      plain: 'These are two separate questions: what kind of property it is, and whether it will be your primary, vacation, or investment home.',
+      when: fullIntake,
+      help: help(
+        'A condo usually has individual unit ownership and an HOA. A cooperative is owned through shares in a corporation. A 1-4 unit property contains two to four separate living units.',
+        'Check the listing, purchase contract, appraisal, HOA documents, or property tax record. Your intended use is your own plan.',
+        'Choose one property type and one residence type.'
+      ),
+      fields: [
+        field('propertyType', 'Type of property?', {
+          required: true,
+          type: 'select',
+          choices: ['', 'Single family', 'Condo', 'Townhouse', 'Cooperative', '1-4 unit', 'Not sure']
+        }),
+        field('residenceType', 'Type of residence?', {
+          required: true,
+          type: 'select',
+          choices: ['', 'Primary', 'Vacation', 'Investment', 'Not sure']
+        })
+      ]
+    },
+    {
+      id: 'tax_and_income',
+      section: 'Income',
+      type: 'fields',
+      source: 'Scenario Desk - Page 1 - Combined tax bracket and Most recent gross income',
+      title: 'Tax bracket and gross income',
+      plain: 'Gross income means income before taxes, insurance, retirement contributions, or other deductions.',
+      when: fullIntake,
+      help: help(
+        'The combined tax bracket is an estimate of your federal and state marginal tax rates. It is not the percentage of tax you paid on all income. Most people do not know this number without checking.',
+        'For gross income, use a recent pay stub, W-2, tax return, Social Security or pension statement, or current profit-and-loss statement. For the tax bracket, use your last tax return or ask your tax professional.',
+        'Enter gross income before deductions and include the time period, such as $120,000 per year or $10,000 per month. Type Not sure when needed.',
+        'This form does not provide tax advice.'
+      ),
+      fields: [
+        field('taxBracket', 'Combined tax bracket:', { required: true, suffix: '%', inputmode: 'decimal', placeholder: 'For example: 35 or Not sure', allowUnknown: true }),
+        field('grossIncome', 'Most recent gross income:*', { required: true, prefix: '$', placeholder: 'For example: 120,000 per year', allowUnknown: true })
+      ]
+    },
+
+    {
+      id: 'tax_bracket_only',
+      section: 'Income',
+      type: 'fields',
+      source: 'Scenario Desk - Page 1 - Combined tax bracket',
+      title: 'Combined tax bracket:',
+      plain: 'Your completed application usually does not identify the combined federal and state marginal tax bracket used for planning.',
+      when: function (state) { return !fullIntake(state); },
+      help: help(
+        'The combined tax bracket is an estimate of your federal and state marginal tax rates. It is not the percentage of tax paid on all income.',
+        'Use your most recent tax return or ask your tax professional. If you do not know it, type Not sure.',
+        'Enter a percentage or Not sure.',
+        'This form does not provide tax advice.'
+      ),
+      fields: [
+        field('taxBracket', 'Combined tax bracket: %', { required: true, suffix: '%', inputmode: 'decimal', full: true, placeholder: 'For example: 35 or Not sure', allowUnknown: true })
+      ]
+    },
+  ];
+
+  return { option: option, field: field, help: help, fullIntake: fullIntake, purchase: purchase, refinance: refinance, yesNo: yesNo, steps: steps };
 })();
