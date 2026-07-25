@@ -1,91 +1,156 @@
-# Scenario Desk Online Intake - Corrected Mockup
+# Scenario Desk Online Intake - Guided Mockup v3
 
 Status: discussion mockup only  
-Proposed URL: `/strategy-intake`  
+URL: `/strategy-intake`  
 Production submission: disabled  
 Search indexing: disabled with `noindex, nofollow`
 
-## Source rule
+## Objective
 
-The supplied two-page `Scenario Desk Interview Form.pdf` is the source of truth for client-facing questions and answer choices.
+Convert the supplied two-page Scenario Desk Interview Form into a branded, one-step-at-a-time online intake without dropping any source question. The form must be understandable to a client who does not know mortgage or financial terminology.
 
-The mockup adds only two routing questions:
+## Source-fidelity rule
 
-1. Has the client completed the online application and credit report?
-2. Which source-form section applies: New House Purchase or Existing House Refinance?
+The supplied `Scenario Desk Interview Form.pdf` remains the source of truth. Every Page 1 and Page 2 field, range, Yes/No choice, Option 1/Option 2 statement, Risk Pyramid choice, and open-ended objective prompt is represented in the mockup.
 
-No other strategy questions have been invented or substituted.
+Added questions are limited to routing and usability:
 
-## Conditional routing
+- Whether the online application and credit report are complete
+- Purchase versus refinance
+- Whether there is a second borrower
+- Whether a home is being sold
+- Whether a first mortgage exists
+- Whether a second mortgage or HELOC exists
 
-### Application and credit report complete
+These additions prevent clients from seeing inapplicable blank sections. Each added question is labeled as a routing question.
 
-Skip information expected to exist in the application or credit file:
+## Application-complete routing
 
-- Name, date of birth, address, email, city, state, ZIP code, and county
-- Type of property and type of residence
-- Most recent gross income
-- Purchase price, sale price of the home being sold, current value, and cash-out amount
+When the client confirms both the online application and credit report are complete, the form skips information expected to exist in that file:
+
+- Borrower names, dates of birth, address, email, city, state, ZIP code, and county
+- Property type and occupancy
+- Gross income
+- Purchase price and expected sale price
+- Current value and cash-out amount
 - Rental income
 - Liquid-asset range
 - Current liabilities
 - First- and second-mortgage details
 
-Retain source-form questions treated as planning inputs rather than standard application facts:
+The form continues to collect source-form planning inputs that may not be standard application fields:
 
 - Combined tax bracket
-- Realtor fee
-- Additional savings the client would consider using
+- Realtor fee when a home is being sold
+- Additional savings available for a purchase
 - Ideal down payment
+- Purpose of cash out for a refinance, including Not applicable when no cash out is requested
 - Additional monthly prepayments
-- Expected property appreciation
-- Expected investment appreciation
-- Years expected to keep the loan or home
+- Property-appreciation assumption
+- Investment-return assumption
+- Expected time in the loan or home
 - Desired payoff timeline
-- Additional debt payments
-- Major purchases planned within three years
+- Additional debt-payment behavior
+- Major purchases within three years
 - Closing-cost preference
-- Option 1 versus Option 2 preference
-- Risk Pyramid selection
+- Option 1 versus Option 2
+- Risk Pyramid preference
 - Key objectives
-- The one outcome the client most wants to accomplish
+- The single most important outcome
 
-### Application or credit report not complete
+This is a best-logic mockup. Before production, the skip list must be compared field by field with the exact NEO application and credit workflow.
 
-Show the applicable Page 1 information before Page 2, including the purchase or refinance branch, cash flow, liabilities, and mortgage information.
+## Financial-literacy treatment
 
-## Source-form fidelity
+Every step includes:
 
-The mockup preserves:
+1. A plain-English explanation of the question
+2. Where the client can find the information
+3. What the client should enter
+4. An important note when tax, investment, appreciation, or product limitations apply
 
-- The Page 1 purchase and refinance section labels
-- The Page 1 liability columns
-- First- and second-mortgage fields
-- All Page 2 time-horizon and payoff ranges
-- The liquid-asset ranges
-- Yes/No answer choices
-- Option 1 and Option 2 wording
-- A, B, and C Risk Pyramid labels and descriptions
-- Both open-ended objective prompts
+The most common sources identified in the form are:
 
-The liabilities section is adapted from a paper table into a responsive web table with an Add another row control.
+- Government-issued ID
+- Utility bill, lease, mortgage statement, or bank statement
+- Purchase agreement, listing agreement, or agent value estimate
+- Pay stub, W-2, tax return, pension statement, Social Security statement, or profit-and-loss statement
+- Bank and brokerage statements
+- Credit report and current debt statements
+- Closing Disclosure, promissory note, and mortgage or HELOC statements
 
-The Risk Pyramid is adapted into an accessible HTML representation of the A/B/C spectrum and the loan-type continuum shown on Page 2.
+When an exact amount is not available, the client can use `I cannot find this right now` on supported fields. The review screen preserves the response as `Not sure` rather than forcing a guess.
 
-## Deliberate mockup safeguards
+## Source coverage
+
+### Page 1
+
+- Both Name and Date of birth lines
+- Address, Email Address(es), City, State, ZIP code, and County
+- Combined tax bracket and Most recent gross income
+- Type of property and Type of residence
+- Existing House Refinance Only: Current value, Cash-out requested, Purpose of cash out
+- Cash Flow: rent collected, additional monthly prepayments, expected property appreciation, expected investment appreciation
+- New House Purchase Only: purchase price, sale price of home being sold, Realtor fee, additional savings, ideal down payment
+- Current liabilities: Type, Creditor, Rate, Balance, Principal & Interest, Tax & Insurance, Payoff Yes/No
+- First Mortgage: original amount, original start date, fixed or adjustable term and years, interest-only Yes/No
+- Second Mortgage: fixed term and years or HELOC, original amount, original start date
+
+### Page 2
+
+- All ten loan/home holding-period ranges
+- All seven desired-payoff ranges
+- All three liquid-asset ranges
+- Additional monthly debt payment Yes/No and amount
+- Major purchase Yes/No and purpose
+- Roll closing costs into loan Yes/No
+- Original Option 1 and Option 2 wording
+- A, B, and C Risk Pyramid wording
+- Full ARM-to-fixed product spectrum
+- Key objectives prompt
+- Single most important outcome prompt
+
+## Brand treatment
+
+The mockup uses the current darynfillis.com system:
+
+- Montserrat typography
+- Navy `#0A2540`
+- Light blue `#5bcbf5`
+- Darker blue `#38b8e8`
+- Current fixed white navigation structure
+- Current phone, Sign in, and Continue actions
+- Dark video hero with the same overlay and grid texture
+- Uppercase tracked eyebrow labels and compact CTA styling
+- White form surfaces, light-gray rules, restrained shadows, and dark footer structure
+
+## Usability treatment
+
+- One decision or closely related field group per step
+- Desktop help panel and mobile expandable help
+- Branch-aware progress
+- Back navigation with preserved answers
+- Keyboard selection for choice questions
+- Minimum 44-pixel touch targets
+- Mobile liabilities cards instead of a wide table
+- Review summary grouped by form section
+- Explicit distinction between required and optional fields
+- Reduced-motion support
+
+## Mockup safeguards
 
 - No submission endpoint
 - No browser storage
-- No analytics containing answers
-- No sitemap entry
+- No answer-bearing analytics
+- No live CRM, LOS, email, or Netlify Forms connection
 - `noindex, nofollow`
-- No live CRM, LOS, email, or Netlify form connection
+- No sitemap entry
 
 ## Before production
 
-1. Compare the skip map against the exact online application and credit workflow.
-2. Confirm whether any retained fields are already available in the LOS or CRM.
-3. Confirm the approved destination for responses.
+1. Compare the skip map against the exact online application and credit report workflow.
+2. Confirm the secure destination for completed responses.
+3. Confirm how a response matches the correct client or loan record.
 4. Confirm privacy, consent, retention, access-control, and compliance language.
-5. Decide how a response will match the correct client record.
+5. Confirm the current Better/NEO disclosure language with compliance before production.
 6. Confirm rights to reproduce or adapt the Borrow Smart Mortgage source form and Risk Pyramid.
