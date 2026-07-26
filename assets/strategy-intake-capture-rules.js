@@ -4,7 +4,7 @@
   var config = window.SCENARIO_DESK_CONFIG;
   if (!config || !Array.isArray(config.steps)) return;
 
-  var HELP_TEXT = 'Not sure — I need Daryn\'s help with this';
+  var HELP_TEXT = 'Not sure, I need Daryn\'s help with this.';
   var ROUTING_FIELDS = {
     transactionType: true,
     hasSecondBorrower: true,
@@ -48,7 +48,7 @@
         return option(
           step.field === 'applicationStatus' ? item.value : HELP_TEXT,
           HELP_TEXT,
-          item.description || 'Record that you would like Daryn to help you answer this.'
+          item.description || 'Choose this instead of guessing. Daryn can review the question with you.'
         );
       });
 
@@ -78,7 +78,7 @@
     help: {
       meaning: 'Liquid assets are funds that can generally be converted to cash without selling real estate. Include checking, savings, money-market accounts, certificates of deposit, mutual funds, brokerage accounts, and other marketable securities. Do not include real estate value.',
       where: 'Use the most recent statement for each bank, brokerage, mutual-fund, and CD account. Add the current balances together. When two borrowers are applying together, include the accounts that should be counted for the household.',
-      enter: 'Enter one combined dollar amount. Use the exact total shown by the statements when possible. If you cannot determine it, choose “Not sure — I need Daryn’s help with this.”',
+      enter: 'Enter one combined dollar amount. Use the exact total shown by the statements when possible. If you cannot determine it, choose “Not sure, I need Daryn’s help with this.”',
       note: 'This intake records the total supplied. It does not analyze liquidity, recommend how much to use, or make an approval conclusion.'
     },
     fields: [
@@ -100,7 +100,7 @@
     closingStep.help = {
       meaning: 'On a refinance, eligible closing costs may sometimes be included in the new loan balance instead of being paid separately at closing.',
       where: 'No document is required. This records your current preference only.',
-      enter: 'Choose Yes, No, or “Not sure — I need Daryn’s help with this.”',
+      enter: 'Choose Yes, No, or “Not sure, I need Daryn’s help with this.”',
       note: 'The answer is captured for discussion. It does not determine the final loan structure or whether costs can be financed.'
     };
   }
