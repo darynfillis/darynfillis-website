@@ -4,6 +4,15 @@
   var config = window.SCENARIO_DESK_CONFIG;
   if (!config || !Array.isArray(config.steps)) return;
 
+  /* Keep the home-sale routing question with the existing-real-estate section. */
+  var saleGateIndex = config.steps.findIndex(function (step) { return step.id === 'selling_home_gate'; });
+  var purchasePropertyIndex = config.steps.findIndex(function (step) { return step.id === 'purchase_subject_property'; });
+  if (saleGateIndex !== -1 && purchasePropertyIndex !== -1) {
+    var saleGate = config.steps.splice(saleGateIndex, 1)[0];
+    purchasePropertyIndex = config.steps.findIndex(function (step) { return step.id === 'purchase_subject_property'; });
+    config.steps.splice(purchasePropertyIndex + 1, 0, saleGate);
+  }
+
   function filingStatusField() {
     return {
       name: 'filingStatus',
