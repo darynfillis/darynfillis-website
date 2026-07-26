@@ -97,4 +97,42 @@
       combinedBracketField()
     ]
   });
+
+  /* The general liability section now follows property-secured debt capture. */
+  function adjustOtherLiabilityCopy() {
+    var screen = document.getElementById('screen');
+    if (!screen) return;
+
+    var noLiabilities = document.getElementById('noLiabilities');
+    if (noLiabilities && noLiabilities.parentElement) {
+      var label = noLiabilities.parentElement;
+      Array.prototype.forEach.call(label.childNodes, function (node) {
+        if (node.nodeType === 3 && node.nodeValue.indexOf('I have no current liabilities') !== -1) {
+          node.nodeValue = node.nodeValue.replace('I have no current liabilities', 'I have no other current liabilities');
+        }
+      });
+    }
+
+    var typeInputs = screen.querySelectorAll('[data-liability-field="type"]');
+    Array.prototype.forEach.call(typeInputs, function (input) {
+      if (input.placeholder.indexOf('Mortgage') !== -1) {
+        input.placeholder = 'Auto loan, credit card, student loan, personal loan...';
+      }
+    });
+
+    var error = document.getElementById('liabilityError');
+    if (error && error.textContent.indexOf('no current liabilities') !== -1) {
+      error.textContent = error.textContent.replace('no current liabilities', 'no other current liabilities');
+    }
+
+    var reviewValues = screen.querySelectorAll('.review-value');
+    Array.prototype.forEach.call(reviewValues, function (value) {
+      if (value.textContent === 'No current liabilities') value.textContent = 'No other current liabilities';
+    });
+  }
+
+  var screenNode = document.getElementById('screen');
+  if (screenNode && window.MutationObserver) {
+    new MutationObserver(adjustOtherLiabilityCopy).observe(screenNode, { childList: true, subtree: true, characterData: true });
+  }
 })();
