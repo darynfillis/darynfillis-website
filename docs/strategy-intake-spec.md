@@ -1,4 +1,4 @@
-# Scenario Desk Online Intake - Guided Mockup v3
+# Scenario Desk Online Intake - Guided Mockup v4
 
 Status: discussion mockup only  
 URL: `/strategy-intake`  
@@ -7,11 +7,32 @@ Search indexing: disabled with `noindex, nofollow`
 
 ## Objective
 
-Convert the supplied two-page Scenario Desk Interview Form into a branded, one-step-at-a-time online intake without dropping any source question. The form must be understandable to a client who does not know mortgage or financial terminology.
+Convert the supplied two-page Scenario Desk Interview Form into a branded, one-step-at-a-time online intake without dropping the information requested by the source form. The experience must be understandable to a client who does not know mortgage or financial terminology.
+
+## Capture-only rule
+
+The intake collects client-supplied information. It does not calculate, infer, score, categorize, recommend, or draw conclusions about:
+
+- Affordability or qualification
+- Equity or cash flow
+- Investment return
+- Risk level
+- Tax bracket
+- Loan structure
+- Todd/Borrow Smart framework outcomes
+
+The final screen is a review of supplied answers only.
 
 ## Source-fidelity rule
 
-The supplied `Scenario Desk Interview Form.pdf` remains the source of truth. Every Page 1 and Page 2 field, range, Yes/No choice, Option 1/Option 2 statement, Risk Pyramid choice, and open-ended objective prompt is represented in the mockup.
+The supplied `Scenario Desk Interview Form.pdf` remains the source of truth for required information. Every Page 1 and Page 2 topic, Yes/No choice, Option 1/Option 2 statement, Risk Pyramid choice, mortgage field, liability field, and objective prompt is represented.
+
+Two deliberate adaptations have been approved for the online version:
+
+1. The Page 2 liquid-asset ranges are replaced by one exact combined dollar amount when possible.
+2. `Roll closing costs into loan?` is displayed only for a refinance and is skipped for a purchase.
+
+## Routing questions
 
 Added questions are limited to routing and usability:
 
@@ -19,84 +40,115 @@ Added questions are limited to routing and usability:
 - Purchase versus refinance
 - Whether there is a second borrower
 - Whether a home is being sold
-- Whether a first mortgage exists
-- Whether a second mortgage or HELOC exists
-- Federal tax filing status, which is required to calculate the source form's tax-bracket field
+- Number of existing properties
+- Whether each property has a first mortgage
+- Whether each property has a second mortgage or HELOC
+- Whether a second lien is fixed term or a HELOC
+- Federal filing status as an additional captured tax input
 
-These additions prevent clients from seeing inapplicable blank sections or being asked to calculate information the form can determine. Each added question is labeled as a routing or calculation input.
+These questions prevent clients from seeing sections that do not apply.
+
+## Unknown-answer rule
+
+When the client does not know an answer, the interface provides:
+
+`Not sure, I need Daryn's help with this.`
+
+This appears as:
+
+- An answer choice on applicable choice questions
+- A cannot-find control on applicable text, date, percentage, and dollar fields
+- A choice within applicable dropdowns
+
+The client is not required to guess.
 
 ## Application-complete routing
 
-When the client confirms both the online application and credit report are complete, the form skips information expected to exist in that file:
+When the client confirms that both the online application and credit report are complete, the intake skips information expected to already exist in that file, including:
 
-- Borrower names, dates of birth, address, email, city, state, ZIP code, and county
-- Property type and occupancy
+- Borrower identity and contact information
+- Property and occupancy information
 - Gross income
 - Purchase price and expected sale price
-- Current value and cash-out amount
+- Current value and requested cash-out amount
 - Rental income
-- Liquid-asset range
+- Exact liquid-asset information
 - Current liabilities
 - First- and second-mortgage details
 
-The form continues to collect source-form planning inputs that may not be standard application fields:
+The production skip map still requires a field-by-field comparison with the actual NEO application and credit workflow.
 
-- Federal tax filing status, which will be paired with gross income from the application to estimate the 2026 federal marginal bracket
-- Realtor fee when a home is being sold
-- Additional savings available for a purchase
-- Ideal down payment
-- Purpose of cash out for a refinance, including Not applicable when no cash out is requested
-- Additional monthly prepayments
-- Property-appreciation assumption
-- Investment-return assumption
-- Expected time in the loan or home
-- Desired payoff timeline
-- Additional debt-payment behavior
-- Major purchases within three years
-- Closing-cost preference
-- Option 1 versus Option 2
-- Risk Pyramid preference
-- Key objectives
-- The single most important outcome
+## Existing real estate
 
-This is a best-logic mockup. Before production, the skip list must be compared field by field with the exact NEO application and credit workflow.
+Existing-real-estate questions are grouped by property.
 
-## 2026 federal tax-bracket estimate
+The full-intake route asks how many properties the client currently owns and repeats a complete property section for each one. The new property being purchased is kept separate from existing real estate. On a refinance, Property 1 is the property being refinanced.
 
-The paper form asks for a `Combined tax bracket`. The online version does not require the client to know or calculate that number.
+Each structured property captures:
 
-For a client completing the full intake, the form asks for:
+- Address or identifying description
+- Property type
+- Primary, vacation, or investment use
+- Current value
+- Monthly rent collected
+- Expected appreciation input
+- First-mortgage routing
+- First-mortgage creditor, rate, balance, principal and interest, tax and insurance, payoff preference, original amount, start date, fixed or adjustable term, term in years, and interest-only status
+- Second-mortgage or HELOC routing
+- Second-lien creditor, rate, balance, principal and interest, tax and insurance, payoff preference, original amount or line limit, start date, type, and fixed term when applicable
 
-- Expected 2026 federal filing status
-- Annual gross income before taxes and deductions
+The form supports up to 10 structured properties plus an additional-property narrative for larger portfolios.
 
-The calculator then:
+Property-secured debts stay with the property. The later liability section is reserved for non-property debts such as credit cards, auto loans, student loans, personal loans, and support obligations.
 
-1. Applies the 2026 standard deduction for the selected filing status.
-2. Estimates taxable income as annual gross income minus that standard deduction, never below zero.
-3. Applies the 2026 ordinary-income marginal-rate schedule in IRS Revenue Procedure 2025-32.
-4. Displays an estimated federal marginal bracket.
+## Home-sale routing
 
-For a client with a completed application, the mockup asks only for filing status. The production integration should use gross income already stored in the loan file.
+For a purchase, the intake asks whether a current property is being sold.
 
-The estimate is deliberately labeled `federal`, not `combined`, because the IRS source does not provide state income-tax brackets. California or another state can be layered in later based on state of residence. The result is a planning estimate, not tax advice, and may differ from the actual return because taxable income can be affected by itemized deductions, business deductions, capital gains, retirement contributions, credits, and other tax rules.
+- If No, sale-price and Realtor-fee questions are skipped.
+- If Yes, the client identifies the property being sold and supplies the expected sales price and Realtor fee.
 
-2026 standard deductions used:
+## Liquid assets
 
-- Single or Married Filing Separately: `$16,100`
-- Married Filing Jointly or Qualifying Surviving Spouse: `$32,200`
-- Head of Household: `$24,150`
+The source form asks for an approximate range. The online version asks for the exact current combined total when possible.
+
+Include:
+
+- Checking and savings
+- Money-market accounts
+- CDs
+- Mutual funds
+- Brokerage accounts
+- Other marketable securities
+
+Do not include real estate value. The client is directed to use the latest statements and add the current balances together. If the exact total cannot be determined, the client can choose `Not sure, I need Daryn's help with this.`
+
+## Tax information
+
+The intake captures:
+
+- Expected federal filing status
+- Annual gross income when the application is incomplete
+- Combined tax bracket only when the client already knows it
+
+The intake does not calculate or infer a tax bracket. The field may be recorded as unknown for later discussion.
+
+## Closing-cost routing
+
+`Roll closing costs into loan?` appears only on the refinance route.
+
+It is skipped on the purchase route because purchase closing costs are not being treated as an amount to roll into the purchase loan in this workflow.
 
 ## Financial-literacy treatment
 
-Every step includes:
+Every substantive step includes:
 
-1. A plain-English explanation of the question
+1. What the question means
 2. Where the client can find the information
 3. What the client should enter
 4. An important note when tax, investment, appreciation, or product limitations apply
 
-The most common sources identified in the form are:
+Common source documents include:
 
 - Government-issued ID
 - Utility bill, lease, mortgage statement, or bank statement
@@ -106,15 +158,11 @@ The most common sources identified in the form are:
 - Credit report and current debt statements
 - Closing Disclosure, promissory note, and mortgage or HELOC statements
 
-When an exact amount is not available, the client can use `I cannot find this right now` on supported fields. The review screen preserves the response as `Not sure` rather than forcing a guess.
-
-## Source coverage
-
-### Page 1
+## Page 1 coverage
 
 - Both Name and Date of birth lines
 - Address, Email Address(es), City, State, ZIP code, and County
-- Combined tax bracket and Most recent gross income; the tax-bracket response is produced by the federal estimator rather than manual client entry
+- Combined tax bracket and Most recent gross income
 - Type of property and Type of residence
 - Existing House Refinance Only: Current value, Cash-out requested, Purpose of cash out
 - Cash Flow: rent collected, additional monthly prepayments, expected property appreciation, expected investment appreciation
@@ -123,14 +171,14 @@ When an exact amount is not available, the client can use `I cannot find this ri
 - First Mortgage: original amount, original start date, fixed or adjustable term and years, interest-only Yes/No
 - Second Mortgage: fixed term and years or HELOC, original amount, original start date
 
-### Page 2
+## Page 2 coverage
 
-- All ten loan/home holding-period ranges
-- All seven desired-payoff ranges
-- All three liquid-asset ranges
+- All loan/home holding-period ranges
+- All desired-payoff ranges
+- Exact liquid-asset total in place of the three source ranges
 - Additional monthly debt payment Yes/No and amount
 - Major purchase Yes/No and purpose
-- Roll closing costs into loan Yes/No
+- Roll closing costs into loan Yes/No on refinance only
 - Original Option 1 and Option 2 wording
 - A, B, and C Risk Pyramid wording
 - Full ARM-to-fixed product spectrum
@@ -147,21 +195,22 @@ The mockup uses the current darynfillis.com system:
 - Darker blue `#38b8e8`
 - Current fixed white navigation structure
 - Current phone, Sign in, and Continue actions
-- Dark video hero with the same overlay and grid texture
+- Static dark branded hero with subtle grid texture; no video
 - Uppercase tracked eyebrow labels and compact CTA styling
 - White form surfaces, light-gray rules, restrained shadows, and dark footer structure
 
 ## Usability treatment
 
 - One decision or closely related field group per step
+- Similar information kept together
 - Desktop help panel and mobile expandable help
 - Branch-aware progress
 - Back navigation with preserved answers
 - Keyboard selection for choice questions
 - Minimum 44-pixel touch targets
 - Mobile liabilities cards instead of a wide table
-- Review summary grouped by form section
-- Explicit distinction between required, optional, and calculated fields
+- Review summary grouped by section and property
+- Explicit distinction between required and optional fields
 - Reduced-motion support
 
 ## Mockup safeguards
@@ -181,4 +230,4 @@ The mockup uses the current darynfillis.com system:
 4. Confirm privacy, consent, retention, access-control, and compliance language.
 5. Confirm the current Better/NEO disclosure language with compliance before production.
 6. Confirm rights to reproduce or adapt the Borrow Smart Mortgage source form and Risk Pyramid.
-7. Decide whether to add a state marginal-rate estimate and, if so, which state table applies based on residence.
+7. Approve final question order and required-versus-optional rules.
