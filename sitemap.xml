@@ -137,8 +137,14 @@
   <!-- Field Notes -->
   <url>
     <loc>https://darynfillis.com/field-notes</loc>
-    <lastmod>2026-04-24</lastmod>
+    <lastmod>2026-08-07</lastmod>
     <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://darynfillis.com/los-angeles-condo-financing-10-unit-projects</loc>
+    <lastmod>2026-08-07</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
