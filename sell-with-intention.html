@@ -20,7 +20,7 @@
 
 <!-- SEO -->
 <title>Sell with Intention | Rate Buydown Listing Strategy | Daryn Fillis</title>
-<meta name="description" content="A rate-buydown listing strategy calculator for real estate agents and sellers. See real PITIA math, break-even analysis, and IPC limits — built for live listing presentations.">
+<meta name="description" content="A rate-buydown listing strategy calculator for agents and sellers. Compare seller net after payoff, complete buyer payment, carrying costs, and concession limits.">
 <link rel="canonical" href="https://darynfillis.com/sell-with-intention">
 <meta name="robots" content="index, follow">
 <meta name="author" content="Daryn Fillis">
@@ -29,7 +29,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://darynfillis.com/sell-with-intention">
 <meta property="og:title" content="Sell with Intention | Rate Buydown Listing Strategy | Daryn Fillis">
-<meta property="og:description" content="A rate-buydown listing strategy calculator for real estate agents and sellers. See real PITIA math, break-even analysis, and IPC limits — built for live listing presentations.">
+<meta property="og:description" content="Compare seller net after payoff, complete buyer payment, carrying costs, and concession limits for a rate-buydown listing strategy.">
 <meta property="og:image" content="https://darynfillis.com/og-home.jpg">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Daryn Fillis | NEO Home Loans">
@@ -37,7 +37,7 @@
 <!-- Twitter / X Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Sell with Intention | Rate Buydown Listing Strategy | Daryn Fillis">
-<meta name="twitter:description" content="A rate-buydown listing strategy calculator for real estate agents and sellers. See real PITIA math, break-even analysis, and IPC limits — built for live listing presentations.">
+<meta name="twitter:description" content="Compare seller net after payoff, complete buyer payment, carrying costs, and concession limits for a rate-buydown listing strategy.">
 <meta name="twitter:image" content="https://darynfillis.com/og-home.jpg">
 
 <!-- Schema.org -->
@@ -46,7 +46,7 @@
   "@context": "https://schema.org",
   "@type": "WebPage",
   "name": "Sell with Intention — Rate Buydown Listing Strategy",
-  "description": "A rate-buydown listing strategy calculator for real estate agents and sellers, modeled with full PITIA payments and real carrying-cost math.",
+  "description": "A rate-buydown listing strategy calculator for real estate agents and sellers, modeled with seller payoff, complete buyer-payment inputs, and carrying-cost math.",
   "url": "https://darynfillis.com/sell-with-intention",
   "author": {
     "@type": "Person",
@@ -188,13 +188,13 @@ nav.scrolled { box-shadow: 0 2px 12px rgba(10,37,64,0.08); }
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px 14px}
 .ic{display:flex;flex-direction:column;gap:4px}
 .ic label{font-size:0.72rem;color:var(--muted);font-weight:600}
-.ic input{
+.ic input,.ic select{
   font-size:0.85rem;padding:9px 11px;border-radius:6px;
   border:1.5px solid var(--rule);background:var(--white);color:var(--ink);
   width:100%;outline:none;font-family:var(--font);font-weight:600;
   transition:border-color .16s;
 }
-.ic input:focus{border-color:var(--blue)}
+.ic input:focus,.ic select:focus{border-color:var(--blue)}
 .why{font-size:0.75rem;color:var(--muted);line-height:1.7;font-weight:200;font-style:italic;margin-top:8px}
 .why strong{color:var(--blue-dark);font-style:normal;font-weight:700}
 .calc-note{font-size:0.75rem;color:var(--body);margin-top:9px;line-height:1.7;background:var(--surface);border-radius:8px;padding:10px 13px}
@@ -421,7 +421,7 @@ footer { background: var(--ink); padding: 56px 48px 36px; }
 
   <span class="eyebrow">Manufacturing Affordability by Design</span>
   <h1 class="h1">Sell with Intention</h1>
-  <p class="sub">A rate-buydown listing strategy that widens the buyer pool without cutting the price — modeled with full PITIA payments and real carrying-cost math.</p>
+  <p class="sub">A rate-buydown listing strategy that widens the buyer pool without cutting the price — modeled with seller payoff, complete buyer-payment inputs, and carrying-cost math.</p>
 
   <div class="box">
     <p class="box-title">New to this? Here&rsquo;s how it works in 60 seconds</p>
@@ -434,7 +434,7 @@ footer { background: var(--ink); padding: 56px 48px 36px; }
       <div class="step">
         <p class="num">02</p>
         <p class="label">Buyer uses credit to buy down rate</p>
-        <p class="desc">That credit permanently lowers the buyer&rsquo;s interest rate, which lowers their monthly payment.</p>
+        <p class="desc">A lender quote determines how much of that credit can be applied to discount points and what permanent rate it can produce.</p>
       </div>
       <div class="step">
         <p class="num">03</p>
@@ -477,23 +477,27 @@ footer { background: var(--ink); padding: 56px 48px 36px; }
 
     <div class="isec">
       <p class="ilbl">Property</p>
-      <div class="g4">
-        <div class="ic"><label>Target list price ($)</label><input type="number" id="lp" value="930000" oninput="calc()"></div>
-        <div class="ic"><label>Commission (%)</label><input type="number" id="cr" value="5" step="0.25" oninput="calc()"></div>
-        <div class="ic"><label>Escrow / title / fees ($)</label><input type="number" id="fe" value="5000" oninput="calc()"></div>
-        <div class="ic"><label>Down payment (%)</label><input type="number" id="dp" value="10" step="5" oninput="calc()"></div>
+      <div class="g3">
+        <div class="ic"><label>Target list price ($)</label><input type="number" id="lp" value="930000" min="0" step="1000" oninput="calc()"></div>
+        <div class="ic"><label>Commission (%)</label><input type="number" id="cr" value="5" min="0" max="100" step="0.25" oninput="calc()"></div>
+        <div class="ic"><label>Escrow / title / fees ($)</label><input type="number" id="fe" value="5000" min="0" step="500" oninput="calc()"></div>
+        <div class="ic"><label>Down payment (%)</label><input type="number" id="dp" value="10" min="0" max="100" step="5" oninput="calc()"></div>
+        <div class="ic"><label>Occupancy</label><select id="occ" onchange="calc()"><option value="primary">Primary / second home</option><option value="investment">Investment property</option></select></div>
+        <div class="ic"><label>Assumed appraised value ($, optional)</label><input type="number" id="av" value="" min="0" step="1000" placeholder="Uses sale price" oninput="calc()"></div>
       </div>
-      <p class="why">This is the price you and the seller agree to list at <strong>before</strong> the Full House strategy is layered on top.</p>
+      <p class="why">This is the price you and the seller agree to list at <strong>before</strong> the Full House strategy is layered on top. The conventional concession check uses the lower of the selected sale price or entered appraisal; when appraisal is blank, it assumes the sale price is supported.</p>
     </div>
 
     <div class="isec">
-      <p class="ilbl">Buyer PITIA on the new home &mdash; Principal &middot; Interest &middot; Taxes &middot; Insurance &middot; HOA</p>
-      <div class="g3">
+      <p class="ilbl">Buyer monthly housing payment &mdash; Principal &middot; Interest &middot; Taxes &middot; Homeowners insurance &middot; Mortgage insurance &middot; HOA</p>
+      <div class="g5">
         <div class="ic"><label>Property tax rate (%/yr)</label><input type="number" id="txr" value="1.25" step="0.05" oninput="calc()"></div>
         <div class="ic"><label>Homeowners insurance (%/yr)</label><input type="number" id="insr" value="0.3" step="0.05" oninput="calc()"></div>
+        <div class="ic"><label>Standard-list mortgage insurance / mo ($)</label><input type="number" id="smi" value="0" min="0" step="25" oninput="calc()"></div>
+        <div class="ic"><label>Full House mortgage insurance / mo ($)</label><input type="number" id="bmi" value="0" min="0" step="25" oninput="calc()"></div>
         <div class="ic"><label>Buyer HOA / mo ($)</label><input type="number" id="bhoa" value="0" oninput="calc()"></div>
       </div>
-      <p class="why">The <strong>buyer&rsquo;s</strong> new tax bill resets to the sale price, so these rates apply to what they pay &mdash; not the seller&rsquo;s old tax bill below.</p>
+      <p class="why">The <strong>buyer&rsquo;s</strong> new tax bill resets to the sale price. Mortgage insurance is not estimated from down payment alone; enter the monthly amount from each scenario&rsquo;s loan quote so the payment comparison remains complete.</p>
     </div>
 
     <div class="isec">
@@ -503,18 +507,20 @@ footer { background: var(--ink); padding: 56px 48px 36px; }
         <div class="ic"><label>Current rate (%)</label><input type="number" id="mr" value="3.5" step="0.125" oninput="calc()"></div>
         <div class="ic"><label>Remaining term (yrs)</label><input type="number" id="mt" value="25" oninput="calc()"></div>
       </div>
-      <p class="why">What the seller still pays every month on <strong>this</strong> home &mdash; used to show the real cost of waiting for a buyer.</p>
+      <p class="why">The balance is treated as the estimated payoff and is subtracted from every seller-net figure. Actual payoff statements may include accrued interest or fees. The monthly payment is used to separate interest cost from principal that reduces the payoff.</p>
     </div>
 
     <div class="isec">
       <p class="ilbl">The departing residence &mdash; drives the seller&rsquo;s real carrying-cost tax &amp; insurance</p>
-      <div class="g4">
+      <div class="g3">
         <div class="ic"><label>Original purchase price ($)</label><input type="number" id="spp" value="650000" oninput="calc()"></div>
         <div class="ic"><label>Purchase date</label><input type="date" id="spd" value="2019-06-15" oninput="calc()"></div>
         <div class="ic"><label>Tax assessment cap (%/yr)</label><input type="number" id="txcap" value="2" step="0.25" oninput="calc()"></div>
         <div class="ic"><label>Insurance inflation (%/yr)</label><input type="number" id="inscap" value="6" step="0.5" oninput="calc()"></div>
+        <div class="ic"><label>Actual seller property tax / mo ($, optional)</label><input type="number" id="stax" value="" min="0" step="25" placeholder="Uses estimate" oninput="calc()"></div>
+        <div class="ic"><label>Actual seller insurance / mo ($, optional)</label><input type="number" id="sins" value="" min="0" step="25" placeholder="Uses estimate" oninput="calc()"></div>
       </div>
-      <p class="why">Property tax is usually locked in near the <strong>purchase price</strong> and grows slowly from there (most states cap annual reassessment growth &mdash; 2% is the California/Prop&nbsp;13 standard; adjust for other states). Insurance isn&rsquo;t capped the same way &mdash; premiums have been climbing well ahead of tax assessments in most markets, which is why it gets its own, faster growth rate. Both compound forward from the purchase date, not from today&rsquo;s list price.</p>
+      <p class="why">For the most accurate carrying cost, enter the seller&rsquo;s actual monthly tax and insurance. When either is blank, the calculator estimates it from purchase price, purchase date, and the growth assumptions shown here.</p>
     </div>
 
     <div class="isec">
@@ -524,7 +530,7 @@ footer { background: var(--ink); padding: 56px 48px 36px; }
         <div class="ic"><label>Full House rate (%)</label><input type="number" id="br" value="6.125" step="0.125" oninput="calc()"></div>
         <div class="ic"><label>Standard List rate (%)</label><input type="number" id="sr" value="7.25" step="0.125" oninput="calc()"></div>
       </div>
-      <p class="why">The concession is added <strong>on top of</strong> the list price above, then credited back to the buyer at closing to buy down their rate.</p>
+      <p class="why">The concession is added <strong>on top of</strong> the list price above, then credited back to the buyer at closing. This calculator does not derive a rate from the credit: enter a current lender-quoted rate after confirming eligible costs, discount-point pricing, and program limits.</p>
     </div>
 
     <div class="isec">
@@ -578,7 +584,7 @@ footer { background: var(--ink); padding: 56px 48px 36px; }
   <div class="footer-grid">
     <div>
       <div class="footer-brand">Daryn <span>Fillis</span></div>
-      <div class="footer-tagline">Certified Mortgage Advisor at NEO Home Loans. Strategic mortgage guidance for buyers, investors, and homeowners in Los Angeles.</div>
+      <div class="footer-tagline">Certified Mortgage Advisor at NEO Home Loans. Helping Los Angeles buyers and homeowners make better mortgage decisions before and after closing.</div>
       <!-- NEO Better white logo -->
       <div style="margin-bottom:20px;opacity:0.88">
         <svg width="120" height="57" viewBox="0 0 385 183" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -701,7 +707,12 @@ footer { background: var(--ink); padding: 56px 48px 36px; }
 
 <input type="hidden" id="sel" value="1">
 
-<script>
+<script type="module">
+import {
+  calculateSellWithIntention,
+  monthlyPrincipalAndInterest
+} from './scripts/sell-with-intention-calculator.mjs';
+
 /* ── NAV ── */
 const nav = document.getElementById('nav');
 const navToggle = document.getElementById('navToggle');
@@ -710,30 +721,31 @@ window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.
 navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
 document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
 
-const OB={1:0,2:0.005,3:0.015,4:0.03,5:0.05};
-
-function fmt(n){return'$'+Math.round(n).toLocaleString();}
+function fmt(n){
+  const value=Number.isFinite(n)?n:0;
+  return(value<0?'−':'')+'$'+Math.round(Math.abs(value)).toLocaleString();
+}
+function signedFmt(n){
+  const value=Number.isFinite(n)?n:0;
+  return(value>0?'+':value<0?'−':'')+'$'+Math.round(Math.abs(value)).toLocaleString();
+}
 function pct(n){return n.toFixed(3)+'%';}
-
-function piCalc(loan,rate,years){
-  const r=rate/100/12,n=(years||30)*12;
-  if(r===0)return loan/n;
-  return loan*(r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1);
-}
-function fullPITIA(price,rate,tx,ins,hoa,dp){
+function bdown(price,rate,tx,ins,mi,hoa,dp){
   const loan=price*(1-dp);
-  return piCalc(loan,rate,30)+(price*tx/100/12)+(price*ins/100/12)+hoa;
+  const pi=monthlyPrincipalAndInterest(loan,rate,30),t=price*tx/100/12,i=price*ins/100/12;
+  return'P&I '+fmt(pi)+' &nbsp;&middot;&nbsp; Tax '+fmt(t)+' &nbsp;&middot;&nbsp; Home ins '+fmt(i)+(mi>0?' &nbsp;&middot;&nbsp; Mtg ins '+fmt(mi):'')+(hoa>0?' &nbsp;&middot;&nbsp; HOA '+fmt(hoa):'');
 }
-function bdown(price,rate,tx,ins,hoa,dp){
-  const loan=price*(1-dp);
-  const pi=piCalc(loan,rate,30),t=price*tx/100/12,i=price*ins/100/12;
-  return'P&I '+fmt(pi)+' &nbsp;&middot;&nbsp; Tax '+fmt(t)+' &nbsp;&middot;&nbsp; Ins '+fmt(i)+(hoa>0?' &nbsp;&middot;&nbsp; HOA '+fmt(hoa):'');
+function inputNumber(id,fallback=0){
+  const raw=document.getElementById(id).value.trim();
+  if(raw==='')return fallback;
+  const value=Number(raw);
+  return Number.isFinite(value)?value:fallback;
 }
-function yearsOwned(dateStr){
-  const pd=new Date(dateStr+'T00:00:00');
-  const now=new Date();
-  const ms=now-pd;
-  return Math.max(0, ms/(1000*60*60*24*365.25));
+function optionalInputNumber(id){
+  const raw=document.getElementById(id).value.trim();
+  if(raw==='')return null;
+  const value=Number(raw);
+  return Number.isFinite(value)?value:null;
 }
 
 function drawChart(nA,nCfloor,nCsel,nD,selLabel){
@@ -744,7 +756,7 @@ function drawChart(nA,nCfloor,nCsel,nD,selLabel){
   const rows=[
     {label:'Standard List',val:nA,color:'#8a95a3',sub:'baseline, no strategy'},
     {label:'Full House — floor',val:nCfloor,color:'#5bcbf5',sub:'zero competing offers'},
-    {label:'Full House — '+selLabel,val:nCsel,color:'#0A2540',sub:'if that upside happens'},
+    ...(selLabel==='Floor (0%)'?[]:[{label:'Full House — '+selLabel,val:nCsel,color:'#0A2540',sub:'if that upside happens'}]),
     {label:'Standard List Fail',val:nD,color:'#E24B4A',sub:'sits, then cuts'}
   ];
   const chartLeft=190, chartRight=980, chartW=chartRight-chartLeft;
@@ -765,76 +777,86 @@ function drawChart(nA,nCfloor,nCsel,nD,selLabel){
 }
 
 function calc(){
-  const lp   =parseFloat(document.getElementById('lp').value)||930000;
-  const cm   =(parseFloat(document.getElementById('cr').value)||5)/100;
-  const fe   =parseFloat(document.getElementById('fe').value)||5000;
-  const dp   =(parseFloat(document.getElementById('dp').value)||10)/100;
-  const tx   =parseFloat(document.getElementById('txr').value)||1.25;
-  const ins  =parseFloat(document.getElementById('insr').value)||0.3;
-  const bh   =parseFloat(document.getElementById('bhoa').value)||0;
-  const mb   =parseFloat(document.getElementById('mb').value)||550000;
-  const mr   =parseFloat(document.getElementById('mr').value)||3.5;
-  const mt   =parseFloat(document.getElementById('mt').value)||25;
-  const cn   =parseFloat(document.getElementById('cn').value)||28000;
-  const br   =parseFloat(document.getElementById('br').value)||6.125;
-  const sr   =parseFloat(document.getElementById('sr').value)||7.25;
-  const dc   =parseFloat(document.getElementById('dc').value)||55000;
-  const spp  =parseFloat(document.getElementById('spp').value)||650000;
-  const spd  =document.getElementById('spd').value||'2019-06-15';
-  const txcap=parseFloat(document.getElementById('txcap').value)||2;
-  const inscap=parseFloat(document.getElementById('inscap').value)||6;
-  const shoa =parseFloat(document.getElementById('shoa').value)||150;
-  const dm   =parseFloat(document.getElementById('dm').value)||3;
-  const no   =parseInt(document.getElementById('sel').value)||1;
+  const inputs={
+    listPrice:inputNumber('lp',930000),
+    commissionPct:inputNumber('cr',5),
+    fees:inputNumber('fe',5000),
+    downPaymentPct:inputNumber('dp',10),
+    occupancy:document.getElementById('occ').value,
+    appraisedValue:inputNumber('av',0),
+    propertyTaxPct:inputNumber('txr',1.25),
+    insurancePct:inputNumber('insr',0.3),
+    standardMortgageInsurance:inputNumber('smi',0),
+    strategyMortgageInsurance:inputNumber('bmi',0),
+    buyerHoa:inputNumber('bhoa',0),
+    sellerLoanBalance:inputNumber('mb',550000),
+    sellerMortgageRatePct:inputNumber('mr',3.5),
+    sellerRemainingTermYears:inputNumber('mt',25),
+    originalPurchasePrice:inputNumber('spp',650000),
+    purchaseDate:document.getElementById('spd').value||'2019-06-15',
+    taxAssessmentCapPct:inputNumber('txcap',2),
+    insuranceInflationPct:inputNumber('inscap',6),
+    sellerPropertyTaxMonthly:optionalInputNumber('stax'),
+    sellerInsuranceMonthly:optionalInputNumber('sins'),
+    concession:inputNumber('cn',28000),
+    strategyRatePct:inputNumber('br',6.125),
+    standardRatePct:inputNumber('sr',7.25),
+    priceCut:inputNumber('dc',37000),
+    sellerHoa:inputNumber('shoa',150),
+    monthsOnMarket:inputNumber('dm',3),
+    offerScenario:parseInt(document.getElementById('sel').value,10)||1
+  };
 
-  const pA=fullPITIA(lp,sr,tx,ins,bh,dp),nA=lp*(1-cm)-fe,bdA=bdown(lp,sr,tx,ins,bh,dp);
-  const lC=lp+cn,pC=fullPITIA(lC,br,tx,ins,bh,dp);
-  const ob=OB[Math.min(no,5)],sC=lC*(1+ob),nC=sC*(1-cm)-cn-fe,dN=nC-nA;
-  const nCfloor=lC*(1-cm)-cn-fe;
-  const beSale=(nA+fe+cn)/(1-cm),beO=Math.max(0,beSale-lC),beP=(beO/lC)*100;
-  const sav=Math.round(pA-pC),bdC=bdown(lC,br,tx,ins,bh,dp);
-  const loanC=lC*(1-dp),piC=piCalc(loanC,br,30);
-  const rS=sr/100/12,nS=360,fS=(rS*Math.pow(1+rS,nS))/(Math.pow(1+rS,nS)-1);
-  const eqP=(piC/fS)/(1-dp);
-  const dL=lp-dc,pD=fullPITIA(dL,sr,tx,ins,bh,dp);
+  const result=calculateSellWithIntention(inputs);
+  const {
+    listPrice:lp,commissionRate:cm,fees:fe,downPaymentRate:dp,
+    propertyTaxPct:tx,insurancePct:ins,buyerHoa:bh,
+    standardMortgageInsurance:smi,strategyMortgageInsurance:bmi,sellerLoanBalance:mb,
+    concession:cn,strategyRatePct:br,standardRatePct:sr,priceCut:dc,
+    originalPurchasePrice:spp,sellerHoa:shoa,monthsOnMarket:dm,offerScenario:no,
+    standardPayment:pA,standardNet:nA,strategyListPrice:lC,strategyPayment:pC,
+    offerPremium:ob,strategySalePrice:sC,strategyNet:nC,strategyFloorNet:nCfloor,
+    strategyVsStandard:dN,strategyFloorVsStandard:dNfloor,
+    breakEvenPremiumDollars:beO,breakEvenPremiumPct:beP,
+    monthlySavings:sav,equivalentMarketRatePrice:eqP,reducedPrice:dL,reducedPayment:pD,
+    ownedYears:yrsOwned,sellerMortgagePayment:mp,sellerPropertyTaxMonthly:sellerTax,
+    sellerInsuranceMonthly:sellerIns,sellerPropertyTaxEstimated,sellerInsuranceEstimated,
+    sellerMonthlyCashOutlay:mc,
+    sellerCashOutlayDuringListing:tc,principalPaidDuringListing:principalPaid,
+    interestPaidDuringListing:interestPaid,economicCarryingCost:economicCarry,
+    failedListNet:nD,strategyVsFailedList:dD,strategyFloorVsFailedList:dDfloor,
+    ltvPct:ltv,ipcCapPct,
+    ipcBasis,ipcCapDollars,concessionPct:concPct,ipcRatio,occupancy,appraisedValue
+  }=result;
 
-  // Seller's carrying costs on the DEPARTING residence.
-  // Property tax and insurance both compound forward from the ORIGINAL purchase price
-  // and purchase date — not from today's list price — using separate growth rates,
-  // since insurance has been inflating faster than tax-assessment caps in most markets.
-  const yrsOwned=yearsOwned(spd);
-  const mp=piCalc(mb,mr,mt);
-  const baseTax=spp*tx/100/12;
-  const sellerTax=baseTax*Math.pow(1+txcap/100,yrsOwned);
-  const baseIns=spp*ins/100/12;
-  const sellerIns=baseIns*Math.pow(1+inscap/100,yrsOwned);
-  const mc=mp+sellerTax+sellerIns+shoa;
-  const tc=mc*dm,nD=dL*(1-cm)-tc-fe,dD=nC-nD;
-  const bdD='Mortgage '+fmt(mp)+' &nbsp;&middot;&nbsp; Tax '+fmt(sellerTax)+' &nbsp;&middot;&nbsp; Ins '+fmt(sellerIns)+(shoa>0?' &nbsp;&middot;&nbsp; HOA '+fmt(shoa):'')+' &nbsp;<span style="opacity:0.7">(escalated '+yrsOwned.toFixed(1)+' yrs from purchase)</span>';
+  const bdA=bdown(lp,sr,tx,ins,smi,bh,dp),bdC=bdown(lC,br,tx,ins,bmi,bh,dp);
+  const sellerTaxSource=sellerPropertyTaxEstimated?'estimated':'entered';
+  const sellerInsuranceSource=sellerInsuranceEstimated?'estimated':'entered';
+  const bdD='Cash outlay: Mortgage '+fmt(mp)+' &nbsp;&middot;&nbsp; Tax '+fmt(sellerTax)+' ('+sellerTaxSource+') &nbsp;&middot;&nbsp; Ins '+fmt(sellerIns)+' ('+sellerInsuranceSource+')'+(shoa>0?' &nbsp;&middot;&nbsp; HOA '+fmt(shoa):'')+'<br>Net comparison counts '+fmt(interestPaid)+' of mortgage interest, not '+fmt(principalPaid)+' of principal that reduces the payoff.';
   const dc2=dN>=0?'#198837':'#E24B4A';
-  const ol=no===5?'5+':String(no);
-  const obn=no===1?'Floor case — sells at asking with zero competitive premium: '+fmt(lC):ol+' offers — est. '+(ob*100).toFixed(1)+'% premium above asking → sale price '+fmt(sC);
+  const dcFloor=dNfloor>=0?'#198837':'#E24B4A';
+  const savingsText=sav>=0?'saves '+fmt(sav)+'/mo':'costs '+fmt(Math.abs(sav))+'/mo more';
+  const standardDownPayment=lp*dp,strategyDownPayment=lC*dp;
+  const obn=no===1?'Floor case — sells at asking with zero competitive premium: '+fmt(lC):(ob*100).toFixed(1)+'% premium scenario above asking → sale price '+fmt(sC);
   const ben=beO<=0
-    ?'This scenario already clears The Standard List with room to spare — no premium needed.'
-    :'The floor case (no competing offers, sells at exactly '+fmt(lC)+') lands within '+fmt(Math.abs(dN))+' of The Standard List. It only takes '+fmt(beO)+' ('+beP.toFixed(2)+'%) above asking — from even one extra interested buyer — to fully match or beat it. The strategy does not require a bidding war to work.';
+    ?'The floor case already clears The Standard List — no competitive premium is needed to break even.'
+    :'The floor case (no competing offers, sells at exactly '+fmt(lC)+') lands within '+fmt(Math.abs(dNfloor))+' of The Standard List. It only takes '+fmt(beO)+' ('+beP.toFixed(2)+'%) above asking to fully match or beat it. Treat any premium as optional upside, not an assumption.';
 
-  // Fannie Mae / Freddie Mac interested-party-contribution (IPC) cap check.
-  // Conventional financing tiers the max seller concession by LTV; FHA is a flat 6%.
-  const ltv=100-(dp*100);
-  const ipcCapPct = ltv>90?3 : ltv>75?6 : 9;
-  const ipcCapDollars = sC*ipcCapPct/100;
-  const concPct = (cn/sC)*100;
-  const ipcRatio = concPct/ipcCapPct;
   let ipcClass='ipc-ok', ipcLabel='Within conventional limits', ipcTitleClass='ok';
-  if(ipcRatio>=1){ ipcClass='ipc-over'; ipcLabel='Exceeds the conventional cap'; ipcTitleClass='over'; }
+  if(ipcRatio>1){ ipcClass='ipc-over'; ipcLabel='Exceeds the conventional cap'; ipcTitleClass='over'; }
+  else if(ipcRatio===1){ ipcClass='ipc-warn'; ipcLabel='At the conventional cap'; ipcTitleClass='warn'; }
   else if(ipcRatio>=0.85){ ipcClass='ipc-warn'; ipcLabel='Getting close to the cap'; ipcTitleClass='warn'; }
-  const ipcNote = ipcRatio>=1
+  const occupancyLabel=occupancy==='investment'?'investment property':'primary residence / second home';
+  const appraisalNote=appraisedValue>0
+    ?'The cap basis uses the lower of the selected sale price and the entered appraisal: '+fmt(ipcBasis)+'.'
+    :'No appraisal was entered, so this check assumes the appraisal supports the selected sale price.';
+  const ipcNote = ipcRatio>1
     ? 'The excess over the cap gets treated as a sales concession and deducted from the sale price for LTV purposes — talk to underwriting before finalizing this concession amount.'
-    : 'This concession has room to grow if you need it — up to '+fmt(ipcCapDollars)+' before hitting the conventional cap at this down payment.';
+    : 'The percentage cap is '+fmt(ipcCapDollars)+'. Actual allowable credit can be lower because it cannot exceed eligible borrower costs.';
 
-  document.getElementById('carry-note').innerHTML='Seller&rsquo;s monthly carrying cost while this home sits: '+fmt(mp)+' mortgage + '+fmt(sellerTax)+' property tax + '+fmt(sellerIns)+' insurance + '+fmt(shoa)+' HOA = <strong>'+fmt(mc)+'/mo</strong> &times; '+dm+' months = <strong>'+fmt(tc)+' total</strong>. Tax &amp; insurance are grown forward from the '+fmt(spp)+' purchase price over '+yrsOwned.toFixed(1)+' years owned &mdash; not calculated off today&rsquo;s '+fmt(lp)+' list price.';
+  document.getElementById('carry-note').innerHTML='Seller&rsquo;s monthly cash outlay while this home sits: '+fmt(mp)+' mortgage + '+fmt(sellerTax)+' property tax ('+sellerTaxSource+') + '+fmt(sellerIns)+' insurance ('+sellerInsuranceSource+') + '+fmt(shoa)+' HOA = <strong>'+fmt(mc)+'/mo</strong> &times; '+dm+' months = <strong>'+fmt(tc)+' total cash outlay</strong>. For the seller-net comparison, '+fmt(principalPaid)+' of principal is treated as payoff reduction rather than an expense, leaving <strong>'+fmt(economicCarry)+' of economic carrying cost</strong>.';
 
-  const pillLabels={1:'Floor (0%)',2:'2 offers',3:'3 offers',4:'4 offers',5:'5+ offers'};
+  const pillLabels={1:'Floor (0%)',2:'+0.5%',3:'+1.5%',4:'+3.0%',5:'+5.0%'};
   const ph=[1,2,3,4,5].map(i=>'<div class="pill'+(no===i?' on':'')+'" onclick="sp('+i+')">'+pillLabels[i]+'</div>').join('');
 
   drawChart(nA,nCfloor,nC,nD,pillLabels[no]);
@@ -847,10 +869,10 @@ function calc(){
     <hr class="dv">
     <div class="rw"><p class="rl">List price</p><p class="rv">${fmt(lp)}</p></div>
     <div class="rw"><p class="rl">Buyer rate</p><p class="rv">${pct(sr)}</p></div>
-    <div class="rw"><p class="rl">Buyer PITIA payment</p><p class="rvl">${fmt(pA)}/mo</p><p class="rbd">${bdA}</p></div>
+    <div class="rw"><p class="rl">Buyer estimated housing payment</p><p class="rvl">${fmt(pA)}/mo</p><p class="rbd">${bdA}</p></div>
     <div class="rw"><p class="rl">Who can buy this home</p><p class="pool-lbl">Only buyers who qualify at market rate</p><div class="bw-bar"><div class="br br-gy" style="width:52%"></div></div><p class="pool-cap">Must afford <strong>${fmt(pA)}/mo</strong> — no buyer with a lower budget can even make an offer.</p></div>
     <hr class="dv">
-    <div class="nb nb-gy"><p class="rl">Estimated seller net</p><p class="nv">${fmt(nA)}</p><p class="ns">${Math.round(cm*100)}% comm &nbsp;·&nbsp; ${fmt(fe)} fees</p><p class="ns" style="margin-top:4px">Baseline — no strategy</p></div>
+    <div class="nb nb-gy"><p class="rl">Estimated seller net after payoff</p><p class="nv">${fmt(nA)}</p><p class="ns">${Math.round(cm*100)}% comm &nbsp;·&nbsp; ${fmt(fe)} fees &nbsp;·&nbsp; ${fmt(mb)} estimated payoff</p><p class="ns" style="margin-top:4px">Baseline — no strategy</p></div>
     <p class="vd">Features-first marketing. Relies on a single buyer at full market payment. No leverage, no competition.</p>
   </div>
 
@@ -861,7 +883,7 @@ function calc(){
     <hr class="dv">
     <div class="rw"><p class="rl">Price after cut</p><p class="rv">${fmt(dL)}</p></div>
     <div class="rw"><p class="rl">Buyer rate</p><p class="rv">${pct(sr)}</p></div>
-    <div class="rw"><p class="rl">Buyer PITIA payment</p><p class="rvl" style="color:#E24B4A">${fmt(pD)}/mo</p><p class="rbd">${bdown(dL,sr,tx,ins,bh,dp)}</p></div>
+    <div class="rw"><p class="rl">Buyer estimated housing payment</p><p class="rvl" style="color:#E24B4A">${fmt(pD)}/mo</p><p class="rbd">${bdown(dL,sr,tx,ins,smi,bh,dp)}</p></div>
     <div class="rw">
       <p class="rl">Who can buy this home after the cut</p>
       <p class="pool-lbl">Buyers still must qualify at market rate (${pct(sr)}) for</p>
@@ -870,8 +892,8 @@ function calc(){
       <p class="pool-cap" style="margin-top:6px">Compare that to a buyer under the strategy on the next card, who pays <strong>${fmt(pC)}/mo</strong> for a home priced <strong>${fmt(lC)}</strong> &mdash; ${pD>pC?'a higher price, and still a lower monthly payment than the cut-price buyer':'roughly the same payment, for a more expensive home'}. Cutting the price without fixing the rate barely moves who can qualify.</p>
     </div>
     <hr class="dv">
-    <div class="nb nb-rd"><p class="rl">Estimated seller net</p><p class="nv" style="color:#E24B4A">${fmt(nD)}</p><p class="ns">${Math.round(cm*100)}% comm &nbsp;·&nbsp; ${fmt(tc)} carry (${fmt(mc)}/mo × ${dm} mo) &nbsp;·&nbsp; ${fmt(fe)} fees</p><p class="ns" style="margin-top:4px;line-height:1.7">${bdD}</p><p class="nd" style="color:#E24B4A">−${fmt(dD)} vs the strategy on the next card</p></div>
-    <p class="vd vd-r">A home that sits is a home that bleeds. This is the risk the next strategy is built to avoid — it leaves ${fmt(dD)} on the table by comparison.</p>
+    <div class="nb nb-rd"><p class="rl">Estimated seller outcome after payoff and carrying costs</p><p class="nv" style="color:#E24B4A">${fmt(nD)}</p><p class="ns">${Math.round(cm*100)}% comm &nbsp;·&nbsp; ${fmt(economicCarry)} economic carry &nbsp;·&nbsp; ${fmt(fe)} fees &nbsp;·&nbsp; ${fmt(mb)} starting payoff</p><p class="ns" style="margin-top:4px;line-height:1.7">${bdD}</p><p class="nd" style="color:#E24B4A">${fmt(Math.abs(dDfloor))} ${dDfloor>=0?'less than':'more than'} the Full House floor case</p></div>
+    <p class="vd vd-r">This scenario combines the price cut with the interest, tax, insurance, and HOA cost of waiting. Principal payments are not counted as a loss because they reduce the eventual payoff.</p>
   </div>
 
   <div class="stack">
@@ -882,17 +904,18 @@ function calc(){
     <hr class="dv">
     <div class="rw"><p class="rl">List price (target + concession)</p><p class="rv">${fmt(lp)} + ${fmt(cn)} = <span style="color:#198837">${fmt(lC)}</span></p></div>
     <div class="rw"><p class="rl">Seller credit at close</p><p class="rv" style="color:#198837">−${fmt(cn)}</p></div>
+    <div class="rw"><p class="rl">Buyer down payment at ${Math.round(dp*100)}%</p><p class="rv">${fmt(strategyDownPayment)} <span style="font-size:0.72rem;color:var(--muted)">vs ${fmt(standardDownPayment)} baseline</span></p><p class="rbd">Seller credit cannot fund the required down payment.</p></div>
     <div class="rw"><p class="rl">Buyer rate</p><p class="rv">${pct(br)} <span style="font-size:0.72rem;color:#198837">vs ${pct(sr)} market</span></p></div>
-    <div class="rw"><p class="rl">Buyer PITIA payment</p><p class="rvl" style="color:#198837">${fmt(pC)}/mo <span style="font-size:0.72rem;font-weight:600">saves ${fmt(sav)}/mo</span></p><p class="rbd">${bdC}</p></div>
+    <div class="rw"><p class="rl">Buyer estimated housing payment</p><p class="rvl" style="color:#198837">${fmt(pC)}/mo <span style="font-size:0.72rem;font-weight:600">${savingsText}</span></p><p class="rbd">${bdC}</p></div>
     <div class="rw"><p class="rl">Who can buy this home</p><p class="pool-lbl">Everyone from the Baseline, plus every buyer the lower rate unlocks</p><div class="bw-bar"><div class="br br-gr" style="width:100%"></div></div><p class="pool-cap" style="color:#198837">List price holds — no public price cut, nothing to spook a buyer.</p></div>
     <hr class="dv">
-    <div class="nb nb-gr"><p class="rl">Estimated seller net (this scenario)</p><p class="nv" style="color:#198837">${fmt(nC)}</p><p class="ns">${Math.round(cm*100)}% comm on ${fmt(sC)} &nbsp;·&nbsp; ${fmt(cn)} credit &nbsp;·&nbsp; ${fmt(fe)} fees</p><p class="nd" style="color:${dc2}">${dN>=0?'+':''}${fmt(dN)} vs The Standard List</p><p class="ap">⚠ Requires appraisal to support ${fmt(lC)}</p></div>
+    <div class="nb nb-gr"><p class="rl">Estimated seller net after payoff (floor case)</p><p class="nv" style="color:#198837">${fmt(nCfloor)}</p><p class="ns">${Math.round(cm*100)}% comm on ${fmt(lC)} &nbsp;·&nbsp; ${fmt(cn)} credit &nbsp;·&nbsp; ${fmt(fe)} fees &nbsp;·&nbsp; ${fmt(mb)} estimated payoff</p><p class="nd" style="color:${dcFloor}">${signedFmt(dNfloor)} vs The Standard List</p><p class="ap">⚠ Requires appraisal to support ${fmt(lC)}</p></div>
     <p class="mini" style="font-size:0.7rem">At the floor case, this is downside protection, not a bigger payout. Real upside only shows up if the bigger buyer pool actually produces competition — see below.</p>
   </div>
 
   <div class="bw-card">
-    <p class="chart-title" style="font-size:0.85rem">Does this work without a bidding war? Yes.</p>
-    <div class="bw-intro">The floor case — zero competing offers, home sells at exactly list + credit — already lands within a few thousand dollars of The Standard List. Any competitive interest at all pushes it ahead. You are not betting the strategy on a frenzy.</div>
+    <p class="chart-title" style="font-size:0.85rem">What happens without a bidding war?</p>
+    <div class="bw-intro">Use the floor case as the real comparison. The calculator shows the exact difference from The Standard List and the sale price required to break even; any competitive premium remains optional upside, not an assumption.</div>
     <p class="ilbl" style="margin-top:2px">Optional upside — only if the bigger buyer pool creates competition</p>
     <p style="font-size:0.7rem;color:var(--muted);line-height:1.6;margin-bottom:8px;font-weight:200">In a soft market, expect the floor case — use it as your real number. In a balanced or hot market, a modest premium becomes realistic. Treat anything above the floor as upside, not the plan.</p>
     <div class="pills">${ph}</div>
@@ -903,15 +926,15 @@ function calc(){
     </div>
     <div class="og-diff ${dN>=0?'og-diff-g':''}">
       <p class="ocl">Vs Standard List</p>
-      <p class="og-diff-v" style="color:${dc2}">${dN>=0?'+':''}${fmt(dN)}</p>
+      <p class="og-diff-v" style="color:${dc2}">${signedFmt(dN)}</p>
       <p class="ocs">${dN>=0?'Ahead of baseline':'Within reach of baseline'}</p>
     </div>
     <p class="ben">${ben}</p>
     <div class="ipc-check ${ipcClass}">
-      <p class="ipc-title ${ipcTitleClass}">${ipcLabel} — ${concPct.toFixed(2)}% of sale price</p>
-      <p class="ipc-body">At <strong>${Math.round(dp*100)}% down (${ltv.toFixed(0)}% LTV)</strong>, conventional financing caps seller concessions at <strong>${ipcCapPct}%</strong> of sale price (${fmt(ipcCapDollars)}). This concession is <strong>${fmt(cn)}</strong>. ${ipcNote} FHA uses a flat 6% cap regardless of down payment — check the applicable cap if buyers may use FHA.</p>
+      <p class="ipc-title ${ipcTitleClass}">${ipcLabel} — ${concPct.toFixed(2)}% of the cap basis</p>
+      <p class="ipc-body">At <strong>${Math.round(dp*100)}% down (${ltv.toFixed(0)}% LTV)</strong> for a <strong>${occupancyLabel}</strong>, the conventional percentage cap is <strong>${ipcCapPct}%</strong> of the lower sale-price/appraisal basis. ${appraisalNote} This concession is <strong>${fmt(cn)}</strong>. ${ipcNote} FHA generally uses a 6% limit, also subject to actual eligible costs and program rules.</p>
     </div>
-    <p class="risk-note">⚠ The real execution risk isn&rsquo;t the buyer count or the concession cap — it&rsquo;s the appraisal. This math only holds if the home appraises at ${fmt(lC)}. If it appraises lower, the credit has to shrink, the seller has to cover the gap, or the price has to come down — get a realistic comp check before you set the concession amount.</p>
+    <p class="risk-note">⚠ The payment and seller-net math uses the selected sale price of ${fmt(sC)}. If the appraisal is lower, the buyer may need additional cash, the credit or price may need to change, and the loan must be re-underwritten. Confirm comps, eligible costs, and rate pricing before presenting the structure.</p>
   </div>
   </div>
 
@@ -920,8 +943,8 @@ function calc(){
     <p class="sn sn-b">Manufacturing Affordability</p><p class="ss">For the buyer who didn't know they could afford you</p>
     <p class="mini">The lower rate means buyers who were shopping below your price point now qualify for this home.</p>
     <hr class="dv">
-    <div class="rw"><p class="rl">PITIA with strategy (${pct(br)})</p><p class="rv">${fmt(pC)}/mo</p></div>
-    <div class="rw"><p class="rl">At ${pct(sr)} that PITIA buys</p><p class="rv" style="color:var(--body)">${fmt(eqP)}</p></div>
+    <div class="rw"><p class="rl">Housing payment with strategy (${pct(br)})</p><p class="rv">${fmt(pC)}/mo</p></div>
+    <div class="rw"><p class="rl">At ${pct(sr)} that payment supports</p><p class="rv" style="color:var(--body)">${fmt(eqP)}</p></div>
     <div class="rw"><p class="rl">With The Full House they buy</p><p class="rv" style="color:#38b8e8">${fmt(lC)}</p></div>
     <div class="rw">
       <p class="rl">The same buyer, two different budgets</p>
@@ -934,11 +957,13 @@ function calc(){
     </div>
     <div class="rw"><p class="rl">Buying power manufactured</p><p class="rvl" style="color:#38b8e8">+${fmt(lC-eqP)}</p></div>
     <hr class="dv">
-    <div class="nb nb-bl"><p class="rl">How it works</p><p class="rvs" style="line-height:1.7;margin-top:4px">Buyers who could only afford <strong>${fmt(eqP)}</strong> at ${pct(sr)} can now compete for your <strong>${fmt(lC)}</strong> home — at the exact same PITIA payment. The home didn't get cheaper. The payment got possible.</p></div>
-    <p class="vd vd-b">More qualified buyers = more competition = The Full House pays off.</p>
+    <div class="nb nb-bl"><p class="rl">How it works</p><p class="rvs" style="line-height:1.7;margin-top:4px">Using the entered rates, taxes, insurance, mortgage insurance, HOA, and down payment, the same monthly housing payment supports <strong>${fmt(eqP)}</strong> at ${pct(sr)} or <strong>${fmt(lC)}</strong> at ${pct(br)}.</p></div>
+    <p class="vd vd-b">A lower payment may widen the qualified pool. Whether that produces additional offers is a market outcome, not a calculator assumption.</p>
   </div>`;
 }
 function sp(n){document.getElementById('sel').value=n;calc();}
+window.calc=calc;
+window.sp=sp;
 calc();
 </script>
 
