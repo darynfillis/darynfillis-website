@@ -155,8 +155,14 @@
   <!-- Field Notes -->
   <url>
     <loc>https://darynfillis.com/field-notes</loc>
-    <lastmod>2026-08-07</lastmod>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://darynfillis.com/field-notes/self-employed-mortgage-los-angeles</loc>
+    <lastmod>2026-08-09</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
