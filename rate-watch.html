@@ -530,8 +530,11 @@
   }
 </style>
 <meta name="twitter:image" content="https://darynfillis.com/og-home.jpg">
+<link rel="stylesheet" href="/site-accessibility.css">
+<script src="/site-analytics.js" defer></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 
 <!-- ── NAVIGATION ── -->
 <nav id="nav">
@@ -543,6 +546,7 @@
     <a href="/schedule" class="nav-cta">Book a call</a>
   </div>
 </nav>
+<main id="main-content">
 
 <!-- ── HERO ── -->
 <section class="hero">
@@ -591,12 +595,12 @@
     <div class="mnd-widget-container">
       <div class="mnd-widget-placeholder">
         <strong>MND Rate Widget Goes Here</strong>
-        Get the embed code from <a href="https://www.mortgagenewsdaily.com/widgets/rates" target="_blank" rel="noopener">mortgagenewsdaily.com/widgets/rates</a> and replace this placeholder div. Choose "Rates Expanded Horizontal" with chart enabled.
+        Get the embed code from <a href="https://www.mortgagenewsdaily.com/widgets/rates" target="_blank" rel="noopener noreferrer">mortgagenewsdaily.com/widgets/rates</a> and replace this placeholder div. Choose "Rates Expanded Horizontal" with chart enabled.
       </div>
     </div>
 
     <p class="mnd-attribution">
-      National rate averages provided by <a href="https://www.mortgagenewsdaily.com/mortgage-rates" target="_blank" rel="noopener">Mortgage News Daily</a>. Updated each weekday around 4PM Eastern.
+      National rate averages provided by <a href="https://www.mortgagenewsdaily.com/mortgage-rates" target="_blank" rel="noopener noreferrer">Mortgage News Daily</a>. Updated each weekday around 4PM Eastern.
     </p>
   </div>
 </section>
@@ -653,6 +657,7 @@
 </section>
 
 <!-- ── FOOTER ── -->
+</main>
 <footer>
   <div>
     <a href="/">Home</a>
@@ -718,7 +723,7 @@
 
   function renderItems(items) {
     if (!items || items.length === 0) {
-      listEl.innerHTML = '<div class="rss-error">No commentary available at the moment. Visit <a href="https://www.mortgagenewsdaily.com/topic/mortgage-rates" target="_blank" rel="noopener">Mortgage News Daily Rate Watch</a> directly for the latest.</div>';
+      listEl.innerHTML = '<div class="rss-error">No commentary available at the moment. Visit <a href="https://www.mortgagenewsdaily.com/topic/mortgage-rates" target="_blank" rel="noopener noreferrer">Mortgage News Daily Rate Watch</a> directly for the latest.</div>';
       return;
     }
 
@@ -730,9 +735,9 @@
 
       return '<article class="rss-item">' +
         '<div class="rss-item-date">' + date + '</div>' +
-        '<h3><a href="' + link + '" target="_blank" rel="noopener">' + title + '</a></h3>' +
+        '<h3><a href="' + link + '" target="_blank" rel="noopener noreferrer">' + title + '</a></h3>' +
         (excerpt ? '<p class="rss-item-excerpt">' + excerpt + '</p>' : '') +
-        '<a href="' + link + '" target="_blank" rel="noopener" class="rss-item-link">Read full analysis on Mortgage News Daily</a>' +
+        '<a href="' + link + '" target="_blank" rel="noopener noreferrer" class="rss-item-link">Read full analysis on Mortgage News Daily</a>' +
         '</article>';
     }).join('');
 
@@ -740,7 +745,7 @@
   }
 
   function showError(message) {
-    listEl.innerHTML = '<div class="rss-error">' + message + ' Visit <a href="https://www.mortgagenewsdaily.com/topic/mortgage-rates" target="_blank" rel="noopener">Mortgage News Daily Rate Watch</a> for the latest commentary.</div>';
+    listEl.innerHTML = '<div class="rss-error">' + message + ' Visit <a href="https://www.mortgagenewsdaily.com/topic/mortgage-rates" target="_blank" rel="noopener noreferrer">Mortgage News Daily Rate Watch</a> for the latest commentary.</div>';
   }
 
   // Fetch the feed

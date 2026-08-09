@@ -1,0 +1,52 @@
+/* Shared accessibility safeguards for the public site. */
+.skip-link,
+.skip-to-main {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 100000;
+  padding: 12px 16px;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #0a2540;
+  font: 800 0.82rem/1.2 Montserrat, Arial, sans-serif;
+  text-decoration: none;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+  transform: translateY(-160%);
+  transition: transform 0.15s ease;
+}
+
+.skip-link:focus,
+.skip-to-main:focus {
+  transform: translateY(0);
+}
+
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid #5bcbf5 !important;
+  outline-offset: 3px !important;
+}
+
+/* Small text on the navy sections previously fell below readable contrast. */
+.hero-divider,
+.hstat-lbl,
+.trust-lbl,
+.about-hi-s,
+.acc-micro,
+.np-lbl,
+.footer-tagline,
+.footer-col h4,
+.footer-copy,
+.about-photo-ph-hint,
+.stat-big-src,
+.refi-disclaimer,
+.prequal-legal,
+.ts-label {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skip-link,
+  .skip-to-main {
+    transition: none;
+  }
+}

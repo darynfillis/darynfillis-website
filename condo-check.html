@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Condo Warrantability Check | Daryn Fillis</title>
 <meta name="description" content="A 2-minute self-check for California condo sellers and listing agents. Find out where your building stands on financing before you list.">
+<link rel="canonical" href="https://darynfillis.com/condo-check">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
@@ -258,8 +259,11 @@
     * { transition: none !important; animation: none !important; }
   }
 </style>
+<link rel="stylesheet" href="/site-accessibility.css">
+<script src="/site-analytics.js" defer></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 
 <!-- Netlify Forms: hidden static form for build-time detection.
      The live submit (in JS) posts to this same form name with these field names.
@@ -286,8 +290,8 @@
     <h1 id="herotitle">Find out if your building will <em>survive financing</em>.</h1>
     <p id="herosub">Most condo deals that fall apart do it at the project level, not the borrower level. Answer a few questions about the building and get a plain-language read on where it stands, plus what to line up before you list.</p>
     <div class="toggle">
-      <button id="tab-seller" class="active" onclick="setMode('seller')">I'm selling</button>
-      <button id="tab-agent" onclick="setMode('agent')">I'm the listing agent</button>
+      <button type="button" id="tab-seller" class="active" aria-pressed="true" onclick="setMode('seller')">I'm selling</button>
+      <button type="button" id="tab-agent" aria-pressed="false" onclick="setMode('agent')">I'm the listing agent</button>
     </div>
   </div>
 </section>
@@ -295,12 +299,12 @@
 <div class="meter-zone">
   <div class="wrap">
     <span class="meter-label">Building read</span>
-    <div class="meter-track"><div class="meter-fill" id="meterfill"></div></div>
+    <div class="meter-track" id="metertrack" role="progressbar" aria-label="Condo check progress" aria-valuemin="0" aria-valuemax="9" aria-valuenow="0"><div class="meter-fill" id="meterfill"></div></div>
     <span class="meter-count" id="metercount">0 of 9</span>
   </div>
 </div>
 
-<main>
+<main id="main-content">
   <div class="wrap">
     <div id="quiz"></div>
 
@@ -309,7 +313,7 @@
     </div>
 
     <!-- RESULT -->
-    <div class="result" id="result">
+    <div class="result" id="result" aria-live="polite">
       <div class="verdict" id="verdict">
         <div class="vlabel">Your building read</div>
         <h2 id="verdict-title"></h2>
@@ -330,7 +334,7 @@
         <h3 id="ctatitle">Want me to check the actual building?</h3>
         <p id="ctabody">This is a directional read, not an underwriting decision. Send me the address and I'll pull the real project data and tell you exactly where it stands. No cost, no obligation.</p>
         <div class="btn-row">
-          <a class="btn" id="ctabtn" href="https://darynfillis.com/schedule" target="_blank" rel="noopener">Book a free project check</a>
+          <a class="btn" id="ctabtn" href="https://darynfillis.com/schedule" target="_blank" rel="noopener noreferrer">Book a free project check</a>
           <a class="btn ghost" href="tel:4243966967">Call 424-396-6967</a>
         </div>
       </div>
@@ -503,6 +507,8 @@ function setMode(m) {
   mode = m;
   document.getElementById('tab-seller').classList.toggle('active', m === 'seller');
   document.getElementById('tab-agent').classList.toggle('active', m === 'agent');
+  document.getElementById('tab-seller').setAttribute('aria-pressed', String(m === 'seller'));
+  document.getElementById('tab-agent').setAttribute('aria-pressed', String(m === 'agent'));
   const c = COPY[m];
   document.getElementById('eyebrow').textContent = c.eyebrow;
   document.getElementById('herotitle').innerHTML = c.title;
@@ -529,12 +535,12 @@ function buildQuiz() {
       const card = document.createElement('div');
       card.className = 'q'; card.id = 'q-' + q.id;
       card.innerHTML = `
-        <div class="q-text">${q.q}</div>
+        <div class="q-text" id="q-label-${q.id}">${q.q}</div>
         <div class="q-help">${q.help}</div>
-        <div class="opts">
-          <button class="opt" data-v="good" onclick="answer('${q.id}','good',this)">Yes</button>
-          <button class="opt" data-v="bad" onclick="answer('${q.id}','bad',this)">No</button>
-          <button class="opt" data-v="unsure" onclick="answer('${q.id}','unsure',this)">Not sure</button>
+        <div class="opts" role="group" aria-labelledby="q-label-${q.id}">
+          <button type="button" class="opt" data-v="good" aria-pressed="false" onclick="answer('${q.id}','good',this)">Yes</button>
+          <button type="button" class="opt" data-v="bad" aria-pressed="false" onclick="answer('${q.id}','bad',this)">No</button>
+          <button type="button" class="opt" data-v="unsure" aria-pressed="false" onclick="answer('${q.id}','unsure',this)">Not sure</button>
         </div>`;
       g.appendChild(card);
     });
@@ -546,7 +552,10 @@ function answer(id, val, btn) {
   answers[id] = val;
   const card = document.getElementById('q-' + id);
   card.classList.add('answered');
-  card.querySelectorAll('.opt').forEach(o => { o.classList.remove('sel-good','sel-bad','sel-unsure'); });
+  card.querySelectorAll('.opt').forEach(o => {
+    o.classList.remove('sel-good','sel-bad','sel-unsure');
+    o.setAttribute('aria-pressed', String(o === btn));
+  });
   // For inverted questions, "No" is the good answer visually; but we store semantic good/bad already.
   // Color reflects whether the answer is favorable.
   const q = QUESTIONS.find(x => x.id === id);
@@ -564,6 +573,7 @@ function updateMeter() {
   const pct = Math.round((done / total) * 100);
   document.getElementById('meterfill').style.width = pct + '%';
   document.getElementById('metercount').textContent = done + ' of ' + total;
+  document.getElementById('metertrack').setAttribute('aria-valuenow', String(done));
   const btn = document.getElementById('seemore');
   if (done === total) {
     btn.disabled = false;
