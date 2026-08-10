@@ -221,6 +221,24 @@ body.presenter #pv{display:grid;grid-template-rows:auto 1fr auto;height:100vh;pa
 #pv footer button{background:var(--navy-mid);border:1px solid var(--panel);color:#fff;border-radius:10px;
   padding:12px 30px;font-size:16px;font-weight:600;cursor:pointer}
 #pv footer button:hover{border-color:var(--blue)}
+
+/* ---------- presentation PDF ---------- */
+@page{size:13.333333in 7.5in;margin:0}
+@media print{
+  html,body{width:1280px;height:auto;overflow:visible;background:var(--navy-deep);print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  #viewport{position:static;inset:auto;display:block;width:1280px;height:auto}
+  #stage{position:static;width:1280px;height:auto;transform:none!important}
+  .slide,.slide.active{position:relative;inset:auto;width:1280px;height:720px;display:flex!important;break-after:page;page-break-after:always}
+  .slide:last-of-type{break-after:auto;page-break-after:auto}
+  #lobby,#hud,#bar,#pv{display:none!important}
+  .slide.active:not(#lobby)>*,.slide.active.back:not(#lobby)>*{animation:none!important}
+  .frag{visibility:visible!important;opacity:1!important;transform:none!important}
+  .tl .fill{width:calc(100% - 80px)!important;transition:none!important}
+  #typeOut{font-size:0}
+  #typeOut::before{content:"A mortgage should create options,";font-size:56px}
+  #typeOut::after{content:" not pressure.";font-size:56px;color:var(--blue)}
+  #typeCursor{display:none!important}
+}
 </style>
 </head>
 <body>

@@ -1,6 +1,0 @@
-# Netlify: send a REAL X-Robots-Tag header for everything in /decks/.
-# This is stronger than a <meta> tag — it also covers the PDF and the raw
-# deck files, which can't carry meta tags at all.
-/decks/*
-  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet, noimageindex
-  Referrer-Policy: no-referrer

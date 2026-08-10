@@ -6,6 +6,14 @@
   Content-Type: application/manifest+json
   Cache-Control: public, max-age=0, must-revalidate
 
+/decks/third-borrower.html
+  X-Robots-Tag: noindex, follow, noarchive
+  Referrer-Policy: strict-origin-when-cross-origin
+
+/decks/third-borrower.pdf
+  X-Robots-Tag: noindex, follow, noarchive
+  Referrer-Policy: strict-origin-when-cross-origin
+
 /*
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff

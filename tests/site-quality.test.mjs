@@ -63,13 +63,26 @@ test('audited calculator controls have associated labels', () => {
 test('SEO cleanup is complete', () => {
   const sitemap = read('sitemap.xml');
   for (const route of [
-    '/cal-condo-buyer', '/cal-condo-seller', '/condo-check', '/field-notes/the-ridge-line-july-2026'
+    '/cal-condo-buyer', '/cal-condo-seller', '/condo-check', '/decks', '/field-notes/the-ridge-line-july-2026'
   ]) {
     assert.match(sitemap, new RegExp(`<loc>https://darynfillis\\.com${route}<\\/loc>`));
   }
   assert.match(read('condo-check.html'), /<link rel="canonical" href="https:\/\/darynfillis\.com\/condo-check">/);
   assert.doesNotMatch(read('ig.html'), /property=["']twitter:/i);
   assert.doesNotMatch(read('self-employed-playbook.html'), /property=["']twitter:/i);
+});
+
+test('agent presentation library is public and connects the presentation to its resources', () => {
+  const library = read('decks/index.html');
+  assert.match(library, /<meta name="robots" content="index, follow">/);
+  assert.match(library, /href="third-borrower\.pdf" download/);
+  assert.match(library, /href="\/california-condo-buyers-checklist\.pdf" download/);
+  assert.match(library, /href="\/california-condo-sellers-checklist\.pdf" download/);
+  assert.doesNotMatch(library, /Private page|Just for me|Note to self/);
+
+  const presentation = read('decks/third-borrower.html');
+  assert.match(presentation, /@media print/);
+  assert.match(presentation, /\.frag\{visibility:visible!important/);
 });
 
 test('conversion events cover the primary mortgage journeys', () => {
