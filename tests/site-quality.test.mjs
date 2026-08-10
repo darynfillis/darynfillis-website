@@ -81,6 +81,10 @@ test('agent presentation library is public and connects the presentation to its 
   assert.match(library, /href="move-up-method\.html\?mins=0"/);
   assert.match(library, /href="move-up-method\.pdf" download/);
   assert.match(library, /href="\/move-up-method"/);
+  assert.match(library, /<h3 id="borrow-smart-title">The third side\.<\/h3>/);
+  assert.match(library, /href="borrow-smart-university\.html\?mins=0"/);
+  assert.match(library, /href="borrow-smart-university\.pdf" download/);
+  assert.match(library, /href="https:\/\/www\.borrowsmartuniversity\.com\/"/);
   assert.doesNotMatch(library, /Private page|Just for me|Note to self/);
 
   const presentation = read('decks/third-borrower.html');
@@ -95,7 +99,7 @@ test('agent presentation library is public and connects the presentation to its 
   assert.match(moveUpPresentation, /id="pipBtn"/);
   assert.match(moveUpPresentation, /The move-up<br><span class="b">method\.<\/span>/);
   assert.match(moveUpPresentation, /Daryn Fillis &nbsp;·&nbsp; NEO Home Loans &nbsp;·&nbsp; NMLS #1988371/);
-  assert.match(moveUpPlayer, /BroadcastChannel\('move-up-method-deck'\)/);
+  assert.match(moveUpPlayer, /window\.DECK_CHANNEL \|\| 'move-up-method-deck'/);
   assert.match(moveUpPlayer, /documentPictureInPicture/);
   assert.match(moveUpPlayer, /function startCountdown\(\)/);
   assert.match(moveUpPlayer, /manualMinutes === null\) manualMinutes = 5;/);
@@ -109,6 +113,32 @@ test('agent presentation library is public and connects the presentation to its 
     assert.ok(fs.existsSync(path.join(root, 'decks/move-up-method', asset)), asset);
   }
   assert.ok(fs.existsSync(path.join(root, 'decks/move-up-method.pdf')));
+
+  const borrowSmartPresentation = read('decks/borrow-smart-university.html');
+  const borrowSmartPlayer = read('decks/borrow-smart-university-live.js');
+  assert.match(borrowSmartPresentation, /<title>The third side\. \| Borrow Smart for real estate agents<\/title>/);
+  assert.match(borrowSmartPresentation, /id="lobby"/);
+  assert.match(borrowSmartPresentation, /Daryn Fillis &nbsp;·&nbsp; NEO Home Loans &nbsp;·&nbsp; NMLS #1988371/);
+  assert.match(borrowSmartPresentation, /What are we trying to make possible\?/);
+  assert.match(borrowSmartPresentation, /Life\. Property\. Position\. Path\./);
+  assert.match(borrowSmartPresentation, /class="balance-triangle"/);
+  assert.match(borrowSmartPresentation, /Life at the center\./);
+  assert.equal((borrowSmartPresentation.match(/<section class="slide/g) || []).length, 24);
+  assert.match(borrowSmartPlayer, /window\.DECK_CHANNEL = 'borrow-smart-university-deck'/);
+  assert.match(borrowSmartPlayer, /\[STTS Step 1:/);
+  assert.match(borrowSmartPlayer, /\[STTS Step 10:/);
+  assert.match(borrowSmartPlayer, /\[Sources\]/);
+  assert.doesNotMatch(borrowSmartPresentation + borrowSmartPlayer, /[\u2010-\u2015]|&(?:m|n)dash;/);
+  for (const asset of ['1.png', 'strategy-call-qr.png']) {
+    assert.ok(fs.existsSync(path.join(root, 'decks/borrow-smart-university', asset)), asset);
+  }
+  for (const asset of [
+    'decks/borrow-smart-university.pdf',
+    'decks/borrow-smart-university.pptx',
+    'decks/borrow-smart-university-live.js'
+  ]) {
+    assert.ok(fs.existsSync(path.join(root, asset)), asset);
+  }
 });
 
 test('conversion events cover the primary mortgage journeys', () => {

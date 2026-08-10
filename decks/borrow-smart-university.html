@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The third side. | Borrow Smart for real estate agents</title>
+<meta name="description" content="A live, agent-facing Borrow Smart University presentation about the three-sided balance sheet and the agent's role in a client's wealth journey.">
+<link rel="canonical" href="https://darynfillis.com/decks/borrow-smart-university">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://darynfillis.com/decks/borrow-smart-university">
+<meta property="og:title" content="The third side. | Borrow Smart for real estate agents">
+<meta property="og:description" content="The agent helps shape more than the transaction. Learn how real estate, liabilities, and assets work together in the client's wealth journey.">
+<meta property="og:image" content="https://darynfillis.com/decks/borrow-smart-university/1.png">
+<meta property="og:site_name" content="Daryn Fillis | NEO Home Loans">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The third side. | Borrow Smart for real estate agents">
+<meta name="twitter:description" content="A life-first look at the three-sided balance sheet and the agent's role in the client's wealth journey.">
+<meta name="twitter:image" content="https://darynfillis.com/decks/borrow-smart-university/1.png">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="move-up-method-live.css">
+<style>
+.balance-slide{justify-content:flex-start;padding-top:56px}
+.balance-triangle{position:relative;width:960px;height:354px;margin:20px auto 0}
+.triangle-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 0 12px rgba(91,203,245,.18))}
+.triangle-lines .plane{fill:rgba(10,37,64,.72);stroke:url(#triangleStroke);stroke-width:4;stroke-linejoin:round}
+.triangle-lines .inner{fill:none;stroke:rgba(143,224,251,.24);stroke-width:1.5;stroke-dasharray:7 9}
+.balance-node{position:absolute;width:250px;min-height:96px;border:1px solid var(--blue);border-radius:999px;background:rgba(7,28,51,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px 24px;box-shadow:0 14px 36px rgba(0,0,0,.24)}
+.balance-node .side-number{font-size:10px;line-height:1;font-weight:600;letter-spacing:.28em;color:var(--blue-lt)}
+.balance-node strong{font-size:24px;line-height:1.1;margin-top:8px}
+.balance-node small{font-size:12px;line-height:1.35;color:var(--muted);margin-top:6px}
+.balance-node.real-estate{left:355px;top:0;background:var(--blue);border-color:var(--blue);color:var(--navy-deep);box-shadow:0 16px 48px rgba(91,203,245,.28)}
+.balance-node.real-estate .side-number,.balance-node.real-estate small{color:var(--navy)}
+.balance-node.assets{left:40px;bottom:0}
+.balance-node.liabilities{right:40px;bottom:0}
+.triangle-center{position:absolute;left:390px;top:154px;width:180px;height:118px;border:1px solid rgba(143,224,251,.5);border-radius:50%;background:radial-gradient(circle at 50% 38%,rgba(18,64,102,.98),rgba(7,28,51,.98));display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 0 42px rgba(91,203,245,.16)}
+.triangle-center span{font-size:10px;font-weight:600;letter-spacing:.24em;color:var(--blue-lt)}
+.triangle-center strong{font-size:19px;line-height:1.2;margin-top:8px}
+.triangle-center small{font-size:11px;color:var(--muted);margin-top:5px}
+@media(prefers-reduced-motion:no-preference){.slide.active .triangle-lines .inner{animation:triangleTrace 7s linear infinite}}
+@keyframes triangleTrace{to{stroke-dashoffset:-64}}
+</style>
+<script src="/site-analytics.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#stage">Skip to presentation</a>
+<div id="viewport"><main id="stage" tabindex="-1">
+
+  <section class="slide active" id="lobby">
+    <div id="gate">
+      <span class="eyebrow"><span class="dot"></span>LIVE SESSION</span>
+      <h1 style="font-size:44px">The third <span class="b">side.</span></h1>
+      <p class="brand-lens">Start with the life.<em>Then structure the loan.</em></p>
+      <p class="small">Tap below to open the room. The countdown and lobby music will start.<br><br><b style="color:var(--blue-lt)">Presenting live?</b> Press <b style="color:#fff">P</b> for floating notes or <b style="color:#fff">N</b> for a second-screen presenter view. Arrow keys advance. <b style="color:#fff">F</b> fullscreen · <b style="color:#fff">M</b> music.<br><br><span style="color:var(--muted)">To skip the countdown, add <b style="color:var(--blue-lt)">?mins=0</b> to the URL or press <b style="color:#fff">→</b> after joining.</span></p>
+      <button class="btn" id="enterBtn" type="button">Open the room</button>
+    </div>
+    <span class="eyebrow"><span class="dot"></span>LIVE SESSION</span>
+    <div id="ring">
+      <svg viewBox="0 0 360 360" aria-hidden="true"><circle class="track" cx="180" cy="180" r="172"/><circle class="arc" cx="180" cy="180" r="172"/></svg>
+      <div id="clock">--:--</div>
+    </div>
+    <div>
+      <h1>We're starting <span class="b">soon.</span></h1>
+      <p class="when" id="whenLabel" style="margin-top:14px">Ready when you are</p>
+    </div>
+  </section>
+
+  <section class="slide center" id="titleSlide" style="gap:30px">
+    <span class="eyebrow"><span class="dot"></span>BORROW SMART UNIVERSITY</span>
+    <h1 style="font-size:70px">The third<br><span class="b">side.</span></h1>
+    <p class="body" style="font-weight:600;font-size:22px;letter-spacing:.02em">Why the agent belongs in every client's wealth conversation.</p>
+    <p class="brand-lens" style="margin-top:-10px">Start with the life.<em>Then structure the loan.</em></p>
+    <p class="small" style="font-size:16px;margin-top:-14px">Daryn Fillis &nbsp;·&nbsp; NEO Home Loans &nbsp;·&nbsp; NMLS #1988371</p>
+  </section>
+
+  <section class="slide center" id="problemSlide" data-title="What are we trying to make possible?" style="gap:30px">
+    <span class="eyebrow">START HERE</span>
+    <p class="body" style="font-size:24px">Before price. Before property. Before financing.</p>
+    <h1 style="font-size:56px"><span id="typeOut"></span><span class="tcursor" id="typeCursor"></span></h1>
+    <p class="brand-lens">Better questions.<em>Better decisions.</em></p>
+  </section>
+
+  <section class="slide">
+    <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">THE STAKES</p>
+    <h2 style="margin-top:14px">The home can be the client's largest asset.<br><span class="b">The mortgage can be the largest liability.</span></h2>
+    <div class="three-col" style="margin-top:36px">
+      <div class="card frag"><span class="small lt" style="font-weight:600">THE LIFE</span><p style="font-weight:800;font-size:21px;margin-top:12px">Home</p><p class="small" style="margin-top:10px">Shelter, belonging, family, work, schools, and the rhythm of daily life.</p></div>
+      <div class="card frag" style="border-color:var(--blue)"><span class="small lt" style="font-weight:600">THE POSITION</span><p style="font-weight:800;font-size:21px;margin-top:12px">Real estate</p><p class="small" style="margin-top:10px">Value, equity, costs, location, condition, and future options.</p></div>
+      <div class="card frag"><span class="small lt" style="font-weight:600">THE OBLIGATION</span><p style="font-weight:800;font-size:21px;margin-top:12px">Mortgage</p><p class="small" style="margin-top:10px">Payment, interest, term, liquidity, risk, and the plan after closing.</p></div>
+    </div>
+    <p class="policy-note">Source: Todd K. Ballenger, <em>Borrow Smart Repay Smart</em> (2020), PDF pp. 11-17.</p>
+  </section>
+
+  <section class="slide">
+    <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">WHY DARYN</p>
+    <h2 style="margin-top:14px">I connect the property decision<br><span class="b">to the financial life around it.</span></h2>
+    <div style="margin-top:34px;border-left:4px solid var(--blue);padding-left:28px;max-width:960px">
+      <p class="body" style="font-size:22px;font-weight:600">The best loan structure begins with the client's goal, timeline, cash flow, liquidity, equity, and risk.</p>
+      <p class="body" style="margin-top:18px;font-size:18px">When the agent and mortgage strategist ask those questions together, the client can see the full decision before an offer turns it into a deadline.</p>
+    </div>
+    <p class="brand-lens" style="margin-top:34px">Rate is one number.<em>Strategy is the full picture.</em></p>
+  </section>
+
+  <section class="slide balance-slide">
+    <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">THE UNIQUE MECHANISM</p>
+    <h2 style="margin-top:14px">A traditional balance sheet has two sides.<br><span class="b">Borrow Smart adds the third.</span></h2>
+    <div class="balance-triangle" aria-label="Three-sided balance sheet with real estate, assets, and liabilities surrounding the client's life">
+      <svg class="triangle-lines" viewBox="0 0 960 354" aria-hidden="true">
+        <defs>
+          <linearGradient id="triangleStroke" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#8FE0FB"/>
+            <stop offset=".52" stop-color="#5BCBF5"/>
+            <stop offset="1" stop-color="#38B8E8"/>
+          </linearGradient>
+        </defs>
+        <path class="plane" d="M480 52 L165 304 L795 304 Z"/>
+        <path class="inner" d="M480 86 L214 286 L746 286 Z"/>
+      </svg>
+      <div class="balance-node real-estate frag">
+        <span class="side-number">SIDE 03</span>
+        <strong>REAL ESTATE</strong>
+        <small>The home, property, costs, and choices.</small>
+      </div>
+      <div class="balance-node assets frag">
+        <span class="side-number">SIDE 01</span>
+        <strong>ASSETS</strong>
+        <small>Cash, savings, investments, and reserves.</small>
+      </div>
+      <div class="balance-node liabilities frag">
+        <span class="side-number">SIDE 02</span>
+        <strong>LIABILITIES</strong>
+        <small>Mortgage, debt, payment, and risk.</small>
+      </div>
+      <div class="triangle-center frag">
+        <span>THE CLIENT</span>
+        <strong>Life at the center.</strong>
+        <small>Goals · cash flow · options</small>
+      </div>
+    </div>
+    <p class="policy-note">Sources: Ballenger, <em>Borrow Smart Repay Smart</em>, PDF pp. 23-28; <a href="https://borrowsmart.beehiiv.com/p/borrow-smart-chronicles-rentals-wealth-gaps" target="_blank" rel="noopener noreferrer">The Borrow Smart Chronicles, Aug. 2, 2024</a>.</p>
+  </section>
+
+  <section class="slide">
+    <span class="eyebrow"><span class="dot"></span>SOME ASSUMPTIONS</span>
+    <div class="quote-bar" style="margin-top:38px;max-width:1000px">
+      <h2>"I help clients buy houses.<br>Their financial plan belongs to someone else."</h2>
+      <p class="body" style="margin-top:22px;color:var(--blue-lt)">You do not have to give financial advice to lead a better financial conversation.</p>
+    </div>
+    <p class="body frag" style="margin-top:34px;font-weight:600">Your role is not to have every answer. It is to bring the right questions into the room early.</p>
+  </section>
+
+  <section class="slide">
+    <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">THE AGENT'S INFLUENCE</p>
+    <h2 style="margin-top:14px">You shape the third side<br><span class="b">before the loan is structured.</span></h2>
+    <div class="dims">
+      <div class="dim frag"><span class="a">1</span><span class="t">Location</span><span class="d">The neighborhood changes commute, schools, support systems, and daily life.</span></div>
+      <div class="dim frag"><span class="a">2</span><span class="t">Property</span><span class="d">Condition, dues, insurance, maintenance, and resale all change the financial position.</span></div>
+      <div class="dim frag"><span class="a">3</span><span class="t">Contract</span><span class="d">Price, credits, contingencies, timing, and repairs affect cash and risk.</span></div>
+      <div class="dim frag"><span class="a">4</span><span class="t">Possibility</span><span class="d">The right home should support the life the client wants without consuming every option.</span></div>
+    </div>
+  </section>
+
+  <section class="slide center" style="gap:28px;background:var(--navy)">
+    <span class="eyebrow"><span class="dot"></span>ROOM CHECK</span>
+    <h1 style="font-size:52px">Where does your buyer<br><span class="b">conversation begin?</span></h1>
+    <div class="two-col" style="width:940px;margin-top:10px">
+      <div class="card frag" style="padding:18px 24px"><b>MAXIMUM PRICE</b><p class="small" style="margin-top:8px">What can the client qualify to buy?</p></div>
+      <div class="card frag" style="padding:18px 24px;border-color:var(--blue)"><b>THE LIFE</b><p class="small" style="margin-top:8px">What are they trying to make possible?</p></div>
+      <div class="card frag" style="padding:18px 24px"><b>THE SEARCH</b><p class="small" style="margin-top:8px">Which homes match the wish list?</p></div>
+      <div class="card frag" style="padding:18px 24px"><b>THE PAYMENT</b><p class="small" style="margin-top:8px">What monthly number feels comfortable?</p></div>
+    </div>
+    <p class="small" style="color:var(--blue-lt);font-weight:600">Show of hands. There is no wrong answer. The order changes the conversation.</p>
+  </section>
+
+  <section class="slide">
+    <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">BALANCE SHEET BASICS</p>
+    <h2 style="margin-top:14px">Moving money changes its location.<br><span class="b">The long-term consequence comes later.</span></h2>
+    <div class="compare" style="margin-top:36px">
+      <div class="card frag"><span class="rate">ASSETS</span><strong>Cash and investments</strong><p class="small" style="margin-top:10px">Accessible resources with different levels of safety, liquidity, and return.</p></div>
+      <div class="card frag" style="border-color:var(--blue)"><span class="rate">LIABILITIES</span><strong>Mortgage and debt</strong><p class="small" style="margin-top:10px">Obligations with different costs, payments, terms, and risks.</p></div>
+    </div>
+    <p class="body" style="margin-top:28px;text-align:center;font-weight:600">Assets minus liabilities equals net worth. The location of money changes what it can do next.</p>
+    <p class="policy-note">Source: Ballenger, <em>Borrow Smart Repay Smart</em>, PDF pp. 23-26.</p>
+  </section>
+
+  <section class="slide">
+    <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">THE THIRD SIDE</p>
+    <h2 style="margin-top:14px">Real estate touches both sides<br><span class="b">and changes the life between them.</span></h2>
+    <div class="three-col" style="margin-top:36px">
+      <div class="card frag"><span class="small lt" style="font-weight:600">AS AN ASSET</span><p style="font-weight:800;font-size:20px;margin-top:12px">Value and equity</p><p class="small" style="margin-top:10px">The position may grow or decline. Equity is not the same as accessible cash.</p></div>
+      <div class="card frag" style="border-color:var(--blue)"><span class="small lt" style="font-weight:600">AS REAL ESTATE</span><p style="font-weight:800;font-size:20px;margin-top:12px">Home and property</p><p class="small" style="margin-top:10px">The client lives inside the asset while location, condition, and ownership costs keep changing.</p></div>
+      <div class="card frag"><span class="small lt" style="font-weight:600">WITH A LIABILITY</span><p style="font-weight:800;font-size:20px;margin-top:12px">Debt and payment</p><p class="small" style="margin-top:10px">The mortgage affects cash flow, borrowing capacity, flexibility, and the future plan.</p></div>
+    </div>
+    <p class="policy-note">Sources: Ballenger, <em>Borrow Smart Repay Smart</em>, PDF pp. 11-17 and 23-28; <a href="https://www.mpamag.com/us/news/general/the-key-to-success-in-a-compliant-world/9235" target="_blank" rel="noopener noreferrer">Ballenger, Mortgage Professional, June 6, 2012</a>.</p>
+  </section>
+
+  <section class="slide center" style="gap:28px">
+    <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">HOUSE + HOME</p>
+    <h1 style="font-size:52px">The house is the financial position.<br><span class="b">Home is the life lived inside it.</span></h1>
+    <p class="body" style="font-size:21px;max-width:960px">A life-first agent holds both truths at once. The property must serve the client's daily life and fit the full financial plan.</p>
+    <p class="brand-lens">The mortgage is one decision.<em>The life around it is the point.</em></p>
+    <p class="policy-note">Source: Ballenger, <em>Borrow Smart Repay Smart</em>, PDF pp. 11-13.</p>
+  </section>
+
+  <section class="slide">
+    <span class="eyebrow"><span class="dot"></span>SOME ASSUMPTIONS</span>
+    <div class="quote-bar" style="margin-top:38px;max-width:1000px">
+      <h2>"If the client qualifies,<br>the home is financially right for them."</h2>
+      <p class="body" style="margin-top:22px;color:var(--blue-lt)">Qualification answers whether a structure may be available. It does not answer whether the full decision fits the life.</p>
+    </div>
+    <p class="body frag" style="margin-top:34px;font-weight:600">Approval is a threshold. Strategy is the conversation around the threshold.</p>
+  </section>
+
+  <section class="slide">
+    <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">QUESTION LEADERSHIP</p>
+    <h2 style="margin-top:14px">You do not need to become<br><span class="b">the client's financial advisor.</span></h2>
+    <div class="flags">
+      <div class="flag frag"><div class="n">ASK</div><div class="t">The life question</div><p>What should this move make possible?</p></div>
+      <div class="flag frag"><div class="n">SURFACE</div><div class="t">The tradeoffs</div><p>What changes with this property, price, and timing?</p></div>
+      <div class="flag frag"><div class="n">CONNECT</div><div class="t">The right experts</div><p>Who should confirm the lending, tax, insurance, or investment impact?</p></div>
+      <div class="flag frag"><div class="n">COORDINATE</div><div class="t">The decision</div><p>What must the agent and lender solve before the offer?</p></div>
+      <div class="flag frag"><div class="n">DOCUMENT</div><div class="t">The plan</div><p>What did the client choose and why?</p></div>
+      <div class="flag frag"><div class="n">REVISIT</div><div class="t">The next chapter</div><p>What changed after closing?</p></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">THE THIRD-SIDE CONVERSATION</p>
+    <h2 style="margin-top:14px">Four questions keep the client<br><span class="b">inside the full decision.</span></h2>
+    <div class="dims" style="margin-top:42px">
+      <div class="dim frag"><span class="a">1</span><span class="t">Life</span><span class="d">What are we trying to make possible?</span></div>
+      <div class="dim frag"><span class="a">2</span><span class="t">Property</span><span class="d">What tradeoffs come with this home and location?</span></div>
+      <div class="dim frag"><span class="a">3</span><span class="t">Position</span><span class="d">What does the purchase do to cash, debt, reserves, and flexibility?</span></div>
+      <div class="dim frag"><span class="a">4</span><span class="t">Path</span><span class="d">What needs to remain possible after closing?</span></div>
+    </div>
+    <p class="brand-lens" style="margin-top:38px">Compare the tradeoffs.<em>Then decide.</em></p>
+  </section>
+
+  <section class="slide">
+    <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">BEFORE THE SEARCH</p>
+    <h2 style="margin-top:14px">Define the life guardrails<br><span class="b">before the listings define them.</span></h2>
+    <div class="four-col">
+      <div class="card frag" style="padding:22px"><span class="small lt" style="font-weight:600">01</span><p style="font-weight:800;font-size:18px;margin-top:12px">Daily life</p><p class="small" style="margin-top:10px">Commute, family, space, schools, care, work, and community.</p></div>
+      <div class="card frag" style="padding:22px"><span class="small lt" style="font-weight:600">02</span><p style="font-weight:800;font-size:18px;margin-top:12px">Time horizon</p><p class="small" style="margin-top:10px">How long should the home and loan need to work?</p></div>
+      <div class="card frag" style="padding:22px"><span class="small lt" style="font-weight:600">03</span><p style="font-weight:800;font-size:18px;margin-top:12px">Monthly life</p><p class="small" style="margin-top:10px">What full housing cost leaves room for everything else?</p></div>
+      <div class="card frag" style="padding:22px;border-color:var(--blue)"><span class="small lt" style="font-weight:600">04</span><p style="font-weight:800;font-size:18px;margin-top:12px">Options</p><p class="small" style="margin-top:10px">What cash, flexibility, and future choices should remain?</p></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">DURING THE SEARCH</p>
+    <h2 style="margin-top:14px">Every showing reveals more<br><span class="b">than rooms and finishes.</span></h2>
+    <div class="two-col" style="margin-top:30px;gap:18px">
+      <div class="card frag" style="padding:20px 24px"><b>OWNERSHIP COSTS</b><p class="small" style="margin-top:8px">Taxes, insurance, HOA, maintenance, utilities, and known repairs.</p></div>
+      <div class="card frag" style="padding:20px 24px;border-color:var(--blue)"><b>PROPERTY RISK</b><p class="small" style="margin-top:8px">Condition, insurability, project eligibility, location, and marketability.</p></div>
+      <div class="card frag" style="padding:20px 24px"><b>LIFE FIT</b><p class="small" style="margin-top:8px">The home has to work on a normal Tuesday, not only on showing day.</p></div>
+      <div class="card frag" style="padding:20px 24px"><b>FUTURE FLEXIBILITY</b><p class="small" style="margin-top:8px">Resale, rentability, expansion, accessibility, and the next likely life change.</p></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">BEFORE THE OFFER</p>
+    <h2 style="margin-top:14px">The strongest offer starts<br><span class="b">with a coordinated decision.</span></h2>
+    <div class="steps">
+      <div class="step frag"><div class="num">CHECK</div><div class="name">PROPERTY</div><p>Confirm the home, disclosures, costs, insurability, and financing fit.</p></div>
+      <div class="arrow frag">→</div>
+      <div class="step frag"><div class="num">COMPARE</div><div class="name">TRADEOFFS</div><p>Price, credits, cash to close, payment, reserves, contingencies, and timing.</p></div>
+      <div class="arrow frag">→</div>
+      <div class="step frag"><div class="num">COORDINATE</div><div class="name">EXECUTION</div><p>Agent, lender, client, and other advisors know the plan and backup path.</p></div>
+    </div>
+    <p class="brand-lens" style="margin-top:34px">Better client decisions before the offer.<em>Clean execution after it.</em></p>
+  </section>
+
+  <section class="slide">
+    <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">AFTER CLOSING</p>
+    <h2 style="margin-top:14px">Closing is the starting line.<br><span class="b">The strategy keeps moving.</span></h2>
+    <div class="dims">
+      <div class="dim frag"><span class="a">1</span><span class="t">Track</span><span class="d">Value, equity, payment, costs, and the rest of the balance sheet.</span></div>
+      <div class="dim frag"><span class="a">2</span><span class="t">Review</span><span class="d">Return to the plan when life, income, markets, or goals change.</span></div>
+      <div class="dim frag"><span class="a">3</span><span class="t">Connect</span><span class="d">Bring in lending, tax, insurance, estate, or investment professionals when needed.</span></div>
+      <div class="dim frag"><span class="a">4</span><span class="t">Stay useful</span><span class="d">The agent remains connected to the client before the next move becomes urgent.</span></div>
+    </div>
+    <p class="brand-lens" style="margin-top:38px">The loan is temporary.<em>The strategy lasts.</em></p>
+  </section>
+
+  <section class="slide">
+    <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">THE ADVISORY TEAM</p>
+    <h2 style="margin-top:14px">No one professional owns<br><span class="b">the whole wealth journey.</span></h2>
+    <div class="four-col">
+      <div class="card frag" style="padding:22px;border-color:var(--blue)"><span class="small lt" style="font-weight:600">REAL ESTATE AGENT</span><p style="font-weight:800;font-size:18px;margin-top:12px">The third side</p><p class="small" style="margin-top:10px">Life fit, property, market, contract, and the path to ownership.</p></div>
+      <div class="card frag" style="padding:22px"><span class="small lt" style="font-weight:600">MORTGAGE STRATEGIST</span><p style="font-weight:800;font-size:18px;margin-top:12px">The liability</p><p class="small" style="margin-top:10px">Qualification, structure, payment, liquidity, and execution.</p></div>
+      <div class="card frag" style="padding:22px"><span class="small lt" style="font-weight:600">FINANCIAL TEAM</span><p style="font-weight:800;font-size:18px;margin-top:12px">The assets</p><p class="small" style="margin-top:10px">Investments, taxes, insurance, estate planning, and risk.</p></div>
+      <div class="card frag" style="padding:22px"><span class="small lt" style="font-weight:600">THE CLIENT</span><p style="font-weight:800;font-size:18px;margin-top:12px">The decision</p><p class="small" style="margin-top:10px">Priorities, tradeoffs, consent, discipline, and the life being built.</p></div>
+    </div>
+    <p class="policy-note">Source: Ballenger, <em>Borrow Smart Repay Smart</em>, PDF pp. 180-183.</p>
+  </section>
+
+  <section class="slide">
+    <span class="eyebrow"><span class="dot"></span>CLIENT SCENARIO</span>
+    <h2 style="margin-top:24px">A buyer can qualify<br><span class="b">and still need a better question.</span></h2>
+    <p class="body" style="margin-top:14px">A family can stretch for the larger home or buy the home that preserves reserves, shortens the commute, and leaves room for childcare and a future move.</p>
+    <div class="compare" style="margin-top:28px">
+      <div class="card frag"><span class="rate">OPTION A</span><strong>More house now</strong><p class="small" style="margin-top:10px">More space, higher ownership cost, less liquidity, and a tighter monthly life.</p></div>
+      <div class="card frag" style="border-color:var(--blue)"><span class="rate">OPTION B</span><strong>More options later</strong><p class="small" style="margin-top:10px">Different property tradeoffs, stronger reserves, and more flexibility after closing.</p></div>
+    </div>
+    <p class="body frag" style="margin-top:26px;text-align:center;font-weight:600">Ask the room: Which facts do you need before you can call either option better?</p>
+    <p class="policy-note">Illustrative discussion only. No investment, tax, legal, insurance, or loan recommendation is implied.</p>
+  </section>
+
+  <section class="slide">
+    <span class="eyebrow"><span class="dot"></span>NEXT STEP</span>
+    <h1 style="margin-top:28px;font-size:54px">Bring one client.<br><span class="b">Run one third-side review.</span></h1>
+    <div class="cta-block">
+      <a class="qr-frame frag" href="https://darynfillis.com/schedule" target="_blank" rel="noopener noreferrer"><img class="qr" src="borrow-smart-university/strategy-call-qr.png?v=1" alt="Scan to schedule a Third-Side Strategy Session"></a>
+      <div class="frag">
+        <p class="body" style="font-size:25px;max-width:650px">One current buyer or homeowner.<br>Four better questions. A coordinated next step.</p>
+        <p class="body" style="font-size:19px;margin-top:24px;font-style:italic">Ask: Life. Property. Position. Path.</p>
+        <p class="body" style="margin-top:22px"><b class="b">424-396-6967</b> · darynfillis.com/schedule</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide center" style="gap:26px">
+    <h1 style="font-size:52px">You help clients choose more<br><span class="b">than the house.</span></h1>
+    <p class="body" style="font-size:22px;max-width:980px">You help shape the third side of the balance sheet and the options that remain after closing.</p>
+    <p class="brand-lens">Start with the life.<em>Then structure the loan.</em></p>
+  </section>
+
+  <section class="slide center" style="background:var(--navy);gap:22px">
+    <span class="eyebrow"><span class="dot"></span>LIVE Q&amp;A</span>
+    <h1 style="font-size:52px">Which client needs<br><span class="b">a bigger conversation?</span></h1>
+    <p class="brand-lens">Better questions.<em>Better decisions.</em></p>
+    <div style="display:flex;align-items:center;gap:24px;margin-top:12px;text-align:left">
+      <a class="qr-frame compact" href="https://darynfillis.com/schedule" target="_blank" rel="noopener noreferrer"><img class="qr" src="borrow-smart-university/strategy-call-qr.png?v=1" alt="Scan to schedule a Third-Side Strategy Session"></a>
+      <div><p class="body" style="font-size:18px;font-weight:600">Life. Property. Position. Path.<br><span class="b" style="font-style:italic">Then structure the loan.</span></p><p class="small" style="margin-top:8px">424-396-6967 · darynfillis.com/schedule</p></div>
+    </div>
+  </section>
+
+  <div id="hud">
+    <div class="keys"><span>← → navigate</span><span>F fullscreen</span><span>M music</span><span>L lobby</span><span>N notes</span><span>P floating notes</span></div>
+    <div><span id="counter" aria-live="polite"></span><button id="muteBtn" type="button">Music: off</button><button id="notesBtn" type="button">Presenter notes</button><button id="pipBtn" type="button">Floating notes</button><button id="fsBtn" type="button">Fullscreen</button></div>
+  </div>
+  <div id="bar"></div>
+</main></div>
+
+<div id="pv">
+  <header><div><div class="now" id="pvNow"></div><div class="next" id="pvNext"></div></div><div class="clockline" id="pvClock"></div></header>
+  <div id="pvNotes"></div>
+  <footer><button id="pvPrev" type="button">← Previous</button><button id="pvNextBtn" type="button">Next →</button></footer>
+</div>
+
+<noscript><p style="padding:24px"><a href="borrow-smart-university.pdf">Download the complete Borrow Smart University presentation PDF.</a></p></noscript>
+<script src="borrow-smart-university-live.js"></script>
+<script src="move-up-method-live.js"></script>
+</body>
+</html>
