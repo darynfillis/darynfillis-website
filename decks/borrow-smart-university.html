@@ -27,9 +27,10 @@
 .balance-slide{justify-content:flex-start;padding-top:56px}
 .balance-triangle{position:relative;width:960px;height:354px;margin:20px auto 0}
 .triangle-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 0 12px rgba(91,203,245,.18))}
-.triangle-lines .plane{fill:rgba(10,37,64,.72);stroke:url(#triangleStroke);stroke-width:4;stroke-linejoin:round}
+.triangle-lines .side-edges{fill:none;stroke-width:4;stroke-linejoin:round;stroke-linecap:round}
+.triangle-lines .plane-fill{fill:rgba(10,37,64,.72);stroke:none}
 .triangle-lines .inner{fill:none;stroke:rgba(143,224,251,.24);stroke-width:1.5;stroke-dasharray:7 9}
-.balance-node{position:absolute;width:250px;min-height:96px;border:1px solid var(--blue);border-radius:999px;background:rgba(7,28,51,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px 24px;box-shadow:0 14px 36px rgba(0,0,0,.24)}
+.balance-node{position:absolute;z-index:4;width:250px;min-height:96px;border:1px solid var(--blue);border-radius:999px;background:rgba(7,28,51,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px 24px;box-shadow:0 14px 36px rgba(0,0,0,.24)}
 .balance-node .side-number{font-size:10px;line-height:1;font-weight:600;letter-spacing:.28em;color:var(--blue-lt)}
 .balance-node strong{font-size:24px;line-height:1.1;margin-top:8px}
 .balance-node small{font-size:12px;line-height:1.35;color:var(--muted);margin-top:6px}
@@ -37,7 +38,9 @@
 .balance-node.real-estate .side-number,.balance-node.real-estate small{color:var(--navy)}
 .balance-node.assets{left:40px;bottom:0}
 .balance-node.liabilities{right:40px;bottom:0}
-.triangle-center{position:absolute;left:390px;top:154px;width:180px;height:118px;border:1px solid rgba(143,224,251,.5);border-radius:50%;background:radial-gradient(circle at 50% 38%,rgba(18,64,102,.98),rgba(7,28,51,.98));display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 0 42px rgba(91,203,245,.16)}
+.third-side-reveal{position:absolute;z-index:2;inset:0}
+.third-side-reveal .balance-node.real-estate{z-index:3}
+.triangle-center{position:absolute;z-index:5;left:390px;top:154px;width:180px;height:118px;border:1px solid rgba(143,224,251,.5);border-radius:50%;background:radial-gradient(circle at 50% 38%,rgba(18,64,102,.98),rgba(7,28,51,.98));display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 0 42px rgba(91,203,245,.16)}
 .triangle-center span{font-size:10px;font-weight:600;letter-spacing:.24em;color:var(--blue-lt)}
 .triangle-center strong{font-size:19px;line-height:1.2;margin-top:8px}
 .triangle-center small{font-size:11px;color:var(--muted);margin-top:5px}
@@ -107,24 +110,8 @@
 
   <section class="slide balance-slide">
     <p class="small" style="letter-spacing:.3em;font-weight:600;font-size:13px;color:var(--blue-lt)">THE UNIQUE MECHANISM</p>
-    <h2 style="margin-top:14px">A traditional balance sheet has two sides.<br><span class="b">Borrow Smart adds the third.</span></h2>
+    <h2 style="margin-top:14px">A traditional balance sheet has two sides.<br><span class="b">What belongs above them?</span></h2>
     <div class="balance-triangle" aria-label="Three-sided balance sheet with real estate, assets, and liabilities surrounding the client's life">
-      <svg class="triangle-lines" viewBox="0 0 960 354" aria-hidden="true">
-        <defs>
-          <linearGradient id="triangleStroke" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#8FE0FB"/>
-            <stop offset=".52" stop-color="#5BCBF5"/>
-            <stop offset="1" stop-color="#38B8E8"/>
-          </linearGradient>
-        </defs>
-        <path class="plane" d="M480 52 L165 304 L795 304 Z"/>
-        <path class="inner" d="M480 86 L214 286 L746 286 Z"/>
-      </svg>
-      <div class="balance-node real-estate frag">
-        <span class="side-number">SIDE 03</span>
-        <strong>REAL ESTATE</strong>
-        <small>The home, property, costs, and choices.</small>
-      </div>
       <div class="balance-node assets frag">
         <span class="side-number">SIDE 01</span>
         <strong>ASSETS</strong>
@@ -134,6 +121,25 @@
         <span class="side-number">SIDE 02</span>
         <strong>LIABILITIES</strong>
         <small>Mortgage, debt, payment, and risk.</small>
+      </div>
+      <div class="third-side-reveal frag">
+        <svg class="triangle-lines" viewBox="0 0 960 354" aria-hidden="true">
+          <defs>
+            <linearGradient id="thirdSideStroke" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#8FE0FB"/>
+              <stop offset=".52" stop-color="#5BCBF5"/>
+              <stop offset="1" stop-color="#38B8E8"/>
+            </linearGradient>
+          </defs>
+          <path class="plane-fill" d="M480 52 L165 304 L795 304 Z"/>
+          <path class="side-edges" d="M165 304 L480 52 L795 304 Z" style="stroke:url(#thirdSideStroke)"/>
+          <path class="inner" d="M480 86 L214 286 L746 286 Z"/>
+        </svg>
+        <div class="balance-node real-estate">
+          <span class="side-number">SIDE 03</span>
+          <strong>REAL ESTATE</strong>
+          <small>The home, property, costs, and choices.</small>
+        </div>
       </div>
       <div class="triangle-center frag">
         <span>THE CLIENT</span>

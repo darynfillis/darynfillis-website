@@ -122,7 +122,16 @@ test('agent presentation library is public and connects the presentation to its 
   assert.match(borrowSmartPresentation, /What are we trying to make possible\?/);
   assert.match(borrowSmartPresentation, /Life\. Property\. Position\. Path\./);
   assert.match(borrowSmartPresentation, /class="balance-triangle"/);
+  assert.match(borrowSmartPresentation, /What belongs above them\?/);
   assert.match(borrowSmartPresentation, /Life at the center\./);
+  const balanceRevealOrder = [
+    'balance-node assets frag',
+    'balance-node liabilities frag',
+    'third-side-reveal frag',
+    'triangle-center frag'
+  ].map((className) => borrowSmartPresentation.indexOf(`class="${className}"`));
+  assert.ok(balanceRevealOrder.every((index) => index >= 0));
+  assert.deepEqual([...balanceRevealOrder].sort((a, b) => a - b), balanceRevealOrder);
   assert.equal((borrowSmartPresentation.match(/<section class="slide/g) || []).length, 24);
   assert.match(borrowSmartPlayer, /window\.DECK_CHANNEL = 'borrow-smart-university-deck'/);
   assert.match(borrowSmartPlayer, /\[STTS Step 1:/);

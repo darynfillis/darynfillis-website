@@ -27,9 +27,11 @@ window.DECK_NOTES = {
     '"When the agent and mortgage strategist ask better questions together, the client can decide before an offer creates urgency."'
   ],
   5: [
-    '[STTS Steps 3 and 4: Roadmap plus unique mechanism. Reveal real estate, assets, liabilities, then the client at the center.]',
-    '"Borrow Smart asks us to see assets, liabilities, and real estate as one connected system."',
-    '"The third side is where you work every day. The client and the life they are building stay at the center of all three."',
+    '[STTS Steps 3 and 4: Roadmap plus unique mechanism. Reveal Assets, then Liabilities. Pause and ask what belongs above them. Reveal Side 03 and the triangle together. Reveal the client at the center last.]',
+    '"The classic balance sheet gives us assets on one side and liabilities on the other."',
+    '[Pause before the third click.]',
+    '"Borrow Smart adds the third side: real estate. This is where you work every day."',
+    '"The client and the life they are building stay at the center of all three."',
     'Do not call real estate guaranteed wealth. Emphasize position, choices, costs, and risk.',
     '[Sources] Todd K. Ballenger, Borrow Smart Repay Smart, 2020 edition, PDF pp. 23-28. Todd Ballenger, The Borrow Smart Chronicles, Rentals and Wealth Gaps, Aug. 2, 2024.'
   ],
