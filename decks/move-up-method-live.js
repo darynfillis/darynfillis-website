@@ -1,4 +1,4 @@
-const NOTES = {
+const DEFAULT_NOTES = {
   1: [
     '[Open with the life-first lens. Do not begin with rates or products.]',
     '"A move-up conversation is not one transaction. It is the sale, the next purchase, and the financing between them."',
@@ -122,6 +122,8 @@ const NOTES = {
     'Close every answer by returning to the life the client is trying to build.'
   ]
 };
+
+const NOTES = window.DECK_NOTES || DEFAULT_NOTES;
 
 const params = new URLSearchParams(location.search);
 const IS_PRESENTER = params.get('presenter') === '1';
@@ -417,11 +419,16 @@ function fadeMusicOut(seconds){
 }
 muteBtn.addEventListener('click', toggleMusic);
 
-const channel = 'BroadcastChannel' in window ? new BroadcastChannel('move-up-method-deck') : null;
+const channelName = window.DECK_CHANNEL || 'move-up-method-deck';
+const stateStorageKey = window.DECK_STATE_KEY || 'move-up-method-state';
+const navigationStorageKey = window.DECK_NAV_KEY || 'move-up-method-nav';
+const presenterWindowName = window.DECK_PRESENTER_WINDOW || 'move-up-method-presenter';
+const presenterTitle = window.DECK_PRESENTER_TITLE || 'Presenter | The move-up method.';
+const channel = 'BroadcastChannel' in window ? new BroadcastChannel(channelName) : null;
 let announce = () => {
   if(channel) channel.postMessage({type:'state', cur});
   try{
-    localStorage.setItem('move-up-method-state', JSON.stringify({cur, time:Date.now()}));
+    localStorage.setItem(stateStorageKey, JSON.stringify({cur, time:Date.now()}));
   }catch(error){}
 };
 
@@ -469,7 +476,7 @@ function renderPresenter(index){
 
 if(IS_PRESENTER){
   document.body.classList.add('presenter');
-  document.title = 'Presenter | The move-up method.';
+  document.title = presenterTitle;
   let presenterCurrent = 0;
   const timerStart = Date.now();
   renderPresenter(0);
@@ -487,12 +494,12 @@ if(IS_PRESENTER){
     if(event.data.type === 'state') receiveState(event.data);
   };
   else addEventListener('storage', event => {
-    if(event.key === 'move-up-method-state') receiveState(JSON.parse(event.newValue || '{}'));
+    if(event.key === stateStorageKey) receiveState(JSON.parse(event.newValue || '{}'));
   });
   const navigate = direction => {
     if(channel) channel.postMessage({type:'nav', direction});
     try{
-      localStorage.setItem('move-up-method-nav', JSON.stringify({direction, time:Date.now()}));
+      localStorage.setItem(navigationStorageKey, JSON.stringify({direction, time:Date.now()}));
     }catch(error){}
   };
   document.getElementById('pvPrev').addEventListener('click', () => navigate(-1));
@@ -507,7 +514,7 @@ if(IS_PRESENTER){
     if(event.data.type === 'nav') receiveNavigation(event.data.direction);
   };
   else addEventListener('storage', event => {
-    if(event.key === 'move-up-method-nav'){
+    if(event.key === navigationStorageKey){
       const message = JSON.parse(event.newValue || '{}');
       if(typeof message.direction === 'number') receiveNavigation(message.direction);
     }
@@ -516,7 +523,7 @@ if(IS_PRESENTER){
   const openPresenter = () => {
     const presenterUrl = new URL(location.href);
     presenterUrl.searchParams.set('presenter', '1');
-    open(presenterUrl, 'move-up-method-presenter', 'width=780,height=640');
+    open(presenterUrl, presenterWindowName, 'width=780,height=640');
     setTimeout(announce, 600);
   };
   document.getElementById('notesBtn').addEventListener('click', openPresenter);
