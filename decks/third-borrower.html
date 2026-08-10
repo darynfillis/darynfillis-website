@@ -207,11 +207,15 @@ td.label{color:var(--surface);font-weight:600;font-size:15.5px}
 body.presenter{overflow:auto}
 body.presenter #viewport{display:none}
 #pv{display:none}
-body.presenter #pv{display:grid;grid-template-rows:auto 1fr auto;height:100vh;padding:22px 30px;gap:16px}
+body.presenter #pv{display:grid;grid-template-rows:auto minmax(180px,34vh) minmax(0,1fr) auto;height:100vh;padding:22px 30px;gap:16px}
 #pv header{display:flex;justify-content:space-between;align-items:center}
-#pv .now{font-weight:800;font-size:26px}
-#pv .next{color:var(--muted);font-size:15px}
-#pv .clockline{font-variant-numeric:tabular-nums;font-weight:600;font-size:22px;color:var(--blue)}
+#pv header>div:first-child{min-width:0}
+#pv .now{font-weight:800;font-size:clamp(20px,2vw,26px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#pv .next{color:var(--muted);font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#pv .clockline{flex:0 0 auto;margin-left:20px;font-variant-numeric:tabular-nums;font-weight:600;font-size:22px;color:var(--blue)}
+#pvSlide{position:relative;width:min(100%,calc(34vh * 16 / 9),560px);aspect-ratio:16/9;justify-self:center;overflow:hidden;background:var(--navy-deep);border:1px solid var(--navy-mid);border-radius:14px}
+.slide-preview .slide{display:flex!important;position:absolute!important;inset:0!important;width:1280px!important;height:720px!important;transform-origin:top left!important;pointer-events:none!important}
+.slide-preview .slide.active>*,.slide-preview .slide.active.back>*{animation:none!important;transition:none!important}
 #pv #pvNotes{background:var(--navy);border:1px solid var(--navy-mid);border-radius:14px;padding:26px 30px;
   overflow-y:auto;font-size:19px;line-height:1.65;color:var(--pale)}
 #pv #pvNotes p{margin-bottom:14px}
@@ -620,6 +624,7 @@ body.presenter #pv{display:grid;grid-template-rows:auto 1fr auto;height:100vh;pa
     <div><div class="now" id="pvNow"></div><div class="next" id="pvNext"></div></div>
     <div class="clockline" id="pvClock"></div>
   </header>
+  <div class="slide-preview" id="pvSlide" aria-label="Current slide preview"></div>
   <div id="pvNotes"></div>
   <footer>
     <button id="pvPrev">← Previous</button>
@@ -629,217 +634,139 @@ body.presenter #pv{display:grid;grid-template-rows:auto 1fr auto;height:100vh;pa
 
 <script>
 const NOTES = {
+"0": [
+  "[As people come in, leave the lobby up and say hello. No formal intro yet.]",
+  "When the room settles, let them know this will be practical: we are going to look at the building as carefully as we look at the buyer.",
+  "When you are ready, advance to the title slide."
+],
 "1": [
-  "[Pre-roll. In-person: leave this up as the room fills. Zoom: read the chat, call out brokerages as people join.]",
-  "Keep it warm and low-key. You are lowering the room before the pattern interrupt.",
-  "[At start time, stop. Full stop. Look at the room. Tone shifts.]",
-  "\"Alright. Thirty minutes. If you have a condo listing or a condo buyer right now, this is going to change how you handle it.\"",
-  "[Do NOT say \"thanks for having me\" or \"a little about myself.\" Those words are what slide 2 exists to prevent.]"
+  "All right, let's get into it. If you have a condo buyer or listing right now, this is going to change the questions you ask before the deal gets moving.",
+  "The idea is simple: start with the life your client wants, then make sure the building and the financing can support it.",
+  "[Pause, then advance.]"
 ],
 "2": [
-  "[STTS Step 1: Bold Opening. This is word one. No intro. No welcome. No \"thanks for having me.\"]",
-  "[Let the line finish typing. Then TWO FULL SECONDS OF SILENCE. Do not fill it. Let them look around the room.]",
-  "\"Somebody in this room is going to help a client choose a condo in the next ninety days.\"",
-  "[Beat.]",
-  "\"And it will not be because the buyer was weak. It won't be because the price was wrong, or the inspection blew up, or somebody got cold feet.\"",
-  "\"That client will start with the life: the home, the neighborhood, and what comes next. Our job is to understand the building early enough to structure the loan around that plan.\"",
-  "[Beat. Then turn. Lower and direct.]",
-  "\"Many project-level issues can be screened early from an address, an HOA name, and the right follow-up documents.\"",
-  "[Straight into slide 3. No pause. No gear change.]"
+  "[Let the sentence finish typing. Give the room a second to read it.]",
+  "A mortgage should create options, not pressure. That is especially true with condos, because the building can change the financing after the client has already fallen in love with the home.",
+  "A lot of those building questions can be raised early. We usually just need the address, the HOA name, and the right follow-up documents."
 ],
 "3": [
-  "[STTS Step 1 continued: The Stakes. Reveal each card on click.]",
-  "\"Here's what most agents don't fully sit with. When your buyer finances a condo, the lender isn't approving one thing. They're approving three.\"",
-  "[Click 1, the 3.] \"The borrower. The unit. And the building. All three have to pass. A buyer with perfect credit and twenty percent down gets declined because the HOA failed. That happens.\"",
-  "[Click 2, EARLY.] \"Formal project review often starts after contract. Earlier screening gives us time to investigate, adjust terms, or choose another path.\"",
-  "[Click 3, the life plan. Slow down.] \"A condo may be a more attainable path into the neighborhood the buyer wants. The financing still has to work with the monthly budget, future options, and what comes next.\"",
-  "[Click 4, the line. This is the title of the talk. Deliver it to the room, not the screen. Slow.]",
-  "\"The building is the third borrower in every condo deal.\"",
-  "[Beat.] \"And it is the one too many people never pre-screen.\"",
-  "[Let it sit. That's the whole thesis. Everything after this is proof. Then move into credibility with energy.]"
+  "Here is the part that catches people off guard. The lender is really approving three things: the borrower, the unit, and the building.",
+  "[Reveal the cards one at a time.]",
+  "A strong buyer cannot make up for a project that does not meet the program rules. If we look earlier, we have time to ask questions, change the structure, or decide the building is not the right fit.",
+  "That is why I call the building the third borrower."
 ],
 "4": [
-  "[STTS Step 2: Credibility. Short. Relevant proof only. No resume dump.]",
-  "\"Quick word on why I'm the one telling you this.\"",
-  "\"I'm a Certified Mortgage Advisor and Branch Lead at NEO Home Loans. I help LA buyers, sellers, and agents understand the building before the loan structure is locked.\"",
-  "\"Most lenders do not review the project questionnaire, reserve study, SB 326 status, and other building details before contract. I run that screen before you write the offer. That's the difference.\"",
-  "[Click the guides card.] \"I also wrote the two guides behind this session, one for buyers and one for sellers. You're leaving with both. I'll show you how at the end.\"",
-  "[One beat. Straight into the roadmap.]"
+  "A quick bit of context about me. I am a Certified Mortgage Advisor and Branch Lead at NEO Home Loans, and I spend a lot of time helping LA agents sort through condo projects before the financing is locked in.",
+  "My role is to look at the building early, explain what we know, and be clear about what still needs to be verified.",
+  "[Reveal the guide card.] I built a buyer guide and a seller guide around this process. You will get both at the end."
 ],
 "5": [
-  "[STTS Steps 3 + 4: Roadmap + Unique Mechanism. This is the reveal. Energy up.]",
-  "\"Here's the method. Three steps. Same method whether you're taking the listing or writing the offer.\"",
-  "\"Step one: CHECK. Start with the client, the home, and the timing. Then screen the address and HOA across the relevant agency and lender sources.\"",
-  "\"Step two: CLEAR. Work the fifteen-item checklist. Six documents, five questions, four conditions. It tells us what we know and what still needs to be verified.\"",
-  "\"Step three: STRUCTURE. Match the loan to the borrower and the building. Use conventional financing when eligible and compare alternatives when it is not. Nothing is automatic.\"",
-  "[Click the closing line.] \"In the next thirty minutes, I'll challenge three common condo assumptions and give you the checklist I use.\"",
-  "[Straight into myth one. Do not pause.]"
+  "The method has three parts, and it works whether you are taking a listing or helping a buyer write an offer.",
+  "First, check the client, the home, the timing, and the basic project information. Then clear the documents and questions that can change eligibility. Finally, structure the loan around both the buyer and the building.",
+  "[Reveal the last line.] We are going to test three common assumptions, then I will give you the checklist I use."
 ],
 "6": [
-  "[STTS Step 5: Break False Belief 1. Validate it first. It's a reasonable belief.]",
-  "\"Myth one. I understand why people believe this: 'The lender handles the building. That's not my job.'\"",
-  "\"And technically, that's true. The lender does run project review. You're not being lazy. That IS the division of labor.\"",
-  "\"But look at WHEN it happens. Formal project review often starts after contract. Earlier screening gives the client more room to make a thoughtful decision.\"",
-  "\"That protects timelines, contingency choices, negotiating strategy, and confidence.\"",
-  "[Deliver the key line directly to the room. Pause before advancing.]"
+  "The first assumption is reasonable: the lender handles the building.",
+  "The lender does complete the formal project review. The problem is timing. That review often begins after the client is already in contract.",
+  "If we raise the obvious questions earlier, the client has more room to think and the agent has more room to protect the timeline and the offer strategy."
 ],
 "7": [
-  "[Key line 1. Slow. Let it land.]",
-  "\"The client chooses the home first.\"",
-  "\"The formal review may come later.\"",
-  "\"Use the gap to protect the plan.\"",
-  "[One full second of silence. Then advance.]"
+  "The client chooses the home first, and the formal review may come later.",
+  "That gap is where we can help. Use it to protect the plan, not to create more pressure.",
+  "[Pause before moving on.]"
 ],
 "8": [
-  "[STTS Step 5: Break False Belief 2. This is the big one. This is the reversal that earns the room.]",
-  "\"Myth two. And this is the one I hear most in this room specifically: 'small buildings are the hard ones.'\"",
-  "\"Everybody assumes it. No professional management. Thin reserves. No doorman, no big budget, sponsor might still own half of it. Of course it's a nightmare to finance.\"",
-  "[Beat.] \"In 2026, qualifying small projects gained a waiver path while common shortcuts retired.\"",
-  "[Advance. Let the inversion do the work.]"
+  "The second assumption is that small buildings are always the difficult ones.",
+  "I understand where that comes from. Small projects can have lighter reserves, self-management, or concentrated ownership.",
+  "But the 2026 rules changed the conversation. Some qualifying small projects gained a waiver path while familiar shortcuts for larger projects went away."
 ],
 "9": [
-  "[The inversion. This is the slide that changes how they think. Reveal each side, then the line.]",
-  "[Click 1, the Waiver.] \"Qualifying two-to-ten-unit projects may use a waiver instead of Full Review. The loan and project still have to satisfy the applicable agency requirements.\"",
-  "[Click 2, the right side. Tone shifts.] \"For applications on or after August third, Limited Review and Freddie's Streamlined Review are retired. Larger established projects generally need Full Review unless another permitted path applies.\"",
-  "\"The practical point is not that every larger building fails. It is that an old closing is not current approval.\"",
-  "[Click 3, the line.] \"Check the project under today's rules.\"",
-  "[Advance to the key line.]"
+  "[Reveal the left side first.] A qualifying two-to-ten-unit project may have a waiver path instead of Full Review. It still has to meet the applicable loan and project requirements.",
+  "[Reveal the right side.] For applications on or after August 3, Limited Review and Freddie's Streamlined Review are retired. A larger established project may need Full Review unless another permitted path applies.",
+  "The point is not that big buildings are bad. The point is that a prior closing does not tell us how the project will be reviewed today.",
+  "[Reveal the final line.] Check the project under today's rules."
 ],
 "10": [
-  "[Key line 2. Deliver it to the room. Do not rush it.]",
-  "\"The ten-unit project may have a new waiver path.\"",
-  "\"The forty-unit project lost a common shortcut.\"",
-  "\"Screen the building before choosing the loan.\"",
-  "[Hold. Let them sit in it. This is the moment they decide you're worth calling.]"
+  "A ten-unit project may have a new waiver path. A forty-unit project may have lost a shortcut people were used to.",
+  "So do not choose the loan based on an old story about the building. Screen the building first.",
+  "[Let that sit for a moment.]"
 ],
 "11": [
-  "[STTS Step 5: Break False Belief 3. Softer than the last one. This one opens a door.]",
-  "\"Myth three. 'Non-warrantable means there is no path.'\"",
-  "\"It may rule out standard agency financing. It does not automatically rule out every program.\"",
-  "\"When a condo creates a more attainable path into the right neighborhood, test every eligible option against payment, cash, fees, timing, and future flexibility.\"",
-  "[Deliver the key line.]"
+  "The third assumption is that non-warrantable means there is no financing path.",
+  "It may take standard agency financing off the table, but it does not automatically eliminate every program.",
+  "If the condo gives the client a more attainable way into the right neighborhood, compare every eligible option against the payment, cash, fees, timing, and future flexibility."
 ],
 "12": [
-  "[Key line 3. Then the setup line for the framework.]",
-  "\"Non-warrantable is not a verdict. It is a different decision.\"",
-  "[Beat.] \"The loan is temporary. The strategy lasts.\"",
-  "\"That's three myths. Now here's the method: CHECK, CLEAR, STRUCTURE.\"",
-  "[Advance directly into the framework.]"
+  "Non-warrantable is not a verdict. It is a different decision.",
+  "The client still needs to understand the tradeoffs, and the alternative still has to make sense for the life they are trying to build.",
+  "The loan is temporary. The strategy lasts. Now let me show you how we check, clear, and structure."
 ],
 "13": [
-  "[STTS Step 6: Teach Framework · Step 1: CHECK. What you're checking against. Build the timeline on clicks.]",
-  "\"Step one is CHECK. But before you can check anything, you need to know what you're checking against. Three dates. This is the whole 2026 picture.\"",
-  "[Click 1, March 18.] \"March eighteenth, 2026. Fannie issued Lender Letter 2026-03 and Freddie issued Bulletin 2026-C, coordinating major project-standard changes. Application dates and lender overlays still matter.\"",
-  "[Click 2, August 3. Slow down. This is the key date.] \"For applications on or after August third, Limited Review and Freddie's Streamlined Review are retired. Larger established projects generally move to Full Review unless another permitted path applies.\"",
-  "[Click 3, January 4.] \"January fourth, 2027. Fannie's Full Review replacement-reserve allocation rises from ten to fifteen percent, unless an eligible reserve-study exception applies.\"",
-  "\"Which means: current project facts and the application date matter. A prior closing is not a current approval.\"",
-  "[Click 4, the critical repairs alert. Tone: this is the strict one.] \"This one is already in effect. If a project has unaddressed safety, structural, or habitability issues, the project is ineligible. Not 'subject to additional review.' Not 'requires an explanation.' Ineligible.\"",
-  "[Advance. The funding-versus-completion distinction is next.]"
+  "Step one is check. To do that well, we have to know which rules and dates apply.",
+  "[Build the timeline one date at a time.] March 18, 2026 brought coordinated project-standard changes. August 3 is the application-date change for Limited Review and Freddie's Streamlined Review. January 4, 2027 is when Fannie's Full Review reserve-allocation minimum rises from 10 to 15 percent, unless an eligible reserve-study exception applies.",
+  "The practical takeaway is that the current project facts and the application date both matter. A prior approval is not a current approval.",
+  "[Reveal the alert.] Unaddressed safety, structural, or habitability issues can make the project ineligible. This is where the condition of the building becomes just as important as the budget."
 ],
 "14": [
-  "[Funding versus completion. Slow down. This is the most important correction in the deck.]",
-  "\"The ten-thousand-dollar-per-unit test is one trigger, and the word unfunded matters. It does not erase a separate critical safety, structural, soundness, or habitability issue.\"",
-  "[Click 1, the red column.] \"Critical conditions include serious water intrusion, advanced deterioration, failure to complete a mandatory safety inspection, and certain unfunded repairs over ten thousand dollars per unit due within a year.\"",
-  "[Click 2, the blue column.] \"Now, what does not trigger it? Routine maintenance does not. Normal capital replacement on schedule does not. Repairs paid by an individual owner do not. Damage isolated to a couple of units does not, unless it affects the building's overall habitability.\"",
-  "\"And this one.\" [Point at it.] \"Repairs funded by a special assessment are not unfunded for the ten-thousand-dollar test.\"",
-  "[Click 3, the payoff card.] \"Funding is not the same as completion. If the repair itself is critical, agency eligibility generally returns only after the work is complete.\"",
-  "\"At the listing appointment, ask what the assessment funds, whether the work is complete, and what the latest inspection says.\"",
-  "[Beat. Then into SB 326.]"
+  "This distinction matters: funding and completion are not the same thing.",
+  "[Reveal the red column.] The $10,000-per-unit test is one trigger, and the word unfunded matters. Serious water intrusion, advanced deterioration, missed mandatory safety inspections, and other critical conditions can create a separate problem.",
+  "[Reveal the blue column.] Routine maintenance and scheduled capital replacement are different. A special assessment can mean the work is funded, but it does not prove the work is complete.",
+  "At the listing appointment, ask three things: what does the assessment fund, is the work finished, and what does the latest inspection say?"
 ],
 "15": [
-  "[SB 326. The California layer. The AB 2579 row is the one they'll remember. Hit it hard.]",
-  "\"Now the California-specific layer, and this one is a landmine.\"",
-  "[Click 1.] \"SB 326 applies to California common-interest developments with three or more multifamily units and load-bearing, wood-supported exterior elevated elements more than six feet above ground.\"",
-  "[Click 2.] \"First inspection was due January first, 2025. That deadline is now more than eighteen months past.\"",
-  "[Click 3, the AB 2579 row. Say it clearly.] \"AB 2579 amended the separate rental-building law and moved that deadline to January first, 2026. It did not extend the SB 326 condo deadline, and it did not create a 2027 deadline.\"",
-  "\"If anyone says 2027, ask which statute and request the report.\"",
-  "[Click 4.] \"An inspection report showing unaddressed critical repairs can make a project ineligible for agency financing until remediation is complete. The report and repair status matter.\"",
-  "[Click 5, the watch-for card.] \"'The inspection was done' does not tell you whether deficiencies were found or corrected. Ask for the actual report and current compliance documentation.\"",
-  "[Move to the red flags.]"
+  "Now we add the California layer: SB 326.",
+  "[Reveal each row.] It applies to certain California common-interest developments with three or more multifamily units and qualifying exterior elevated elements. The first inspection deadline was January 1, 2025.",
+  "AB 2579 changed the deadline for a separate rental-building law. It did not extend the SB 326 condo deadline and it did not create a 2027 deadline.",
+  "The important question is not simply, 'Was the inspection done?' Ask for the report, find out what it identified, and confirm whether any required work is complete."
 ],
 "16": [
-  "[STTS Step 6, Step 2: CLEAR. The nine screening signals. Do not read all nine out loud.]",
-  "\"Step two is CLEAR. These are nine common signals that change the financing conversation. They are not automatic outcomes.\"",
-  "[Click through all nine while you talk. Let the grid build, then land on these:]",
-  "\"Number two: special assessments. Review the purpose, payment status, and whether related critical work is complete.\"",
-  "\"Number three: single-entity ownership. The current general limits are more than two units in a five-to-twenty-unit project, or more than twenty percent in a project of twenty-one or more units, with fact-specific waivers.\"",
-  "\"Number seven: reserve allocation. Full Review uses a budget test today. Fannie's minimum rises to fifteen percent in 2027, with eligible reserve-study exceptions.\"",
-  "\"Notice that the old Fannie investor-concentration cap was retired in 2026. Do not use a thirty-five or fifty percent renter rule as an automatic disqualifier.\"",
-  "[Advance to the checklist.]"
+  "Step two is clear. These are screening signals, not automatic outcomes, so I would not read the whole grid as a list of deal killers.",
+  "[Build the grid while you talk.] I usually spend the most time on special assessments, single-entity ownership, current reserve support, insurance, litigation, and unresolved critical repairs.",
+  "The point is to identify what deserves a deeper look before the client is depending on one financing path.",
+  "Also, do not use an old renter-percentage rule as an automatic disqualifier. The current project facts and the current program rules are what matter."
 ],
 "17": [
-  "[The checklist. This is the takeaway artifact. Frame it as THEIRS.]",
-  "\"Here's the whole thing on one slide. Fifteen items, three buckets.\"",
-  "[Click 1.] \"Six documents. Financials, reserve study, meeting minutes, master insurance, CC&Rs, and the SB 326 report when applicable. Read the reserve study alongside the current budget; there is no universal Fannie thirty-percent-funded rule.\"",
-  "[Click 2.] \"Five questions: litigation, special assessments, single-entity ownership, delinquency, and short-term rentals. For Full Review, the general delinquency cap is fifteen percent of units that are at least sixty days late.\"",
-  "[Click 3.] \"Four conditions. Single-entity ownership, commercial space, reserves. And the fifteenth item.\" [Point.] \"Run the project status check. That's the one that catches what the other fourteen miss.\"",
-  "[Click 4.] \"Sellers: start this two weeks before listing, because HOA management is the bottleneck. Buyers: same fifteen items, run before you write.\"",
-  "\"All fifteen are in the guides. You're not memorizing this.\"",
-  "[Into Condo Solutions.]"
+  "Here is the whole checklist: six documents, five questions, and four conditions.",
+  "[Reveal each group.] The documents tell us what the HOA has put in writing. The questions help us find the issues that may not be obvious in a listing. The conditions tell us which program rules need a closer look.",
+  "Run the project status check too. That is the item that can catch something the documents alone do not show.",
+  "Sellers should start before the listing goes live. Buyers should start before the offer if they can. You do not need to memorize any of this. It is all in the guides."
 ],
 "18": [
-  "[STTS Step 6, Step 3: STRUCTURE. Reveal row by row. Keep every statement conditional.]",
-  "\"Step three. The building came back non-warrantable. Now what.\"",
-  "[Click 1.] \"Do not assume there is no loan. Check whether an eligible portfolio or non-agency path exists.\"",
-  "[Click 2.] \"Compare rate, APR, fees, cash to close, and the total monthly housing cost, including HOA dues. Rate alone is not the decision.\"",
-  "[Click 3.] \"Down payment depends on the program, borrower, occupancy, and project. Do not quote a universal minimum.\"",
-  "[Click 4.] \"Alternative programs use their own review and eligibility standards. Faster is not guaranteed.\"",
-  "[Click 5.] \"Seller credits must fit the contract, appraisal, and program contribution limits. Never promise that a credit will erase the cost.\"",
-  "[Click 6.] \"A future refinance is an option to revisit, not a promise. Borrower, project, equity, and market conditions must all work later.\"",
-  "[Click 7.] \"Tell the client what you know, explain what still needs to be verified, and have them confirm options with their own lender. The question is whether this is a sound path into ownership, not whether you can force a loan through.\""
+  "Step three is structure. If the project is non-warrantable, do not assume there is no loan, but do not force an alternative either.",
+  "[Reveal the rows as you talk.] Compare the rate, APR, fees, cash to close, and the full monthly housing cost, including HOA dues. Down payment and review requirements vary by program.",
+  "Treat seller credits and a future refinance as possibilities to evaluate, not promises.",
+  "The client should understand what we know, what still needs to be verified, and whether the tradeoffs support a sound path into ownership."
 ],
 "19": [
-  "[STTS Step 7: Sample timeline. Say clearly that results will vary.]",
-  "\"Here is the avoidable pattern.\"",
-  "\"Week four: conventional financing is declined because of the project. The parties now have less time, less leverage, and fewer comfortable choices.\"",
-  "\"If an eligible alternative fits, the loan can be restructured. But the client is making a major decision under pressure.\"",
-  "[Beat. Then turn it. This is the point.]",
-  "[Click the turn.] \"Do the work before the offer. Start with the client's plan, screen the building, and compare the financing. That can keep a realistic path into the client's preferred neighborhood open at a price that fits the budget.\"",
-  "\"Ownership can create the opportunity to build equity over time through principal repayment and, when values rise, appreciation. Neither is a reason to force a deal that does not fit.\"",
-  "\"Sometimes the right call is still, 'This is not the right building.'\"",
-  "[Straight into the offer. Don't let the air out.]"
+  "Here is the pattern we are trying to avoid. The project issue appears in week four, conventional financing falls apart, and now everyone has less time and fewer comfortable choices.",
+  "An eligible alternative may exist, but the client is making a major decision under pressure.",
+  "[Reveal the turn.] Do the work before the offer. Start with the client's plan, screen the building, and compare the financing while there is still room to make a thoughtful decision.",
+  "Ownership can create the opportunity to build equity over time, but that is never a reason to force a deal that does not fit. Sometimes the right answer is still, 'This is not the right building.'"
 ],
 "20": [
-  "[STTS Step 8: Interest Check + Offer. In-person: actually ask for hands. Zoom: ask for a YES in chat. Wait for the response before continuing.]",
-  "\"Quick show of hands. Who has a condo listing or buyer right now?\"",
-  "[Wait. Count them out loud. \"Six, seven. Okay, good.\" Do not rush past this.]",
-  "\"Here's what I want you to do with it. Bring me in early. Two things, both free, both yours.\"",
-  "[Click 1.] \"The Project Status Screen. Send me the address and HOA name. I target an initial read within one business day using available agency and public sources, then identify what still requires HOA documents or lender review. A screen is not final approval.\"",
-  "[Click 2.] \"And both guides. The Buyer's Pre-Offer Checklist and the Seller's Warrantability Checklist. These are meant to be shared. Give the buyer's guide to your buyer at consult and the seller's guide to your seller at the listing appointment. Fifteen items, nine red flags, and the full critical-repairs appendix.\"",
-  "\"That's a differentiated listing presentation, and it costs you nothing.\"",
-  "[Click 3.] \"And no obligation, and I mean that. Some of the people I run checks for end up working with me. Many don't. Either way you should know where the building stands before you commit your client to it.\"",
-  "[Advance to the CTA.]"
+  "Quick show of hands: who has a condo buyer or listing right now?",
+  "[Give people time to respond.]",
+  "Bring me in early. Send me the address and HOA name, and I will target an initial screen within one business day using the information that is available. I will also tell you what still needs HOA documents or formal lender review.",
+  "The buyer and seller guides are free and meant to be shared. There is no obligation. The goal is simply to ask better questions before the client is committed to the building."
 ],
 "21": [
-  "[STTS Step 9: Call to Action. Separate beat. Be concrete. Then stop talking and let them write it down.]",
-  "\"Here's your next step, and I want it to be stupidly easy.\"",
-  "\"Two things: the property address, including the unit number, and the registered HOA name. The marketing name is often different.\"",
-  "\"Text it, email it, or use the form at darynfillis.com/cal-condo. Both guides download from that same page.\"",
-  "[Click the phone line.] \"Save my number in your phone under 'condo.' Four-two-four, three-nine-six, six-nine-six-seven. Text me the address the day you take the listing.\"",
-  "[GIVE THEM FIVE FULL SECONDS OF SILENCE. Let them actually enter it. Do not fill the silence.]",
-  "[In-person: this is the moment to hold up the printed guides / point at the QR. Zoom: drop the link in chat NOW.]"
+  "Here is the next step. Send me the property address, including the unit number, and the registered HOA name. The marketing name is not always the legal name.",
+  "You can text me, email me, or use darynfillis.com/cal-condo. Both guides are on that same page.",
+  "[Reveal the phone line.] Save my number under 'condo': 424-396-6967.",
+  "[Pause so people can scan the code or save the number.]"
 ],
 "22": [
-  "[STTS Step 10: Life-first close. Warm, direct, unhurried. Eye contact. This is not about math.]",
-  "\"One last thing before questions.\"",
-  "\"Your client does not experience this as 'the project failed review.' They experience it as uncertainty around the home and life they had already begun to picture.\"",
-  "\"The right condo has to do more than pass a financing review. It can be a path into ownership.\"",
-  "\"A more attainable way into the neighborhood they want, and the opportunity to build equity over time. That opportunity still has to fit the payment, cash, building, and time horizon.\"",
-  "[Beat.]",
-  "\"Start with the life. Then structure the loan.\"",
-  "\"Screen what can be known early, then let the facts guide the structure.\"",
-  "[Hold. Then Q&A.]"
+  "One last thought before questions. Your client does not experience this as 'the project failed review.' They experience it as uncertainty around a home and a life they had already started to picture.",
+  "The right condo can be a more attainable path into the neighborhood they want and an opportunity to build equity over time. It still has to fit the payment, the cash, the building, and the client's timeline.",
+  "Start with the life. Then structure the loan.",
+  "Screen what we can know early, and let the facts guide the structure."
 ],
 "23": [
-  "[STTS Step 11: Q&A. Reinforce the CTA every two answers. Keep the address/HOA ask visible the entire time.]",
-  "\"Bring me a building. Anybody have an address right now? Let's see if it works. We'll look at what we know, what we still need from the HOA, and which financing options may fit.\"",
-  "[If someone gives you one: THIS IS THE BEST POSSIBLE OUTCOME. Do it in front of the room.]",
-  "[Every two answers, reset the ask: \"Address plus HOA name. That's all I need to start asking better questions.\"]",
-  "[Likely questions:]",
-  "• \"How long does the screen take?\" I target one business day for the initial read. Final eligibility may require HOA documents and lender underwriting.",
-  "• \"What if the building's fine? Do I still owe you the deal?\" No. There is genuinely no obligation.",
-  "• \"Can you present this to my office?\" Yes. Say yes immediately.",
-  "• \"Is my building okay?\" Never guess in the room. Say, \"Send me the address. I will screen what is available and tell you what still needs to be verified.\" That is the CTA."
+  "Bring me a building. Does anyone have an address we can use right now?",
+  "If someone shares one, look at it with the room. Be clear about what is available, what still needs to come from the HOA, and what cannot be decided until formal lender review.",
+  "For timing questions: I target one business day for the initial screen. Final eligibility may require HOA documents and formal review.",
+  "For obligation questions: there is none. The screen is there to help the agent and client make a better-informed decision.",
+  "If you do not know whether a building is eligible, do not guess. Ask for the address and HOA name, then verify it."
 ]
 };
 </script>
@@ -1159,41 +1086,91 @@ if(muteBtn) muteBtn.onclick = toggleMusic;
 const IS_PRESENTER = params.get('presenter') === '1';
 const chan = ('BroadcastChannel' in window) ? new BroadcastChannel('tb-deck') : null;
 function announce(){
-  if(chan) chan.postMessage({type:'state', cur});
-  try{ localStorage.setItem('tb-state', JSON.stringify({cur, t:Date.now()})); }catch(e){}
+  const state = {type:'state', cur, previewHtml:slides[cur].outerHTML, t:Date.now()};
+  if(chan) chan.postMessage(state);
+  try{ localStorage.setItem('tb-state', JSON.stringify(state)); }catch(e){}
 }
 const _show = show;
 show = function(i, fb){ _show(i, fb); announce(); };
 
-function slideTitle(i){
-  if(i<=0) return 'Lobby: countdown';
+function slideTitle(i, previewHtml){
+  if(i<=0) return 'Countdown';
   if(i>=slides.length) return 'End of deck';
-  const el = slides[i].querySelector('h1,h2');
-  return (el ? el.textContent.trim().replace(/\s+/g,' ') : 'Slide '+i).slice(0,70);
+  let el = null;
+  if(previewHtml){
+    const template = document.createElement('template');
+    template.innerHTML = previewHtml.trim();
+    el = template.content.querySelector('h1,h2');
+  }
+  if(!el) el = slides[i].querySelector('h1,h2');
+  if(!el) return `Slide ${i}`;
+  const copy = el.cloneNode(true);
+  copy.querySelectorAll('br').forEach(br=>br.replaceWith(' '));
+  const title = copy.textContent.trim().replace(/\s+/g,' ');
+  return (title || `Slide ${i}`).slice(0,70);
 }
-function renderPresenter(i){
-  document.getElementById('pvNow').textContent = (i===0?'Lobby':`Slide ${i} / ${slides.length-1}`) + ': ' + slideTitle(i);
+function escapeNote(text){
+  return String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function notesHtml(notes){
+  return notes ? notes.map(p=>`<p class="${/^\[.*\]$/.test(p)?'cue':''}">${escapeNote(p)}</p>`).join('') : '<p class="cue">No notes for this slide.</p>';
+}
+function renderSlidePreview(target, i, previewHtml){
+  if(!target || !slides[i]) return;
+  let clone;
+  if(previewHtml){
+    const template = target.ownerDocument.createElement('template');
+    template.innerHTML = previewHtml.trim();
+    clone = template.content.firstElementChild;
+  }else{
+    clone = slides[i].cloneNode(true);
+  }
+  if(!clone) return;
+  clone.classList.add('active');
+  clone.classList.remove('back');
+  clone.setAttribute('aria-hidden','true');
+  clone.querySelectorAll('a,button,input,select,textarea').forEach(el=>el.setAttribute('tabindex','-1'));
+  clone.style.display = 'flex';
+  clone.style.position = 'absolute';
+  clone.style.inset = 'auto';
+  clone.style.width = '1280px';
+  clone.style.height = '720px';
+  clone.style.transformOrigin = 'top left';
+  target.replaceChildren(clone);
+  requestAnimationFrame(()=>{
+    const boxW = target.clientWidth, boxH = target.clientHeight;
+    if(!boxW || !boxH) return;
+    const scale = Math.min(boxW/1280, boxH/720);
+    clone.style.left = `${Math.max(0,(boxW-1280*scale)/2)}px`;
+    clone.style.top = `${Math.max(0,(boxH-720*scale)/2)}px`;
+    clone.style.transform = `scale(${scale})`;
+  });
+}
+function renderPresenter(i, previewHtml){
+  document.getElementById('pvNow').textContent = i===0 ? 'Lobby: countdown' : `Slide ${i} / ${slides.length-1}: ${slideTitle(i, previewHtml)}`;
   document.getElementById('pvNext').textContent = 'Next: ' + slideTitle(i+1);
-  const box = document.getElementById('pvNotes');
-  const notes = NOTES[i];
-  box.innerHTML = notes ? notes.map(p=>{
-    const cue = /^\[.*\]$/.test(p);
-    return `<p class="${cue?'cue':''}">${p}</p>`;
-  }).join('') : '<p class="cue">No notes for this slide.</p>';
+  document.getElementById('pvNotes').innerHTML = notesHtml(NOTES[i]);
+  renderSlidePreview(document.getElementById('pvSlide'), i, previewHtml);
 }
 if(IS_PRESENTER){
   document.body.classList.add('presenter');
   document.title = 'Presenter | The Third Borrower';
-  let pcur = 0; const t0 = Date.now();
+  let pcur = 0, pPreviewHtml = ''; const t0 = Date.now();
   renderPresenter(0);
   setInterval(()=>{ const s=Math.floor((Date.now()-t0)/1000);
     document.getElementById('pvClock').textContent = `Elapsed ${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; },1000);
-  function onState(st){ if(st && typeof st.cur==='number' && st.cur!==pcur){ pcur=st.cur; renderPresenter(pcur); } }
+  function onState(st){
+    if(!st || typeof st.cur!=='number') return;
+    pcur = st.cur;
+    pPreviewHtml = typeof st.previewHtml==='string' ? st.previewHtml : '';
+    renderPresenter(pcur, pPreviewHtml);
+  }
   if(chan) chan.onmessage = e=>{ if(e.data.type==='state') onState(e.data); };
   else addEventListener('storage', e=>{ if(e.key==='tb-state') onState(JSON.parse(e.newValue||'{}')); });
   const nav = d=>{ if(chan) chan.postMessage({type:'nav', d}); try{ localStorage.setItem('tb-nav', JSON.stringify({d, t:Date.now()})); }catch(e){} };
   document.getElementById('pvPrev').onclick = ()=>nav(-1);
   document.getElementById('pvNextBtn').onclick = ()=>nav(1);
+  addEventListener('resize', ()=>renderPresenter(pcur, pPreviewHtml));
   addEventListener('keydown', e=>{ if(e.key==='ArrowRight'||e.key===' ') nav(1); if(e.key==='ArrowLeft') nav(-1); }, true);
 }else{
   const navMsg = d=> d>0 ? next() : prev();
@@ -1209,29 +1186,33 @@ if(IS_PRESENTER){
     if(!pipWin || pipWin.closed) return;
     const d = pipWin.document;
     d.getElementById('pipNow').textContent = (cur===0?'Lobby':`Slide ${cur} / ${slides.length-1}`) + ': ' + slideTitle(cur);
-    const notes = NOTES[cur];
-    d.getElementById('pipNotes').innerHTML = notes
-      ? notes.map(p=>`<p class="${/^\[.*\]$/.test(p)?'cue':''}">${p.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</p>`).join('')
-      : '<p class="cue">No notes for this slide.</p>';
+    d.getElementById('pipNotes').innerHTML = notesHtml(NOTES[cur]);
+    renderSlidePreview(d.getElementById('pipSlide'), cur);
   }
   async function openPip(){
     if(!('documentPictureInPicture' in window)){ openPresenter(); return; }
     if(pipWin && !pipWin.closed){ pipWin.close(); pipWin = null; return; }
-    pipWin = await documentPictureInPicture.requestWindow({width: 460, height: 580});
+    pipWin = await documentPictureInPicture.requestWindow({width: 520, height: 720});
+    [...document.head.querySelectorAll('link[rel="stylesheet"],style')].forEach(node=>pipWin.document.head.appendChild(node.cloneNode(true)));
     pipWin.document.body.innerHTML = `
-      <div id="pipNow" style="font-weight:800;font-size:15px;margin-bottom:10px"></div>
+      <div id="pipNow"></div>
+      <div class="slide-preview" id="pipSlide" aria-label="Current slide preview"></div>
       <div id="pipNotes"></div>
-      <div style="display:flex;gap:8px;margin-top:12px">
-        <button id="pipPrev" style="flex:1;padding:10px;border-radius:8px;border:1px solid #124066;background:#0D3050;color:#fff;font-size:14px;cursor:pointer">← Prev</button>
-        <button id="pipNext" style="flex:1;padding:10px;border-radius:8px;border:1px solid #124066;background:#0D3050;color:#fff;font-size:14px;cursor:pointer">Next →</button>
+      <div id="pipControls">
+        <button id="pipPrev">← Prev</button>
+        <button id="pipNext">Next →</button>
       </div>`;
     const st = pipWin.document.createElement('style');
-    st.textContent = `body{background:#071C33;color:#E3F4FD;font-family:Montserrat,system-ui,sans-serif;padding:16px;font-size:14.5px;line-height:1.6}
-      #pipNotes{overflow-y:auto;max-height:calc(100vh - 130px)} #pipNotes p{margin:0 0 10px}
-      #pipNotes p.cue{color:#8A95A3;font-style:italic;font-size:13px} #pipNow{color:#5BCBF5}`;
+    st.textContent = `html,body{width:auto;height:100%;overflow:hidden}body{box-sizing:border-box;margin:0;background:#071C33;color:#E3F4FD;font-family:Montserrat,system-ui,sans-serif;padding:14px;font-size:14.5px;line-height:1.55;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;gap:10px}
+      #pipNow{color:#5BCBF5;font-weight:800;font-size:15px;line-height:1.3}
+      #pipSlide{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#031426;border:1px solid #124066;border-radius:10px}
+      #pipNotes{overflow-y:auto;min-height:0;padding:2px 4px 0 0} #pipNotes p{margin:0 0 10px}
+      #pipNotes p.cue{color:#8A95A3;font-style:italic;font-size:13px}
+      #pipControls{display:flex;gap:8px} #pipControls button{flex:1;padding:10px;border-radius:8px;border:1px solid #124066;background:#0D3050;color:#fff;font-size:14px;cursor:pointer}`;
     pipWin.document.head.appendChild(st);
     pipWin.document.getElementById('pipPrev').onclick = ()=>prev();
     pipWin.document.getElementById('pipNext').onclick = ()=>next();
+    pipWin.addEventListener('resize', renderPip);
     pipWin.addEventListener('pagehide', ()=>{ pipWin = null; });
     renderPip();
   }
@@ -1267,12 +1248,12 @@ function runTypewriter(){
   const out = document.getElementById('typeOut');
   clearInterval(typeTimer); out.innerHTML = '';
   if(matchMedia('(prefers-reduced-motion: reduce)').matches){
-    out.innerHTML = TYPE_SEGS.map(s=>`<span class="${s.cls}">${s.t}</span>`).join(''); return;
+    out.innerHTML = TYPE_SEGS.map(s=>`<span class="${s.cls}">${s.t}</span>`).join(''); announce(); return;
   }
   let seg = 0, ch = 0;
   const spans = TYPE_SEGS.map(s=>{ const el=document.createElement('span'); el.className=s.cls; out.appendChild(el); return el; });
   typeTimer = setInterval(()=>{
-    if(seg >= TYPE_SEGS.length){ clearInterval(typeTimer); return; }
+    if(seg >= TYPE_SEGS.length){ clearInterval(typeTimer); announce(); return; }
     spans[seg].textContent += TYPE_SEGS[seg].t[ch++];
     if(typeof keyClick === 'function') keyClick();
     if(ch >= TYPE_SEGS[seg].t.length){ seg++; ch=0; }

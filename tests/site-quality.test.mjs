@@ -90,6 +90,11 @@ test('agent presentation library is public and connects the presentation to its 
   const presentation = read('decks/third-borrower.html');
   assert.match(presentation, /@media print/);
   assert.match(presentation, /\.frag\{visibility:visible!important/);
+  assert.match(presentation, /id="pvSlide" aria-label="Current slide preview"/);
+  assert.match(presentation, /id="pipSlide" aria-label="Current slide preview"/);
+  assert.match(presentation, /function renderSlidePreview\(target, i, previewHtml\)/);
+  assert.match(presentation, /previewHtml:slides\[cur\]\.outerHTML/);
+  assert.match(presentation, /A mortgage should create options, not pressure\./);
 
   const moveUpPresentation = read('decks/move-up-method.html');
   const moveUpPlayer = read('decks/move-up-method-live.js');
