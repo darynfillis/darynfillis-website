@@ -2,6 +2,7 @@
   "scripts": {
     "dev": "netlify dev",
     "test:calculator": "node --test tests/sell-with-intention-calculator.test.mjs",
+    "test:move-up-method": "node --test tests/move-up-method-calculations.test.mjs",
     "test:site-quality": "node --test tests/site-quality.test.mjs",
     "build": "node scripts/apply-neighborhoods.js",
     "postbuild": "node scripts/fix-neighborhood-buttons.js && node scripts/update-westchester-market-cards.js && node scripts/finalize-neighborhood-seo.js && node scripts/apply-glossary.js && node scripts/apply-seo-pass-1.js && node scripts/apply-aeo-brand-pass-2.js && node scripts/apply-site-quality-pass.mjs"

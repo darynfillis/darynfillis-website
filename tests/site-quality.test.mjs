@@ -78,11 +78,37 @@ test('agent presentation library is public and connects the presentation to its 
   assert.match(library, /href="third-borrower\.pdf" download/);
   assert.match(library, /href="\/california-condo-buyers-checklist\.pdf" download/);
   assert.match(library, /href="\/california-condo-sellers-checklist\.pdf" download/);
+  assert.match(library, /href="move-up-method\.html\?mins=0"/);
+  assert.match(library, /href="move-up-method\.pdf" download/);
+  assert.match(library, /href="\/move-up-method"/);
   assert.doesNotMatch(library, /Private page|Just for me|Note to self/);
 
   const presentation = read('decks/third-borrower.html');
   assert.match(presentation, /@media print/);
   assert.match(presentation, /\.frag\{visibility:visible!important/);
+
+  const moveUpPresentation = read('decks/move-up-method.html');
+  const moveUpPlayer = read('decks/move-up-method-live.js');
+  const moveUpStyles = read('decks/move-up-method-live.css');
+  assert.match(moveUpPresentation, /id="lobby"/);
+  assert.match(moveUpPresentation, /id="notesBtn"/);
+  assert.match(moveUpPresentation, /id="pipBtn"/);
+  assert.match(moveUpPresentation, /The move-up<br><span class="b">method\.<\/span>/);
+  assert.match(moveUpPresentation, /Daryn Fillis &nbsp;·&nbsp; NEO Home Loans &nbsp;·&nbsp; NMLS #1988371/);
+  assert.match(moveUpPlayer, /BroadcastChannel\('move-up-method-deck'\)/);
+  assert.match(moveUpPlayer, /documentPictureInPicture/);
+  assert.match(moveUpPlayer, /function startCountdown\(\)/);
+  assert.match(moveUpPlayer, /manualMinutes === null\) manualMinutes = 5;/);
+  assert.match(moveUpStyles, /h1\{font-weight:800;font-size:58px;line-height:1\.12;letter-spacing:-\.01em\}/);
+  assert.match(moveUpStyles, /h2\{font-weight:800;font-size:44px;line-height:1\.15\}/);
+  assert.match(moveUpStyles, /\.body\{font-size:20px;line-height:1\.55;color:var\(--pale\);font-weight:400\}/);
+  assert.match(moveUpStyles, /\.brand-lens\{font-size:19px;line-height:1\.45;font-weight:600;/);
+  assert.match(moveUpStyles, /@media print/);
+  assert.match(moveUpStyles, /\.frag\{visibility:visible!important/);
+  for (const asset of ['1.png', 'app-preview.png', 'app-qr.png', 'strategy-call-qr.png']) {
+    assert.ok(fs.existsSync(path.join(root, 'decks/move-up-method', asset)), asset);
+  }
+  assert.ok(fs.existsSync(path.join(root, 'decks/move-up-method.pdf')));
 });
 
 test('conversion events cover the primary mortgage journeys', () => {
