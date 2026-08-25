@@ -1581,7 +1581,10 @@ html{-webkit-text-size-adjust:100%;}
     .fn-card-meta { align-items:center; border-top:1px solid #e8edf2; color:#7d8a98; display:flex; flex-wrap:wrap; font-size:.69rem; gap:6px 10px; padding-top:13px; }
     .fn-card-meta strong { color:#258eb8; font-size:.66rem; font-weight:800; letter-spacing:.1em; margin-left:auto; text-transform:uppercase; white-space:nowrap; }
     .fn-card--latest { background:#0a2540; border-color:#0a2540; color:#fff; grid-column:span 2; display:grid; grid-template-columns:1.15fr 1fr; }
-    .fn-card--latest .fn-card-media { aspect-ratio:auto; min-height:100%; }
+    .fn-card--latest .fn-card-media { aspect-ratio:auto; min-height:100%; position:relative; }
+    .fn-image-label { background:linear-gradient(0deg,rgba(4,20,34,.82),rgba(4,20,34,0)); bottom:0; box-sizing:border-box; color:#fff; display:flex; flex-direction:column; gap:5px; left:0; padding:48px 22px 20px; position:absolute; right:0; }
+    .fn-image-label span { color:#8cdef9; font-size:.62rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; }
+    .fn-image-label strong { font-size:.9rem; font-weight:800; letter-spacing:-.01em; }
     .fn-card--latest .fn-card-copy { justify-content:center; padding:clamp(28px,4vw,48px); }
     .fn-card--latest .fn-card-tag { color:#7bd8fa; }
     .fn-card--latest h2 { color:#fff; font-size:clamp(1.45rem,2.8vw,2.2rem); line-height:1.1; }
@@ -1601,7 +1604,7 @@ html{-webkit-text-size-adjust:100%;}
     .fn-subscribe a { background:#0a2540; border-radius:5px; color:#fff; flex:0 0 auto; font-size:.72rem; font-weight:800; letter-spacing:.12em; padding:14px 19px; text-decoration:none; text-transform:uppercase; }
     .fn-subscribe a:hover { background:#16486d; }
     @media (max-width:820px) { .fn-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .fn-card--latest { grid-column:span 2; } .fn-intro,.fn-series,.fn-subscribe-inner { align-items:flex-start; flex-direction:column; } .fn-series-links { justify-content:flex-start; } }
-    @media (max-width:560px) { .fn-hero { padding-top:108px; } .fn-grid { grid-template-columns:1fr; } .fn-card--latest { display:flex; grid-column:span 1; } .fn-card--latest .fn-card-media { aspect-ratio:16/9; } .fn-card-copy,.fn-card--latest .fn-card-copy { padding:21px; } }
+    @media (max-width:560px) { .fn-hero { padding-top:108px; } .fn-grid { grid-template-columns:1fr; } .fn-card--latest { display:flex; grid-column:span 1; } .fn-card--latest .fn-card-media { aspect-ratio:auto; height:158px; } .fn-image-label { padding:44px 18px 15px; } .fn-image-label strong { font-size:.84rem; } .fn-card-copy,.fn-card--latest .fn-card-copy { padding:21px; } }
   </style>
   <section class="fn-hero" aria-labelledby="field-notes-title">
     <div class="fn-hero-inner">
@@ -1614,7 +1617,7 @@ html{-webkit-text-size-adjust:100%;}
   <section class="fn-content" aria-labelledby="latest-notes-title">
     <div class="fn-intro"><div><span class="eyebrow">Field Notes</span><h2 id="latest-notes-title">Mortgage and market strategy for clearer next moves.</h2></div><p>Practical reads for California buyers, homeowners, and real estate partners.</p></div>
     <div class="fn-grid"><a class="fn-card fn-card--latest reveal" href="/field-notes/the-ridge-line-august-2026">
-  <div class="fn-card-media"><img src="/field-notes/images/the-ridge-line-august-2026.jpg" alt="View of Mount Whitney and the Sierra Nevada mountains" loading="lazy"></div>
+  <div class="fn-card-media"><img src="/field-notes/images/the-ridge-line-august-2026.jpg" alt="View of Mount Whitney and the Sierra Nevada mountains" loading="lazy"><div class="fn-image-label"><span>Featured article</span><strong>The Ridge Line: August 2026</strong></div></div>
   <div class="fn-card-copy">
     <div class="fn-card-tag">Latest article · The Ridge Line</div>
     <h2>The market catches its breath. Here’s what July’s housing and economic data mean for you.</h2>
