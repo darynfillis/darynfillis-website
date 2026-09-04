@@ -1,17 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
-  <title id="title">Demo property placeholder</title>
-  <desc id="desc">A branded architectural illustration used until verified listing photography is added.</desc>
-  <rect width="1600" height="1000" fill="#0a2540"/>
-  <rect y="250" width="1600" height="370" fill="#123f5e"/>
-  <rect y="620" width="1600" height="380" fill="#061a2e"/>
-  <polygon points="60,250 560,80 1080,250" fill="#061a2e"/>
-  <rect x="90" y="190" width="970" height="610" fill="#e8edf0"/>
-  <rect x="150" y="250" width="850" height="550" fill="#f6f8fa"/>
-  <rect x="1050" y="360" width="400" height="440" fill="#5bcbf5"/>
-  <rect x="260" y="370" width="290" height="430" fill="#0a2540"/>
-  <rect x="610" y="370" width="290" height="430" fill="#0a2540"/>
-  <rect x="300" y="420" width="180" height="180" fill="#5bcbf5"/>
-  <rect x="650" y="420" width="180" height="180" fill="#5bcbf5"/>
-  <text x="110" y="900" fill="#ffffff" font-family="Montserrat,Arial,sans-serif" font-size="56" font-weight="800" letter-spacing="5">DEMO PROPERTY</text>
-  <text x="110" y="954" fill="#b4c6d2" font-family="Montserrat,Arial,sans-serif" font-size="28">Replace with verified listing photography before publishing.</text>
+  <title id="title">Demo property illustration</title>
+  <desc id="desc">A simple modern home illustration used only for the private open-house landing-page prototype.</desc>
+  <rect width="1600" height="1000" fill="#061a2e"/>
+  <rect width="1600" height="260" fill="#0a2d4c"/>
+  <rect y="260" width="1600" height="380" fill="#123f5e"/>
+  <rect y="640" width="1600" height="360" fill="#061a2e"/>
+  <path d="M60 270 560 90l520 180Z" fill="#061a2e"/>
+  <rect x="90" y="220" width="970" height="590" fill="#e8edf0"/>
+  <rect x="150" y="280" width="850" height="530" fill="#f6f8fa"/>
+  <rect x="1050" y="370" width="400" height="440" fill="#5bcbf5"/>
+  <rect x="260" y="390" width="290" height="420" fill="#0a2540"/>
+  <rect x="610" y="390" width="290" height="420" fill="#0a2540"/>
+  <rect x="300" y="440" width="180" height="180" fill="#5bcbf5"/>
+  <rect x="650" y="440" width="180" height="180" fill="#5bcbf5"/>
 </svg>
