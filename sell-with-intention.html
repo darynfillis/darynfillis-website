@@ -162,6 +162,10 @@ nav.scrolled { box-shadow: 0 2px 12px rgba(10,37,64,0.08); }
 .eyebrow{font-size:0.67rem;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:12px;display:block}
 .h1{font-weight:800;font-size:clamp(1.8rem,3.2vw,2.6rem);letter-spacing:-0.03em;line-height:1.08;color:var(--navy);margin-bottom:10px}
 .sub{font-weight:200;font-size:1rem;color:var(--body);line-height:1.85;max-width:680px}
+.page-actions{display:flex;gap:12px;align-items:center;margin-top:22px}
+.print-page-btn{appearance:none;background:var(--navy);border:1px solid var(--navy);border-radius:999px;color:var(--white);cursor:pointer;font:700 0.72rem var(--font);letter-spacing:.12em;padding:11px 18px;text-transform:uppercase;transition:background .16s,border-color .16s,transform .16s}
+.print-page-btn:hover{background:var(--blue-dark);border-color:var(--blue-dark);transform:translateY(-1px)}
+.print-page-btn:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
 
 /* ── EXPLAINER BOXES ── */
 .box{background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:24px 26px;margin-top:28px}
@@ -349,9 +353,41 @@ footer { background: var(--ink); padding: 56px 48px 36px; }
   .footer-bottom{flex-direction:column;gap:10px;text-align:center}
 }
 @media print{
-  nav{position:static}
-  .breadcrumb-bar{display:none}
-  .ic input{border:1px solid #999}
+  @page{size:letter landscape;margin:.38in}
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{background:#fff!important;color:#000!important;font-size:10pt}
+  body>nav,body>.breadcrumb-bar,body>footer,.skip-to-main,.page-actions{display:none!important}
+  main{display:block!important}
+  .page{max-width:none!important;margin:0!important;padding:0!important}
+  .eyebrow{color:#1d5777!important;margin-bottom:6pt}
+  .h1{font-size:24pt!important;margin-bottom:5pt;color:#0a2540!important}
+  .sub{font-size:10pt!important;line-height:1.45!important;max-width:7.6in}
+  .box,.iw,.chart-wrap,.section-head,.rg,.tool-disclaimer{break-inside:avoid-page;page-break-inside:avoid}
+  .box,.iw{box-shadow:none!important;border-color:#b7c0c8!important}
+  .box{margin-top:16pt!important;padding:14pt 16pt!important}
+  .iw{margin-top:16pt!important;padding:16pt!important}
+  .steps{gap:12pt}
+  .step .desc,.why,.calc-note{font-size:8pt!important;line-height:1.4!important}
+  .ic input,.ic select{border:1px solid #88939c!important;background:#fff!important;color:#000!important;padding:5pt 6pt!important;font-size:9pt!important}
+  .chart-wrap{margin-top:18pt!important}
+  .chart-sub{margin-bottom:8pt!important}
+  #netchart{max-height:1.8in!important}
+  .cards{gap:8pt!important;margin-top:8pt!important}
+  .card,.bw-card{box-shadow:none!important;border-color:#88939c!important;border-radius:8pt!important;padding:10pt!important}
+  .card-g{border-bottom:1px solid #88939c!important}
+  .bw-card{border-top:1px solid #88939c!important;margin-top:8pt!important}
+  .card:hover{box-shadow:none!important}
+  .card,.stack,.rk{break-inside:avoid-page;page-break-inside:avoid}
+  .sn{font-size:11pt!important}.mini,.vd,.pool-cap,.rbd,.ipc-body{font-size:7.5pt!important;line-height:1.35!important}
+  .nv{font-size:16pt!important}.rvl{font-size:12pt!important}
+  .section-head{margin-top:18pt!important;margin-bottom:8pt!important}
+  .rg{gap:10pt!important}.rk{padding:12pt!important}.ri{font-size:8pt!important;margin-bottom:4pt!important}
+  .tool-disclaimer{margin-top:18pt!important;padding-top:12pt!important;color:#303840!important;font-size:8pt!important;font-weight:400!important}
+  .tool-disclaimer strong{color:#000!important}
+  a{color:inherit!important;text-decoration:none!important}
+  .pill{border-color:#88939c!important;padding:4pt 7pt!important}
+  .pill.on{background:#0a2540!important;color:#fff!important}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
 <link rel="stylesheet" href="/site-accessibility.css">
@@ -424,6 +460,9 @@ footer { background: var(--ink); padding: 56px 48px 36px; }
   <span class="eyebrow">Manufacturing Affordability by Design</span>
   <h1 class="h1">Sell with Intention</h1>
   <p class="sub">A rate-buydown listing strategy that widens the buyer pool without cutting the price — modeled with seller payoff, complete buyer-payment inputs, and carrying-cost math.</p>
+  <div class="page-actions">
+    <button class="print-page-btn" type="button" onclick="window.print()">Print strategy</button>
+  </div>
 
   <div class="box">
     <p class="box-title">New to this? Here&rsquo;s how it works in 60 seconds</p>
@@ -577,7 +616,7 @@ footer { background: var(--ink); padding: 56px 48px 36px; }
     </div>
   </div>
 
-  <p class="tool-disclaimer">All figures are estimates for illustrative purposes only. Actual payments, rates &amp; proceeds may vary. Not a commitment to lend. Daryn Fillis &middot; NEO Home Loans &middot; NMLS #1988371.</p>
+  <p class="tool-disclaimer"><strong>Illustrative purposes only.</strong> This tool does not guarantee a sale, buyer interest, offer terms, appraisal, financing approval, or seller proceeds. All figures are estimates; actual payments, rates, costs, credits, and net proceeds may vary. Confirm property-specific numbers, program eligibility, and final loan terms before making decisions. Not a commitment to lend. Daryn Fillis &middot; NEO Home Loans &middot; NMLS #1988371.</p>
 
 </div>
 </main>
