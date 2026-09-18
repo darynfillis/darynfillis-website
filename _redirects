@@ -10,6 +10,12 @@
 /continue/   /continue.html    200
 /time-log    /time-log/index.html    200
 /time-log/   /time-log/index.html    200
+/open-house/thanks    /open-house/thanks.html    200
+/open-house/thanks/   /open-house/thanks.html    200
+/open-house    /open-house.html    200
+/open-house/   /open-house.html    200
+/homes/:property/:rider    /open-house.html?property=:property&rider=:rider    200
+/homes/:property    /open-house.html?property=:property    200
 /is-buying-a-condo-in-los-angeles-worth-it    /field-notes/is-buying-a-condo-in-los-angeles-worth-it    301
 /field-notes/los-angeles-condo-financing-10-unit-projects    /los-angeles-condo-financing-10-unit-projects    301
 /darynfillis    /    301

@@ -13,6 +13,7 @@
     '/thanks-condo-buyer-guide': 'condo_buyer_guide',
     '/thanks-condo-seller-guide': 'condo_seller_guide',
     '/thanks-mortgage-strategy-digest': 'mortgage_strategy_digest',
+    '/open-house/thanks': 'open_house_property_strategy',
     '/thanks-partnership': 'partnership',
     '/thanks-playbook': 'self_employed_playbook',
     '/thanks-rate-watch': 'rate_watch',
