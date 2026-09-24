@@ -12,3 +12,13 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/temp-buydown/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/temp-buydown/og-temp-buydown.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"

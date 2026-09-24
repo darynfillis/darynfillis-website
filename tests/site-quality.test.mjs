@@ -72,6 +72,20 @@ test('SEO cleanup is complete', () => {
   assert.doesNotMatch(read('self-employed-playbook.html'), /property=["']twitter:/i);
 });
 
+test('temporary buydown landing page has its clean route and social metadata', () => {
+  const html = read('temp-buydown/index.html');
+  assert.match(html, /<link rel="canonical" href="https:\/\/darynfillis\.com\/temp-buydown"/);
+  assert.match(html, /<meta property="og:title" content="Temporary Buydown, Explained \| Daryn Fillis"/);
+  assert.match(html, /<meta property="og:image" content="https:\/\/darynfillis\.com\/temp-buydown\/og-temp-buydown\.jpg"/);
+  assert.match(html, /<meta name="twitter:card" content="summary_large_image"/);
+  assert.match(html, /<meta name="robots" content="index, follow"/);
+  assert.match(html, /src="\/temp-buydown\/assets\/index-[^"]+\.js"/);
+  assert.match(html, /href="\/temp-buydown\/assets\/index-[^"]+\.css"/);
+  assert.ok(fs.existsSync(path.join(root, 'temp-buydown/og-temp-buydown.jpg')));
+  assert.match(read('_redirects'), /^\/temp-buydown\s+\/temp-buydown\/index\.html\s+200$/m);
+  assert.match(read('sitemap.xml'), /<loc>https:\/\/darynfillis\.com\/temp-buydown<\/loc>/);
+});
+
 test('agent presentation library is public and connects the presentation to its resources', () => {
   const library = read('decks/index.html');
   assert.match(library, /<meta name="robots" content="index, follow">/);

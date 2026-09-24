@@ -29,6 +29,12 @@
 
   <!-- Strategy pages -->
   <url>
+    <loc>https://darynfillis.com/temp-buydown</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://darynfillis.com/no-cost-refinance</loc>
     <lastmod>2026-04-24</lastmod>
     <changefreq>monthly</changefreq>
