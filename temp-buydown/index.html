@@ -26,6 +26,80 @@
     <title>Temporary Buydown Explained | Daryn Fillis</title>
     <script type="module" crossorigin src="/temp-buydown/assets/index-4RIS10Mu.js"></script>
     <link rel="stylesheet" crossorigin href="/temp-buydown/assets/index-DsbsU5vj.css">
+    <style>
+      /* Put the timeline directly after the piggy bank in the one-column layout. */
+      @media (max-width: 860px) {
+        .piggy-workbench {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 18px;
+        }
+
+        .piggy-workbench > .piggy-stage,
+        .piggy-workbench > .piggy-timeline,
+        .piggy-workbench > .custody-callout,
+        .piggy-workbench > .equation-story-heading,
+        .piggy-workbench > .equation-panel {
+          grid-column: auto;
+          grid-row: auto;
+        }
+
+        .piggy-workbench > .piggy-stage { order: 1; }
+        .piggy-workbench > .piggy-timeline { order: 2; }
+        .piggy-workbench > .custody-callout { order: 3; }
+        .piggy-workbench > .equation-story-heading { order: 4; }
+        .piggy-workbench > .equation-panel { order: 5; }
+      }
+
+      /* Keep range controls visible and easy to grab on phones. */
+      @media (max-width: 720px) {
+        .piggy-timeline input[type="range"],
+        .range-field input[type="range"],
+        .rate-field > input[type="range"] {
+          display: block;
+          width: 100%;
+          height: 32px;
+          min-height: 32px;
+          padding: 12px 0;
+          background-clip: content-box;
+          touch-action: pan-y;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+          width: 24px;
+          height: 24px;
+          border: 5px solid var(--white);
+          border-radius: 50%;
+          background: var(--navy);
+          box-shadow: 0 2px 12px rgba(10, 37, 64, .25);
+        }
+
+        input[type="range"]::-moz-range-track {
+          height: 8px;
+          border-radius: 999px;
+          background: var(--rule);
+        }
+
+        input[type="range"]::-moz-range-progress {
+          height: 8px;
+          border-radius: 999px;
+          background: var(--blue-dark);
+        }
+
+        .piggy-timeline input[type="range"]::-moz-range-progress {
+          background: var(--blue);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+          width: 14px;
+          height: 14px;
+          border: 5px solid var(--white);
+          border-radius: 50%;
+          background: var(--navy);
+          box-shadow: 0 2px 12px rgba(10, 37, 64, .25);
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
