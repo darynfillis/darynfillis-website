@@ -77,6 +77,31 @@ test('SEO cleanup is complete', () => {
   assert.doesNotMatch(read('self-employed-playbook.html'), /property=["']twitter:/i);
 });
 
+test('core entity markup connects the advisor, business, and website without inventing a site search', () => {
+  const homeGraph = jsonLdItems(read('index.html')).find((item) => Array.isArray(item['@graph']))?.['@graph'];
+  assert.ok(homeGraph, 'home page entity graph is missing');
+  const byId = new Map(homeGraph.map((item) => [item['@id'], item]));
+  const business = byId.get('https://darynfillis.com/#business');
+  const website = byId.get('https://darynfillis.com/#website');
+  const webpage = byId.get('https://darynfillis.com/#webpage');
+
+  assert.equal(business?.['@type'], 'FinancialService');
+  assert.equal(website?.publisher?.['@id'], 'https://darynfillis.com/#business');
+  assert.equal(webpage?.isPartOf?.['@id'], 'https://darynfillis.com/#website');
+  assert.equal(webpage?.mainEntity?.['@id'], 'https://darynfillis.com/#daryn');
+  assert.equal(homeGraph.filter((item) => item['@type'] === 'SearchAction').length, 0, 'site does not offer a search interface');
+
+  const aboutProfile = jsonLdItems(read('about.html')).find((item) => item['@type'] === 'ProfilePage');
+  assert.equal(aboutProfile?.mainEntity?.['@id'], 'https://darynfillis.com/#daryn');
+});
+
+test('public pages apply baseline production security headers', () => {
+  const headers = read('_headers');
+  assert.match(headers, /Referrer-Policy:\s*strict-origin-when-cross-origin/);
+  assert.match(headers, /Permissions-Policy:\s*camera=\(\), geolocation=\(\), microphone=\(\), payment=\(\)/);
+  assert.match(headers, /Strict-Transport-Security:\s*max-age=31536000/);
+});
+
 test('Field Notes article schema identifies the page it appears on', () => {
   for (const file of listPublicHtml(path.join(root, 'field-notes'))) {
     const html = fs.readFileSync(file, 'utf8');
