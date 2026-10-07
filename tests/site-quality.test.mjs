@@ -86,6 +86,26 @@ test('Field Notes article schema identifies the page it appears on', () => {
     for (const article of articles) {
       assert.ok(canonical, `${path.relative(root, file)}: canonical URL is missing`);
       assert.equal(article.mainEntityOfPage?.['@id'], canonical, `${path.relative(root, file)}: article schema points to the wrong page`);
+      assert.ok(article.datePublished, `${path.relative(root, file)}: article schema needs a published date`);
+      assert.ok(article.dateModified, `${path.relative(root, file)}: article schema needs a modified date`);
+      assert.ok(article.image, `${path.relative(root, file)}: article schema needs a primary image`);
+      assert.equal(article.author?.['@id'], 'https://darynfillis.com/#daryn', `${path.relative(root, file)}: article schema needs the canonical author entity`);
+      assert.equal(article.isPartOf?.['@id'], 'https://darynfillis.com/field-notes#field-notes', `${path.relative(root, file)}: article schema needs the Field Notes collection`);
+    }
+  }
+});
+
+test('high-intent Field Notes pages expose visible FAQ content and matching schema', () => {
+  for (const page of [
+    'medical-professionals-buying-homes-los-angeles.html',
+    'self-employed-mortgage-los-angeles.html'
+  ]) {
+    const html = read(`field-notes/${page}`);
+    const faq = jsonLdItems(html).find((item) => item['@type'] === 'FAQPage');
+    assert.ok(faq?.mainEntity?.length >= 3, `${page}: FAQPage schema is missing`);
+    for (const entry of faq.mainEntity) {
+      assert.ok(html.includes(`<h3>${entry.name}</h3>`), `${page}: FAQ question is not visible on the page`);
+      assert.ok(html.includes(entry.acceptedAnswer.text), `${page}: FAQ answer is not visible on the page`);
     }
   }
 });
