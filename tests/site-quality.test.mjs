@@ -118,6 +118,33 @@ test('Field Notes articles use their own social preview image', () => {
   }
 });
 
+test('source-led Field Notes content identifies primary sources and a review date', () => {
+  const evidencePages = [
+    ['when-an-arm-makes-sense.html', /consumerfinance\.gov/],
+    ['new-condo-rules-2026.html', /singlefamily\.fanniemae\.com/],
+    ['higher-rates-buyer-leverage.html', /freddiemac\.com/],
+    ['the-ridge-line-june-2026.html', /car\.org/],
+    ['the-ridge-line-july-2026.html', /car\.org/],
+    ['the-ridge-line-august-2026.html', /car\.org/],
+    ['the-ridge-line-september-2026.html', /car\.org/]
+  ];
+
+  for (const [page, primarySource] of evidencePages) {
+    const html = read(`field-notes/${page}`);
+    assert.match(html, /id=["']sources-title["']/, `${page}: visible sources heading is missing`);
+    assert.match(html, /Sources and review/, `${page}: source section is not clearly labeled`);
+    assert.match(html, /Last reviewed October 7, 2026/, `${page}: review date is missing`);
+    assert.match(html, primarySource, `${page}: expected primary source is missing`);
+  }
+
+  const arm = read('field-notes/when-an-arm-makes-sense.html');
+  assert.doesNotMatch(arm, /Bank of America says ARMs make up 10 percent/);
+
+  const condo = read('field-notes/new-condo-rules-2026.html');
+  assert.doesNotMatch(condo, /Fannie Mae and Freddie Mac eliminate Limited Review/);
+  assert.doesNotMatch(condo, /\$50,000 per-unit deductible cap/);
+});
+
 test('public pages do not use self-serving aggregate rating markup', () => {
   for (const file of listPublicHtml()) {
     const html = fs.readFileSync(file, 'utf8');
