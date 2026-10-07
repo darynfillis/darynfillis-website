@@ -20,6 +20,11 @@ function read(relative) {
   return fs.readFileSync(path.join(root, relative), 'utf8');
 }
 
+function jsonLdItems(html) {
+  return [...html.matchAll(/<script\s+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)]
+    .map((match) => JSON.parse(match[1].trim()));
+}
+
 test('public pages load the shared accessibility and analytics layers', () => {
   for (const file of listPublicHtml()) {
     const html = fs.readFileSync(file, 'utf8');
@@ -70,6 +75,34 @@ test('SEO cleanup is complete', () => {
   assert.match(read('condo-check.html'), /<link rel="canonical" href="https:\/\/darynfillis\.com\/condo-check">/);
   assert.doesNotMatch(read('ig.html'), /property=["']twitter:/i);
   assert.doesNotMatch(read('self-employed-playbook.html'), /property=["']twitter:/i);
+});
+
+test('Field Notes article schema identifies the page it appears on', () => {
+  for (const file of listPublicHtml(path.join(root, 'field-notes'))) {
+    const html = fs.readFileSync(file, 'utf8');
+    const canonical = html.match(/<link\s+rel=["']canonical["']\s+href=["']([^"']+)["']/i)?.[1];
+    const articles = jsonLdItems(html).filter((item) => item['@type'] === 'Article' || item['@type'] === 'BlogPosting');
+
+    for (const article of articles) {
+      assert.ok(canonical, `${path.relative(root, file)}: canonical URL is missing`);
+      assert.equal(article.mainEntityOfPage?.['@id'], canonical, `${path.relative(root, file)}: article schema points to the wrong page`);
+    }
+  }
+});
+
+test('Field Notes articles use their own social preview image', () => {
+  for (const file of listPublicHtml(path.join(root, 'field-notes'))) {
+    const html = fs.readFileSync(file, 'utf8');
+    if (!/"@type":"(?:Article|BlogPosting)"|"@type": "(?:Article|BlogPosting)"/.test(html)) continue;
+    assert.doesNotMatch(html, /<meta property="og:image"\s+content="https:\/\/darynfillis\.com\/og-home\.jpg">/, path.relative(root, file));
+  }
+});
+
+test('public pages do not use self-serving aggregate rating markup', () => {
+  for (const file of listPublicHtml()) {
+    const html = fs.readFileSync(file, 'utf8');
+    assert.doesNotMatch(html, /"aggregateRating"\s*:/, path.relative(root, file));
+  }
 });
 
 test('temporary buydown landing page has its clean route and social metadata', () => {
