@@ -92,7 +92,9 @@ test('core entity markup connects the advisor, business, and website without inv
   assert.equal(homeGraph.filter((item) => item['@type'] === 'SearchAction').length, 0, 'site does not offer a search interface');
 
   const aboutProfile = jsonLdItems(read('about.html')).find((item) => item['@type'] === 'ProfilePage');
+  assert.equal(aboutProfile?.url, 'https://darynfillis.com/about');
   assert.equal(aboutProfile?.mainEntity?.['@id'], 'https://darynfillis.com/#daryn');
+  assert.equal('mainEntityOfPage' in aboutProfile, false, 'ProfilePage avoids fields unsupported by Google profile markup');
 });
 
 test('public pages apply baseline production security headers', () => {
