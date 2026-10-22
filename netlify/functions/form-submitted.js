@@ -78,6 +78,14 @@ function authHeaderName() {
   return /^[A-Za-z0-9-]+$/.test(name) ? name : "Authorization";
 }
 
+function authPrefix() {
+  if (process.env.MMS_LEAD_INTAKE_AUTH_PREFIX !== undefined) {
+    return text(process.env.MMS_LEAD_INTAKE_AUTH_PREFIX, 40);
+  }
+
+  return authHeaderName().toLowerCase() === "authorization" ? "Bearer" : "";
+}
+
 function deliveryKey(payload, form) {
   const identifier = text(payload?.id || payload?.submission_id || payload?.created_at || payload?.createdAt, 160);
   return crypto.createHash("sha256").update(`${form}:${identifier}`).digest("hex");
@@ -105,7 +113,7 @@ exports.handler = async (event) => {
 
   const submittedAt = text(payload.created_at || payload.createdAt, 50) || new Date().toISOString();
   const idempotencyKey = deliveryKey(payload, form);
-  const authorizationPrefix = text(process.env.MMS_LEAD_INTAKE_AUTH_PREFIX || "Bearer", 40);
+  const authorizationPrefix = authPrefix();
   const headers = { "Content-Type": "application/json", "User-Agent": "darynfillis-website-lead-router/1.0" };
   headers[authHeaderName()] = authorizationPrefix ? `${authorizationPrefix} ${token}` : token;
   headers["x-idempotency-key"] = idempotencyKey;

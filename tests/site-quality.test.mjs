@@ -316,6 +316,8 @@ test('lead routing waits for verified Netlify submissions and keeps MMS delivery
   assert.match(router, /payload\?\.data/);
   assert.match(router, /MMS_LEAD_INTAKE_URL/);
   assert.match(router, /MMS_LEAD_INTAKE_TOKEN/);
+  assert.match(router, /MMS_LEAD_INTAKE_AUTH_HEADER/);
+  assert.match(router, /authHeaderName\(\)\.toLowerCase\(\) === "authorization" \? "Bearer" : ""/);
   assert.match(router, /MMS_LEAD_WORKSPACE/);
   assert.match(router, /x-idempotency-key/);
   assert.match(router, /mymortgagestudio\.com/);
