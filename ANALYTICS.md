@@ -34,7 +34,7 @@ The established MyMortgageSTUDIO redirect inside YouCanBookMe remains unchanged.
 Before enabling the webhook, set these server-only Netlify environment variables:
 
 - `BOOKING_WEBHOOK_SECRET`: a new long random secret used only by YouCanBookMe and the function
-- `GA4_MEASUREMENT_ID`: `G-QC0YG2MK2P`
+- `GA4_MEASUREMENT_ID`: `G-HNXGMCM9L5`
 - `GA4_MEASUREMENT_PROTOCOL_SECRET`: an API secret created in this GA4 property's web stream
 
 Then configure YouCanBookMe to send a POST request to:

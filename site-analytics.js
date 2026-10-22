@@ -1,9 +1,9 @@
 (function () {
   'use strict';
 
-  // The current darynfillis.com GA4 property. Older page-level tags remain in
-  // place during the migration so historical collection is not interrupted.
-  const GA_ID = 'G-QC0YG2MK2P';
+  // The active darynfillis.com GA4 web stream. This matches the page-level
+  // Google tag already installed across the site.
+  const GA_ID = 'G-HNXGMCM9L5';
   const pagePath = window.location.pathname.replace(/\/$/, '') || '/';
   const calculatorPaths = new Set([
     '/buying-vs-renting',
