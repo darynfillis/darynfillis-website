@@ -309,6 +309,23 @@ test('booking completion webhook keeps credentials private and deduplicates prov
   assert.doesNotMatch(webhook, /email|phone|firstName|lastName/i, 'booking webhook must not process borrower PII');
 });
 
+test('lead routing waits for verified Netlify submissions and keeps MMS delivery server-side', () => {
+  const router = read('netlify/functions/form-submitted.js');
+  const guide = read('LEAD-ROUTING.md');
+  assert.match(router, /exports\.handler/);
+  assert.match(router, /payload\?\.data/);
+  assert.match(router, /MMS_LEAD_INTAKE_URL/);
+  assert.match(router, /MMS_LEAD_INTAKE_TOKEN/);
+  assert.match(router, /MMS_LEAD_WORKSPACE/);
+  assert.match(router, /x-idempotency-key/);
+  assert.match(router, /mymortgagestudio\.com/);
+  assert.match(router, /mms-lead-delivery-dedupe/);
+  assert.match(router, /marketing_consent/);
+  assert.doesNotMatch(router, /console\.log\([^)]*answers/);
+  assert.match(guide, /function-only/i);
+  assert.match(guide, /Not enrolled unless consented/);
+});
+
 test('high-confidence retired routes resolve to their current equivalents', () => {
   const redirects = read('_redirects');
   assert.match(redirects, /^\/home\s+\/\s+301$/m);
