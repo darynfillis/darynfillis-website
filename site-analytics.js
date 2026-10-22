@@ -21,6 +21,12 @@
 
   window.dataLayer = window.dataLayer || [];
   window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+  const queryParams = new URLSearchParams(window.location.search);
+  const campaignSource = queryParams.get('source') || window.sessionStorage.getItem('daryn_campaign_source') || '';
+
+  if (queryParams.get('source')) {
+    window.sessionStorage.setItem('daryn_campaign_source', queryParams.get('source'));
+  }
 
   if (!document.querySelector(`script[src*="googletagmanager.com/gtag/js?id=${GA_ID}"]`)) {
     const googleTag = document.createElement('script');
@@ -75,6 +81,14 @@
     if (type === 'phone') send('phone_contact_started', details);
     if (type === 'email') send('email_contact_started', details);
 
+    const promotion = target.closest('[data-promotion]');
+    if (promotion) {
+      send('promotion_cta_clicked', {
+        promotion_name: cleanText(promotion.getAttribute('data-promotion')),
+        ...details
+      });
+    }
+
     if (
       type !== 'general' ||
       target.matches('.btn, .nav-cta, .nav-continue, .hero-cta, [data-analytics-cta]')
@@ -102,11 +116,11 @@
   }
 
   if (pagePath === '/schedule') {
-    const bookingConfirmed = new URLSearchParams(window.location.search).get('booking') === 'confirmed';
+    const bookingConfirmed = queryParams.get('booking') === 'confirmed';
     if (bookingConfirmed) {
-      send('consultation_booked', { provider: 'youcanbookme' });
+      send('consultation_booked', { provider: 'youcanbookme', campaign_source: campaignSource || 'direct' });
     } else {
-      send('schedule_viewed', {});
+      send('schedule_viewed', { campaign_source: campaignSource || 'direct' });
     }
     const schedulingFrame = document.querySelector('iframe[src*="youcanbook.me"]');
     if (schedulingFrame) {
@@ -114,6 +128,19 @@
         send('schedule_widget_loaded', { provider: 'youcanbookme' });
       }, { once: true });
     }
+  }
+
+  if (pagePath === '/booking-confirmed') {
+    send('consultation_booked', { provider: 'youcanbookme', campaign_source: campaignSource || 'direct' });
+    window.sessionStorage.removeItem('daryn_campaign_source');
+  }
+
+  const promotionView = document.querySelector('[data-promotion-view]');
+  if (promotionView) {
+    send('promotion_viewed', {
+      promotion_name: cleanText(promotionView.getAttribute('data-promotion-view')),
+      promotion_location: ctaLocation(promotionView)
+    });
   }
 
   if (calculatorPaths.has(pagePath)) {
