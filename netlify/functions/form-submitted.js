@@ -1,5 +1,5 @@
 const crypto = require("node:crypto");
-const { connectLambda, getStore } = require("@netlify/blobs");
+const { getStore } = require("@netlify/blobs");
 
 const INTERNAL_FIELDS = new Set([
   "bot-field",
@@ -118,7 +118,6 @@ exports.handler = async (event) => {
     return;
   }
 
-  connectLambda(event);
   const store = getStore("mms-lead-delivery-dedupe");
   const key = `submissions/${deliveryKey(payload, form)}`;
   if (await store.get(key, { type: "json" })) return;
