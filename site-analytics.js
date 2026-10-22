@@ -1,6 +1,8 @@
 (function () {
   'use strict';
 
+  // The active darynfillis.com GA4 web stream. This matches the page-level
+  // Google tag already installed across the site.
   const GA_ID = 'G-HNXGMCM9L5';
   const pagePath = window.location.pathname.replace(/\/$/, '') || '/';
   const calculatorPaths = new Set([
@@ -18,14 +20,70 @@
     '/thanks-rate-watch': 'rate_watch',
     '/thanks-wealth-digest': 'wealth_digest'
   };
+  const formIntents = {
+    'cal-condo-buyer': 'condo_buyer_checklist',
+    'cal-condo-seller': 'condo_seller_checklist',
+    'condo-check': 'condo_project_check',
+    'condo-project-check-buyer': 'condo_project_check',
+    'condo-project-check-seller': 'condo_project_check',
+    'decode-2026': 'homebuyer_strategy',
+    'mortgage-strategy-digest': 'mortgage_strategy_digest',
+    'partnership-plus-download': 'realtor_partnership',
+    'refi-rate-watch': 'refinance_rate_watch',
+    'self-employed-playbook': 'self_employed_playbook',
+    'wealth-digest': 'wealth_digest'
+  };
 
   window.dataLayer = window.dataLayer || [];
   window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
   const queryParams = new URLSearchParams(window.location.search);
-  const campaignSource = queryParams.get('source') || window.sessionStorage.getItem('daryn_campaign_source') || '';
+  const attributionStorageKey = 'daryn_website_attribution_v1';
 
-  if (queryParams.get('source')) {
-    window.sessionStorage.setItem('daryn_campaign_source', queryParams.get('source'));
+  function cleanAttributionValue(value) {
+    return String(value || '').replace(/[^a-zA-Z0-9._ -]/g, '').trim().slice(0, 100);
+  }
+
+  function referrerDomain() {
+    try {
+      const domain = new URL(document.referrer).hostname;
+      return domain === window.location.hostname ? '' : cleanAttributionValue(domain);
+    } catch (error) {
+      return '';
+    }
+  }
+
+  function savedAttribution() {
+    try {
+      return JSON.parse(window.localStorage.getItem(attributionStorageKey) || '{}');
+    } catch (error) {
+      return {};
+    }
+  }
+
+  const suppliedAttribution = {
+    source: cleanAttributionValue(queryParams.get('source') || queryParams.get('utm_source')),
+    medium: cleanAttributionValue(queryParams.get('utm_medium')),
+    campaign: cleanAttributionValue(queryParams.get('utm_campaign')),
+    content: cleanAttributionValue(queryParams.get('utm_content')),
+    term: cleanAttributionValue(queryParams.get('utm_term')),
+    landingPath: pagePath,
+    referrer: referrerDomain()
+  };
+  const storedAttribution = savedAttribution();
+  const hasNewAttribution = Object.values(suppliedAttribution).some(Boolean) && Boolean(
+    suppliedAttribution.source || suppliedAttribution.medium || suppliedAttribution.campaign ||
+    suppliedAttribution.content || suppliedAttribution.term
+  );
+  const firstTouch = storedAttribution.firstTouch || (hasNewAttribution ? suppliedAttribution : {
+    source: 'direct', medium: '', campaign: '', content: '', term: '', landingPath: pagePath, referrer: referrerDomain()
+  });
+  const latestTouch = hasNewAttribution ? suppliedAttribution : (storedAttribution.latestTouch || firstTouch);
+  const websiteSource = latestTouch.source || 'direct';
+
+  try {
+    window.localStorage.setItem(attributionStorageKey, JSON.stringify({ firstTouch, latestTouch }));
+  } catch (error) {
+    // Attribution is helpful but must never interfere with the visitor journey.
   }
 
   if (!document.querySelector(`script[src*="googletagmanager.com/gtag/js?id=${GA_ID}"]`)) {
@@ -49,6 +107,39 @@
       ...parameters
     });
   }
+
+  function formName(form) {
+    return cleanText(form.getAttribute('name') || form.id || 'unnamed_form');
+  }
+
+  function formIntent(form) {
+    return formIntents[formName(form)] || formName(form);
+  }
+
+  function addHiddenField(form, name, value) {
+    if (!value || form.querySelector(`[name="${name}"]`)) return;
+    const field = document.createElement('input');
+    field.type = 'hidden';
+    field.name = name;
+    field.setAttribute('value', value);
+    form.appendChild(field);
+  }
+
+  function addLeadAttribution(form) {
+    if (!form.matches('form[data-netlify="true"], form[data-netlify], form[netlify]')) return;
+    const metadata = {
+      website_lead_source: firstTouch.source || 'direct',
+      website_lead_medium: firstTouch.medium,
+      website_lead_campaign: firstTouch.campaign,
+      website_landing_page: firstTouch.landingPath,
+      website_referrer_domain: firstTouch.referrer,
+      website_submission_page: pagePath,
+      website_funnel_intent: formIntent(form)
+    };
+    Object.entries(metadata).forEach(([name, value]) => addHiddenField(form, name, value));
+  }
+
+  document.querySelectorAll('form').forEach(addLeadAttribution);
 
   function ctaLocation(element) {
     const region = element.closest('header, nav, main, section, aside, footer');
@@ -104,23 +195,39 @@
     }
   });
 
+  const startedForms = new WeakSet();
+
+  document.addEventListener('focusin', function (event) {
+    const form = event.target.closest('form');
+    if (!form || startedForms.has(form)) return;
+    startedForms.add(form);
+    send('lead_form_started', {
+      form_name: formName(form),
+      lead_type: formIntent(form),
+      website_source: websiteSource
+    });
+  });
+
   document.addEventListener('submit', function (event) {
     const form = event.target;
     send('lead_form_submitted', {
-      form_name: cleanText(form.getAttribute('name') || form.id || 'unnamed_form')
+      form_name: formName(form),
+      lead_type: formIntent(form),
+      website_source: websiteSource
     });
   });
 
   if (thankYouTypes[pagePath]) {
-    send('lead_form_completed', { lead_type: thankYouTypes[pagePath] });
+    send('lead_form_completed', { lead_type: thankYouTypes[pagePath], website_source: websiteSource });
+    send('generate_lead', { lead_type: thankYouTypes[pagePath], website_source: websiteSource });
   }
 
   if (pagePath === '/schedule') {
     const bookingConfirmed = queryParams.get('booking') === 'confirmed';
     if (bookingConfirmed) {
-      send('consultation_booked', { provider: 'youcanbookme', campaign_source: campaignSource || 'direct' });
+      send('consultation_booked', { provider: 'youcanbookme', website_source: websiteSource });
     } else {
-      send('schedule_viewed', { campaign_source: campaignSource || 'direct' });
+      send('schedule_viewed', { website_source: websiteSource });
     }
     const schedulingFrame = document.querySelector('iframe[src*="youcanbook.me"]');
     if (schedulingFrame) {
@@ -131,8 +238,7 @@
   }
 
   if (pagePath === '/booking-confirmed') {
-    send('consultation_booked', { provider: 'youcanbookme', campaign_source: campaignSource || 'direct' });
-    window.sessionStorage.removeItem('daryn_campaign_source');
+    send('consultation_booked', { provider: 'youcanbookme', website_source: websiteSource });
   }
 
   const promotionView = document.querySelector('[data-promotion-view]');

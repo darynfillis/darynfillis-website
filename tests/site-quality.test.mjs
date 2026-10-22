@@ -284,11 +284,37 @@ test('conversion events cover the primary mortgage journeys', () => {
   const analytics = read('site-analytics.js');
   for (const eventName of [
     'cta_clicked', 'schedule_started', 'schedule_viewed', 'prequalification_started',
-    'phone_contact_started', 'email_contact_started', 'lead_form_submitted',
-    'lead_form_completed', 'calculator_started', 'calculator_result_viewed',
+    'phone_contact_started', 'email_contact_started', 'lead_form_started', 'lead_form_submitted',
+    'lead_form_completed', 'generate_lead', 'calculator_started', 'calculator_result_viewed',
     'consultation_booked'
   ]) {
     assert.match(analytics, new RegExp(`['"]${eventName}['"]`), eventName);
   }
   assert.doesNotMatch(analytics, /\.value\b/, 'analytics must not read form field values');
+  for (const field of [
+    'website_lead_source', 'website_lead_medium', 'website_lead_campaign',
+    'website_landing_page', 'website_submission_page', 'website_funnel_intent'
+  ]) {
+    assert.match(analytics, new RegExp(field), `lead attribution field: ${field}`);
+  }
+});
+
+test('booking completion webhook keeps credentials private and deduplicates provider events', () => {
+  const webhook = read('netlify/functions/booking-completed.js');
+  assert.match(webhook, /BOOKING_WEBHOOK_SECRET/);
+  assert.match(webhook, /GA4_MEASUREMENT_PROTOCOL_SECRET/);
+  assert.match(webhook, /timingSafeEqual/);
+  assert.match(webhook, /booking-completion-dedupe/);
+  assert.match(webhook, /consultation_booked/);
+  assert.doesNotMatch(webhook, /email|phone|firstName|lastName/i, 'booking webhook must not process borrower PII');
+});
+
+test('high-confidence retired routes resolve to their current equivalents', () => {
+  const redirects = read('_redirects');
+  assert.match(redirects, /^\/home\s+\/\s+301$/m);
+  assert.match(redirects, /^\/journey-calibrate\s+\/journey\s+301$/m);
+  assert.match(redirects, /^\/refi-guide\s+\/refi-rate-watch\s+301$/m);
+  assert.match(redirects, /^\/refi-quiz\s+\/refi-rate-watch\s+301$/m);
+  assert.match(redirects, /^\/quiz\s+\/buying-vs-renting\s+301$/m);
+  assert.match(redirects, /^\/decode3\s+\/404\.html\s+410$/m);
 });

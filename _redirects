@@ -14,6 +14,12 @@
 /temp-buydown/   /temp-buydown/index.html    200
 /los-angeles-purchase-promotion    /los-angeles-purchase-promotion.html    200
 /los-angeles-purchase-promotion/   /los-angeles-purchase-promotion.html    200
+/home    /    301
+/journey-calibrate    /journey    301
+/refi-guide    /refi-rate-watch    301
+/refi-quiz    /refi-rate-watch    301
+/quiz    /buying-vs-renting    301
+/decode3    /404.html    410
 /is-buying-a-condo-in-los-angeles-worth-it    /field-notes/is-buying-a-condo-in-los-angeles-worth-it    301
 /field-notes/los-angeles-condo-financing-10-unit-projects    /los-angeles-condo-financing-10-unit-projects    301
 /darynfillis    /    301
