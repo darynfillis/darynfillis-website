@@ -324,7 +324,8 @@ test('lead routing waits for verified Netlify submissions and keeps MMS delivery
   assert.match(router, /MMS_LEAD_WORKSPACE/);
   assert.match(router, /x-idempotency-key/);
   assert.match(router, /mymortgagestudio\.com/);
-  assert.match(router, /mms-lead-delivery-dedupe/);
+  assert.match(router, /idempotencyKey/);
+  assert.match(router, /MMS receives the stable submission-based idempotency key/);
   assert.match(router, /marketing_consent/);
   assert.doesNotMatch(router, /console\.log\([^)]*answers/);
   assert.match(guide, /function-only/i);
