@@ -1,5 +1,4 @@
 const crypto = require("node:crypto");
-const { getStore } = require("@netlify/blobs");
 
 const INTERNAL_FIELDS = new Set([
   "bot-field",
@@ -118,10 +117,6 @@ exports.handler = async (event) => {
     return;
   }
 
-  const store = getStore("mms-lead-delivery-dedupe");
-  const key = `submissions/${deliveryKey(payload, form)}`;
-  if (await store.get(key, { type: "json" })) return;
-
   const submittedAt = text(payload.created_at || payload.createdAt, 50) || new Date().toISOString();
   const idempotencyKey = deliveryKey(payload, form);
   const authorizationPrefix = authPrefix();
@@ -150,6 +145,9 @@ exports.handler = async (event) => {
     throw new Error("MMS lead delivery failed");
   }
 
-  await store.setJSON(key, { deliveredAt: new Date().toISOString(), form });
+  // Netlify's platform-event bundle does not include optional Blob packages.
+  // MMS receives the stable submission-based idempotency key above and owns
+  // replay protection, so the delivery path remains safe without a second
+  // storage dependency in the website runtime.
   console.log(`MMS lead delivery succeeded for ${form}: ${response.status}`);
 };
