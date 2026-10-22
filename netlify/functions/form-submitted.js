@@ -43,7 +43,7 @@ function parseEvent(event) {
 }
 
 function formName(payload, data) {
-  return text(payload?.form_name || payload?.formName || payload?.form?.name || data["form-name"], 100);
+  return text(payload?.form_name || payload?.formName || payload?.form?.name || data.mms_form || data["form-name"], 100);
 }
 
 function safeAnswers(data) {

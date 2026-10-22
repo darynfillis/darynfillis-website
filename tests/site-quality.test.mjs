@@ -334,6 +334,26 @@ test('lead routing waits for verified Netlify submissions and keeps MMS delivery
   assert.match(guide, /Not enrolled unless consented/);
 });
 
+test('Netlify lead forms preserve a routing key for MMS response plans', () => {
+  const leadForms = [
+    'cal-condo-buyer.html',
+    'cal-condo-seller.html',
+    'condo-check.html',
+    'decode3.html',
+    'index.html',
+    'mortgage-under-management.html',
+    'partnership-plus.html',
+    'refi-rate-watch.html',
+    'self-employed-playbook.html',
+    'thanks-condo-buyer-guide.html',
+    'thanks-condo-seller-guide.html'
+  ];
+
+  for (const page of leadForms) {
+    assert.match(read(page), /name="mms_form"/, `${page} must retain an MMS routing key`);
+  }
+});
+
 test('high-confidence retired routes resolve to their current equivalents', () => {
   const redirects = read('_redirects');
   assert.match(redirects, /^\/home\s+\/\s+301$/m);

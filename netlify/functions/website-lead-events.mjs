@@ -12,7 +12,7 @@ export default {
     const data = event?.data && typeof event.data === "object" ? event.data : {};
     return formSubmissionRouter.handler({
       data,
-      form_name: data["form-name"] || data.form_name || event?.formName || event?.form?.name || "website-form",
+      form_name: data.mms_form || data["form-name"] || data.form_name || event?.formName || event?.form?.name || "website-form",
       id: event?.id || data.submission_id,
       created_at: event?.createdAt || event?.created_at
     });
