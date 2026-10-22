@@ -316,6 +316,8 @@ test('lead routing waits for verified Netlify submissions and keeps MMS delivery
   assert.match(router, /exports\.handler/);
   assert.match(eventHandler, /formSubmitted/);
   assert.match(eventHandler, /formSubmissionRouter\.handler/);
+  assert.match(eventHandler, /event\.data/);
+  assert.match(eventHandler, /"website-form"/);
   assert.match(router, /payload\?\.data/);
   assert.match(router, /MMS_LEAD_INTAKE_URL/);
   assert.match(router, /MMS_LEAD_INTAKE_TOKEN/);
