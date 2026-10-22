@@ -311,8 +311,11 @@ test('booking completion webhook keeps credentials private and deduplicates prov
 
 test('lead routing waits for verified Netlify submissions and keeps MMS delivery server-side', () => {
   const router = read('netlify/functions/form-submitted.js');
+  const eventHandler = read('netlify/functions/website-lead-events.mjs');
   const guide = read('LEAD-ROUTING.md');
   assert.match(router, /exports\.handler/);
+  assert.match(eventHandler, /formSubmitted/);
+  assert.match(eventHandler, /formSubmissionRouter\.handler/);
   assert.match(router, /payload\?\.data/);
   assert.match(router, /MMS_LEAD_INTAKE_URL/);
   assert.match(router, /MMS_LEAD_INTAKE_TOKEN/);
