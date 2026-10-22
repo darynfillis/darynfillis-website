@@ -30,7 +30,13 @@ function text(value, maxLength = 1000) {
 
 function parseEvent(event) {
   try {
-    const body = typeof event.body === "string" ? JSON.parse(event.body) : event.body;
+    // Netlify's legacy event functions provide a JSON body, while newer
+    // platform-event runtimes can provide the event payload directly.
+    // Accept both so a verified form is never silently discarded after a
+    // runtime migration.
+    const body = typeof event?.body === "string"
+      ? JSON.parse(event.body)
+      : (event?.body || event);
     return body && (body.payload || body);
   } catch {
     return null;
@@ -94,7 +100,10 @@ function deliveryKey(payload, form) {
 exports.handler = async (event) => {
   const payload = parseEvent(event);
   const data = payload?.data;
-  if (!payload || !data || typeof data !== "object") return;
+  if (!payload || !data || typeof data !== "object") {
+    console.error("MMS lead delivery skipped: invalid Netlify submission event.");
+    return;
+  }
 
   const form = formName(payload, data);
   const answers = safeAnswers(data);
@@ -104,7 +113,10 @@ exports.handler = async (event) => {
 
   // An unconfigured destination is deliberately a no-op: forms continue to be
   // captured by Netlify, but no borrower data is sent anywhere else.
-  if (!endpoint || !token || !form) return;
+  if (!endpoint || !token || !form) {
+    console.error(`MMS lead delivery skipped for ${form || "unknown form"}: configuration unavailable.`);
+    return;
+  }
 
   connectLambda(event);
   const store = getStore("mms-lead-delivery-dedupe");
@@ -140,4 +152,5 @@ exports.handler = async (event) => {
   }
 
   await store.setJSON(key, { deliveredAt: new Date().toISOString(), form });
+  console.log(`MMS lead delivery succeeded for ${form}: ${response.status}`);
 };
