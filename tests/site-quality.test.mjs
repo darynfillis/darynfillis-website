@@ -75,6 +75,10 @@ test('SEO cleanup is complete', () => {
   assert.match(read('condo-check.html'), /<link rel="canonical" href="https:\/\/darynfillis\.com\/condo-check">/);
   assert.doesNotMatch(read('ig.html'), /property=["']twitter:/i);
   assert.doesNotMatch(read('self-employed-playbook.html'), /property=["']twitter:/i);
+  const localHomeLoans = read('los-angeles-home-loans.html');
+  assert.match(localHomeLoans, /<link rel="canonical" href="https:\/\/darynfillis\.com\/los-angeles-home-loans">/);
+  assert.match(localHomeLoans, /<title>Los Angeles Home Loans & Mortgage Advisor \| Daryn Fillis<\/title>/);
+  assert.match(sitemap, /<loc>https:\/\/darynfillis\.com\/los-angeles-home-loans<\/loc>/);
 });
 
 test('core entity markup connects the advisor, business, and website without inventing a site search', () => {
