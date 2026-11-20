@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>MMS Roadmap to Success</title>
+ <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;800&display=swap" rel="stylesheet">
+ <style>
+ /* darynfillis.com visual foundation */
+ :root{--blue:#5bcbf5;--blue-dark:#38b8e8;--better:#017a4e;--better-deep:#004733;--better-mint:#00d46e;--better-cream:#f0eee9;--navy:#0A2540;--navy-mid:#0d3050;--ink:#1a2b3c;--body:#4a5568;--muted:#8a95a3;--rule:#e8edf2;--surface:#f7f9fb;--white:#fff;--font:'Montserrat',sans-serif;--ease:cubic-bezier(.22,1,.36,1);--shadow-sm:0 1px 4px rgba(10,37,64,.06),0 4px 16px rgba(10,37,64,.06)}
+ *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:var(--font);background:var(--white);color:var(--ink);font-weight:400;line-height:1.7}.max-w{max-width:1040px;margin:0 auto}section{padding:82px 48px}.eyebrow{display:block;margin-bottom:14px;color:var(--blue-dark);font-size:.67rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase}.h2{margin-bottom:18px;color:var(--navy);font-size:clamp(2rem,3.8vw,3rem);font-weight:800;letter-spacing:-.03em;line-height:1.06}.sub{max-width:720px;color:var(--body);font-size:1.03rem;font-weight:200;line-height:1.85}
+ nav{display:flex;align-items:center;justify-content:space-between;height:70px;padding:0 48px;background:rgba(255,255,255,.97);border-bottom:1px solid var(--rule)}.brand-lockup{display:flex;align-items:center;gap:10px}.logo{color:var(--navy);font-size:.85rem;font-weight:800;letter-spacing:.04em}.logo span{color:var(--blue-dark)}.lockup-rule{width:1px;height:18px;background:#d1d5db}.better-logo{display:flex;align-items:center;gap:4px;color:var(--better-deep);font-size:.96rem;font-weight:800;letter-spacing:-.045em}.better-logo img{width:15px;height:15px}.status{color:var(--muted);font-size:.62rem;font-weight:800;letter-spacing:.14em;text-align:right;text-transform:uppercase}.hero{position:relative;overflow:hidden;padding:82px 48px 76px;background:linear-gradient(135deg,var(--better-deep) 0%,#07533b 55%,var(--navy) 100%)}.hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,110,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(91,203,245,.055) 1px,transparent 1px);background-size:64px 64px}.hero .max-w{position:relative;z-index:1}h1{max-width:850px;color:var(--white);font-size:clamp(2.8rem,5.5vw,5rem);font-weight:800;letter-spacing:-.035em;line-height:1.04}h1 em{color:var(--better-mint);font-style:normal}.hero-sub{max-width:780px;margin-top:24px;color:rgba(255,255,255,.78);font-size:1.01rem;font-weight:400;line-height:1.75}.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:920px;margin-top:32px}.problem-card{min-height:142px;padding:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-top:3px solid var(--better-mint)}.problem-card:nth-child(2){border-top-color:var(--blue)}.problem-card:nth-child(3){border-top-color:#fff}.problem-number{display:block;margin-bottom:18px;color:rgba(255,255,255,.55);font-size:.62rem;font-weight:800;letter-spacing:.17em}.problem-card h2{margin-bottom:8px;color:#fff;font-size:1rem;font-weight:800;letter-spacing:-.02em;line-height:1.2}.problem-card p{color:rgba(255,255,255,.76);font-size:.75rem;line-height:1.55}.purpose{display:grid;grid-template-columns:1.35fr .65fr;gap:56px;align-items:start}.principle{padding:26px;background:var(--better-cream);border-left:3px solid var(--better)}.principle p{color:var(--navy);font-size:.95rem;font-weight:600;line-height:1.7}.principle strong{display:block;margin-bottom:8px;color:var(--better);font-size:.63rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.divider{height:1px;background:var(--rule)}
+ .memo{padding-top:10px}.memo-section{display:grid;grid-template-columns:130px minmax(0,1fr);gap:46px;padding:48px 0;border-bottom:1px solid var(--rule)}.memo-section:last-child{border-bottom:0}.number{padding-top:5px;color:var(--blue-dark);font-size:.67rem;font-weight:800;letter-spacing:.2em}.memo-section h3{margin-bottom:14px;color:var(--navy);font-size:1.45rem;font-weight:800;letter-spacing:-.025em;line-height:1.2}.memo-section p{max-width:720px;margin-bottom:14px;color:var(--body);font-size:.9rem;line-height:1.82}.memo-section strong{color:var(--ink);font-weight:800}.memo-section p:last-child{margin-bottom:0}.memo-section ul{display:grid;gap:7px;max-width:760px;margin:16px 0 0;padding:0;list-style:none}.memo-section li{position:relative;padding-left:18px;color:var(--body);font-size:.86rem;line-height:1.6}.memo-section li::before{content:'•';position:absolute;left:0;color:var(--blue-dark);font-weight:800}.fact-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;overflow:hidden;max-width:760px;margin-top:22px;background:var(--rule);border:1px solid var(--rule);border-radius:8px}.fact-row.two{grid-template-columns:repeat(2,1fr);max-width:560px}.fact{padding:22px 18px;background:var(--surface)}.fact-num{display:block;margin-bottom:6px;color:var(--navy);font-size:1.65rem;font-weight:800;letter-spacing:-.05em;line-height:1}.fact-label{color:var(--body);font-size:.62rem;font-weight:600;line-height:1.45}.market-calculator{max-width:760px;margin-top:24px;padding:24px;background:var(--better-cream);border-top:3px solid var(--better)}.market-calculator h4{margin-bottom:7px;color:var(--navy);font-size:1rem;font-weight:800}.market-calculator>p{margin-bottom:18px;font-size:.78rem}.market-controls{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.market-control label{display:block;margin-bottom:7px;color:var(--navy);font-size:.63rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.market-control input{width:100%;padding:11px 12px;background:#fff;border:1px solid #cbd5df;border-radius:4px;color:var(--navy);font-family:var(--font);font-size:.95rem;font-weight:600;outline:none}.market-control input:focus{border-color:var(--better);box-shadow:0 0 0 3px rgba(1,122,78,.12)}.market-result{display:grid;grid-template-columns:1fr 1fr;gap:1px;overflow:hidden;margin-top:18px;background:#c7d2d9;border:1px solid #c7d2d9}.market-result div{padding:18px;background:#fff}.market-result span{display:block;margin-bottom:4px;color:var(--muted);font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.market-result strong{color:var(--better-deep);font-size:1.6rem;letter-spacing:-.04em}.market-calculator .calculator-note{margin:14px 0 0;color:var(--body);font-size:.68rem;line-height:1.55}.deal-break{margin:56px 0 0;padding:24px 0;border-top:2px solid var(--better);border-bottom:1px solid var(--rule)}.deal-break span{display:block;margin-bottom:6px;color:var(--better);font-size:.67rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase}.deal-break p{max-width:640px;color:var(--body);font-size:.88rem;line-height:1.65}.note{max-width:760px;margin-top:22px;padding:18px 20px;background:rgba(91,203,245,.08);border:1px solid rgba(56,184,232,.25);border-radius:8px;color:var(--body);font-size:.79rem;line-height:1.65}.note strong{color:var(--navy)}.footer{padding:36px 48px 48px;border-top:1px solid var(--rule)}.footer p{max-width:1040px;margin:0 auto;color:var(--muted);font-size:.68rem;line-height:1.7}
+ @media(max-width:760px){nav{padding:0 24px}.status{display:none}.hero,section{padding:56px 24px}.problem-grid,.purpose,.market-controls,.market-result{grid-template-columns:1fr;gap:12px}.memo-section{grid-template-columns:1fr;gap:8px;padding:36px 0}.footer{padding:28px 24px}.fact-row{grid-template-columns:1fr}.fact{padding:16px}}@media print{@page{size:letter;margin:.5in}nav{height:45px;padding:0}.hero{padding:40px 0}h1{font-size:36px}.hero-sub{font-size:.83rem;line-height:1.6}.problem-grid{gap:8px;margin-top:18px}.problem-card{min-height:105px;padding:12px}.problem-number{margin-bottom:8px}.problem-card h2{font-size:.75rem}.problem-card p{font-size:.58rem}.problem-card{border-top-width:2px}section{padding:38px 0}.h2{font-size:25px}.sub{font-size:.76rem;line-height:1.6}.purpose{gap:28px}.principle{padding:14px}.principle p{font-size:.7rem}.memo-section{grid-template-columns:90px minmax(0,1fr);gap:24px;padding:25px 0}.memo-section h3{margin-bottom:7px;font-size:1rem}.memo-section p,.memo-section li{font-size:.66rem;line-height:1.55}.memo-section p{margin-bottom:7px}.memo-section ul{gap:3px;margin-top:7px}.fact-row{margin-top:12px}.fact{padding:12px}.fact-num{font-size:1.15rem}.fact-label{font-size:.5rem}.market-calculator{padding:14px}.market-control input{padding:7px}.market-result div{padding:10px}.market-result strong{font-size:1.1rem}.note{margin-top:12px;padding:11px;font-size:.61rem;line-height:1.5}.footer{padding:18px 0}.footer p{font-size:.53rem}}
+ </style>
+ <style>
+.video-section{background:var(--surface)}.video-section.product-sizzle{background:var(--navy)}.video-section .h2{max-width:760px}.product-sizzle .h2,.product-sizzle .sub{color:var(--white)}.product-sizzle .eyebrow{color:var(--better-mint)}.video-placeholder{position:relative;display:flex;align-items:center;justify-content:center;gap:16px;aspect-ratio:16/9;max-width:1040px;margin-top:30px;overflow:hidden;background:linear-gradient(135deg,var(--better-deep),var(--navy));border:1px solid rgba(255,255,255,.22)}.video-placeholder::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:42px 42px}.video-placeholder>div{position:relative;z-index:1}.video-play{display:grid;place-items:center;width:54px;height:54px;border:1px solid rgba(255,255,255,.55);border-radius:50%;color:var(--white);font-size:1.05rem}.video-copy span,.video-copy strong{display:block;color:var(--white)}.video-copy span{font-size:.63rem;font-weight:800;letter-spacing:.16em}.video-copy strong{margin-top:3px;font-size:.95rem}.reviews-section{overflow:hidden;padding:52px 0;background:var(--better-deep)}.reviews-heading{padding:0 48px}.reviews-heading .eyebrow{color:var(--better-mint)}.reviews-heading .h2{color:var(--white);font-size:clamp(1.65rem,3vw,2.5rem)}.reviews-heading .sub{color:rgba(255,255,255,.72);font-size:.86rem}.reviews-viewport{overflow:hidden;margin-top:26px}.review-track{display:flex;gap:14px;width:max-content;padding:0 48px;animation:reviews-fly 34s linear infinite}.review-track:hover{animation-play-state:paused}.review-card{width:340px;padding:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.86);font-size:.84rem;line-height:1.65}.review-card strong{display:block;margin-top:12px;color:var(--better-mint);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase}.hero .problem-grid{max-width:980px;gap:16px}.hero .problem-card{min-height:180px;padding:26px}.hero .problem-card h2{font-size:1.2rem}.hero .problem-card p{font-size:.84rem;line-height:1.6}.hero .problem-number{margin-bottom:22px}@keyframes reviews-fly{from{transform:translateX(0)}to{transform:translateX(-50%)}}@media(max-width:760px){.video-section{padding:52px 24px}.video-placeholder{margin-top:22px}.reviews-heading{padding:0 24px}.review-track{padding:0 24px}.review-card{width:285px}.video-copy strong{font-size:.78rem}.hero .problem-card{min-height:142px;padding:20px}.hero .problem-card h2{font-size:1rem}.hero .problem-card p{font-size:.75rem}.hero .problem-number{margin-bottom:18px}}@media(prefers-reduced-motion:reduce){.review-track{animation:none;transform:none}}
+ </style>
+<style>.memo>.product-sizzle{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw)}.next-step-layout{display:grid;grid-template-columns:minmax(0,1fr) 285px;gap:28px;align-items:start}.deal-memo-card{display:block;overflow:hidden;border:1px solid #cbd5df;border-radius:8px;background:var(--surface);box-shadow:var(--shadow-sm);color:var(--navy);text-decoration:none;transition:transform .2s var(--ease),box-shadow .2s var(--ease)}.deal-memo-card:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(10,37,64,.14)}.deal-memo-card img{display:block;width:100%;border-bottom:1px solid #d9e1e7}.deal-memo-card-copy{display:block;padding:16px 18px}.deal-memo-card-kicker{display:block;margin-bottom:4px;color:var(--better);font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.deal-memo-card strong{display:block;font-size:.91rem;line-height:1.35}.deal-memo-card small{display:block;margin-top:4px;color:var(--body);font-size:.71rem;line-height:1.45}.hero .problem-marquee{width:100vw;margin:36px 0 0 calc(50% - 50vw);overflow:hidden}.hero .problem-track{display:flex;gap:22px;width:max-content;padding:0 48px;animation:problem-cards-fly 26s linear infinite}.hero .problem-track:hover{animation-play-state:paused}.hero .problem-card{display:block;flex:0 0 clamp(340px,30vw,400px);min-height:220px;padding:30px}.hero .problem-card h2{font-size:1.35rem}.hero .problem-card p{font-size:.9rem;line-height:1.65}.hero .problem-number{margin-bottom:28px}@keyframes problem-cards-fly{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 11px))}}@media(max-width:760px){.next-step-layout{grid-template-columns:1fr}.deal-memo-card{max-width:320px}.hero .problem-marquee{margin-top:26px}.hero .problem-track{gap:14px;padding:0 24px;animation-duration:32s}.hero .problem-card{flex-basis:290px;min-height:188px;padding:22px}.hero .problem-card h2{font-size:1.08rem}.hero .problem-card p{font-size:.78rem}.hero .problem-number{margin-bottom:20px}}@media(prefers-reduced-motion:reduce){.hero .problem-track{animation:none;transform:none}}</style>
+<style>.hero-kicker{display:block;margin-bottom:16px;color:var(--better-mint);font-size:.68rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase}.stts-flow{padding:86px 48px;background:var(--better-cream)}.credibility-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.82fr);gap:62px;align-items:start}.credibility-layout .sub{font-weight:400;font-size:.98rem;line-height:1.8}.credibility-proof{display:grid;gap:14px;list-style:none}.credibility-proof li{padding:18px 20px;background:#fff;border-left:3px solid var(--better);color:var(--body);font-size:.84rem;line-height:1.6}.credibility-proof strong{display:block;margin-bottom:3px;color:var(--navy);font-size:.84rem}.stts-roadmap{margin-top:56px;padding-top:26px;border-top:1px solid rgba(10,37,64,.16)}.stts-roadmap>p{max-width:650px;color:var(--body);font-size:.93rem;line-height:1.75}.mechanism-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:25px}.mechanism-card{min-height:185px;padding:24px 22px;background:var(--navy);border-top:3px solid var(--better-mint)}.mechanism-card:nth-child(2){border-top-color:var(--blue)}.mechanism-card:nth-child(3){border-top-color:#fff}.mechanism-card .problem-number{margin-bottom:20px}.mechanism-card h3{margin-bottom:10px;color:#fff;font-size:1.07rem;line-height:1.25}.mechanism-card p{color:rgba(255,255,255,.76);font-size:.79rem;line-height:1.65}.belief-section{padding:74px 48px;background:var(--navy)}.belief-section .h2{max-width:720px;color:#fff}.belief-section .sub{color:rgba(255,255,255,.75);font-weight:400}.belief-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:32px}.belief-card{padding:25px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.17)}.belief-card span{display:block;margin-bottom:10px;color:var(--better-mint);font-size:.61rem;font-weight:800;letter-spacing:.17em;text-transform:uppercase}.belief-card h3{margin-bottom:9px;color:#fff;font-size:1rem;line-height:1.3}.belief-card p{color:rgba(255,255,255,.76);font-size:.79rem;line-height:1.65}@media(max-width:760px){.hero-kicker{margin-bottom:12px;font-size:.58rem}.stts-flow,.belief-section{padding:56px 24px}.credibility-layout,.mechanism-grid,.belief-grid{grid-template-columns:1fr;gap:16px}.stts-roadmap{margin-top:38px}.mechanism-card{min-height:0}.belief-grid{margin-top:24px}}</style>
+<style>.proof-section{padding:78px 48px;background:var(--surface)}.proof-layout{display:grid;grid-template-columns:.72fr 1.28fr;gap:56px;align-items:start}.proof-layout .sub{font-weight:400;font-size:.98rem;line-height:1.8}.proof-stories{display:grid;grid-template-columns:1fr 1fr;gap:14px}.proof-story{padding:25px;background:#fff;border:1px solid var(--rule);border-top:3px solid var(--blue-dark)}.proof-story:nth-child(2){border-top-color:var(--better)}.proof-story span{display:block;margin-bottom:10px;color:var(--better);font-size:.62rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase}.proof-story h3{margin-bottom:9px;color:var(--navy);font-size:1.02rem;line-height:1.3}.proof-story p{color:var(--body);font-size:.79rem;line-height:1.68}@media(max-width:760px){.proof-section{padding:56px 24px}.proof-layout,.proof-stories{grid-template-columns:1fr;gap:16px}}</style>
+<style>
+.stts-flow .mechanism-marquee,.belief-section .belief-marquee{width:100vw;margin:32px 0 0 calc(50% - 50vw);overflow:hidden}.stts-flow .mechanism-track,.belief-section .belief-track{display:flex;gap:22px;width:max-content;padding:0 48px}.stts-flow .mechanism-track{animation:mechanism-cards-fly 30s linear infinite}.belief-section .belief-track{animation:belief-cards-fly 32s linear infinite}.stts-flow .mechanism-track:hover,.belief-section .belief-track:hover{animation-play-state:paused}.stts-flow .mechanism-card,.belief-section .belief-card{display:block;flex:0 0 clamp(380px,34vw,460px);min-height:270px;padding:34px}.stts-flow .mechanism-card h3,.belief-section .belief-card h3{font-size:1.23rem}.stts-flow .mechanism-card p,.belief-section .belief-card p{font-size:.9rem;line-height:1.7}@keyframes mechanism-cards-fly{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 11px))}}@keyframes belief-cards-fly{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 11px))}}@media(prefers-reduced-motion:reduce){.stts-flow .mechanism-track,.belief-section .belief-track{animation:none}}@media(max-width:760px){.stts-flow .mechanism-marquee,.belief-section .belief-marquee{margin-top:24px}.stts-flow .mechanism-track,.belief-section .belief-track{gap:14px;padding:0 24px}.stts-flow .mechanism-card,.belief-section .belief-card{flex-basis:300px;min-height:230px;padding:26px}.stts-flow .mechanism-card h3,.belief-section .belief-card h3{font-size:1.08rem}.stts-flow .mechanism-card p,.belief-section .belief-card p{font-size:.82rem}}
+</style>
+<style>
+.hero .problem-card{position:relative;transition:transform .24s var(--ease),background-color .24s var(--ease),box-shadow .24s var(--ease)}.hero .problem-card:hover{z-index:3;transform:scale(1.09);background:rgba(255,255,255,.16);box-shadow:0 18px 36px rgba(0,0,0,.26)}.credibility-proof{gap:18px}.credibility-proof li{min-height:154px;padding:28px 30px;font-size:.96rem;line-height:1.68;box-shadow:0 6px 16px rgba(10,37,64,.05)}.credibility-proof strong{margin-bottom:6px;font-size:1rem}@media(max-width:760px){.hero .problem-card:hover{transform:scale(1.04)}.credibility-proof li{min-height:0;padding:22px 24px;font-size:.87rem}.credibility-proof strong{font-size:.9rem}}
+</style>
+<style>
+.stts-flow .mechanism-marquee,.belief-section .belief-marquee{width:auto;margin:32px 0 0;overflow:visible}.stts-flow .mechanism-track,.belief-section .belief-track{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;width:auto;padding:0;animation:none}.stts-flow .mechanism-track .mechanism-card:nth-child(n+4),.belief-section .belief-track .belief-card:nth-child(n+4){display:none}.stts-flow .mechanism-card,.belief-section .belief-card{min-height:278px;padding:34px}.memo .product-sizzle .video-placeholder{width:100vw;max-width:none;margin:30px 0 0 calc(50% - 50vw);border-right:0;border-left:0}@media(max-width:760px){.stts-flow .mechanism-track,.belief-section .belief-track{grid-template-columns:1fr;gap:14px}.stts-flow .mechanism-card,.belief-section .belief-card{min-height:0;padding:28px}.memo .product-sizzle .video-placeholder{margin-top:24px}}
+</style>
+<style>
+.hero .problem-card:hover{z-index:4;transform:translateY(-10px) scale(1.16);background:rgba(255,255,255,.2);box-shadow:0 24px 48px rgba(0,0,0,.34)}.hero .problem-card:hover h2{font-size:1.46rem}.hero .problem-card:hover p{font-size:.96rem}@media(max-width:760px){.hero .problem-card:hover{transform:translateY(-4px) scale(1.08)}.hero .problem-card:hover h2{font-size:1.12rem}.hero .problem-card:hover p{font-size:.8rem}}
+</style>
+<style>
+.neo-reviews{background:linear-gradient(120deg,#002f27,#00513e)}.neo-reviews .reviews-heading{max-width:1100px}.neo-lockup{display:flex;align-items:center;gap:8px;margin-bottom:18px;color:#fff;font-size:1.04rem;font-weight:800;letter-spacing:-.03em}.neo-lockup small{margin-left:2px;color:#67e8c1;font-size:.55rem;font-weight:800;letter-spacing:.18em}.neo-mark{display:grid;place-items:center;width:28px;height:28px;background:#67e8c1;color:#003c31;font-size:.82rem;font-weight:900;clip-path:polygon(50% 0,100% 24%,100% 76%,50% 100%,0 76%,0 24%)}.neo-reviews .reviews-heading .h2{max-width:620px}.neo-reviews .review-card{background:rgba(255,255,255,.1);border-color:rgba(103,232,193,.34)}.neo-reviews .review-card strong{color:#67e8c1}@media(max-width:760px){.neo-lockup{margin-bottom:14px}}
+</style>
+<style>
+/* NEO review treatment follows the darynfillis.com testimonial system. */
+.neo-reviews{padding:96px 48px;background:var(--surface);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}.neo-reviews .reviews-heading{max-width:820px;padding:0 48px;text-align:center}.neo-lockup{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:22px}.neo-lockup span{display:inline-flex;align-items:center;padding:7px 16px;border:1px solid var(--rule);border-radius:20px;background:var(--white);color:var(--navy);font-size:.72rem;font-weight:600;letter-spacing:.04em}.neo-lockup small{color:var(--muted);font-size:.62rem;font-weight:600;letter-spacing:.04em}.neo-reviews .reviews-heading .h2{max-width:620px;margin:0 auto;color:var(--navy)}.neo-reviews .reviews-heading .sub{max-width:620px;margin:14px auto 0;color:var(--body);font-size:.9rem}.neo-reviews .reviews-viewport{margin-top:34px}.neo-reviews .review-track{gap:16px}.neo-reviews .review-card{width:350px;min-height:148px;padding:22px;background:var(--white);border:1px solid var(--rule);border-radius:10px;box-shadow:var(--shadow-sm);color:var(--body);font-size:.84rem;line-height:1.7}.neo-reviews .review-card strong{color:var(--navy);font-size:.65rem;letter-spacing:.06em}.neo-reviews .review-card strong::before{content:'NEO HOME LOANS · ';color:var(--blue-dark)}@media(max-width:760px){.neo-reviews{padding:72px 24px}.neo-reviews .reviews-heading{padding:0}.neo-reviews .review-card{width:285px;min-height:0}.neo-lockup small{width:100%}}
+</style>
+<style>
+.hero .problem-card{padding:0;background:transparent!important;border:0!important;perspective:1200px;cursor:pointer;outline:0}.hero .problem-card-inner{position:absolute;inset:0;transition:transform .62s var(--ease);transform-style:preserve-3d}.hero .problem-card.is-flipped .problem-card-inner{transform:rotateY(180deg)}.hero .problem-face{position:absolute;inset:0;padding:30px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-top:3px solid var(--card-accent);backface-visibility:hidden;-webkit-backface-visibility:hidden}.hero .problem-back{display:flex;flex-direction:column;justify-content:center;transform:rotateY(180deg);background:rgba(10,37,64,.96)}.hero .problem-card.problem-dependency{--card-accent:var(--better-mint)}.hero .problem-card.problem-conversion{--card-accent:var(--blue)}.hero .problem-card.problem-retention{--card-accent:#fff}.problem-card-hint{display:block;margin-top:18px;color:var(--card-accent);font-size:.63rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.hero .problem-back h2{margin:0 0 12px;color:#fff;font-size:1.15rem;line-height:1.22}.hero .problem-back p{margin:0;color:rgba(255,255,255,.8);font-size:.82rem;line-height:1.65}.hero .problem-card:focus-visible .problem-face{outline:3px solid var(--blue);outline-offset:4px}@media(max-width:760px){.hero .problem-face{padding:22px}.hero .problem-back h2{font-size:1rem}.hero .problem-back p{font-size:.75rem}.problem-card-hint{margin-top:13px}}
+</style>
+<style>
+.neo-reviews{position:relative;padding:112px 48px;background:linear-gradient(135deg,#e7f7fd 0%,#f7f9fb 58%,#edf7f3 100%);border-top:3px solid var(--blue);border-bottom:3px solid var(--better-mint)}.neo-lockup{margin-bottom:26px}.neo-lockup span{padding:9px 19px;background:var(--navy);border-color:var(--navy);color:#fff;font-size:.78rem;box-shadow:var(--shadow-sm)}.neo-lockup small{color:var(--navy);font-size:.66rem}.neo-reviews .reviews-heading .h2{max-width:720px;font-size:clamp(2.15rem,4vw,3.5rem);line-height:1.08}.neo-reviews .reviews-heading .sub{max-width:680px;font-size:.98rem}.neo-reviews .reviews-viewport{margin-top:46px}.neo-reviews .review-track{gap:20px}.neo-reviews .review-card{width:420px;min-height:190px;padding:28px;border-color:#d6e4ee;box-shadow:0 10px 28px rgba(10,37,64,.12);font-size:.92rem}.neo-reviews .review-card strong{margin-top:18px;font-size:.69rem}@media(max-width:760px){.neo-reviews{padding:78px 24px}.neo-reviews .reviews-heading .h2{font-size:2.1rem}.neo-reviews .reviews-viewport{margin-top:34px}.neo-reviews .review-card{width:310px;min-height:164px;padding:24px;font-size:.84rem}}
+</style>
+<style>
+.hero .problem-back{justify-content:flex-start;padding:25px 30px 22px}.hero .problem-back .problem-number{margin-bottom:14px}.hero .problem-back h2{margin-bottom:9px}.hero .problem-back p{font-size:.8rem;line-height:1.48}.hero .problem-back .problem-card-hint{display:inline-flex;align-items:center;align-self:flex-start;gap:6px;min-height:30px;margin-top:auto;padding:0 11px;border:1px solid rgba(0,212,110,.42);border-radius:999px;background:rgba(0,212,110,.1);color:var(--better-mint);font-size:.56rem;letter-spacing:.08em;line-height:1;white-space:nowrap}.hero .problem-back .problem-card-hint::before{content:'↩';font-size:.82rem;line-height:1}@media(max-width:760px){.hero .problem-back{padding:20px 22px}.hero .problem-back .problem-number{margin-bottom:10px}.hero .problem-back p{font-size:.72rem}.hero .problem-back .problem-card-hint{min-height:28px;padding:0 10px;font-size:.53rem}}
+</style>
+<style>
+/* Presentation polish: give the credibility proof points a deliberate editorial rhythm. */
+.credibility-proof li{position:relative;overflow:hidden;transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.credibility-proof li::after{position:absolute;right:18px;bottom:-28px;color:rgba(10,37,64,.045);font-size:5rem;font-weight:800;line-height:1;content:attr(data-proof)}
+.credibility-proof li:hover{transform:translateY(-4px);border-left-color:var(--blue);box-shadow:0 14px 26px rgba(10,37,64,.11)}
+.credibility-proof strong{position:relative;z-index:1}.credibility-proof a{position:relative;z-index:1}
+.profile-link{display:inline-flex;align-items:center;gap:7px;margin-top:14px;color:var(--blue-dark);font-size:.68rem;font-weight:800;letter-spacing:.08em;text-decoration:none;text-transform:uppercase}.profile-link::after{content:'↗';font-size:.9rem;line-height:1}.profile-link:hover{text-decoration:underline;text-underline-offset:4px}
+.belief-card:first-child{border-top:3px solid var(--better-mint)}
+.belief-card:first-child h3{max-width:18ch}
+@media(max-width:760px){.credibility-proof li:hover{transform:none}.profile-link{margin-top:12px}}
+</style>
+<style>
+.deal-break{position:relative;overflow:hidden;margin:88px 0 0;padding:54px 58px;background:linear-gradient(135deg,#e8f8fe 0%,#f7f9fb 58%,#eef8f3 100%);border:1px solid #d6e4ee;border-top:4px solid var(--better);border-bottom:0}.deal-break::after{content:'05';position:absolute;right:42px;bottom:-28px;color:rgba(10,37,64,.06);font-size:9rem;font-weight:800;letter-spacing:-.08em;line-height:1}.deal-break span{position:relative;z-index:1;margin-bottom:12px;color:var(--better);font-size:.69rem}.deal-break h2{position:relative;z-index:1;max-width:680px;margin:0 0 12px;color:var(--navy);font-size:clamp(1.8rem,3.3vw,2.75rem);font-weight:800;letter-spacing:-.035em;line-height:1.08}.deal-break p{position:relative;z-index:1;max-width:700px;font-size:.96rem;line-height:1.72}@media(max-width:760px){.deal-break{margin-top:58px;padding:38px 26px}.deal-break::after{right:16px;font-size:6rem}.deal-break h2{font-size:1.9rem}}
+</style>
+<style>
+  /* Maintain a readable body-copy floor throughout the presentation. */
+  p, li { font-size: 1.05rem; line-height: 1.7; }
+  .stts-roadmap > p { font-size: 1.12rem; line-height: 1.65; }
+  @media (max-width: 760px) { p, li { font-size: 1rem; } .stts-roadmap > p { font-size: 1.05rem; } }
+</style>
+<style>
+  /* Keep calculator fields aligned when a label wraps onto a second line. */
+  .market-controls { align-items: end; }
+  .market-control { display: grid; grid-template-rows: 2.7rem auto; align-items: end; }
+  .market-control label { display: flex; align-items: end; margin: 0; line-height: 1.35; }
+  .market-control input { align-self: end; }
+  .market-calculator[aria-label="Interactive combined revenue potential calculator"] .market-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (max-width: 760px) { .market-control { grid-template-rows: auto auto; gap: 7px; } }
+</style>
+<style>
+  /* The memorandum is a reading document: narrative copy deserves a larger measure. */
+  .hero h1 { max-width: 1040px; }
+  .stts-flow .stts-roadmap:nth-of-type(3) > .eyebrow { display: none; }
+  .neo-reviews .review-card strong::before { display: none; }
+  .video-placeholder.vimeo-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  /* Section signatures replace the generic all-caps "eyebrow" pattern. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: .72rem;
+    margin-bottom: 1.1rem;
+    color: var(--better-deep);
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .01em;
+    line-height: 1.15;
+    text-transform: none;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 1.75rem;
+    height: 2px;
+    flex: 0 0 auto;
+    background: var(--better);
+  }
+  .stts-roadmap > .eyebrow { color: var(--blue-dark); }
+  .stts-roadmap > .eyebrow::before { background: var(--blue-dark); }
+  .proof-section .eyebrow { color: var(--better-deep); }
+  .product-sizzle .eyebrow { color: var(--white); }
+  .product-sizzle .eyebrow::before { background: var(--better-mint); }
+  .principle strong {
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+    margin-bottom: .9rem;
+    letter-spacing: .01em;
+    text-transform: none;
+  }
+  .principle strong::before { content: ''; width: 1.15rem; height: 2px; background: var(--better); }
+  /* The memorandum reads in chapters: the marker is an editorial margin note, not a label. */
+  .memo-section { grid-template-columns: 156px minmax(0, 1fr); gap: 52px; }
+  .memo-section > .number {
+    position: sticky;
+    top: 2rem;
+    display: grid;
+    gap: .48rem;
+    align-self: start;
+    padding: 0 1.1rem 1rem 0;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .memo-section > .number::after {
+    content: '';
+    width: 100%;
+    height: 1px;
+    margin-top: .26rem;
+    background: linear-gradient(90deg, var(--better), rgba(1, 122, 78, 0));
+  }
+  .section-index {
+    color: var(--blue-dark);
+    font-size: 2.65rem;
+    font-weight: 800;
+    letter-spacing: -.09em;
+    line-height: .82;
+  }
+  .section-label {
+    color: var(--body);
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .01em;
+    line-height: 1.25;
+  }
+  /* Opening argument: three editorial problem statements, not product cards. */
+  .hero .problem-marquee { width: auto; margin: 3.25rem 0 0; overflow: visible; }
+  .hero .problem-track {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.6rem;
+    width: auto;
+    padding: 0;
+    animation: none;
+  }
+  .hero .problem-card[aria-hidden='true'] { display: none; }
+  .hero .problem-card {
+    display: block;
+    min-height: 0;
+    padding: 0;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    cursor: default;
+    transform: none !important;
+  }
+  .hero .problem-card:hover { transform: none !important; background: transparent !important; box-shadow: none !important; }
+  .hero .problem-number {
+    margin-bottom: 1rem;
+    color: var(--better-mint);
+    font-size: 1.7rem;
+    font-weight: 800;
+    letter-spacing: -.08em;
+    line-height: 1;
+  }
+  .hero .problem-card h2,
+  .hero .problem-card:hover h2 {
+    max-width: 17rem;
+    margin-bottom: .6rem;
+    color: var(--white);
+    font-size: clamp(1.2rem, 1.65vw, 1.58rem);
+    font-weight: 800;
+    letter-spacing: -.035em;
+    line-height: 1.13;
+  }
+  .hero .problem-card p,
+  .hero .problem-card:hover p {
+    max-width: 19rem;
+    color: rgba(255,255,255,.76);
+    font-size: .94rem;
+    line-height: 1.58;
+  }
+  .hero .problem-card-inner { height: auto; transform: none !important; }
+  .hero .problem-front { position: relative; inset: auto; display: block; backface-visibility: visible; }
+  .hero .problem-back, .hero .problem-card-hint { display: none !important; }
+  .decision-section { padding: 0 48px; background: var(--surface); }
+  .decision-section .max-w { padding: 34px 0; }
+  .decision-section .deal-break { max-width: none; margin: 0; padding: 26px 30px; background: #fff; border-top: 3px solid var(--better); border-bottom: 0; box-shadow: var(--shadow-sm); }
+  .decision-section .deal-break::after { content: none; }
+  .decision-section .deal-break h2 { max-width: 700px; color: var(--navy); font-size: clamp(1.65rem, 3vw, 2.4rem); font-weight: 800; letter-spacing: -.03em; line-height: 1.08; }
+  .decision-section .deal-break p { max-width: 780px; margin-top: 10px; font-size: 1rem; }
+  .memo-section > div:nth-child(2) > p,
+  .memo-section .next-step-layout > div > p,
+  .memo-section > div:nth-child(2) > ul > li { font-size: 1.15rem; line-height: 1.78; }
+  @media (max-width: 760px) {
+    .memo-section > div:nth-child(2) > p,
+    .memo-section .next-step-layout > div > p,
+    .memo-section > div:nth-child(2) > ul > li { font-size: 1.05rem; line-height: 1.72; }
+    .memo-section { grid-template-columns: 1fr; gap: 1rem; }
+    .memo-section > .number { position: static; grid-template-columns: auto 1fr; align-items: center; gap: .7rem; padding: 0; }
+    .memo-section > .number::after { grid-column: 1 / -1; width: 5rem; }
+    .section-index { font-size: 2rem; }
+    .hero .problem-marquee { margin-top: 2.5rem; }
+    .hero .problem-track { grid-template-columns: 1fr; gap: 2rem; }
+    .hero .problem-card { min-height: 0; padding: 0; }
+    .hero .problem-number { margin-bottom: .8rem; font-size: 1.45rem; }
+    .decision-section { padding: 0 24px; }
+    .decision-section .max-w { padding: 24px 0; }
+    .decision-section .deal-break { padding: 22px; }
+  }
+</style>
+<style>
+  /* Editorial treatment: claims and evidence should read as a document, not a feature grid. */
+  .stts-flow .mechanism-marquee,
+  .belief-section .belief-marquee { width: auto; margin: 2.8rem 0 0; overflow: visible; }
+  .stts-flow .mechanism-track,
+  .belief-section .belief-track {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.6rem;
+    width: auto;
+    padding: 0;
+    animation: none;
+  }
+  .stts-flow .mechanism-card,
+  .belief-section .belief-card {
+    min-height: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+  }
+  .stts-flow .mechanism-card[aria-hidden='true'],
+  .belief-section .belief-card[aria-hidden='true'] { display: none; }
+  .stts-flow .mechanism-card .problem-number,
+  .belief-section .belief-card span {
+    margin-bottom: 1rem;
+    color: var(--better-mint);
+    font-size: 1.65rem;
+    font-weight: 800;
+    letter-spacing: -.08em;
+    line-height: 1;
+  }
+  .stts-flow .mechanism-card h3,
+  .belief-section .belief-card h3 {
+    margin-bottom: .65rem;
+    font-size: 1.28rem;
+    letter-spacing: -.03em;
+    line-height: 1.15;
+  }
+  .stts-flow .mechanism-card h3 { color: var(--navy); }
+  .stts-flow .mechanism-card p { color: var(--body); font-size: .94rem; line-height: 1.62; }
+  .belief-section .belief-card p { font-size: .94rem; line-height: 1.62; }
+  .proof-stories { gap: 2.4rem; }
+  .proof-story {
+    padding: 1.35rem 0 0;
+    background: transparent;
+    border: 0;
+    border-top: 2px solid var(--blue-dark);
+  }
+  .proof-story:nth-child(2) { border-top-color: var(--better); }
+  .proof-story span { color: var(--body); font-size: .75rem; letter-spacing: .01em; text-transform: none; }
+  .proof-story h3 { font-size: 1.2rem; }
+  .proof-story p { font-size: .94rem; line-height: 1.65; }
+  .neo-reviews .reviews-viewport { max-width: 1040px; margin: 2.8rem auto 0; overflow: visible; }
+  .neo-reviews .review-track {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+    width: auto;
+    padding: 0;
+    animation: none;
+  }
+  .neo-reviews .review-card {
+    width: auto;
+    min-height: 0;
+    padding: 1.35rem 0 0;
+    background: transparent;
+    border: 0;
+    border-top: 2px solid var(--blue-dark);
+    border-radius: 0;
+    box-shadow: none;
+    font-size: .96rem;
+    line-height: 1.7;
+  }
+  .neo-reviews .review-card:nth-child(2n) { border-top-color: var(--better); }
+  .neo-reviews .review-card strong { margin-top: 1rem; }
+  .neo-reviews .review-card[aria-hidden='true'] { display: none; }
+  @media (max-width: 760px) {
+    .stts-flow .mechanism-track,
+    .belief-section .belief-track,
+    .neo-reviews .review-track { grid-template-columns: 1fr; gap: 2rem; }
+    .stts-flow .mechanism-marquee,
+    .belief-section .belief-marquee { margin-top: 2.25rem; }
+    .proof-stories { gap: 1.8rem; }
+  }
+</style>
+<style>
+  .demo-reel-section { padding: 88px 48px; background: var(--surface); }
+  .demo-reel-section .h2 { max-width: 680px; }
+  .demo-reel-frame {
+    display: grid;
+    width: 100vw;
+    min-height: 0;
+    margin: 2rem 0 0 calc(50% - 50vw);
+    aspect-ratio: 16 / 9;
+    place-items: center;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--better-deep), var(--navy));
+    border-top: 3px solid var(--better-mint);
+    color: var(--white);
+  }
+  .demo-reel-frame > div { text-align: center; }
+  .demo-reel-frame span,
+  .demo-reel-frame strong { display: block; }
+  .demo-reel-frame span { color: var(--better-mint); font-size: .78rem; font-weight: 700; letter-spacing: .01em; }
+  .demo-reel-frame strong { margin-top: .35rem; font-size: 1.1rem; letter-spacing: -.02em; }
+  .demo-reel-frame iframe { width: 100%; height: 100%; border: 0; }
+  @media (max-width: 760px) { .demo-reel-section { padding: 60px 24px; } }
+</style>
+</head>
+<body>
+ <nav><div class="brand-lockup"><div class="logo">MyMortgage<span>STUDIO</span></div><div class="lockup-rule"></div><div class="better-logo"><img src="better-mark.svg" alt=""><span>better</span></div></div></nav>
+ <header class="hero"><div class="max-w"><h1>Can Better make every Mortgage Advisor more effective <em>without adding another vendor?</em></h1><div class="problem-marquee" aria-label="The three business problems MMS addresses"><div class="problem-track"><article class="problem-card"><span class="problem-number">01</span><h2>Too many tools. Too little leverage.</h2><p>Fragmented vendors and workflows make every Advisor harder to support, while leaving approximately $415K of annual technology spend addressable.</p></article><article class="problem-card"><span class="problem-number">02</span><h2>Great advice does not scale by itself.</h2><p>MMS turns Tinman data into clearer client conversations, faster next steps, and a consistent way to win business.</p></article><article class="problem-card"><span class="problem-number">03</span><h2>The relationship ends too soon.</h2><p>Without a connected operating system, post-close opportunities and long-term client value are left on the table.</p></article><article class="problem-card" aria-hidden="true"><span class="problem-number">01</span><h2>Too many tools. Too little leverage.</h2><p>Fragmented vendors and workflows make every Advisor harder to support, while leaving approximately $415K of annual technology spend addressable.</p></article><article class="problem-card" aria-hidden="true"><span class="problem-number">02</span><h2>Great advice does not scale by itself.</h2><p>MMS turns Tinman data into clearer client conversations, faster next steps, and a consistent way to win business.</p></article><article class="problem-card" aria-hidden="true"><span class="problem-number">03</span><h2>The relationship ends too soon.</h2><p>Without a connected operating system, post-close opportunities and long-term client value are left on the table.</p></article></div></div></div></header>
+ <section class="stts-flow"><div class="max-w"><div class="credibility-layout"><div><h2 class="h2">The person who can make the technology useful.</h2><p class="sub">Daryn brings a client-experience perspective from inside and outside mortgage. The focus is not technology for its own sake. It is making complex mortgage decisions clearer for consumers, more useful for Mortgage Advisors, and more valuable to Better.</p></div><ul class="credibility-proof"><li data-proof="01"><strong>Operator before mortgage.</strong> Daryn spent 18 years in Mexico City building and leading consumer businesses, including a toy company he led as CEO. <a class="profile-link" href="https://www.linkedin.com/in/darynfillis" target="_blank" rel="noopener noreferrer">View LinkedIn profile</a></li><li data-proof="02"><strong>Built from the whole client journey.</strong> As a Certified Mortgage Advisor and Branch Lead at NEO, I design from the full client decision, not just the transaction.</li><li data-proof="03"><strong>Already building the answer.</strong> Daryn owns the initial MMS build and experience vision; MMS has beta users and is rolling out across NEO with PDE clearing deployment.</li></ul></div><div class="stts-roadmap"><span class="eyebrow">The path from proof to scale</span><h2 class="h2">Prove it. Scale it. Monetize it.</h2><p>The execution path is clear: prove value in NEO, make the platform enterprise-ready for Better and Better.com DTC, then use Better Wholesale and external commercialization to create wider distribution and revenue.</p></div><div class="stts-roadmap"><span class="eyebrow">Unique mechanism · MyMortgageSTUDIO</span><h2 class="h2">Turn data into conversations, conversations into action.</h2><div class="mechanism-marquee" aria-label="The MMS unique mechanism"><div class="mechanism-track"><article class="mechanism-card"><span class="problem-number">01</span><h3>Clarify the client conversation.</h3><p>Translate complex loan and market information into a clearer, more consistent experience.</p></article><article class="mechanism-card"><span class="problem-number">02</span><h3>Equip the Mortgage Advisor.</h3><p>Give advisors a usable operating layer for client, partner, presentation, and workflow needs.</p></article><article class="mechanism-card"><span class="problem-number">03</span><h3>Strengthen the operating model.</h3><p>Use the platform to reduce fragmented tools, improve adoption, and create measurable business value.</p></article><article class="mechanism-card" aria-hidden="true"><span class="problem-number">01</span><h3>Clarify the client conversation.</h3><p>Translate complex loan and market information into a clearer, more consistent experience.</p></article><article class="mechanism-card" aria-hidden="true"><span class="problem-number">02</span><h3>Equip the Mortgage Advisor.</h3><p>Give advisors a usable operating layer for client, partner, presentation, and workflow needs.</p></article><article class="mechanism-card" aria-hidden="true"><span class="problem-number">03</span><h3>Strengthen the operating model.</h3><p>Use the platform to reduce fragmented tools, improve adoption, and create measurable business value.</p></article></div></div></div></div></section>
+ <section class="proof-section"><div class="max-w proof-layout"><div><span class="eyebrow">What the work already proves</span><h2 class="h2">The approach already works at the client level.</h2><p class="sub">MMS scales the same operating belief that has defined Daryn’s mortgage work: make the tradeoffs visible, stay involved after the transaction, and turn a complex process into an ongoing relationship.</p></div><div class="proof-stories"><article class="proof-story"><span>Mortgage Under Management</span><h3>Value continues after closing.</h3><p>After a client crossed 20% equity, Daryn initiated the PMI-removal request, saving the client $280 per month. When rates later changed, he reopened the discussion around a no-cost refinance.</p></article><article class="proof-story"><span>Complex buyer strategy</span><h3>Structure creates possibility.</h3><p>A self-employed buyer came to Daryn after two lenders had declined the file. By matching the documentation to the right program, the client closed in 21 days.</p></article></div></div></section>
+ <section class="belief-section"><div class="max-w"><h2 class="h2">Built to strengthen the operating system—not compete with it.</h2><p class="sub">Tinman remains the system of record. MMS gives Mortgage Advisors a practical operating layer around it, with a lean team and a clear test for what earns the next investment.</p><div class="belief-marquee" aria-label="Three operating principles"><div class="belief-track"><article class="belief-card"><span>01</span><h3>Tinman stays the system of record.</h3><p>MMS builds on Tinman’s data and workflow. It is the layer Advisors use to prepare, guide clients, work with partners, and keep the next step clear.</p></article><article class="belief-card"><span>02</span><h3>Consolidate where it counts.</h3><p>The goal is not more software. It is fewer disconnected vendor tools, replaced only where the Advisor and the business are demonstrably better off.</p></article><article class="belief-card"><span>03</span><h3>Earn the right to scale.</h3><p>Working with PDE, a small team can ship, test, and measure the next highest-value capability before committing to broader investment.</p></article><article class="belief-card" aria-hidden="true"><span>01</span><h3>Tinman stays the system of record.</h3><p>MMS builds on Tinman’s data and workflow. It is the layer Advisors use to prepare, guide clients, work with partners, and keep the next step clear.</p></article><article class="belief-card" aria-hidden="true"><span>02</span><h3>Consolidate where it counts.</h3><p>The goal is not more software. It is fewer disconnected vendor tools, replaced only where the Advisor and the business are demonstrably better off.</p></article><article class="belief-card" aria-hidden="true"><span>03</span><h3>Earn the right to scale.</h3><p>Working with PDE, a small team can ship, test, and measure the next highest-value capability before committing to broader investment.</p></article></div></div></div></section>
+ <section class="video-section"><div class="max-w"><h2 class="h2">Why Daryn. Why now.</h2><p class="sub">Watch this 4 minute video to get to know me.</p><div class="video-placeholder vimeo-embed" aria-label="Leadership vision video"><iframe src="https://player.vimeo.com/video/1248186233" title="Why Daryn. Why now." allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div></div></section>
+ <section><div class="max-w"><div class="purpose"><div><span class="eyebrow">The case for building this now</span><h2 class="h2">Build a mortgage-specific platform around the work that matters.</h2><p class="sub">MMS is currently in MVP V1. Tinman remains the core data and workflow backbone. MMS enhances that foundation by helping Mortgage Advisors turn it into a clearer, more consistent client experience. The first objective is to consolidate fragmented SaaS where it makes economic sense, improve conversion, and give NEO a tangible recruiting advantage through an operating and client-experience platform that helps advisors do more.</p></div><aside class="principle"><strong>How we choose the work</strong><p>Prioritize the work that reduces third-party dependency, improves conversion, strengthens client retention, saves money or time, improves the client or partner experience, or creates revenue.</p></aside></div></div></section>
+ <section class="demo-reel-section"><div class="max-w"><span class="eyebrow">The demo</span><h2 class="h2">See the Advisor experience in action.</h2><p class="sub">A short walkthrough of the client conversation, Advisor workflow, and the operating layer MMS gives the team.</p><div class="demo-reel-frame vimeo-demo-slot" aria-label="MMS demo reel"><iframe src="https://player.vimeo.com/video/1248607825" title="MMS demo reel" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div></div></section>
+ <div class="divider"></div>
+ <main class="max-w memo">
+ <article class="memo-section"><div class="number">01 · V1 SOLUTION</div><div><h3>Serve NEO first, then scale through a disciplined development pipeline</h3><p>MMS is in MVP V1 and is rolling out across NEO. <strong>NEO is the active proof environment.</strong> The first release remains focused on adoption, measurable value, and the core mortgage planning, client-experience, presentation, partner, and workflow capabilities of the platform. A successful NEO rollout also strengthens the NEO recruiting proposition by giving prospective Mortgage Advisors a differentiated operating platform.</p><p><strong>The vision began with Vishal's ask:</strong> use AI and internal development to replace or reduce dependence on third-party vendors. That is a real pain point for NEO Mortgage Advisors, who carry fragmented tools, recurring software expense, and disconnected workflows.</p><p>Drawing on Daryn's expertise in client experience inside and outside mortgage, MMS turns that direction into a usable interface and operating experience. The UI was created to execute on the vision: make the work clearer for Mortgage Advisors, make the client journey more consistent, and give Better a platform it can continue to improve.</p><p><strong>Tinman runs the core workflow. MMS improves the experience.</strong> MMS is not intended to replace Tinman. It enhances Tinman data and workflow to help Mortgage Advisors deliver the best possible consumer experience.</p><p><strong>V1 does not include a full CRM.</strong> Landing pages, calculators, presentations, and other MMS experiences should capture prospect information into MMS and transmit it to existing CRMs through approved integrations, APIs, webhooks, or similar connections. Over time, MMS may consolidate fragmented advisor-facing third-party capabilities, including CRM functionality, without replacing Tinman as the core loan workflow.</p><p><strong>Rollout sequence:</strong> Complete and measure the NEO rollout. Next, bring MMS to the required level of enterprise readiness and roll it across Better, including Better.com DTC. Then extend the platform to Better Wholesale as a sign-up, retention, and funded-loan tool. Future external clients follow once those internal deployments validate the product, operating model, integrations, and economics.</p><p><strong>Development pipeline:</strong> Following V1, the product roadmap should prioritize enhancements that deepen user adoption and measurable impact, including broader workflow automation, richer client and partner experiences, additional integrations, reporting and operating insights, AI capabilities, and enterprise readiness. Each initiative should be prioritized against the investment filter and the evidence produced in V1.</p></div></article>
+<article class="memo-section"><div class="number">02 · INTERNAL ECONOMICS</div><div><h3>Use MMS to make Better Wholesale more valuable</h3><p><strong>NEO subscription:</strong> Full MMS access is <strong>$249 per eligible Mortgage Advisor per month.</strong> All Mortgage Advisors are included in the NEO adoption model. Support staff do not pay a user fee.</p><p><strong>Wholesale access model:</strong> MMS should be a recruitment and relationship tool for Better Wholesale, giving brokers best-in-class tools to support their business. Brokers receive MMS <strong>at no charge while they maintain an active Better Wholesale account.</strong> Better Wholesale funds the MMS division <strong>$49 per funded loan.</strong> This keeps the broker experience free while directly aligning MMS funding with funded production.</p><div class="fact-row two"><div class="fact"><span class="fact-num">Free</span><span class="fact-label">MMS access while a Better Wholesale account remains active</span></div><div class="fact"><span class="fact-num">$49</span><span class="fact-label">per funded loan, funded by Wholesale to MMS</span></div></div><div class="market-calculator" aria-label="Interactive Wholesale funding calculator"><h4>Interactive Wholesale funding calculator</h4><p>Model the internal funding contributed by Better Wholesale to the MMS division based on funded production.</p><div class="market-controls"><div class="market-control"><label for="wholesale-loans">Funded Better Wholesale loans per month</label><input id="wholesale-loans" type="number" min="0" step="1" value="2500"></div><div class="market-control"><label for="wholesale-fee">Funding per funded loan</label><input id="wholesale-fee" type="number" min="0" step="1" value="49"></div><div class="market-control"><label for="wholesale-active-accounts">Active Wholesale accounts</label><input id="wholesale-active-accounts" type="number" min="0" step="1" value="200"></div></div><div class="market-result"><div><span>Monthly MMS funding from Wholesale</span><strong id="wholesale-monthly">$122,500</strong></div><div><span>Annual MMS funding from Wholesale</span><strong id="wholesale-annual">$1,470,000</strong></div></div><p class="calculator-note"><strong id="wholesale-free-accounts">200</strong> active Wholesale accounts in this example receive MMS at no additional charge. The calculator shows the internal Wholesale-to-MMS funding only. It does not include Better's loan-margin economics from the funded loans.</p></div><p>This gives brokers a simple value exchange: maintain an active Better Wholesale account and receive best-in-class tools at no additional cost. Better Wholesale funds MMS only when its broker partners fund loans. The definitive program should define an active account, the billing period, the funded-production measure, and the internal funding mechanics.</p><p><strong>Better option:</strong> Better's internal use, including Better.com DTC, may likewise be priced at <strong>$49 per funded loan</strong> as a success fee, billed to the applicable client as part of Better's fee set. This aligns MMS cost with funded production and gives the relevant Better cost center a lower-risk path to adoption.</p><p><strong>Addressable technology opportunity:</strong> approximately <strong>$415,000 annually</strong> in identified third-party technology expense may be addressable by MMS. MMS already replaces Mortgage Coach, is nearing Lendware replacement, is expected to replace Home Report and List Reports, and may replace part of MBS Highway.</p><p><strong>Savings discipline:</strong> Home Report replacement requires a data-aggregator connection, so that cost must be netted before savings are recognized. MBS Highway savings should remain partial until Better's enterprise agreement and daily-update requirements are confirmed. Savings should be recognized only when the underlying expense is actually eliminated, reduced, consolidated, or avoided.</p><p>MMS should have a clear internal P&amp;L showing platform revenue, verified technology savings, development and operating expense, external revenue, and net financial contribution.</p></div></article>
+ <article class="memo-section"><div class="number">03 · MARKET OPPORTUNITY</div><div><h3>Make Better stronger first, then serve the external market</h3><p>NEO and Better are the first customers. MMS must first improve their Mortgage Advisor, client, partner, and consumer experience before it is offered outside the company.</p><p>Once proven internally, Better and Daryn may make MMS commercially available to loan officers, producing teams, mortgage brokers, independent mortgage banks, enterprise mortgage organizations, and potentially Better Wholesale customers. Better retains approval over the timing, market, brand, pricing, distribution, and strategic use of MMS outside the company.</p><p>External pricing may include per-user subscriptions, team pricing, enterprise licensing, white-label arrangements, transaction pricing, premium modules, implementation services, Wholesale-sponsored access, or a combination of models.</p><div class="market-calculator" aria-label="Interactive external market value calculator"><h4>Interactive external market value</h4><p>Change the market size, adoption rate, or monthly user price to test the external subscription opportunity.</p><div class="market-controls"><div class="market-control"><label for="market-size">Potential MLO market</label><input id="market-size" type="number" min="0" step="1000" value="199000"></div><div class="market-control"><label for="adoption-rate">Adoption rate (%)</label><input id="adoption-rate" type="number" min="0" max="100" step="0.1" value="3"></div><div class="market-control"><label for="monthly-price">Monthly price per user</label><input id="monthly-price" type="number" min="0" step="1" value="249"></div></div><div class="market-result"><div><span>Paying users</span><strong id="market-users">5,970</strong></div><div><span>Potential annual revenue</span><strong id="market-annual">$17,838,360</strong></div></div><p class="calculator-note">The starting market proxy is 199,000 state-licensed mortgage loan originators reported by CSBS for 2024. The 3 shown above means 3%. This is an external-market illustration. It excludes NEO subscription revenue, Better economics, Wholesale funded-loan fees, loan-margin impact, and operating costs.</p></div><div class="market-calculator" aria-label="Interactive combined revenue potential calculator"><h4>Combined annual revenue potential</h4><p>This totals NEO subscription revenue, Wholesale success-fee revenue, and the external subscription scenario above.</p><div class="market-controls"><div class="market-control"><label for="neo-advisors">Eligible NEO Mortgage Advisors</label><input id="neo-advisors" type="number" min="0" step="1" value="250"></div><div class="market-control"><label for="neo-fee">NEO monthly fee per advisor</label><input id="neo-fee" type="number" min="0" step="1" value="249"></div></div><div class="market-result"><div><span>Annual NEO subscription revenue</span><strong id="neo-annual">$747,000</strong></div><div><span>Combined annual revenue potential</span><strong id="combined-annual">$20,055,360</strong></div></div><p class="calculator-note">The combined figure is gross MMS revenue potential before platform operating costs, the $20,000 monthly income floor, technology savings, loan-margin economics, or any other costs and revenues outside MMS.</p></div><p>Better Wholesale is both a distribution channel and a sign-up tool. It can offer brokers an easier way to run and grow their business, help create a stronger broker community, and give them a reason to fund loans through Better beyond product, price, and fulfillment alone. The fund-or-subscribe structure gives brokers a reason to experience MMS while aligning ongoing access with their funded relationship with Better Wholesale.</p></div></article>
+ <article class="memo-section"><div class="number">04 · INVESTMENT</div><div><h3>Use a lean, fail-fast investment model</h3><p>Better is not being asked to fund a separate software organization. Daryn owns the initial MMS build and business case. PDE provides the enterprise technical partnership needed to validate architecture, security, integrations, and deployment readiness.</p><p>Codex-assisted development can materially reduce the cost and time required to build, test, and improve MMS compared with traditional software development. The investment should remain disciplined: build quickly, test with real users, measure the result, scale what works, and stop what does not.</p><ul><li>Codex and AI-development costs.</li><li>Incremental PDE, Product, Design, and Engineering resources.</li><li>Security, compliance, and legal review.</li><li>Hosting, APIs, infrastructure, and implementation costs.</li><li>Other direct costs specifically attributable to MMS.</li></ul><p>NEO can also reduce the need for separate third-party vendors and for teams managing integrations between those tools and Tinman. When a third-party capability is strategically important, MMS can determine whether building it internally is faster, less expensive, and better integrated than continuing to license it.</p><p><strong>Existing corporate overhead, pre-existing salaries, unrelated technology projects, and costs that would have existed without MMS should not automatically be allocated to MMS.</strong> The intent is to account for the actual investment in the platform without artificially burdening the business.</p></div></article>
+ </main>
+<section class="reviews-section neo-reviews"><div class="reviews-heading max-w"><div class="neo-lockup" aria-label="NEO Home Loans"><span>NEO Home Loans</span><small>Powered by Better Mortgage Corporation</small></div><h2 class="h2">Built with Mortgage Advisors. Proven in the field.</h2><p class="sub">Early feedback from Mortgage Advisors using MyMortgageSTUDIO in buyer conversations, agent outreach, and everyday business development.</p></div><div class="reviews-viewport"><div class="review-track"><article class="review-card">“Had a GREAT weekend running these. Three buyers booked directly after I worked two open houses, and the third is looking to put in an offer well over ask.”<strong>Jon Castellano · NEO Home Loans</strong></article><article class="review-card">“I can’t explain how big of an advantage this is. I am getting appointments with new agents daily because of this.”<strong>Boone Plager · NEO Home Loans</strong></article><article class="review-card">“I’m getting it into agent hands rapidly and I’m going to be listed on a BUNCH of listings as the preferred lender.”<strong>Tim Humphrey · NEO Home Loans</strong></article><article class="review-card">“My Mortgage Studio is going to be a GAME CHANGER for this whole crew. Can’t wait to see you all execute and take market share with this!”<strong>Ryan Grant · NEO Home Loans</strong></article><article class="review-card" aria-hidden="true">“Had a GREAT weekend running these. Three buyers booked directly after I worked two open houses, and the third is looking to put in an offer well over ask.”<strong>Jon Castellano · NEO Home Loans</strong></article><article class="review-card" aria-hidden="true">“I can’t explain how big of an advantage this is. I am getting appointments with new agents daily because of this.”<strong>Boone Plager · NEO Home Loans</strong></article><article class="review-card" aria-hidden="true">“I’m getting it into agent hands rapidly and I’m going to be listed on a BUNCH of listings as the preferred lender.”<strong>Tim Humphrey · NEO Home Loans</strong></article><article class="review-card" aria-hidden="true">“My Mortgage Studio is going to be a GAME CHANGER for this whole crew. Can’t wait to see you all execute and take market share with this!”<strong>Ryan Grant · NEO Home Loans</strong></article></div></div></section>
+ <main class="max-w memo">
+ <div class="deal-break"><span>From opportunity to structure</span><h2>What I’m proposing to build and lead.</h2><p>With the solution, rollout, investment, and market opportunity established, this is the operating structure I’m proposing to build, lead, and measure with Better.</p></div>
+ <article class="memo-section"><div class="number">05 · ROLE</div><div><h3>Vice President and General Manager</h3><p>With MMS rolling out across NEO, Daryn would serve as <strong>Vice President, Client Experience &amp; Strategic Ventures</strong> and <strong>General Manager, MyMortgageSTUDIO.</strong></p><p>The role exists to serve NEO and Better first by improving the Mortgage Advisor, client, partner, and consumer experience. Future external clients are the expansion opportunity after internal value is proven.</p><p>This is an operating role, not an advisory assignment. Daryn owns the initial build, MMS vision, product roadmap, experience strategy, adoption, commercialization, and the operating result. PDE owns technical standards and clears MMS for deployment.</p><p>The role carries accountability for the Client Experience and MMS P&amp;Ls and the authority to work across teams to change behavior, drive adoption, and deliver results.</p><ul><li>Establish the product, deployment, and commercialization roadmap.</li><li>Identify opportunities to replace or reduce third-party software expense.</li><li>Prioritize features against measurable business value and more funded loans.</li><li>Coordinate with Product, PDE, Engineering, Design, Finance, Compliance, Legal, Operations, NEO, Better DTC, Wholesale, and leadership.</li></ul></div></article>
+ <article class="memo-section"><div class="number">06 · COMPENSATION</div><div><h3>$20,000 monthly income floor and Better equity</h3><p>Daryn would receive a minimum of <strong>$20,000 per month</strong> upon formal sponsorship of the VP and GM mandate, allowing Daryn to put MMS to work for NEO and Better. The income floor supports the role and is a <strong>non-recourse draw against Daryn’s 49% participation</strong> in MMS economic value.</p><p>As part of the VP compensation package, Daryn would also participate in Better’s equity program through an initial <strong>RSU or stock-option grant.</strong> The amount, vesting schedule, and terms would be determined through Better’s applicable equity plans and compensation practices.</p><p>The monthly income floor is credited against MMS participation. If the draw exceeds Daryn’s participation in a given month or period, Daryn has no personal repayment obligation. <strong>Better equity is compensation for the VP role and alignment with Better as a whole.</strong> MMS participation is separate and recognizes the creation, operation, and commercialization of the MMS asset.</p></div></article>
+ <article class="memo-section"><div class="number">07 · MMS PARTICIPATION</div><div><h3>49% economic participation; 51% Better control</h3><p>Daryn would receive a <strong>49% economic participation right in MMS</strong>, with Better retaining <strong>51% and control of the business.</strong> The participation applies to distributable MMS economics after agreed operating expenses and approved MMS-specific startup cost recovery.</p><div class="fact-row"><div class="fact"><span class="fact-num">49%</span><span class="fact-label">Daryn economic participation</span></div><div class="fact"><span class="fact-num">51%</span><span class="fact-label">Better ownership &amp; control</span></div><div class="fact"><span class="fact-num">MMS</span><span class="fact-label">Participation follows the asset</span></div></div><p>The commercial intent is that the participation follows MMS at the same <strong>49% level.</strong> If MMS is sold, spun off, transferred to a subsidiary, renamed, licensed, merged into another platform, or included in a larger transaction, Daryn’s participation continues to attach to the economic value attributable to MMS.</p><div class="note"><strong>Documentation principle:</strong> Legal and Finance may select the appropriate structure, subsidiary, joint venture, contractual participation right, profits interest, or another mechanism, provided the agreed economic intent is preserved.</div></div></article>
+ <article class="memo-section"><div class="number">08 · NEXT STEP</div><div class="next-step-layout"><div><h3>Formally sponsor the active NEO rollout, then scale on proof</h3><p>MMS is already rolling out across NEO. The immediate decision is whether Better will formally sponsor the initiative, establish the Client Experience and MMS P&amp;Ls, and appoint Daryn as the accountable VP and GM owner. Better can then measure adoption, conversion, savings, recruiting, retention, and funded-loan impact before approving broader Better, Wholesale, or external expansion.</p><p>The implementation teams can then document the selected legal structure, governance, participation mechanics, cost-accounting methodology, VP compensation, Better equity terms, deployment requirements, and external commercialization rights.</p><div class="note"><strong>Working-document status:</strong> This memorandum expresses proposed business terms for discussion. It is not intended to be definitive legal documentation.</div></div><a class="deal-memo-card" href="mymortgagestudio-working-deal-memorandum.pdf" target="_blank" rel="noopener" aria-label="Open the formal three-page deal memorandum PDF"><img src="mymortgagestudio-working-deal-memorandum-preview.png" alt="First page of the formal MyMortgageSTUDIO deal memorandum"><span class="deal-memo-card-copy"><strong>Open the three-page deal memorandum</strong></span></a></div></article>
+ </main>
+ <script>
+  (() => {const marketSize=document.getElementById('market-size'),adoptionRate=document.getElementById('adoption-rate'),monthlyPrice=document.getElementById('monthly-price'),users=document.getElementById('market-users'),annual=document.getElementById('market-annual'),wholesaleLoans=document.getElementById('wholesale-loans'),wholesaleFee=document.getElementById('wholesale-fee'),wholesaleActiveAccounts=document.getElementById('wholesale-active-accounts'),wholesaleMonthly=document.getElementById('wholesale-monthly'),wholesaleAnnual=document.getElementById('wholesale-annual'),wholesaleFreeAccounts=document.getElementById('wholesale-free-accounts'),neoAdvisors=document.getElementById('neo-advisors'),neoFee=document.getElementById('neo-fee'),neoAnnual=document.getElementById('neo-annual'),combinedAnnual=document.getElementById('combined-annual');const number=new Intl.NumberFormat('en-US',{maximumFractionDigits:0}),currency=new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}),value=input=>Math.max(0,Number(input.value)||0);const wholesaleFundingAnnual=()=>value(wholesaleLoans)*value(wholesaleFee)*12;const updateTotal=()=>{const externalUsers=Math.round(value(marketSize)*value(adoptionRate)/100),externalAnnual=externalUsers*value(monthlyPrice)*12,neoAnnualValue=value(neoAdvisors)*value(neoFee)*12;neoAnnual.textContent=currency.format(neoAnnualValue);combinedAnnual.textContent=currency.format(neoAnnualValue+wholesaleFundingAnnual()+externalAnnual)};const updateMarket=()=>{const payingUsers=Math.round(value(marketSize)*value(adoptionRate)/100);users.textContent=number.format(payingUsers);annual.textContent=currency.format(payingUsers*value(monthlyPrice)*12);updateTotal()};const updateWholesale=()=>{const monthly=value(wholesaleLoans)*value(wholesaleFee);wholesaleMonthly.textContent=currency.format(monthly);wholesaleAnnual.textContent=currency.format(monthly*12);wholesaleFreeAccounts.textContent=number.format(value(wholesaleActiveAccounts));updateTotal()};[marketSize,adoptionRate,monthlyPrice].forEach(input=>input.addEventListener('input',updateMarket));[wholesaleLoans,wholesaleFee,wholesaleActiveAccounts].forEach(input=>input.addEventListener('input',updateWholesale));[neoAdvisors,neoFee].forEach(input=>input.addEventListener('input',updateTotal));updateMarket();updateWholesale();updateTotal()})();
+ </script>
+ <script>(()=>{const product=document.querySelector('.product-sizzle');const economics=[...document.querySelectorAll('.memo-section')].find(section=>section.querySelector('.number')?.textContent.includes('02 · INTERNAL ECONOMICS'));if(product&&economics)economics.parentNode.insertBefore(product,economics)})();</script>
+ <footer class="footer"><p>MyMortgageSTUDIO · Supporting Deal Memorandum · Discussion Draft · September 2026</p></footer>
+<script>
+ (() => {
+  const reviews = document.querySelector('.reviews-section');
+  const proof = document.querySelector('.proof-section');
+  if (reviews && proof) reviews.parentNode.insertBefore(proof, reviews);
+
+  const sections = [...document.querySelectorAll('.memo-section')];
+  const rename = (match, label, title, id) => {
+   const section = sections.find(item => item.querySelector('.number')?.textContent.includes(match));
+   if (!section) return;
+   section.querySelector('.number').textContent = label;
+   section.querySelector('h3').textContent = title;
+   if (id) section.id = id;
+  };
+  rename('01 · V1 SOLUTION', '01 · TEACH THE FRAMEWORK', 'The V1 that makes the mechanism real');
+  rename('02 · INTERNAL ECONOMICS', '02 · TEST THE BUSINESS MODEL', 'Test the internal economics and adoption model');
+  rename('03 · MARKET OPPORTUNITY', '03 · INTERACTIVE REVENUE MODEL', 'Test the revenue potential in real time', 'interactive-revenue');
+  rename('04 · INVESTMENT', '04 · INVESTMENT DISCIPLINE', 'Use a lean, fail-fast investment model');
+
+  const status = document.querySelector('.status');
+  if (status) status.innerHTML = 'Founder Review<br>STTS Decision Framework';
+ })();
+</script>
+<script>
+(() => {
+  const operatorCard = document.querySelector('.credibility-proof li:first-child');
+  if (operatorCard) operatorCard.innerHTML = '<strong>Operator before mortgage.</strong>Daryn spent 18 years in Mexico City building and leading consumer businesses, including Tower Records and Cartier, and a toy company he led as CEO.';
+  const credibilityCopy = document.querySelector('.credibility-layout .sub');
+  if (credibilityCopy) credibilityCopy.innerHTML = 'Daryn brings a client-experience perspective from inside and outside mortgage. <strong>The focus is not technology for its own sake. It is making complex mortgage decisions clearer for consumers, more useful for Mortgage Advisors, and more valuable to Better.</strong>';
+})();
+</script>
+<script>
+(() => {
+  const internalEconomics = [...document.querySelectorAll('.memo-section')].find(section => section.querySelector('.number')?.textContent.includes('02'));
+  if (internalEconomics) {
+    internalEconomics.querySelector('h3').textContent = 'Prove adoption in NEO, then establish the internal economics';
+    const firstParagraph = internalEconomics.querySelector('p');
+    if (firstParagraph) firstParagraph.innerHTML = '<strong>NEO rollout and branch billing:</strong> MMS goes live across NEO <strong>at no charge until the MVP is working consistently and its value is proven.</strong> After that proof period, full MMS access moves to <strong>$249 per eligible Mortgage Advisor per month, billed to the NEO branch.</strong> Support staff do not pay a user fee.';
+  }
+  const marketSection = [...document.querySelectorAll('.memo-section')].find(section => section.querySelector('.number')?.textContent.includes('03'));
+  if (marketSection) {
+    const combined = marketSection.querySelector('[aria-label="Interactive combined revenue potential calculator"]');
+    if (combined) {
+      combined.querySelector('h4').textContent = 'Combined annual revenue potential after the NEO proof period';
+      combined.querySelector('p').textContent = 'This totals post-pilot NEO branch-paid revenue, Wholesale success-fee revenue, and the external subscription scenario above.';
+      combined.querySelector('label[for="neo-fee"]').textContent = 'NEO branch monthly fee per advisor';
+      combined.querySelector('.market-result span').textContent = 'Annual NEO branch-paid revenue';
+    }
+  }
+})();
+</script>
+<script>
+(() => {
+  const cardDetails = {
+    'Third-party dependency': {
+      className: 'problem-dependency',
+      title: 'The MMS response',
+      copy: 'Consolidate advisor-facing tools and reduce integration burden. Identified addressable technology opportunity: approximately $415k per year.'
+    },
+    'Conversion opportunity': {
+      className: 'problem-conversion',
+      title: 'The MMS response',
+      copy: 'Turn Tinman data into clearer client conversations, faster next steps, and a stronger partner-launch experience.'
+    },
+    'Stickier clients': {
+      className: 'problem-retention',
+      title: 'The MMS response',
+      copy: 'Keep clients engaged after closing with PMI, refinance, recast, and equity opportunities.'
+    }
+  };
+  document.querySelectorAll('.hero .problem-card').forEach(card => {
+    const title = card.querySelector('h2')?.textContent.trim();
+    const details = cardDetails[title];
+    if (!details || card.dataset.flipReady) return;
+    const front = card.innerHTML;
+    card.dataset.flipReady = 'true';
+    card.classList.add(details.className);
+    card.removeAttribute('aria-hidden');
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('aria-pressed', 'false');
+    card.setAttribute('aria-label', `Show the MMS response to ${title}`);
+    card.innerHTML = `<div class="problem-card-inner"><div class="problem-face problem-front">${front}<span class="problem-card-hint">Click for the MMS response</span></div><div class="problem-face problem-back"><span class="problem-number">MMS</span><h2>${details.title}</h2><p>${details.copy}</p><span class="problem-card-hint">Return</span></div></div>`;
+    const toggle = () => {
+      const flipped = card.classList.toggle('is-flipped');
+      card.setAttribute('aria-pressed', String(flipped));
+      card.setAttribute('aria-label', flipped ? `Return to ${title}` : `Show the MMS response to ${title}`);
+    };
+    card.addEventListener('click', toggle);
+    card.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        toggle();
+      }
+    });
+  });
+})();
+</script>
+<script>
+(() => {
+  const headline = document.querySelector('.hero h1');
+  if (headline) headline.innerHTML = 'Can Better make every Mortgage Advisor more effective <em>while replacing fragmented vendors?</em>';
+})();
+</script>
+<script>
+(() => {
+  const section = number => [...document.querySelectorAll('.memo-section')].find(item => item.querySelector('.number')?.textContent.includes(number));
+  const setParagraph = (item, index, html) => {
+    const paragraph = item?.querySelectorAll('p')[index];
+    if (paragraph) paragraph.innerHTML = html;
+  };
+
+  const credibility = document.querySelector('.credibility-layout');
+  if (credibility) {
+    credibility.querySelector('h2').textContent = 'Why I’m the person who can make the technology useful.';
+    credibility.querySelector('.sub').innerHTML = 'I bring a client-experience perspective from inside and outside mortgage. <strong>The focus is not technology for its own sake. It is making complex mortgage decisions clearer for consumers, more useful for Mortgage Advisors, and more valuable to Better.</strong>';
+    const proof = credibility.querySelectorAll('.credibility-proof li');
+    if (proof[0]) {
+      proof[0].dataset.proof = '01';
+      proof[0].innerHTML = '<strong>Operator before mortgage.</strong>I spent 18 years in Mexico City building and leading consumer businesses, including Tower Records and Cartier, and a toy company I led as CEO. <a class="profile-link" href="https://www.linkedin.com/in/darynfillis" target="_blank" rel="noopener noreferrer">View LinkedIn profile</a>';
+    }
+    if (proof[1]) {
+      proof[1].dataset.proof = '02';
+      proof[1].innerHTML = '<strong>Built from the whole client journey.</strong>As a Certified Mortgage Advisor and Branch Lead at NEO, I design from the full client decision, not just the transaction.';
+    }
+    if (proof[2]) {
+      proof[2].dataset.proof = '03';
+      proof[2].innerHTML = '<strong>Already building the answer.</strong>I own the initial MMS build and experience vision. MMS has beta users and is rolling out across NEO with PDE clearing deployment.';
+    }
+  }
+
+  const proofSection = document.querySelector('.proof-section');
+  if (proofSection) {
+    proofSection.querySelector('.sub').textContent = 'MMS scales the operating belief that defines my mortgage work: make the tradeoffs visible, stay involved after the transaction, and turn a complex process into an ongoing relationship.';
+    const stories = proofSection.querySelectorAll('.proof-story p');
+    if (stories[0]) stories[0].textContent = 'After a client crossed 20% equity, I initiated the PMI-removal request, saving the client $280 per month. When rates later changed, I reopened the discussion around a no-cost refinance.';
+    if (stories[1]) stories[1].textContent = 'A self-employed buyer came to me after two lenders had declined the file. By matching the documentation to the right program, I helped the client close in 21 days.';
+  }
+
+  const v1 = section('01');
+  setParagraph(v1, 2, 'Drawing on my experience in client experience inside and outside mortgage, I built MMS to turn that direction into a usable interface and operating experience. The UI makes the work clearer for Mortgage Advisors, the client journey more consistent, and gives Better a platform it can continue to improve.');
+  const market = section('03');
+  setParagraph(market, 1, 'Once internal proof is established, Better and I may make MMS commercially available to loan officers, producing teams, mortgage brokers, independent mortgage banks, enterprise mortgage organizations, and potentially Better Wholesale customers. Better retains approval over the timing, market, brand, pricing, distribution, and strategic use of MMS outside the company.');
+  const investment = section('04');
+  setParagraph(investment, 0, 'Better is not being asked to fund a separate software organization. I own the initial MMS build and business case. PDE provides the enterprise technical partnership needed to validate architecture, security, integrations, and deployment readiness.');
+
+  const role = section('05');
+  if (role) {
+    role.querySelector('h3').textContent = 'My role: Vice President and General Manager';
+    setParagraph(role, 0, 'With MMS rolling out across NEO, I propose serving as <strong>Vice President, Client Experience &amp; Strategic Ventures</strong> and <strong>General Manager, MyMortgageSTUDIO.</strong>');
+    setParagraph(role, 1, 'My role is to serve NEO and Better first by improving the Mortgage Advisor, client, partner, and consumer experience. Future external clients are the expansion opportunity after internal value is proven.');
+    setParagraph(role, 2, 'This is an operating role, not an advisory assignment. I own the initial build, MMS vision, product roadmap, experience strategy, adoption, commercialization, and operating result. PDE owns technical standards and clears MMS for deployment.');
+    setParagraph(role, 3, 'I will be accountable for the Client Experience and MMS P&amp;Ls, with authority to work across teams to change behavior, drive adoption, and deliver results.');
+    const list = role.querySelector('ul');
+    if (list) list.innerHTML = '<li>I will establish the product, deployment, and commercialization roadmap.</li><li>I will identify opportunities to replace or reduce third-party software expense.</li><li>I will prioritize features against measurable business value and more funded loans.</li><li>I will coordinate with Product, PDE, Engineering, Design, Finance, Compliance, Legal, Operations, NEO, Better DTC, Wholesale, and leadership.</li>';
+  }
+
+  const compensation = section('06');
+  if (compensation) {
+    setParagraph(compensation, 0, 'I propose a minimum of <strong>$20,000 per month</strong> upon formal sponsorship of the VP and GM mandate, allowing me to put MMS to work for NEO and Better. The income floor supports the role and is a <strong>non-recourse draw against my 49% participation</strong> in MMS economic value.');
+    setParagraph(compensation, 1, 'As part of my VP compensation package, I would also participate in Better’s equity program through an initial <strong>RSU or stock-option grant.</strong> The amount, vesting schedule, and terms would be determined through Better’s applicable equity plans and compensation practices.');
+    setParagraph(compensation, 2, 'The monthly income floor is credited against my MMS participation. If the draw exceeds my participation in a given month or period, I have no personal repayment obligation. <strong>Better equity is compensation for the VP role and alignment with Better as a whole.</strong> MMS participation is separate and recognizes the creation, operation, and commercialization of the MMS asset.');
+  }
+
+  const participation = section('07');
+  if (participation) {
+    setParagraph(participation, 0, 'I would receive a <strong>49% economic participation right in MMS</strong>, with Better retaining <strong>51% and control of the business.</strong> The participation applies to distributable MMS economics after agreed operating expenses and approved MMS-specific startup cost recovery.');
+    const labels = participation.querySelectorAll('.fact-label');
+    if (labels[0]) labels[0].textContent = 'My economic participation';
+    setParagraph(participation, 1, 'The commercial intent is that my participation follows MMS at the same <strong>49% level.</strong> If MMS is sold, spun off, transferred to a subsidiary, renamed, licensed, merged into another platform, or included in a larger transaction, my participation continues to attach to the economic value attributable to MMS.');
+  }
+
+  const next = section('08');
+  setParagraph(next, 0, 'MMS is already rolling out across NEO. The immediate decision is whether Better will formally sponsor the initiative, establish the Client Experience and MMS P&amp;Ls, and appoint me as the accountable VP and GM owner. Better can then measure adoption, conversion, savings, recruiting, retention, and funded-loan impact before approving broader Better, Wholesale, or external expansion.');
+})();
+</script>
+<script>
+(() => {
+  const compensation = [...document.querySelectorAll('.memo-section')].find(item => item.querySelector('.number')?.textContent.includes('06'));
+  if (compensation) {
+    compensation.querySelector('h3').textContent = '$30,000 monthly income floor and Better equity';
+    const compensationParagraph = compensation.querySelector('p');
+    if (compensationParagraph) compensationParagraph.innerHTML = 'I propose a minimum of <strong>$30,000 per month</strong> upon formal sponsorship of the VP and GM mandate, allowing me to put MMS to work for NEO and Better. The income floor supports the role and is a <strong>non-recourse draw against my 49% participation</strong> in MMS economic value.';
+  }
+  document.querySelectorAll('.calculator-note').forEach(note => {
+    note.innerHTML = note.innerHTML.replaceAll('$20,000 monthly income floor', '$30,000 monthly income floor');
+  });
+})();
+</script>
+<script>
+(() => {
+  const adoptionRate = document.getElementById('adoption-rate');
+  const neoAdvisors = document.getElementById('neo-advisors');
+  const wholesaleLoans = document.getElementById('wholesale-loans');
+  if (adoptionRate) {
+    adoptionRate.value = 1;
+    adoptionRate.defaultValue = 1;
+    adoptionRate.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+  if (neoAdvisors) {
+    neoAdvisors.value = 100;
+    neoAdvisors.defaultValue = 100;
+    neoAdvisors.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+  if (wholesaleLoans) {
+    wholesaleLoans.value = 100;
+    wholesaleLoans.defaultValue = 100;
+    wholesaleLoans.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+  document.querySelectorAll('.calculator-note').forEach(note => {
+    note.innerHTML = note.innerHTML.replace('The 3 shown above means 3%.', 'The 1 shown above means 1%.');
+  });
+})();
+</script>
+<script>
+(() => {
+  document.querySelector('.next-step-layout .note')?.remove();
+  const memoLink = document.querySelector('.deal-memo-card');
+  if (memoLink) {
+    memoLink.querySelector('strong').textContent = 'Open the deal memo';
+    memoLink.setAttribute('aria-label', 'Open the deal memo PDF');
+  }
+})();
+</script>
+<script>
+(() => {
+  const roadmaps = document.querySelectorAll('.stts-roadmap');
+  if (roadmaps[0]) {
+    roadmaps[0].querySelector('h2').textContent = 'Deploy it. Measure it. Scale it.';
+    roadmaps[0].querySelector('p').textContent = 'The NEO proof period is already live. I am asking for a 90-day mandate to deploy MMS across NEO, Better DTC, and Better Wholesale, then measure the operating and commercial results.';
+  }
+
+  const dealBreak = document.querySelector('.deal-break');
+  if (dealBreak) {
+    dealBreak.querySelector('span').textContent = 'The decision requested';
+    dealBreak.querySelector('h2').textContent = 'Approve a 90-day mandate to deploy and measure MMS.';
+    dealBreak.querySelector('p').textContent = 'The NEO proof period is already underway. The next step is a time-bound mandate to deploy MMS across NEO, Better DTC, and Better Wholesale, with clear ownership and measurable operating results.';
+  }
+
+  const section = number => [...document.querySelectorAll('.memo-section')].find(item => item.querySelector('.number')?.textContent.includes(number));
+  const role = section('05');
+  if (role) {
+    role.querySelector('h3').textContent = 'My 90-day mandate: deploy MMS across NEO, Better DTC, and Wholesale';
+    role.querySelector('p').innerHTML = 'I will lead a <strong>90-day enterprise mandate</strong> to deploy MMS across NEO, Better DTC, and Better Wholesale, while driving measurable results in advisor adoption, client and partner experience, vendor consolidation, and funded-loan impact.';
+  }
+
+  const compensation = section('06');
+  if (compensation) {
+    const paragraphs = compensation.querySelectorAll('p');
+    compensation.querySelector('h3').textContent = 'Revenue-first $30,000 monthly floor and Better equity';
+    if (paragraphs[0]) paragraphs[0].innerHTML = '<strong>No compensation is due during the 90-day deployment mandate.</strong> Once MMS begins charging, I receive the first <strong>up to $30,000 per month</strong> from collected MMS charges. If collected charges are below $30,000 in a month, my compensation is limited to the amount actually collected.';
+    if (paragraphs[1]) paragraphs[1].innerHTML = 'The revenue-first compensation is paid <strong>before the 49% / 51% split</strong> of remaining distributable MMS economics. It creates no guaranteed salary, advance, or other upfront payment obligation for Better.';
+    if (paragraphs[2]) paragraphs[2].innerHTML = '<strong>Better equity is separate compensation for the VP role and alignment with Better as a whole.</strong> My MMS participation applies to the remaining economics after the revenue-first compensation, agreed operating expenses, and approved MMS-specific startup cost recovery.';
+  }
+
+  const participation = section('07');
+  if (participation) {
+    const firstParagraph = participation.querySelector('p');
+    if (firstParagraph) firstParagraph.innerHTML = 'I receive a <strong>49% economic participation right in MMS</strong>, with Better retaining <strong>51% and control of the business.</strong> The split applies to remaining distributable MMS economics after the revenue-first compensation, agreed operating expenses, and approved MMS-specific startup cost recovery.';
+  }
+
+  const next = section('08');
+  if (next) {
+    const paragraphs = next.querySelectorAll('p');
+    next.querySelector('h3').textContent = 'Approve the 90-day mandate, then decide on the data';
+    if (paragraphs[0]) paragraphs[0].textContent = 'The NEO proof period is already running. I am asking Better to approve a 90-day mandate for me to deploy MMS across NEO, Better DTC, and Better Wholesale, with accountability for adoption, conversion, vendor savings, recruiting, retention, and funded-loan impact.';
+    if (paragraphs[1]) paragraphs[1].textContent = 'At the end of the mandate, Better can review the operating results and decide whether to formalize the VP and GM role, establish the Client Experience and MMS P&Ls, and activate the long-term commercial structure.';
+  }
+})();
+</script>
+<script>
+(() => {
+  const track = document.querySelector('.neo-reviews .review-track');
+  const duplicateStart = track?.querySelector('[aria-hidden="true"]');
+  if (!track || !duplicateStart || track.dataset.ziggyAdded) return;
+
+  const endorsement = document.createElement('article');
+  endorsement.className = 'review-card';
+  endorsement.innerHTML = '“This is melting my mind.”<strong>Ziggy Jonsson · Better</strong>';
+  track.insertBefore(endorsement, duplicateStart);
+
+  const duplicate = endorsement.cloneNode(true);
+  duplicate.setAttribute('aria-hidden', 'true');
+  track.append(duplicate);
+  track.dataset.ziggyAdded = 'true';
+})();
+</script>
+<script>
+(() => {
+  const chapterNames = {
+    '01': 'Framework',
+    '02': 'Business model',
+    '03': 'Economics',
+    '04': 'Investment',
+    '05': 'Mandate',
+    '06': 'Compensation',
+    '07': 'Shared upside',
+    '08': 'The decision'
+  };
+  document.querySelectorAll('.memo-section > .number').forEach(marker => {
+    const match = marker.textContent.trim().match(/^(\d{2})\s*·/);
+    if (!match) return;
+    const index = match[1];
+    marker.innerHTML = `<span class="section-index">${index}</span><span class="section-label">${chapterNames[index] || 'Section'}</span>`;
+    marker.setAttribute('aria-label', `Section ${index}: ${chapterNames[index] || 'Section'}`);
+  });
+})();
+</script>
+<script>
+(() => {
+  const hero = document.querySelector('.hero');
+  const decision = document.querySelector('.deal-break');
+  const whyDaryn = document.querySelector('.video-section:not(.product-sizzle)');
+  const strategy = document.querySelector('.stts-flow');
+  const proof = document.querySelector('.proof-section');
+  const reviews = document.querySelector('.reviews-section');
+  const belief = document.querySelector('.belief-section');
+  const product = document.querySelector('.product-sizzle');
+  const businessCase = [...document.querySelectorAll('section')].find(section => section.querySelector('.purpose'));
+
+  if (hero && decision && !decision.closest('.decision-section')) {
+    const decisionSection = document.createElement('section');
+    const inner = document.createElement('div');
+    decisionSection.className = 'decision-section';
+    inner.className = 'max-w';
+    decisionSection.appendChild(inner);
+    inner.appendChild(decision);
+    hero.after(decisionSection);
+  }
+
+  const decisionSection = document.querySelector('.decision-section');
+  if (decisionSection && whyDaryn) decisionSection.after(whyDaryn);
+  if (strategy && proof) strategy.after(proof);
+  if (proof && reviews) proof.after(reviews);
+  if (reviews && belief) reviews.after(belief);
+  if (belief && product) belief.after(product);
+  if (product && businessCase) product.after(businessCase);
+
+  const visibleProblems = new Set();
+  document.querySelectorAll('.hero .problem-card').forEach(card => {
+    const title = card.querySelector('.problem-front h2')?.textContent.trim() || card.querySelector('h2')?.textContent.trim();
+    if (title && visibleProblems.has(title)) {
+      card.setAttribute('aria-hidden', 'true');
+      return;
+    }
+    if (title) visibleProblems.add(title);
+    card.classList.remove('is-flipped');
+    card.removeAttribute('role');
+    card.removeAttribute('tabindex');
+    card.removeAttribute('aria-pressed');
+    card.removeAttribute('aria-label');
+  });
+})();
+</script>
+<script>
+(() => {
+  /* Replace generic label language with the short editorial cues used throughout the document. */
+  const roadmaps = document.querySelectorAll('.stts-roadmap');
+  if (roadmaps[0]) roadmaps[0].querySelector('.eyebrow')?.replaceChildren('Next: a 90-day deployment');
+  if (roadmaps[1]) {
+    roadmaps[1].querySelector('.eyebrow')?.remove();
+    roadmaps[1].querySelector('.h2').textContent = 'Give every Advisor a better operating system.';
+    const principles = roadmaps[1].querySelectorAll('.mechanism-card');
+    const copy = [
+      ['Start with the client conversation.', 'Translate the loan, the market, and the options into a conversation a client can actually use.'],
+      ['Give Advisors a clear next step.', 'Keep the client, partner, presentation, and workflow work in one practical place.'],
+      ['Make the business easier to run.', 'Reduce fragmented tools, improve adoption, and make the operating result visible.']
+    ];
+    principles.forEach((card, index) => {
+      const item = copy[index % copy.length];
+      card.querySelector('h3').textContent = item[0];
+      card.querySelector('p').textContent = item[1];
+    });
+  }
+
+  const proof = document.querySelector('.proof-section');
+  if (proof) {
+    proof.querySelector('.eyebrow')?.replaceChildren('In the field');
+    proof.querySelector('.h2').textContent = 'The work already shows up in the outcome.';
+  }
+
+  const purpose = document.querySelector('.purpose');
+  if (purpose) {
+    purpose.querySelector('.eyebrow')?.replaceChildren('The work');
+    purpose.querySelector('.h2').textContent = 'Build around the work, not the software.';
+    purpose.querySelector('.principle strong').textContent = 'The test for every investment';
+  }
+
+  /* Do not leave an invented product-video placeholder in an executive document. */
+  document.querySelector('.product-sizzle')?.remove();
+})();
+</script>
+</body>
+</html>
